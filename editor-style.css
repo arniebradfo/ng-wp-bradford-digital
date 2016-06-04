@@ -1,0 +1,13 @@
+/* 
+ * 
+ * This css styles the tinyMCE post/page editor in the admin section 
+ * The editor-style.css is loaded into an <iframe> with the editor, 
+ * so don't worry about the class names overriding other wp-admin sections.
+ * The section can be styled as if it were its own page.
+ * 
+ */
+
+body{ 
+	font-family: Helvetica, Arial, sans-serif; 
+	color: #333;
+}

@@ -1,0 +1,42 @@
+// -vars.scss
+
+
+// --------------------------------------------------------------- ABSOULTE FILL
+@mixin absoluteFill{
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+}
+
+// --------------------------------------------------------------- TRANSITION & TRANSFORM ADD-ONS
+// adds translateZ to all transforms to force Hardware Acceleration.
+@mixin transform($transforms){	
+	transform: $transforms translateZ(0);
+}
+
+// adds backface visibility to all transitions to prevent "blinky" transitions.
+@mixin transition( $properties:all, $duration:250ms, $timing:ease, $backface:hidden ) {
+	transition: $properties $duration $timing;
+	backface-visibility: $backface;
+}
+
+// --------------------------------------------------------------- CLEARFIX MIXIN
+// $order is a choice between ::before and ::after - use without the "::" prefix
+@mixin clearfix($order:after){
+	&:#{$order}{
+		content:"";
+		display:table;
+		clear:both;		
+	}
+}
+// doesn't work on ie6 or ie7
+
+// --------------------------------------------------------------- AUTOPREFIXERS
+@mixin inputPlaceholder{
+	&::-webkit-input-placeholder 	{@content;}
+	&:-moz-placeholder 				{@content;}	 	/* Firefox 18- */ 
+	&::-moz-placeholder 			{@content;}   	/* Firefox 19+ */ 
+	&:-ms-input-placeholder 		{@content;}
+}

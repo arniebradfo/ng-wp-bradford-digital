@@ -1,0 +1,29 @@
+{
+  "name": "Grunt-Boilerplate-ArnieBradfo",
+  "email": "james@polaris.graphics",
+  "homepage": "polaris.graphics", // not the repository
+  "repository" : { 
+    "type" : "git", 
+    "url" : "https://github.com/arniebradfo/Grunt-Boilerplate-ArnieBradfo"
+  },
+  "bugs":{
+    "url" : "https://github.com/arniebradfo/Grunt-Boilerplate-ArnieBradfo/issues/new", 
+    "email" : "james@polaris.graphics"
+  },
+  // "repository": "npm/npm",
+  // "repository": "gist:11081aaa281",
+  // "repository": "bitbucket:example/repo",
+  // "repository": "gitlab:another/repo",
+  "license": "GPL-3.0", // must be an SPDX expression: https://spdx.org/licenses/
+  // "licence": "UNLICENSED", // for private stuff
+  // "private": true, // npm will refuse to publish this
+  "description":"a grunt boilerplate based on Chris Coyier's",
+  "keywords": ["grunt","boilerplate","arniebradfo"],
+  "version": "0.1.0",
+  "devDependencies": {
+    "glob": "*",
+    "grunt": "*",
+    "load-grunt-tasks": "*"
+  },
+  "dependencies": {}
+}

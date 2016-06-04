@@ -1,0 +1,38 @@
+{
+  "name": "Bradfolio",
+  "email": "arniebradfo@gmail.com",
+  "homepage": "arniebradfo.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arniebradfo/Bradfolio"
+  },
+  "bugs": {
+    "url": "https://github.com/arniebradfo/Bradfolio/issues/new",
+    "email": "arniebradfo@gmail.com"
+  },
+  "license": "GPL-3.0",
+  "description": "the bradford portfolio wordpress theme",
+  "keywords": [ ],
+  "version": "0.1.0",
+	"devDependencies": {
+    "autoprefixer": "^6.3.1",
+    "css-mqpacker": "^5.0.1",
+    "cssnano": "^3.4.0",
+    "glob": "^7.0.3",
+    "grunt": "^1.0.1",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-connect": "^1.0.2",
+    "grunt-contrib-jshint": "^1.0.0",
+    "grunt-contrib-sass": "^1.0.0",
+    "grunt-contrib-uglify": "^1.0.1",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-dev-update": "^2.0.0",
+    "grunt-modernizr": "^1.0.2",
+    "grunt-postcss": "^0.8.0",
+    "grunt-svgstore": "^1.0.0",
+    "load-grunt-tasks": "^3.1.0",
+    "normalize.css": "^4.1.1",
+    "reset-css": "^2.0.2011012603"
+  },
+  "dependencies": {}
+}

@@ -1,0 +1,21 @@
+// --global.scss
+// a table of contents for the .scss modules
+
+@import "-comments";
+
+// ------------------------------------------------------------ LIBS
+// @import "libs/normalize";
+@import "libs/reset";
+
+// ------------------------------------------------------------ LIBS
+// @import "-debug";
+
+// ------------------------------------------------------------ DEPENDENCIES
+@import "-z-indices";
+@import "-vars";
+@import "-custom-reset";
+@import "-print-styles";
+
+// ------------------------------------------------------------ DEPENDENCIES
+@import "legacy-wpajax";
+@import "wp-css";

@@ -1,0 +1,18 @@
+// -z-indices.scss
+
+
+// list all elements that need z-indexing in ascending order here: bottom element first, top element last
+// use the index() function to return a number to be used as the z-index
+
+/* EXAMPLE:
+.class-name{
+	z-index:index($z-of,class-name);
+} 
+*/
+
+$z-of:
+	class-one,
+	class-two,
+	class-three,
+	class-name
+;
