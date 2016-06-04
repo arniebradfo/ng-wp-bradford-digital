@@ -34,10 +34,11 @@ module.exports = function (grunt) {
 	grunt.registerTask(
 		'default', [
 			// 'modernizr',
-			'jshint',
+			// 'jshint',
 			'concat:js',
 			// 'concat:modernizr',
-			'uglify',
+			'uglify:js',
+			// 'uglify:modernizr',
 			'sass',
 			'postcss:global',
 			'svgstore'

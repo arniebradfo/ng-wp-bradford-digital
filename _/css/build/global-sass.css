@@ -251,6 +251,16 @@ textarea:-moz-placeholder {
 
 /* ajax Transition Styles
 -------------------------------------------------------------------------------*/
+@-webkit-keyframes grow-height {
+  0% {
+    max-height: 0px;
+    opacity: 0;
+  }
+  100% {
+    max-height: 300px;
+    opacity: 1;
+  }
+}
 @keyframes grow-height {
   0% {
     max-height: 0px;
@@ -262,6 +272,7 @@ textarea:-moz-placeholder {
   }
 }
 .comment.added-by-wpajax, .children.added-by-wpajax {
+  -webkit-animation: grow-height 1s ease-in;
   animation: grow-height 1s ease-in;
 }
 
@@ -277,3 +288,5 @@ textarea:-moz-placeholder {
   max-width: 100%;
   height: auto;
 }
+
+/*# sourceMappingURL=global-sass.css.map */
