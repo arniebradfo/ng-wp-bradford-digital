@@ -1,42 +1,134 @@
 // -vars.scss
 
 
-// --------------------------------------------------------------- ABSOULTE FILL
-@mixin absoluteFill{
-	position: absolute;
-	top: 0;
-	left: 0;
-	bottom: 0;
-	right: 0;
+// --------------------------------------------------------------- ANIMATION VARS
+$speedOutEASING: cubic-bezier(1,0,1,1);
+$speedInEASING:  cubic-bezier(0,0,0,1);
+
+$flyOutEASING: cubic-bezier(.5,0,1,0);
+$flyInEASING:  cubic-bezier(0,1,.5,1);
+
+$smoothEASING: cubic-bezier(.5,.2,0,1);
+
+$defaultDURATION: 250ms;
+$panelTransitionDURATION: 400ms;
+
+
+// --------------------------------------------------------------- UTILITY CLASSES
+.checkbox-hack{
+	display: none;
+	// position: absolute;
+	// top:  -9999px;
+	// left: -9999px;
 }
 
-// --------------------------------------------------------------- TRANSITION & TRANSFORM ADD-ONS
-// adds translateZ to all transforms to force Hardware Acceleration.
-@mixin transform($transforms){	
+
+// --------------------------------------------------------------- POSITION
+@mixin position ($position, $args:()) {
+	position: $position;
+	$length: length($args);
+	@if ($length == 1) {
+		top:    nth($args, 1);
+		right:  nth($args, 1);
+		bottom: nth($args, 1);
+		left:   nth($args, 1);
+	}
+	@elseif ($length == 2) {
+		top:    nth($args, 1);
+		right:  nth($args, 2);
+		bottom: nth($args, 1);
+		left:   nth($args, 2);
+	}
+	@elseif ($length == 3) {
+		top:    nth($args, 1);
+		right:  nth($args, 2);
+		bottom: nth($args, 3);
+		left:   nth($args, 2);
+	}
+	@elseif ($length == 4) {
+		top:    nth($args, 1);
+		right:  nth($args, 2);
+		bottom: nth($args, 3);
+		left:   nth($args, 4);
+	}
+	@elseif ($length > 4) {
+		top:    nth($args, 1);
+		right:  nth($args, 2);
+		bottom: nth($args, 3);
+		left:   nth($args, 4);
+		@warn "Invalid nuber of args.";
+	}
+}
+@mixin absolute ($args:()) {
+  @include position(absolute, $args);
+}
+@mixin fixed ($args:()) {
+  @include position(fixed, $args);
+}
+@mixin relative ($args:()) {
+  @include position(relative, $args);
+}
+
+
+// --------------------------------------------------------------- STRIP UNIT
+@function strip-unit($number) {
+  @if type-of($number) == 'number' and not unitless($number) {
+    @return $number / ($number * 0 + 1);
+  }
+
+  @return $number;
+}
+
+
+// --------------------------------------------------------------- TRANSFORM
+// adds translateZ to transforms to force Hardware Acceleration.
+@mixin transform($transforms){
+	// transform: $transforms; // to compare
 	transform: $transforms translateZ(0);
+	// backface-visibility: hidden; // prevent blinking in webkit
+	// perspective: 1000; // might help prevent blinking ??
 }
 
+// --------------------------------------------------------------- TRANSITION
+// TODO: add transition chaining function
 // adds backface visibility to all transitions to prevent "blinky" transitions.
-@mixin transition( $properties:all, $duration:250ms, $timing:ease, $backface:hidden ) {
-	transition: $properties $duration $timing;
+@mixin transition( $properties:(all), $duration:$defaultDURATION, $timing:$smoothEASING, $backface:hidden ) {
+	$transitionsLIST:'';
+	@each $property in $properties {
+		$transitionsLIST: $transitionsLIST +' '+ $property +' '+ $duration +' '+ $timing +' '+ 1ms+', ';
+	}
+	transition: #{$transitionsLIST} ;
+	backface-visibility: $backface;
+}
+@mixin transitionVis( $visibilityFirst, $properties:(all), $duration:250ms, $timing:'', $backface:hidden ) {
+	$transitionsLIST:'';
+	@if $visibilityFirst{
+		$transitionsLIST: $transitionsLIST+visibility 1ms 0ms+', ';
+		@each $property in $properties {
+			$transitionsLIST: $transitionsLIST +' '+ $property +' '+ $duration +' '+ $timing +' '+ 1ms+', ';
+		}
+		transition: #{$transitionsLIST} ;
+		visibility: visible;
+	}
+	@else {
+		@each $property in $properties {
+			$transitionsLIST: $transitionsLIST+' '+$property+' '+$duration+' '+$timing+' '+0ms+', ';
+		}
+		$transitionsLIST: $transitionsLIST+' '+visibility 1ms +' '+$duration;
+		transition: #{$transitionsLIST} ;
+		visibility: hidden;
+	}
 	backface-visibility: $backface;
 }
 
-// --------------------------------------------------------------- CLEARFIX MIXIN
-// $order is a choice between ::before and ::after - use without the "::" prefix
+
+// --------------------------------------------------------------- CLEARFIX
+// $order is a choice between :before and :after - use without the "::" prefix
 @mixin clearfix($order:after){
 	&:#{$order}{
-		content:"";
-		display:table;
-		clear:both;		
+		content: '';
+		display: table;
+		clear:   both;
 	}
 }
 // doesn't work on ie6 or ie7
-
-// --------------------------------------------------------------- AUTOPREFIXERS
-@mixin inputPlaceholder{
-	&::-webkit-input-placeholder 	{@content;}
-	&:-moz-placeholder 				{@content;}	 	/* Firefox 18- */ 
-	&::-moz-placeholder 			{@content;}   	/* Firefox 19+ */ 
-	&:-ms-input-placeholder 		{@content;}
-}

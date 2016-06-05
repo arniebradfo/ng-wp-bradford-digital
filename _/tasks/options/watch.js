@@ -1,7 +1,7 @@
 module.exports = {
 	// https://github.com/gruntjs/grunt-contrib-watch
 	options: {
-		livereload: false
+		livereload: true
 		// must add a special <script> to the .html page
 		// https://github.com/gruntjs/grunt-contrib-watch#optionslivereload
 	},
