@@ -14,16 +14,16 @@
 			<p><?php echo the_archive_description(); ?></p>
 		<?php endif; ?>
 
-		<section class="post-items">		
+		<section class="post-items">
 			<?php while ( have_posts()) : the_post(); ?>
-		
+
 				<?php template_post_item(); ?>
 
 			<?php endwhile; ?>
 		</section>
-			
+
 		<?php wpajax_post_pagination(); ?>
-			
+
 	<?php else : ?>
 
 		<h1><?php _e('Nothing Found','wpajax'); ?></h1>

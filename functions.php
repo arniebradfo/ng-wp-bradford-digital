@@ -147,7 +147,7 @@
 
 		// Load Custom Scripts
 		wp_register_script( 'wpajaxjs', get_template_directory_uri()."/_/js/wpajax.js", false, $themeVersion, true );
-		wp_enqueue_script( 'wpajaxjs' );
+		// wp_enqueue_script( 'wpajaxjs' );
 
 	}
 	add_action( 'wp_enqueue_scripts', 'load_theme_scripts_and_styles' );

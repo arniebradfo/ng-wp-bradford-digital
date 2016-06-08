@@ -419,6 +419,11 @@ textarea {
   /* 2 */
 }
 
+*, *::before, *::after {
+  outline: 1px solid rgba(255, 0, 0, 0.2);
+  outline-offset: -1px;
+}
+
 /* EXAMPLE:
 .class-name{
 	z-index:index($z-of,class-name);
@@ -440,12 +445,17 @@ a, a:link, a:visited {
   text-decoration: none;
 }
 
-pre, code, kbd, samp {
-  font-family: monospace, sans-serif;
+html, body {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  padding: 0;
+  margin: 0;
 }
 
-/* 
+/*
 
+pre, code, kbd, samp {font-family: monospace, sans-serif;}
 
 // unordered list reset to menu style
 ul {
@@ -455,13 +465,7 @@ ul {
 }
 
 
-// makes the 100% height work. Might close off everything into a scroallable div?
-html, body{
-  height:100%;
-}
-
-
-// force a vertical scrollbar to prevent a jumpy page if margin:0 auto; is used 
+// force a vertical scrollbar to prevent a jumpy page if margin:0 auto; is used
 html{overflow-y: scroll;}
 
 
@@ -476,7 +480,7 @@ html{overflow-y: scroll;}
 
 // Custom text-selection colors (remove any text shadows: http://twitter.com/miketaylr/status/12228805301)
 ::-moz-selection{	background: black;	color: white;	text-shadow: none;	}
-::selection {		background: black;	color: white;	text-shadow: none;	} 
+::selection {		background: black;	color: white;	text-shadow: none;	}
 
 
 // Style input elements like the are normal elements - radio and checkbox?

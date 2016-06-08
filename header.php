@@ -6,7 +6,7 @@
  */
 ?>
 
-<?php 
+<?php
 	// if this is an ajax request paganating comments
 	if ($GLOBALS['is_ajax'] && $GLOBALS['is_ajax_get_comments_section']){
 		// return only the comments section of the current context
@@ -19,7 +19,7 @@
 	}
 
 	// if this is an ajax request paganating posts
-	if ($GLOBALS['is_ajax'] && $GLOBALS['is_ajax_get_posts']){ 
+	if ($GLOBALS['is_ajax'] && $GLOBALS['is_ajax_get_posts']){
 		// return only the comments section of the current context
 		if (have_posts()) : ?>
 			<section class="post-items">
@@ -29,10 +29,10 @@
 
 			endwhile; ?>
 			</section>
-		<?php 
+		<?php
 		wpajax_post_pagination();
-		endif; 
-		exit; 
+		endif;
+		exit;
 	}
 ?>
 
@@ -47,7 +47,9 @@
 <!--[if !IE ]><!--><html <?php language_attributes(); ?>><!--<![endif]-->
 
 <head>
+
 <?php endif; // step out of ajax detection for the head ?>
+
 <?php if ($GLOBALS['is_ajax']){ ?><div id="ajax-head"><?php } // wrap meta info ?>
 
 	<?php // <!-- Application-specific meta tags -->
@@ -63,39 +65,40 @@
 	<meta charset="<?php bloginfo('charset'); ?>"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0 minimal-ui" />
 	<link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
-
 	<?php author_meta_tag(); ?>
+
 	<!-- wp_head starts here -->
 	<?php wp_head(); ?>
 
+<?php if ($GLOBALS['is_ajax']): ?>
 
-<?php if ($GLOBALS['is_ajax']){ ?></div><?php } // close #ajax-head ?>
-<?php if (!$GLOBALS['is_ajax']): //... and step back inv?>
+	</div><!-- #ajax-head -->
+
+	<nav id="wp-all-registered-nav-menus">
+		<?php
+			$menus = get_registered_nav_menus();
+			foreach ( $menus as $location => $description ) {
+				wp_nav_menu( array('theme_location' => $location) );
+			}
+		?>
+	</nav>
+
+<?php else:	// non-ajax ?>
+
 </head>
+
 <body <?php body_class(); ?> >
 
 	<header id="header" role="banner">
 		<a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a>
 		<div class="description"><?php bloginfo( 'description' ); ?></div>
+		<nav class="nav" role="navigation">
+			<?php wp_nav_menu( array('theme_location' => 'primary') ); ?>
+		</nav>
 	</header>
 
-	<nav class="nav" role="navigation">
-		<?php wp_nav_menu( array('theme_location' => 'primary') ); ?>
-	</nav>
-
-	<?php else:	// content that only comes through ajax ?>
-
-	<nav id="wp-all-registered-nav-menus">
-		<?php
-			$menus = get_registered_nav_menus();
-			foreach ( $menus as $location => $description ) { 
-				wp_nav_menu( array('theme_location' => $location) ); 
-			}
-		?>
-	</nav>
+	<div class="mainWrapper">
 
 	<?php endif; // end ajax detection ?>
-	
-	<main id="content"><?php // Pjax content wrapper element ?>
 
-	
+		<main id="content"><?php // Pjax content wrapper element ?>
