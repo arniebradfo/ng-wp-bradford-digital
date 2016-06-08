@@ -89,6 +89,8 @@
 
 <body <?php body_class(); ?> >
 
+	<input id="navOpen" type="checkbox" />
+
 	<header id="header" role="banner">
 		<a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a>
 		<div class="description"><?php bloginfo( 'description' ); ?></div>

@@ -1,0 +1,26 @@
+// nav.scss
+
+#navOpen{
+	z-index: index($z-of, #navOpen);
+	@include fixed(0 null null 0);
+	&:checked ~ #header{
+		display: block;
+	}
+}
+
+#header{
+	z-index: index($z-of, #header);
+	@include fixed(0);
+	display: none;
+}
+
+@include parallax-init(1, '.mainWrapper');
+.mainWrapper{
+	z-index: index($z-of, #mainWrapper);
+	@include fixed(0);
+	// overflow-y: auto;
+}
+
+.cover{
+	@include parallax(-0.1);
+}

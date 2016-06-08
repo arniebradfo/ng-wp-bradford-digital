@@ -7,12 +7,11 @@
 /* EXAMPLE:
 .class-name{
 	z-index:index($z-of,class-name);
-} 
+}
 */
 
 $z-of:
-	class-one,
-	class-two,
-	class-three,
-	class-name
+	#mainWrapper,
+	#header,
+	#navOpen,
 ;

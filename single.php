@@ -10,7 +10,7 @@
 
 		<article <?php post_class() ?> id="post-<?php the_ID(); ?>">
 
-			<section>
+			<section class="cover">
 
 				<div class="bannerWrapper object-fit__container">
 					<?php echo the_post_thumbnail(); ?>
