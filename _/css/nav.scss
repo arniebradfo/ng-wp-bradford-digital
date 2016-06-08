@@ -14,13 +14,28 @@
 	display: none;
 }
 
-@include parallax-init(1, '.mainWrapper');
 .mainWrapper{
+	@include parallaxContainer();
+	overflow-y: auto;
+	overflow-x: hidden;
 	z-index: index($z-of, #mainWrapper);
 	@include fixed(0);
-	// overflow-y: auto;
 }
 
 .cover{
-	@include parallax(-0.1);
+	@include parallax(-0.5);
+	transform-origin: 50vw 50vh;
+	height: 80vh;
+	max-width: 100%;
+	position: relative;
+
+	&__hero{
+		@include absolute(0);
+		.wp-post-image{
+			object-fit: cover;
+			height: 100%;
+			width: 100%;
+		}
+	}
+
 }

@@ -12,11 +12,11 @@
 
 			<section class="cover">
 
-				<div class="bannerWrapper object-fit__container">
-					<?php echo the_post_thumbnail(); ?>
+				<div class="cover__hero" >
+					<?php echo the_post_thumbnail('full'); ?>
 				</div>
 
-				<h1 class="entry-title"><?php the_title(); ?></h1>
+				<h1 class="cover__title"><?php the_title(); ?></h1>
 
 			</section>
 

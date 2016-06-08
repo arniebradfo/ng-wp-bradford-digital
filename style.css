@@ -419,11 +419,6 @@ textarea {
   /* 2 */
 }
 
-*, *::before, *::after {
-  outline: 1px solid rgba(255, 0, 0, 0.2);
-  outline-offset: -1px;
-}
-
 /* EXAMPLE:
 .class-name{
 	z-index:index($z-of,class-name);
@@ -638,6 +633,10 @@ textarea:-moz-placeholder {
   height: auto;
 }
 
+* {
+  transform-style: preserve-3d;
+}
+
 #navOpen {
   z-index: 3;
   position: fixed;
@@ -659,15 +658,11 @@ textarea:-moz-placeholder {
 }
 
 .mainWrapper {
-  overflow: auto;
   perspective: 1px;
+  transform: translateZ(0);
   -webkit-overflow-scrolling: touch;
-}
-.mainWrapper * {
-  transform-style: preserve-3d;
-}
-
-.mainWrapper {
+  overflow-y: auto;
+  overflow-x: hidden;
   z-index: 1;
   position: fixed;
   top: 0;
@@ -677,6 +672,22 @@ textarea:-moz-placeholder {
 }
 
 .cover {
-  transform: translateZ(-0.1px) scale(1.1);
-  z-index: -100;
+  transform: translateZ(-0.5px) scale(1.5);
+  z-index: -500;
+  transform-origin: 50vw 50vh;
+  height: 80vh;
+  max-width: 100%;
+  position: relative;
+}
+.cover__hero {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+.cover__hero .wp-post-image {
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
 }
