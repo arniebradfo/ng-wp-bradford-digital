@@ -6,14 +6,18 @@
  */
 ?>
 
-		</main>
+		</main><!-- .main -->
 
 		<?php if (!$GLOBALS['is_ajax']): // if this is not an ajax call ?>
 
-		<footer id="footer" class="source-org vcard copyright" role="contentinfo">
+		<footer class="footer">
 
-			<nav class="nav" role="navigation">
-				<?php wp_nav_menu( array('theme_location' => 'secondary') ); ?>
+			<nav class="footNav nav" role="navigation">
+				<?php wp_nav_menu( array(
+					'theme_location' => 'footer',
+					'menu_class' => 'footNav__menu',
+					'container' => '' // null
+				) ); ?>
 			</nav>
 			<small>&copy;<?php echo date("Y"); echo " "; bloginfo('name'); ?></small>
 

@@ -23,5 +23,9 @@ module.exports = {
 	reset: {
 		src: [ 'node_modules/reset-css/reset.css' ],
 		dest: '_/css/libs/reset.scss'
+	},
+	sanitize: {
+		src: [ 'node_modules/sanitize.css/lib/sanitize.scss' ],
+		dest: '_/css/libs/sanitize.scss'
 	}
 };

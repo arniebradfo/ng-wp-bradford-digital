@@ -6,12 +6,16 @@
 
 $parallax-perspective : 1 !default;
 $parallax-ios         : false !default;
+$perspective-origin   : center center;
 
 @mixin parallaxContainer (
-	$perspective  : $parallax-perspective,
-	$parallax-ios : $parallax-ios
+	$perspective        : $parallax-perspective,
+	$parallax-ios       : $parallax-ios
+	// $perspective-origin : $perspective-origin
 	) {
 	perspective: $perspective * 1px;
+	// perspective-origin: $perspective-origin;
+
 	transform: translateZ(0);
 	// Allows for smooth scrolling but disables parallax effects.
 	@if $parallax-ios == false {

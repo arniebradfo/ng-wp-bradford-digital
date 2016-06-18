@@ -12,15 +12,15 @@
 
 			<section class="cover">
 
-				<div class="cover__hero" >
-					<?php echo the_post_thumbnail('full'); ?>
-				</div>
+				<?php echo the_post_thumbnail('full', array(
+					'class' => 'cover__hero'
+				)); ?>
 
 				<h1 class="cover__title"><?php the_title(); ?></h1>
 
 			</section>
 
-			<section class="entry-content">
+			<section class="entry">
 
 				<?php the_content(); ?>
 

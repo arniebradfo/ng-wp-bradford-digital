@@ -3,7 +3,8 @@ module.exports = function (grunt) {
 	grunt.registerTask(
 		'csslibs', [
 			'concat:normalize',
-			'concat:reset'
+			'concat:reset',
+			'concat:sanitize'
 		]
 	);
 };

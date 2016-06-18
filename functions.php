@@ -66,7 +66,7 @@
 		// Nav Menus
 		register_nav_menus( array(
 			'primary'   => __( 'Navigation Menu', 'wpajax' ),
-			'secondary' => __( 'Footer Menu', 'wpajax' ),
+			'footer' => __( 'Footer Menu', 'wpajax' ),
 		) );
 
 		// featured images aka thumbnails

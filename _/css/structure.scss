@@ -1,0 +1,58 @@
+// structure.scss
+
+// makes the 100% height work. Might close off everything into a scroallable div?
+html, body{
+  height: 100%;
+  width:  100%;
+  position: relative;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  background-color: #eee;
+}
+
+$drawerWIDTH: 90%;
+$mainWrapperSCALE: 0.9;
+$horzMARGIN: 20px;
+$vertMARGIN: 100px;
+
+#mainNav--opener{
+	z-index: index($z-of, #navOpen);
+	@include fixed(0 null null 0);
+}
+
+.header{
+	z-index: index($z-of, #header);
+	@include fixed(0);
+	display: none;
+	// width: 100%;
+	// width: $drawerWIDTH * $mainWrapperSCALE;
+	// margin-right: $horzMARGIN * $mainWrapperSCALE;
+	// padding-left: $horzMARGIN; // + menu width
+	// $drawerWIDTHinvert: 100% - $drawerWIDTH;
+	// padding-right: $drawerWIDTHinvert;
+	// padding-right: calc(#{$horzMARGIN} + #{$drawerWIDTHinvert});
+	margin-right: (-$horzMARGIN);
+	padding-right: 100% - $drawerWIDTH;
+}
+
+.mainWrapper{
+	@include parallaxContainer();
+	// perspective-origin: center center;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	margin: (-$vertMARGIN) (-$horzMARGIN);
+	padding: ($vertMARGIN - $horzMARGIN)  0;
+	z-index: index($z-of, #mainWrapper);
+	@include fixed(0);
+	transform-origin: $horzMARGIN center;
+}
+
+#mainNav--opener:checked {
+	~ .mainWrapper{
+		transform: translateX($drawerWIDTH) scale($mainWrapperSCALE);
+	}
+	~ .header{
+		display: block;
+	}
+}

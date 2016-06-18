@@ -1,0 +1,21 @@
+// cover.scss
+
+.cover{
+	@include parallax(-1);
+	// transform-origin: 50vw 50vh;
+	height: calc(100vh + 20px);
+	width: 100%;
+	// max-width: 100vw;
+	position: relative;
+	border-top-left-radius: 6px;
+	border-top-right-radius: 6px;
+	overflow: hidden;
+
+	&__hero{
+		@include absolute(0);
+		object-fit: cover;
+		height: 100%;
+		width: 100%;
+	}
+
+}

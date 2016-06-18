@@ -52,16 +52,6 @@
 
 <?php if ($GLOBALS['is_ajax']){ ?><div id="ajax-head"><?php } // wrap meta info ?>
 
-	<?php // <!-- Application-specific meta tags -->
-		// Google  				-  https://support.google.com/webmasters/answer/79812
-		// LinkedIn  			-  https://developer.linkedin.com/docs/share-on-linkedin
-		// OpenGraph  			-  http://ogp.me/
-		// Richard's Toolbox  	-  http://richardstoolbox.com/#q=meta tag
-		// Windows  			-  https://msdn.microsoft.com/en-us/library/dn255024(v=vs.85).aspx
-		// 						-  https://msdn.microsoft.com/library/dn455106.aspx
-		// Twitter  			-  https://dev.twitter.com/cards/markup
-		// Facebook  			-  https://developers.facebook.com/docs/sharing/webmasters
-	?>
 	<meta charset="<?php bloginfo('charset'); ?>"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0 minimal-ui" />
 	<link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
@@ -89,18 +79,29 @@
 
 <body <?php body_class(); ?> >
 
-	<input id="navOpen" type="checkbox" />
+	<input id="mainNav--opener" type="checkbox" />
 
-	<header id="header" role="banner">
-		<a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a>
-		<div class="description"><?php bloginfo( 'description' ); ?></div>
-		<nav class="nav" role="navigation">
-			<?php wp_nav_menu( array('theme_location' => 'primary') ); ?>
+	<header class="header">
+		<nav class="mainNav nav" role="navigation">
+			<a class="mainNav__logo" href="<?php echo esc_url( home_url( '/' ) ); ?>">
+				<?php bloginfo( 'name' ); ?>
+			</a>
+			<div class="mainNav__description">
+				<?php bloginfo( 'description' ); ?>
+			</div>
+			<?php wp_nav_menu( array(
+				'theme_location' => 'primary',
+				'menu_class' => 'mainNav__menu',
+				'container' => '' // null
+			) ); ?>
 		</nav>
+		<div class="mainNav__posts">
+
+		</div>
 	</header>
 
 	<div class="mainWrapper">
 
 	<?php endif; // end ajax detection ?>
 
-		<main id="content"><?php // Pjax content wrapper element ?>
+		<main class="main"><?php // Pjax content wrapper element ?>

@@ -3,16 +3,18 @@
 
 @import "-comments";
 
-// ------------------------------------------------------------ LIBS
-@import "libs/normalize";
-// @import "libs/reset";
+// ------------------------------------------------------------ VARS
+@import "-z-indices";
+@import "-vars";
+@import "-vars-sanitize";
 
 // ------------------------------------------------------------ LIBS
+@import "libs/sanitize";
+// @import "libs/normalize";
+// @import "libs/reset";
 // @import "-debug"; // hurts performance
 
 // ------------------------------------------------------------ DEPENDENCIES
-@import "-z-indices";
-@import "-vars";
 @import "-custom-reset";
 @import "-print-styles";
 
@@ -20,4 +22,5 @@
 @import "legacy-wpajax";
 @import "wp-css";
 @import "parallax";
-@import "nav";
+@import "structure";
+@import "cover";

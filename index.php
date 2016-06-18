@@ -8,7 +8,7 @@
 
 	<?php if (have_posts()) : ?>
 
-		<section class="post-items">		
+		<section class="postList">		
 			<?php while (have_posts()) : the_post(); ?>
 
 				<?php template_post_item(); ?>
