@@ -89,15 +89,26 @@
 			<div class="mainNav__description">
 				<?php bloginfo( 'description' ); ?>
 			</div>
-			<?php wp_nav_menu( array(
+			<?php
+			$classPlacement = has_nav_menu( 'primary' ) ? 'container_class' : 'menu_class' ;
+			wp_nav_menu( array(
 				'theme_location' => 'primary',
-				'menu_class' => 'mainNav__menu',
-				'container' => '' // null
-			) ); ?>
+				$classPlacement => 'mainNav__menu',
+			) );
+			?>
 		</nav>
-		<div class="mainNav__posts">
+		<section class="postList postList--header">
+		<?php $q = new WP_Query(array('post_type'=>'post')); ?>
+		<?php if ($q->have_posts()): ?>
+				<?php while ($q->have_posts()) : $q->the_post(); ?>
 
-		</div>
+					<?php template_post_item(); ?>
+
+				<?php endwhile; ?>
+		<?php else: ?>
+			<h1><?php _e('Nothing Found','wpajax'); ?></h1>
+		<?php endif; wp_reset_postdata(); ?>
+		</section>
 	</header>
 
 	<div class="mainWrapper">

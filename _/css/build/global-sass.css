@@ -580,7 +580,7 @@ html, body {
 }
 
 #mainNav--opener {
-  z-index: 3;
+  z-index: 5;
   position: fixed;
   top: 0;
   left: 0;
@@ -594,11 +594,15 @@ html, body {
   bottom: 0;
   left: 0;
   display: none;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 100%;
   margin-right: -20px;
   padding-right: 10%;
 }
 
 .mainWrapper {
+  z-index: 2;
   perspective: 1px;
   transform: translateZ(0);
   -webkit-overflow-scrolling: touch;
@@ -606,7 +610,6 @@ html, body {
   overflow-x: hidden;
   margin: -100px -20px;
   padding: 80px 0;
-  z-index: 2;
   position: fixed;
   top: 0;
   right: 0;
@@ -620,6 +623,35 @@ html, body {
 }
 #mainNav--opener:checked ~ .header {
   display: block;
+}
+
+.mainNav {
+  display: flex;
+  flex-direction: column;
+  z-index: 4;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 300px;
+}
+.mainNav__menu {
+  flex-grow: 1;
+  overflow: hidden;
+  height: 100%;
+}
+.mainNav__menu > ul {
+  margin-right: -20px;
+  padding-right: 20px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 100%;
+}
+
+.postList--header {
+  z-index: 3;
+  padding-left: 300px;
 }
 
 .cover {
