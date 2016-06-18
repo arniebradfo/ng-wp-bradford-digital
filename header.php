@@ -81,37 +81,39 @@
 
 	<input id="mainNav--opener" type="checkbox" />
 
-	<header class="header">
-		<nav class="mainNav nav" role="navigation">
-			<a class="mainNav__logo" href="<?php echo esc_url( home_url( '/' ) ); ?>">
-				<?php bloginfo( 'name' ); ?>
-			</a>
-			<div class="mainNav__description">
-				<?php bloginfo( 'description' ); ?>
-			</div>
-			<?php
-			$classPlacement = has_nav_menu( 'primary' ) ? 'container_class' : 'menu_class' ;
-			wp_nav_menu( array(
-				'theme_location' => 'primary',
-				$classPlacement => 'mainNav__menu',
-			) );
-			?>
-		</nav>
+	<header class="mainNav nav" role="navigation">
+		<a class="mainNav__logo" href="<?php echo esc_url( home_url( '/' ) ); ?>">
+			<?php bloginfo( 'name' ); ?>
+		</a>
+		<div class="mainNav__description">
+			<?php bloginfo( 'description' ); ?>
+		</div>
+		<?php
+		$classPlacement = has_nav_menu( 'primary' ) ? 'container_class' : 'menu_class' ;
+		wp_nav_menu( array(
+			'theme_location' => 'primary',
+			$classPlacement => 'mainNav__menu',
+			'container' => 'nav'
+		) );
+		?>
+	</header>
+
+	<aside class="wrapper postListWrapper">
 		<section class="postList postList--header">
-		<?php $q = new WP_Query(array('post_type'=>'post')); ?>
-		<?php if ($q->have_posts()): ?>
+			<?php $q = new WP_Query(array('post_type'=>'post')); ?>
+			<?php if ($q->have_posts()): ?>
 				<?php while ($q->have_posts()) : $q->the_post(); ?>
 
 					<?php template_post_item(); ?>
 
 				<?php endwhile; ?>
-		<?php else: ?>
-			<h1><?php _e('Nothing Found','wpajax'); ?></h1>
-		<?php endif; wp_reset_postdata(); ?>
+			<?php else: ?>
+				<h1><?php _e('Nothing Found','wpajax'); ?></h1>
+			<?php endif; wp_reset_postdata(); ?>
 		</section>
-	</header>
+	</aside>
 
-	<div class="mainWrapper">
+	<div class="wrapper mainWrapper">
 
 	<?php endif; // end ajax detection ?>
 

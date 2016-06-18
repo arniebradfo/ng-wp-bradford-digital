@@ -193,13 +193,15 @@ function template_post_item() {
 	<?php break; case 'audio': ?>
 	<?php break; default: // marked 'standard'?>
 	<?php endswitch;?>
-	<article <?php post_class(); ?> id="post-<?php the_ID(); ?>">
+	<article <?php post_class('postItem'); ?> id="post-<?php the_ID(); ?>">
 
 		<h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
 
 		<?php posted_on(); ?>
 
-		<?php the_post_thumbnail(); ?>
+		<?php the_post_thumbnail('medium', array(
+			'class' => 'postItem__hero'
+		) ); ?>
 
 		<div class="excerpt">
 			<?php the_excerpt(); ?>

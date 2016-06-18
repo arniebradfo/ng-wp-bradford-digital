@@ -1,0 +1,12 @@
+// postItem.scss
+
+.postItem{
+	margin-bottom: 60px; // 
+	&__hero{
+		@include parallax(-.1);
+		object-fit: cover;
+		display: block;
+		width: 100%;
+		height: 60vh;
+	}
+}
