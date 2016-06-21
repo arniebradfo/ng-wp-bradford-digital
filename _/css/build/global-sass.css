@@ -687,13 +687,17 @@ html, body {
 .postItem {
   margin-bottom: 60px;
 }
-.postItem__hero {
+.postItem__heroWrapper {
   transform: translateZ(-0.1px) scale(1.1);
   z-index: -100;
+  height: 60vh;
+  width: 100%;
+}
+.postItem__hero {
   object-fit: cover;
   display: block;
   width: 100%;
-  height: 60vh;
+  height: 100%;
 }
 
 /*# sourceMappingURL=global-sass.css.map */

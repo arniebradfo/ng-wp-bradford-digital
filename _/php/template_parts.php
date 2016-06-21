@@ -199,9 +199,11 @@ function template_post_item() {
 
 		<?php posted_on(); ?>
 
-		<?php the_post_thumbnail('medium', array(
-			'class' => 'postItem__hero'
-		) ); ?>
+		<figure class="postItem__heroWrapper wrapper">
+			<?php the_post_thumbnail('medium', array(
+				'class' => 'postItem__hero'
+			) ); ?>
+		</figure>
 
 		<div class="excerpt">
 			<?php the_excerpt(); ?>
