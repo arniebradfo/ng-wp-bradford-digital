@@ -6,7 +6,9 @@
 (function (document, window) {
 
 	var transition = function (e) {
-		var rect = this.getBoundingClientRect();
+		var measureThis = this.getElementsByClassName('postItem__hero')[0];
+		var translateThis = this.getElementsByClassName('postItem__heroTranslate')[0];
+		var rect = measureThis.getBoundingClientRect();
 		var windowBox = {
 			height: window.innerHeight,
 			width: window.innerWidth
@@ -15,12 +17,11 @@
 		var scaleX = windowBox.width / rect.width;
 		var translateX = (windowBox.width / 2) - (rect.left + rect.width / 2);
 		var translateY = (windowBox.height / 2) - (rect.top + rect.height / 2);
-		this.style.transform = 'translate3D(' + translateX + 'px,' + translateY + 'px,0) scale(' + scaleX + ',' + scaleY + ')';
-		console.dir(rect);
+		translateThis.style.transform = 'translate(' + translateX + 'px,' + translateY + 'px) scale(' + scaleX + ',' + scaleY + ')';
 	};
 
 	var initalize = function () {
-		var heroWraps = document.getElementsByClassName('postItem__heroWrapper');
+		var heroWraps = document.getElementsByClassName('postItem');
 		for (var i = 0; i < heroWraps.length; i++) {
 			var heroWrap = heroWraps[i];
 			heroWrap.addEventListener('click', transition, false);

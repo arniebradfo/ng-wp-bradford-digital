@@ -643,6 +643,9 @@ html, body {
   height: 100%;
 }
 
+.postList {
+  padding-right: 20px;
+}
 .postListWrapper {
   position: fixed;
   top: 0;
@@ -687,13 +690,29 @@ html, body {
 .postItem {
   margin-bottom: 60px;
 }
-.postItem__heroWrapper {
-  transform: translateZ(-0.1px) scale(1.1);
-  z-index: -100;
+.postItem__hero {
   height: 60vh;
   width: 100%;
+  position: relative;
 }
-.postItem__hero {
+.postItem__heroTranslate {
+  transform: translateZ(-0.1px) scale(1.1);
+  z-index: -100;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+.postItem__heroWrapper {
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  border-radius: 6px;
+}
+.postItem__heroImg {
   object-fit: cover;
   display: block;
   width: 100%;

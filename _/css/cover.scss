@@ -7,8 +7,8 @@
 	width: 100%;
 	// max-width: 100vw;
 	position: relative;
-	border-top-left-radius: 6px;
-	border-top-right-radius: 6px;
+	border-top-left-radius:  $borderRADIUS;
+	border-top-right-radius: $borderRADIUS;
 	overflow: hidden;
 
 	&__hero{

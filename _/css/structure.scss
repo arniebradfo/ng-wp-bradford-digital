@@ -70,6 +70,7 @@ $vertMARGIN: 100px;
 }
 
 .postList{
+	padding-right: $horzMARGIN;
 	&Wrapper{
 		@include fixed(0);
 		overflow-y: scroll;
