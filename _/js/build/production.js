@@ -7,7 +7,6 @@
 
 	var transition = function (e) {
 		var measureThis = this.getElementsByClassName('postItem__hero')[0];
-		var translateThis = this.getElementsByClassName('postItem__heroTranslate')[0];
 		var rect = measureThis.getBoundingClientRect();
 		var windowBox = {
 			height: window.innerHeight,
@@ -17,7 +16,8 @@
 		var scaleX = windowBox.width / rect.width;
 		var translateX = (windowBox.width / 2) - (rect.left + rect.width / 2);
 		var translateY = (windowBox.height / 2) - (rect.top + rect.height / 2);
-		translateThis.style.transform = 'translate(' + translateX + 'px,' + translateY + 'px) scale(' + scaleX + ',' + scaleY + ')';
+		this.getElementsByClassName('postItem__heroTranslate')[0].style.transform = 'translate(' + translateX + 'px,' + translateY + 'px) scale(' + scaleX + ',' + scaleY + ')';
+		this.getElementsByClassName('postItem__heroImg--focus')[0].style.opacity = '0';
 	};
 
 	var initalize = function () {

@@ -203,7 +203,10 @@ function template_post_item() {
 			<div class="postItem__heroTranslate">
 				<div class="postItem__heroWrapper">
 					<?php the_post_thumbnail('medium', array(
-						'class' => 'postItem__heroImg'
+						'class' => 'postItem__heroImg postItem__heroImg--blur'
+					) ); ?>
+					<?php the_post_thumbnail('medium', array(
+						'class' => 'postItem__heroImg postItem__heroImg--focus'
 					) ); ?>
 				</div>
 			</div>
