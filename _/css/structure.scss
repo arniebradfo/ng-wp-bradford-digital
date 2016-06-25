@@ -10,11 +10,11 @@ html, body{
   background-color: #eee;
 }
 
-$mainNavWIDTH: 300px;
+$mainNavWIDTH: fib(13);
 $drawerWIDTH: 90%;
 $mainWrapperSCALE: 0.9;
-$horzMARGIN: 20px;
-$vertMARGIN: 100px;
+$horzMARGIN: $bleed;
+$vertMARGIN: fib(11);
 
 .header{
 	z-index: index($z-of, header);

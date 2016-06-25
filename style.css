@@ -586,14 +586,14 @@ html, body {
   -webkit-overflow-scrolling: touch;
   overflow-y: scroll;
   overflow-x: hidden;
-  margin: -100px -20px;
-  padding: 80px 0;
+  margin: -89px -21px;
+  padding: 68px 0;
   position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
-  transform-origin: 20px center;
+  transform-origin: 21px center;
 }
 
 #mainNav--opener {
@@ -620,7 +620,7 @@ html, body {
   right: 0;
   bottom: 0;
   left: 0;
-  width: 300px;
+  width: 233px;
 }
 .mainNav__menu {
   -ms-flex-positive: 1;
@@ -629,15 +629,15 @@ html, body {
   height: 100%;
 }
 .mainNav__menu > ul {
-  margin-right: -20px;
-  padding-right: 20px;
+  margin-right: -21px;
+  padding-right: 21px;
   overflow-y: scroll;
   overflow-x: hidden;
   height: 100%;
 }
 
 .postList {
-  padding-right: 20px;
+  padding-right: 21px;
 }
 .postListWrapper {
   position: fixed;
@@ -647,26 +647,26 @@ html, body {
   left: 0;
   overflow-y: scroll;
   overflow-x: hidden;
-  margin-right: -20px;
+  margin-right: -21px;
   padding-right: 10%;
   perspective: 1px;
   transform: translateZ(0);
   -webkit-overflow-scrolling: touch;
-  perspective-origin: calc( 45% + 150px );
+  perspective-origin: calc( 45% + 116.5px );
 }
 .postList--header {
   z-index: 3;
-  padding-left: 300px;
+  padding-left: 233px;
 }
 
 .cover {
   transform: translateZ(-1px) scale(2);
   z-index: -1000;
-  height: calc(100vh + 20px);
+  height: calc(100vh + 21px);
   width: 100%;
   position: relative;
-  border-top-left-radius: 6px;
-  border-top-right-radius: 6px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
   overflow: hidden;
 }
 .cover__hero {
@@ -684,7 +684,7 @@ html, body {
   margin-bottom: 60px;
 }
 .postItem__hero {
-  height: 60vh;
+  height: 20vh;
   width: 100%;
   position: relative;
 }
@@ -704,8 +704,9 @@ html, body {
   overflow: hidden;
   height: 100%;
   width: 100%;
-  border-radius: 6px;
+  border-radius: 5px;
   position: relative;
+  background: black;
 }
 .postItem__heroImg {
   object-fit: cover;

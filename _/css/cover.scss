@@ -3,7 +3,7 @@
 .cover{
 	@include parallax(-1);
 	// transform-origin: 50vw 50vh;
-	height: calc(100vh + 20px);
+	height: calc(100vh + #{$bleed});
 	width: 100%;
 	// max-width: 100vw;
 	position: relative;

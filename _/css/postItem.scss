@@ -3,7 +3,7 @@
 .postItem{
 	margin-bottom: 60px; //
 	&__hero{
-		height: 60vh;
+		height: 20vh;
 		width: 100%;
 		position: relative;
 		&Translate{
@@ -19,6 +19,7 @@
 			width: 100%;
 			border-radius: $borderRADIUS;
 			position: relative;
+			background: black;
 		}
 		&Img{
 			object-fit: cover;
