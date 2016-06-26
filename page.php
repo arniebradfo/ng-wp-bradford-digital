@@ -8,40 +8,33 @@
 
 	<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
-		<?php switch ( get_post_format() ): // output different HTML based on the post type
-		             case 'aside': ?>
-		<?php break; case 'chat': ?>
-		<?php break; case 'gallery': ?>
-		<?php break; case 'link': ?>
-		<?php break; case 'image': ?>
-		<?php break; case 'quote': ?>
-		<?php break; case 'status': ?>
-		<?php break; case 'video': ?>
-		<?php break; case 'audio': ?>
-		<?php break; default: // marked 'standard' ?>
-		<?php endswitch;?>
+		<?php
+			/*
+			<article class="post" id="post-<?php the_ID(); ?>">
 
-		<article class="post" id="post-<?php the_ID(); ?>">
+				<h2><?php the_title(); ?></h2>
 
-			<h2><?php the_title(); ?></h2>
+				<?php posted_on(); ?>
 
-			<?php posted_on(); ?>
+				<div class="entry">
 
-			<div class="entry">
+					<?php the_post_thumbnail(); ?>
 
-				<?php the_post_thumbnail(); ?>
+					<?php the_content(); ?>
 
-				<?php the_content(); ?>
+					<?php wp_link_pages(array('before' => __('Pages: ','wpajax'), 'next_or_number' => 'number')); ?>
 
-				<?php wp_link_pages(array('before' => __('Pages: ','wpajax'), 'next_or_number' => 'number')); ?>
+				</div>
 
-			</div>
+				<?php edit_post_link(__('Edit this entry','wpajax'), '<p>', '</p>'); ?>
 
-			<?php edit_post_link(__('Edit this entry','wpajax'), '<p>', '</p>'); ?>
+			</article>
 
-		</article>
+			<?php comments_template(); ?>
+			*/
+		?>
 
-		<?php comments_template(); ?>
+		<?php template_post_item(); ?>
 
 		<?php endwhile; endif; ?>
 

@@ -9,8 +9,17 @@
 **/
 
 // HTML for a post links - use inside the loop
-function template_post_item() {
+function template_post_item($type) {
+
+	// detect the page type
+	if ( !isset($type) ) {
+		$type = 'list';
+		if ( is_single() ) $type = 'single';
+		elseif ( is_page() ) $type = 'page';
+	}
+
 	?>
+
 	<?php switch ( get_post_format() ): // output different HTML based on the post type
 	             case 'aside': ?>
 	<?php break; case 'chat': ?>
@@ -23,6 +32,7 @@ function template_post_item() {
 	<?php break; case 'audio': ?>
 	<?php break; default: // marked 'standard'?>
 	<?php endswitch;?>
+
 	<article <?php post_class('postItem'); ?> id="post-<?php the_ID(); ?>">
 
 		<h2 class="postItem__title">
@@ -44,16 +54,24 @@ function template_post_item() {
 			</div>
 		</figure>
 
-		<div class="excerpt">
-			<?php the_excerpt(); ?>
-		</div>
+		<section class="excerpt">
+			<?php if ($type === 'list') the_excerpt(); ?>
+		</section>
 
-		<footer class="postmetadata">
+		<section class="content">
+			<?php if ($type === 'single' || $type === 'page') the_content(); ?>
+		</section>
+
+		<section class="comments">
+			<?php if ($type === 'single' || $type === 'page') comments_template(); ?>
+		</section>
+
+		<!-- <footer class="postmetadata">
 			<?php the_tags(__('Tags: ','wpajax'), ', ', '<br />'); ?>
 			<?php _e('Posted in','wpajax'); ?>
 			<?php the_category(', '); ?> |
 			<?php comments_popup_link(__('No Comments &#187;','wpajax'), __('1 Comment &#187;','wpajax'), __('% Comments &#187;','wpajax')); ?>
-		</footer>
+		</footer> -->
 
 	</article>
 	<?php

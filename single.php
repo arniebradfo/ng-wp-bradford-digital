@@ -8,35 +8,43 @@
 
 	<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
-		<article <?php post_class() ?> id="post-<?php the_ID(); ?>">
+		<?php
+			/*
 
-			<section class="cover">
+			<article <?php post_class() ?> id="post-<?php the_ID(); ?>">
 
-				<?php echo the_post_thumbnail('full', array(
-					'class' => 'cover__hero'
-				)); ?>
+				<section class="cover">
 
-				<h1 class="cover__title"><?php the_title(); ?></h1>
+					<?php echo the_post_thumbnail('full', array(
+						'class' => 'cover__hero'
+					)); ?>
 
-			</section>
+					<h1 class="cover__title"><?php the_title(); ?></h1>
 
-			<section class="entry">
+				</section>
 
-				<?php the_content(); ?>
+				<section class="entry">
 
-				<?php wp_link_pages(array('before' => __('Pages: ','wpajax'), 'next_or_number' => 'number')); ?>
+					<?php the_content(); ?>
 
-				<?php the_tags( __('Tags: ','wpajax'), ', ', ''); ?>
+					<?php wp_link_pages(array('before' => __('Pages: ','wpajax'), 'next_or_number' => 'number')); ?>
 
-				<?php posted_on(); ?>
+					<?php the_tags( __('Tags: ','wpajax'), ', ', ''); ?>
 
-			</section>
+					<?php posted_on(); ?>
 
-			<?php edit_post_link(__('Edit this entry','wpajax'),'','.'); ?>
+				</section>
 
-			<?php comments_template(); ?>
+				<?php edit_post_link(__('Edit this entry','wpajax'),'','.'); ?>
 
-		</article>
+				<?php comments_template(); ?>
+
+			</article>
+
+			*/
+		?>
+
+		<?php template_post_item(); ?>
 
 	<?php endwhile; endif; ?>
 
