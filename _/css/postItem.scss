@@ -1,19 +1,23 @@
 // postItem.scss
 
 .postItem{
-	margin-bottom: 60px; //
+	margin-bottom: 60px;
+	text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
+	color: white;
+	position: relative;
 	&__hero{
-		height: 20vh;
+		height:40vh;
 		width: 100%;
 		position: relative;
+		z-index: -1;
 		&Translate{
-			@include parallax(-.1);
+			@include parallax(-.05);
 			@include absolute(0);
 			height: 100%;
 			width: 100%;
 		}
 		&Wrapper{
-			box-shadow: 0px 0px 24px 1px rgba(0,0,0,0.5);
+			box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.5);
 			overflow: hidden;
 			height: 100%;
 			width: 100%;
@@ -32,6 +36,20 @@
 			&--focus{
 				@include transition(opacity);
 				@include absolute(0);
+			}
+		}
+	}
+	&__title{
+		font-size: fib(9);
+		@include absolute(null);
+	}
+	&.growJS{
+		color: red;
+		transform-style: flat;
+		.postItem{
+			&__heroTranslate{
+				@include fixed((-$bleed));
+				transform: translateZ(0);
 			}
 		}
 	}

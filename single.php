@@ -34,9 +34,9 @@
 
 			<?php edit_post_link(__('Edit this entry','wpajax'),'','.'); ?>
 
-		</article>
+			<?php comments_template(); ?>
 
-	<?php comments_template(); ?>
+		</article>
 
 	<?php endwhile; endif; ?>
 

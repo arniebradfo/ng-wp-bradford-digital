@@ -6,6 +6,7 @@
 (function (document, window) {
 
 	var transition = function (e) {
+		// this.classList.add('growJS');
 		var measureThis = this.getElementsByClassName('postItem__hero')[0];
 		var rect = measureThis.getBoundingClientRect();
 		var windowBox = {

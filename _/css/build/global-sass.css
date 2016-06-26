@@ -576,7 +576,7 @@ html, body {
   overflow: hidden;
   padding: 0;
   margin: 0;
-  background-color: #eee;
+  background-color: #aaa;
 }
 
 .header {
@@ -689,15 +689,19 @@ html, body {
 
 .postItem {
   margin-bottom: 60px;
-}
-.postItem__hero {
-  height: 20vh;
-  width: 100%;
+  text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
+  color: white;
   position: relative;
 }
+.postItem__hero {
+  height: 40vh;
+  width: 100%;
+  position: relative;
+  z-index: -1;
+}
 .postItem__heroTranslate {
-  transform: translateZ(-0.1px) scale(1.1);
-  z-index: -100;
+  transform: translateZ(-0.05px) scale(1.05);
+  z-index: -50;
   position: absolute;
   top: 0;
   right: 0;
@@ -707,7 +711,7 @@ html, body {
   width: 100%;
 }
 .postItem__heroWrapper {
-  box-shadow: 0px 0px 24px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.5);
   overflow: hidden;
   height: 100%;
   width: 100%;
@@ -732,6 +736,22 @@ html, body {
   right: 0;
   bottom: 0;
   left: 0;
+}
+.postItem__title {
+  font-size: 34px;
+  position: absolute;
+}
+.postItem.growJS {
+  color: red;
+  transform-style: flat;
+}
+.postItem.growJS .postItem__heroTranslate {
+  position: fixed;
+  top: -21px;
+  right: -21px;
+  bottom: -21px;
+  left: -21px;
+  transform: translateZ(0);
 }
 
 /*# sourceMappingURL=global-sass.css.map */
