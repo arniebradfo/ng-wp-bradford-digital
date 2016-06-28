@@ -71,6 +71,14 @@ $selection-color: #ffffff;
 $selection-text-shadow: none;
 
 */
+* {
+  transform-style: preserve-3d;
+}
+
+* {
+  transition: all 0.5s ease;
+}
+
 /*! sanitize.css v3.3.0 | CC0 1.0 Public Domain | github.com/10up/sanitize.css */
 /*
  * Normalization
@@ -429,119 +437,6 @@ blockquote, q {
 }
 
  */
-/* Ok, this is where the fun starts.
--------------------------------------------------------------------------------*/
-* {
-  transition: all 0.5s ease;
-}
-
-html, body {
-  background-color: white;
-}
-
-/* A Linux- and Windows-friendly sans-serif font stack: http://prospects.mhurrell.co.uk/post/updating-the-helvetica-font-stack */
-body {
-  font: 13px Helmet, Freesans, sans-serif;
-}
-
-.current-menu-ancestor > a {
-  color: green;
-}
-
-.current-page-ancestor > a {
-  font-weight: bold;
-}
-
-.current-page-parent > a {
-  text-decoration: none;
-}
-
-.current-menu-item > a, .current_page_item > a, .current {
-  color: red;
-}
-
-img, object, embed {
-  max-width: 100%;
-  height: auto;
-}
-
-/* Using local fonts? Check out Font Squirrel's webfont generator: http://www.fontsquirrel.com/tools/webfont-generator */
-/* We like off-black for text. */
-body, select, input, textarea {
-  color: #333;
-}
-
-a {
-  color: #03f;
-}
-
-a:hover {
-  color: #69f;
-}
-
-/* links without destinations of funtions tied to them are inactive */
-a:not([href]):not([onclick]) {
-  color: gray;
-  /* opacity:0.5; */
-  /* disply:none; */
-}
-
-/* Custom text-selection colors (remove any text shadows: http://twitter.com/miketaylr/status/12228805301) */
-::-moz-selection {
-  background: #fcd700;
-  color: #fff;
-  text-shadow: none;
-}
-
-::selection {
-  background: #fcd700;
-  color: #fff;
-  text-shadow: none;
-}
-
-/*	j.mp/webkit-tap-highlight-color */
-a:link {
-  -webkit-tap-highlight-color: #fcd700;
-}
-
-ins {
-  background-color: #fcd700;
-  color: #000;
-  text-decoration: none;
-}
-
-mark {
-  background-color: #fcd700;
-  color: #000;
-  font-style: italic;
-  font-weight: bold;
-}
-
-/* Mozilla dosen't style place holders by default */
-input:-moz-placeholder {
-  color: #a9a9a9;
-}
-
-textarea:-moz-placeholder {
-  color: #a9a9a9;
-}
-
-/* ajax Transition Styles
--------------------------------------------------------------------------------*/
-@keyframes grow-height {
-  0% {
-    max-height: 0px;
-    opacity: 0;
-  }
-  100% {
-    max-height: 300px;
-    opacity: 1;
-  }
-}
-.comment.added-by-wpajax, .children.added-by-wpajax {
-  animation: grow-height 1s ease-in;
-}
-
 /* Required Wordpress CSS
 -------------------------------------------------------------------------------*/
 /* http://codex.wordpress.org/CSS#WordPress_Generated_Classes */
@@ -553,10 +448,6 @@ textarea:-moz-placeholder {
 .size-thumbnail {
   max-width: 100%;
   height: auto;
-}
-
-* {
-  transform-style: preserve-3d;
 }
 
 html, body {
@@ -579,8 +470,7 @@ html, body {
   height: 100%;
 }
 
-.mainWrapper {
-  z-index: 2;
+.mainContent {
   perspective: 1px;
   transform: translateZ(0);
   -webkit-overflow-scrolling: touch;
@@ -602,7 +492,7 @@ html, body {
   top: 0;
   left: 0;
 }
-#mainNav--opener:checked ~ .mainWrapper {
+#mainNav--opener:checked ~ .mainContent {
   transform: translateX(90%) scale(0.9);
 }
 #mainNav--opener:not(:checked) ~ .mainNav {
@@ -654,45 +544,25 @@ html, body {
   -webkit-overflow-scrolling: touch;
   perspective-origin: calc( 45% + 116.5px );
 }
-.postList--header {
+.postList--aside {
   z-index: 3;
   padding-left: 233px;
 }
 
-.cover {
-  transform: translateZ(-1px) scale(2);
-  z-index: -1000;
-  height: calc(100vh + 21px);
-  width: 100%;
-  position: relative;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  overflow: hidden;
-}
-.cover__hero {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  object-fit: cover;
-  height: 100%;
-  width: 100%;
-}
-
-.postItem {
+.post {
   margin-bottom: 60px;
   text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
   color: white;
   position: relative;
 }
-.postItem__hero {
+
+.cover__hero {
   height: 40vh;
   width: 100%;
   position: relative;
   z-index: -1;
 }
-.postItem__heroTranslate {
+.cover__heroTransform {
   transform: translateZ(-0.05px) scale(1.05);
   z-index: -50;
   position: absolute;
@@ -703,7 +573,7 @@ html, body {
   height: 100%;
   width: 100%;
 }
-.postItem__heroWrapper {
+.cover__heroWrapper {
   box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.5);
   overflow: hidden;
   height: 100%;
@@ -712,17 +582,17 @@ html, body {
   position: relative;
   background: black;
 }
-.postItem__heroImg {
+.cover__heroImg {
   object-fit: cover;
   display: block;
   width: 100%;
   height: 100%;
 }
-.postItem__heroImg--blur {
+.cover__heroImg--blur {
   -webkit-filter: blur(10px);
           filter: blur(10px);
 }
-.postItem__heroImg--focus {
+.cover__heroImg--focus {
   transition:  opacity 250ms cubic-bezier(0.5, 0.2, 0, 1) 1ms;
   backface-visibility: hidden;
   position: absolute;
@@ -731,19 +601,7 @@ html, body {
   bottom: 0;
   left: 0;
 }
-.postItem__title {
+.cover__title {
   font-size: 34px;
   position: absolute;
-}
-.postItem.growJS {
-  color: red;
-  transform-style: flat;
-}
-.postItem.growJS .postItem__heroTranslate {
-  position: fixed;
-  top: -21px;
-  right: -21px;
-  bottom: -21px;
-  left: -21px;
-  transform: translateZ(0);
 }

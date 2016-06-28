@@ -6,7 +6,6 @@
  */
 ?>
 
-		</main><!-- .main -->
 
 		<?php if (!$GLOBALS['is_ajax']): // if this is not an ajax call ?>
 
@@ -27,7 +26,7 @@
 
 		</footer>
 
-	</div><!-- .mainWrapper -->
+	</main><!-- .main -->
 
 	<?php // get_sidebar(); ?>
 

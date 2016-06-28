@@ -98,23 +98,18 @@
 		?>
 	</header>
 
-	<aside class="wrapper postListWrapper">
-		<section class="postList postList--header">
-			<?php $q = new WP_Query(array('post_type'=>'post')); ?>
-			<?php if ($q->have_posts()): ?>
-				<?php while ($q->have_posts()) : $q->the_post(); ?>
-
-					<?php template_post_item(); ?>
-
-				<?php endwhile; ?>
-			<?php else: ?>
-				<h1><?php _e('Nothing Found','wpajax'); ?></h1>
-			<?php endif; wp_reset_postdata(); ?>
+	<aside class="postListWrapper">
+		<section class="postList postList--aside">
+			<?php $q = new WP_Query(array('post_type'=>'post'));
+				if ($q->have_posts()) : while ($q->have_posts()) : $q->the_post();
+					template_post_item('list');
+				endwhile; endif; wp_reset_postdata();
+			?>
 		</section>
 	</aside>
 
-	<div class="wrapper mainWrapper">
+	<main class="mainContent">
 
 	<?php endif; // end ajax detection ?>
 
-		<main class="main"><?php // Pjax content wrapper element ?>
+		<!-- <main class="main"><?php // Pjax content wrapper element ?> -->

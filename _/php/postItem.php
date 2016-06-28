@@ -9,13 +9,30 @@
 **/
 
 // HTML for a post links - use inside the loop
-function template_post_item($type) {
+function template_post_item ($type = null) {
 
 	// detect the page type
 	if ( !isset($type) ) {
 		$type = 'list';
 		if ( is_single() ) $type = 'single';
 		elseif ( is_page() ) $type = 'page';
+	}
+
+	$postItemClasses = array();
+	switch ($type) {
+		case 'list':
+			$postItemClasses[] = 'post--list';
+			break;
+		case 'single':
+			$postItemClasses[] = 'post--single';
+			$postItemClasses[] = 'post--full';
+			break;
+		case 'page':
+			$postItemClasses[] = 'post--page';
+			$postItemClasses[] = 'post--full';
+			break;
+		default:
+			break;
 	}
 
 	?>
@@ -33,26 +50,30 @@ function template_post_item($type) {
 	<?php break; default: // marked 'standard'?>
 	<?php endswitch;?>
 
-	<article <?php post_class('postItem'); ?> id="post-<?php the_ID(); ?>">
+	<article <?php post_class($postItemClasses); ?> id="post-<?php the_ID(); ?>">
 
-		<h2 class="postItem__title">
-			<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-		</h2>
+		<header class="cover">
 
-		<?php posted_on(); ?>
+			<h2 class="cover__title">
+				<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+			</h2>
 
-		<figure class="postItem__hero">
-			<div class="postItem__heroTranslate">
-				<div class="postItem__heroWrapper">
-					<?php the_post_thumbnail('medium', array(
-						'class' => 'postItem__heroImg postItem__heroImg--blur'
-					) ); ?>
-					<?php the_post_thumbnail('medium', array(
-						'class' => 'postItem__heroImg postItem__heroImg--focus'
-					) ); ?>
+			<?php posted_on(); ?>
+
+			<figure class="cover__hero">
+				<div class="cover__heroTransform">
+					<div class="cover__heroWrapper">
+						<?php the_post_thumbnail('medium', array(
+							'class' => 'cover__heroImg postItem__cover--blur'
+						) ); ?>
+						<?php the_post_thumbnail('medium', array(
+							'class' => 'cover__heroImg postItem__cover--focus'
+						) ); ?>
+					</div>
 				</div>
-			</div>
-		</figure>
+			</figure>
+
+		</header>
 
 		<section class="excerpt">
 			<?php if ($type === 'list') the_excerpt(); ?>

@@ -7,6 +7,8 @@
 @import "-z-indices";
 @import "-vars";
 @import "-vars-sanitize";
+@import "-vars-parallax";
+*{transition: all 0.5s ease;}
 
 // ------------------------------------------------------------ LIBS
 @import "libs/sanitize";
@@ -19,9 +21,6 @@
 @import "-print-styles";
 
 // ------------------------------------------------------------ DEPENDENCIES
-@import "legacy-wpajax";
 @import "wp-css";
-@import "parallax";
 @import "structure";
 @import "cover";
-@import "postItem";

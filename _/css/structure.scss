@@ -12,7 +12,7 @@ html, body{
 
 $mainNavWIDTH: fib(13);
 $drawerWIDTH: 90%;
-$mainWrapperSCALE: 0.9;
+$mainContentSCALE: 0.9;
 $horzMARGIN: $bleed;
 $vertMARGIN: fib(11);
 
@@ -22,8 +22,8 @@ $vertMARGIN: fib(11);
 	height: 100%;
 }
 
-.mainWrapper{
-	z-index: index($z-of, mainWrapper);
+.mainContent{
+	z-index: index($z-of, mainContent);
 	@include parallaxContainer();
 	// perspective-origin: center center;
 	overflow-y: scroll;
@@ -38,8 +38,8 @@ $vertMARGIN: fib(11);
 	z-index: index($z-of, mainNav--opener);
 	@include fixed(0 null null 0);
 	&:checked {
-		~ .mainWrapper{
-			transform: translateX($drawerWIDTH) scale($mainWrapperSCALE);
+		~ .mainContent{
+			transform: translateX($drawerWIDTH) scale($mainContentSCALE);
 		}
 	}
 	&:not(:checked){
@@ -80,11 +80,17 @@ $vertMARGIN: fib(11);
 		@include parallaxContainer();
 		perspective-origin: calc( #{($drawerWIDTH / 2)} + #{($mainNavWIDTH / 2)} );
 	}
-	&--header{
+	&--aside{
 		z-index: index($z-of, postList--header);
 		// width: 100%;
 		padding-left: $mainNavWIDTH;
 		// padding-right: $horzMARGIN;
 	}
+}
 
+.post{
+	margin-bottom: 60px;
+	text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
+	color: white;
+	position: relative;
 }
