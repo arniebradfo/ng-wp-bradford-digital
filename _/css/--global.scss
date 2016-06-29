@@ -21,6 +21,6 @@
 @import "-print-styles";
 
 // ------------------------------------------------------------ DEPENDENCIES
-@import "wp-css";
-@import "structure";
+@import "structure"; // contains vars
 @import "cover";
+@import "wp-css";

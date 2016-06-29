@@ -437,19 +437,6 @@ blockquote, q {
 }
 
  */
-/* Required Wordpress CSS
--------------------------------------------------------------------------------*/
-/* http://codex.wordpress.org/CSS#WordPress_Generated_Classes */
-/* https://codex.wordpress.org/Content_Width#Adding_Theme_Support */
-.size-auto,
-.size-full,
-.size-large,
-.size-medium,
-.size-thumbnail {
-  max-width: 100%;
-  height: auto;
-}
-
 html, body {
   height: 100%;
   width: 100%;
@@ -602,12 +589,15 @@ html, body {
   left: 0;
 }
 .cover__title {
-  font-size: 34px;
   position: absolute;
   right: 0;
   bottom: 20%;
   left: 0;
-  padding: 0 55px;
+  padding: 0 34px;
+}
+.cover__title, .cover__title a {
+  display: block;
+  color: white;
 }
 
 .post--full .cover {
@@ -633,4 +623,36 @@ html, body {
 .post--full .cover__title {
   right: 21px;
   left: 21px;
+}
+
+.post--list .cover__title {
+  font-size: calc( 90vw - 322px );
+  line-height: 9%;
+}
+.post--list .cover__title a {
+  display: block;
+  font-size: 9%;
+  line-height: 1.2em;
+}
+.post--full .cover__title {
+  font-size: calc( 100vw - 68px );
+  line-height: 9%;
+}
+.post--full .cover__title a {
+  display: block;
+  font-size: 9%;
+  line-height: 1.2em;
+}
+
+/* Required Wordpress CSS
+-------------------------------------------------------------------------------*/
+/* http://codex.wordpress.org/CSS#WordPress_Generated_Classes */
+/* https://codex.wordpress.org/Content_Width#Adding_Theme_Support */
+.size-auto,
+.size-full,
+.size-large,
+.size-medium,
+.size-thumbnail {
+  max-width: 100%;
+  height: auto;
 }

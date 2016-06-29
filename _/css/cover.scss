@@ -1,6 +1,8 @@
 // cover.scss
 
 
+$textPADDING: fib(9);
+
 .cover{
 	height: 40vh;
 	width: 100%;
@@ -35,9 +37,13 @@
 		}
 	}
 	&__title{
-		font-size: fib(9);
 		@include absolute(null 0 20%);
-		padding: 0 fib(10);
+		padding: 0 $textPADDING;
+		&, & a{
+			display: block;
+			color: white;
+		}
+
 	}
 }
 
@@ -65,9 +71,37 @@
 	}
 }
 
-.post--list{ // posts in a list
-	.cover{
+// title font sizing
+// based on screen width
+.post{
+	$widthToFontSizePERCENTAGE: 9%;
+	// TODO: increase this width at smaller widths
+	&--list .cover__title{
+		$calcValue1: (strip-unit($drawerWIDTH) * 1vw);
+		$calcValue2: $textPADDING*2 + $horzMARGIN + $mainNavWIDTH;
+		font-size: calc( #{$calcValue1} - #{$calcValue2} );
+		line-height: $widthToFontSizePERCENTAGE;
+		a{
+			display: block;
+			font-size: $widthToFontSizePERCENTAGE;
+			line-height: 1.2em;
+		}
 	}
+	&--full .cover__title{
+		$calcValue1: 100vw;
+		$calcValue2: $textPADDING*2;
+		font-size: calc( #{$calcValue1} - #{$calcValue2} );
+		line-height: $widthToFontSizePERCENTAGE;
+		a{
+			display: block;
+			font-size: $widthToFontSizePERCENTAGE;
+			line-height: 1.2em;
+		}
+	}
+}
+
+.post--list{ // posts in a list
+	.cover{	}
 }
 
 .post--single{ // a post (not page) in full form

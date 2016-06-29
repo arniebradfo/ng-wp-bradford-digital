@@ -110,6 +110,10 @@ $bleed: fib(8);
 
 
 // --------------------------------------------------------------- STRIP UNIT
+/// Remove the unit of a length
+/// @param  {Number} $number - Number to remove unit from
+/// @return {Number} - Unitless number
+/// @link   https://css-tricks.com/snippets/sass/strip-unit-function/
 @function strip-unit($number) {
   @if type-of($number) == 'number' and not unitless($number) {
     @return $number / ($number * 0 + 1);

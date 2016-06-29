@@ -4,6 +4,7 @@
  */
 
 (function (document, window) {
+	// explination
 
 	var transition = function (e) {
 		// this.classList.add('growJS');
