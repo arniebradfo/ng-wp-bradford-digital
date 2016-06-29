@@ -556,13 +556,13 @@ html, body {
   position: relative;
 }
 
-.cover__hero {
+.cover {
   height: 40vh;
   width: 100%;
   position: relative;
   z-index: -1;
 }
-.cover__heroTransform {
+.cover__hero {
   transform: translateZ(-0.05px) scale(1.05);
   z-index: -50;
   position: absolute;
@@ -604,4 +604,33 @@ html, body {
 .cover__title {
   font-size: 34px;
   position: absolute;
+  right: 0;
+  bottom: 20%;
+  left: 0;
+  padding: 0 55px;
+}
+
+.post--full .cover {
+  transform: translateZ(-1px) scale(2);
+  z-index: -1000;
+  height: calc(100vh + 21px);
+  width: 100%;
+  position: relative;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  overflow: hidden;
+}
+.post--full .cover__hero {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+}
+.post--full .cover__title {
+  right: 21px;
+  left: 21px;
 }

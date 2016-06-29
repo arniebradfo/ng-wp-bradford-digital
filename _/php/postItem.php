@@ -58,18 +58,16 @@ function template_post_item ($type = null) {
 				<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
 			</h2>
 
-			<?php posted_on(); ?>
+			<?php // posted_on(); ?>
 
 			<figure class="cover__hero">
-				<div class="cover__heroTransform">
-					<div class="cover__heroWrapper">
-						<?php the_post_thumbnail('medium', array(
-							'class' => 'cover__heroImg postItem__cover--blur'
-						) ); ?>
-						<?php the_post_thumbnail('medium', array(
-							'class' => 'cover__heroImg postItem__cover--focus'
-						) ); ?>
-					</div>
+				<div class="cover__heroWrapper">
+					<?php if ($type === 'single' || $type === 'page')
+						the_post_thumbnail('full', array( 'class' => 'cover__heroImg postItem__cover--full' ) ); ?>
+					<?php if ($type === 'list')
+						the_post_thumbnail('medium', array( 'class' => 'cover__heroImg postItem__cover--blur' ) ); ?>
+					<?php if ($type === 'list')
+						the_post_thumbnail('medium', array( 'class' => 'cover__heroImg postItem__cover--focus' ) ); ?>
 				</div>
 			</figure>
 
