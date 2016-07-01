@@ -14,6 +14,7 @@ $textPADDING: fib(9);
 		height: 100%;
 		width: 100%;
 		&Wrapper{
+			display: block;
 			box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.5);
 			overflow: hidden;
 			height: 100%;
@@ -67,51 +68,52 @@ $textPADDING: fib(9);
 		&__title{
 			right: $bleed;
 			left:  $bleed;
-		}
-	}
-}
-
-// title font sizing
-// based on screen width
-.post{
-	$widthToFontSizePERCENTAGE: 9%;
-	// TODO: increase this width at smaller widths
-	&--list .cover__title{
-		$calcValue1: (strip-unit($drawerWIDTH) * 1vw);
-		$calcValue2: $textPADDING*2 + $horzMARGIN + $mainNavWIDTH;
-		font-size: calc( #{$calcValue1} - #{$calcValue2} );
-		line-height: $widthToFontSizePERCENTAGE;
-		a{
-			display: block;
-			font-size: $widthToFontSizePERCENTAGE;
-			line-height: 1.2em;
-		}
-	}
-	&--full .cover__title{
-		$calcValue1: 100vw;
-		$calcValue2: $textPADDING*2;
-		font-size: calc( #{$calcValue1} - #{$calcValue2} );
-		line-height: $widthToFontSizePERCENTAGE;
-		a{
-			display: block;
-			font-size: $widthToFontSizePERCENTAGE;
-			line-height: 1.2em;
+			font-size: fib(10);
 		}
 	}
 }
 
 .post--list{ // posts in a list
-	.cover{	}
+	.cover{
+		&__title{
+			font-size: fib(9);
+		}
+	}
 }
 
 .post--single{ // a post (not page) in full form
-	.cover{
-
-	}
+	.cover{ }
 }
 
 .post--page{ // a page (not post) in full form
-	.cover{
+	.cover{ }
+}
 
-	}
+// title font sizing
+// based on screen width
+.post{
+	// $widthToFontSizePERCENTAGE: 9%;
+	// // TODO: increase this width at smaller widths
+	// &--list .cover__title{
+	// 	$calcValue1: (strip-unit($drawerWIDTH) * 1vw);
+	// 	$calcValue2: $textPADDING*2 + $horzMARGIN + $mainNavWIDTH;
+	// 	font-size: calc( #{$calcValue1} - #{$calcValue2} );
+	// 	line-height: $widthToFontSizePERCENTAGE;
+	// 	a{
+	// 		display: block;
+	// 		font-size: $widthToFontSizePERCENTAGE;
+	// 		line-height: 1.2em;
+	// 	}
+	// }
+	// &--full .cover__title{
+	// 	$calcValue1: 100vw;
+	// 	$calcValue2: $textPADDING*2;
+	// 	font-size: calc( #{$calcValue1} - #{$calcValue2} );
+	// 	line-height: $widthToFontSizePERCENTAGE;
+	// 	a{
+	// 		display: block;
+	// 		font-size: $widthToFontSizePERCENTAGE;
+	// 		line-height: 1.2em;
+	// 	}
+	// }
 }

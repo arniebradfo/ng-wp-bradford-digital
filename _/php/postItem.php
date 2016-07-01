@@ -22,6 +22,7 @@ function template_post_item ($type = null) {
 	switch ($type) {
 		case 'list':
 			$postItemClasses[] = 'post--list';
+			$postItemClasses[] = 'post--postExpandJS'; // for postExpand.js
 			break;
 		case 'single':
 			$postItemClasses[] = 'post--single';
@@ -61,14 +62,14 @@ function template_post_item ($type = null) {
 			<?php // posted_on(); ?>
 
 			<figure class="cover__hero">
-				<div class="cover__heroWrapper">
+				<a class="cover__heroWrapper" href="<?php the_permalink(); ?>" >
 					<?php if ($type === 'single' || $type === 'page')
 						the_post_thumbnail('full', array( 'class' => 'cover__heroImg postItem__cover--full' ) ); ?>
 					<?php if ($type === 'list')
 						the_post_thumbnail('medium', array( 'class' => 'cover__heroImg postItem__cover--blur' ) ); ?>
 					<?php if ($type === 'list')
 						the_post_thumbnail('medium', array( 'class' => 'cover__heroImg postItem__cover--focus' ) ); ?>
-				</div>
+				</a>
 			</figure>
 
 		</header>

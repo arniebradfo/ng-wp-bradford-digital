@@ -38,7 +38,7 @@ $vertMARGIN: fib(11);
 	z-index: index($z-of, mainNav--opener);
 	@include fixed(0 null null 0);
 	&:checked {
-		~ .mainContent{
+		~ .mainContent--active{
 			transform: translateX($drawerWIDTH) scale($mainContentSCALE);
 		}
 	}

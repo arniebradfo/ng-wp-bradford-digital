@@ -108,7 +108,7 @@
 		</section>
 	</aside>
 
-	<main class="mainContent">
+	<main class="mainContent mainContent--active">
 
 	<?php endif; // end ajax detection ?>
 
