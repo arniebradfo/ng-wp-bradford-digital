@@ -53,24 +53,34 @@
 		};
 		this.invert = function () {
 			// apply INVERT css to mutate node back to its original state
+			var scaleWIDTH = this.hero.rectFirst.width / this.hero.rectLast.width;
+			this.hero.node.style.transform = 'scale(' + scaleWIDTH + ')';
+			this.hero.node.style.transition = 'color';
 		};
 		this.play = function () {
 			// switch on transitions
+			this.hero.node.style.transition = '';
 			// remove INVERT css to PLAY the transitions
+			this.hero.node.style.transform = '';
 		};
 	}
 
 	var postExpand = function (e) {
 		e.preventDefault();
 
-		var post = this;
-		var postExpand = new PostExpand_FLIP(e, post);
+		var postExpand = new PostExpand_FLIP(e, this);
 
 		postExpand.first();
 
 		postExpand.mutate();
 
 		postExpand.last();
+
+		postExpand.invert();
+
+		window.requestAnimationFrame(function () {
+			postExpand.play();
+		});
 
 		// console.log(postExpand);
 		// var windowBox = {
