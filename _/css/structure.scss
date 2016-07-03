@@ -27,7 +27,7 @@ $vertMARGIN: fib(11);
 	@include parallaxContainer();
 	// perspective-origin: center center;
 	overflow-y: scroll;
-	overflow-x: hidden;
+	overflow-x: visible; // does this do anything?
 	margin: (-$vertMARGIN) (-$horzMARGIN);
 	padding: ($vertMARGIN - $horzMARGIN)  0;
 	@include fixed(0);

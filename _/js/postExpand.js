@@ -14,6 +14,7 @@
 		console.dir(this); // for debugging
 		this.e = e;
 		this.post = post;
+		var self = this;
 
 		this.elements = {
 			hero: 'cover__hero',
@@ -24,19 +25,21 @@
 		}
 		this.mutate = function () {
 			// mutate node
-			var main = document.getElementsByClassName('mainContent')[0];
-			var mainClone = main.cloneNode(true);
-			// var postClone = post.cloneNode(true);
-			mainClone.replaceChild(this.post, mainClone.getElementsByClassName('post')[0]);
-			mainClone.classList.remove('mainContent--active');
+			this.main = document.getElementsByClassName('mainContent')[0];
+			this.mainClone = this.main.cloneNode(true);
+			this.postClone = this.post.cloneNode(true);
+			this.post.parentNode.insertBefore(this.postClone, this.post.nextSibling); // insert after
+			// this.postClone.style.visibility = 'hidden';
+			this.mainClone.replaceChild(this.post, this.mainClone.getElementsByClassName('post')[0]);
+			this.mainClone.classList.remove('mainContent--active');
 			this.post.classList.remove('post--list');
 
 			// apply classes / force synchrynous layout.
 			this.post.classList.add('post--full');
-			document.body.appendChild(mainClone);
-			document.body.removeChild(main);
+			document.body.appendChild(this.mainClone);
+			document.body.removeChild(this.main);
 			document.getElementById('mainNav--opener').checked = false;
-			mainClone.classList.add('mainContent--active');
+			this.mainClone.classList.add('mainContent--active');
 		};
 		this.collectRects = function (state) {
 			for (var key in this.elements) {
@@ -49,35 +52,46 @@
 		};
 		this.last = function () {
 			// collect dimensions of LAST state
+			this.mutate();
 			this.collectRects('rectLast');
 		};
 		this.invert = function () {
 			// apply INVERT css to mutate node back to its original state
-			var scaleWIDTH = this.hero.rectFirst.width / this.hero.rectLast.width;
-			this.hero.node.style.transform = 'scale(' + scaleWIDTH + ')';
-			this.hero.node.style.transition = 'color';
+			var transform = 'translateZ(0) ';
+			var offsetX = (this.hero.rectFirst.left + (this.hero.rectFirst.width / 2)) - (this.hero.rectLast.left + (this.hero.rectLast.width / 2));
+			transform += 'translateX(' + offsetX + 'px) ';
+			var offsetY = (this.hero.rectFirst.top + (this.hero.rectFirst.height / 2)) - (this.hero.rectLast.top + (this.hero.rectLast.height / 2));
+			transform += 'translateY(' + offsetY + 'px) ';
+			var scaleX = this.hero.rectFirst.width / (this.hero.rectLast.width);
+			transform += 'scaleX(' + scaleX + ') ';
+			var scaleY = this.hero.rectFirst.height / this.hero.rectLast.height;
+			transform += 'scaleY(' + scaleY + ') ';
+			this.hero.node.style.transform = transform;
+			// this.hero.node.style.transformOrigin = '50% 50%'; // just in case
+			this.hero.node.style.transition = 'color'; // to break it
 		};
 		this.play = function () {
 			// switch on transitions
 			this.hero.node.style.transition = '';
 			// remove INVERT css to PLAY the transitions
 			this.hero.node.style.transform = '';
+			var transitionEvent = window.whichTransitionEvent();
+			this.hero.node.addEventListener(transitionEvent, this.cleanup, false);
+		};
+		this.cleanup = function (e) {
+			// use self
+			e.target.removeEventListener(e.type, self.cleanup);
 		};
 	}
 
 	var postExpand = function (e) {
 		e.preventDefault();
 
+		// FLIP animation
 		var postExpand = new PostExpand_FLIP(e, this);
-
 		postExpand.first();
-
-		postExpand.mutate();
-
 		postExpand.last();
-
 		postExpand.invert();
-
 		window.requestAnimationFrame(function () {
 			postExpand.play();
 		});

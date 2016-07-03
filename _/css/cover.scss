@@ -2,6 +2,7 @@
 
 
 $textPADDING: fib(9);
+$boxShadow: 0px 0px 10px 1px rgba(0,0,0,0.5);
 
 .cover{
 	height: 40vh;
@@ -15,7 +16,7 @@ $textPADDING: fib(9);
 		width: 100%;
 		&Wrapper{
 			display: block;
-			box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.5);
+			box-shadow: $boxShadow;
 			overflow: hidden;
 			height: 100%;
 			width: 100%;
@@ -49,21 +50,23 @@ $textPADDING: fib(9);
 }
 
 .post--full{ // a page or post in full form
+	box-shadow: $boxShadow;
+	border-radius: $borderRADIUS;
 	.cover{
-		@include parallax(-1);
-		// transform-origin: 50vw 50vh;
 		height: calc(100vh + #{$bleed});
 		width: 100%;
 		// max-width: 100vw;
-		position: relative;
-		border-top-left-radius:  $borderRADIUS;
-		border-top-right-radius: $borderRADIUS;
-		overflow: hidden;
+		// position: relative;
+		// border-radius: $borderRADIUS;
+		// overflow: hidden;
 		&__hero{
-			@include absolute(0);
-			object-fit: cover;
-			height: 100%;
-			width: 100%;
+			&Wrapper{
+				box-shadow: none;
+			}
+			// @include absolute(0);
+			// object-fit: cover;
+			// height: 100%;
+			// width: 100%;
 		}
 		&__title{
 			right: $bleed;
