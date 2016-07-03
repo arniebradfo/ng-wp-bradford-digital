@@ -99,7 +99,7 @@ $boxShadow: 0px 0px 10px 1px rgba(0,0,0,0.5);
 // title font sizing
 // based on screen width
 .post{
-	$widthToFontSizePERCENTAGE: 9%;
+	$widthToFontSizePERCENTAGE: 6%;
 	// TODO: increase this width at smaller widths
 	&--list .cover__title{
 		$calcValue1: (strip-unit($drawerWIDTH) * 1vw);

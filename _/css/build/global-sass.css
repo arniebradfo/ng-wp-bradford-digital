@@ -461,7 +461,7 @@ html, body {
   transform: translateZ(0);
   -webkit-overflow-scrolling: touch;
   overflow-y: scroll;
-  overflow-x: visible;
+  overflow-x: hidden;
   margin: -89px -21px;
   padding: 68px 0;
   position: fixed;
@@ -623,20 +623,20 @@ html, body {
 
 .post--list .cover__title {
   font-size: calc( 90vw - 322px );
-  line-height: 9%;
+  line-height: 6%;
 }
 .post--list .cover__title a {
   display: block;
-  font-size: 9%;
+  font-size: 6%;
   line-height: 1.2em;
 }
 .post--full .cover__title {
   font-size: calc( 100vw - 68px );
-  line-height: 9%;
+  line-height: 6%;
 }
 .post--full .cover__title a {
   display: block;
-  font-size: 9%;
+  font-size: 6%;
   line-height: 1.2em;
 }
 
