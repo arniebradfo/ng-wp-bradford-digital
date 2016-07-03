@@ -60,6 +60,7 @@ $boxShadow: 0px 0px 10px 1px rgba(0,0,0,0.5);
 		// border-radius: $borderRADIUS;
 		// overflow: hidden;
 		&__hero{
+			@include parallax(-1);
 			&Wrapper{
 				box-shadow: none;
 			}
@@ -69,6 +70,9 @@ $boxShadow: 0px 0px 10px 1px rgba(0,0,0,0.5);
 			// width: 100%;
 		}
 		&__title{
+			&Link{
+				// @include parallax(-0.5);
+			}
 			right: $bleed;
 			left:  $bleed;
 			font-size: fib(10);
@@ -95,28 +99,28 @@ $boxShadow: 0px 0px 10px 1px rgba(0,0,0,0.5);
 // title font sizing
 // based on screen width
 .post{
-	// $widthToFontSizePERCENTAGE: 9%;
-	// // TODO: increase this width at smaller widths
-	// &--list .cover__title{
-	// 	$calcValue1: (strip-unit($drawerWIDTH) * 1vw);
-	// 	$calcValue2: $textPADDING*2 + $horzMARGIN + $mainNavWIDTH;
-	// 	font-size: calc( #{$calcValue1} - #{$calcValue2} );
-	// 	line-height: $widthToFontSizePERCENTAGE;
-	// 	a{
-	// 		display: block;
-	// 		font-size: $widthToFontSizePERCENTAGE;
-	// 		line-height: 1.2em;
-	// 	}
-	// }
-	// &--full .cover__title{
-	// 	$calcValue1: 100vw;
-	// 	$calcValue2: $textPADDING*2;
-	// 	font-size: calc( #{$calcValue1} - #{$calcValue2} );
-	// 	line-height: $widthToFontSizePERCENTAGE;
-	// 	a{
-	// 		display: block;
-	// 		font-size: $widthToFontSizePERCENTAGE;
-	// 		line-height: 1.2em;
-	// 	}
-	// }
+	$widthToFontSizePERCENTAGE: 9%;
+	// TODO: increase this width at smaller widths
+	&--list .cover__title{
+		$calcValue1: (strip-unit($drawerWIDTH) * 1vw);
+		$calcValue2: $textPADDING*2 + $horzMARGIN + $mainNavWIDTH;
+		font-size: calc( #{$calcValue1} - #{$calcValue2} );
+		line-height: $widthToFontSizePERCENTAGE;
+		a{
+			display: block;
+			font-size: $widthToFontSizePERCENTAGE;
+			line-height: 1.2em;
+		}
+	}
+	&--full .cover__title{
+		$calcValue1: 100vw;
+		$calcValue2: $textPADDING*2;
+		font-size: calc( #{$calcValue1} - #{$calcValue2} );
+		line-height: $widthToFontSizePERCENTAGE;
+		a{
+			display: block;
+			font-size: $widthToFontSizePERCENTAGE;
+			line-height: 1.2em;
+		}
+	}
 }

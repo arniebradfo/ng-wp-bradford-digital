@@ -4,7 +4,7 @@
  */
 
 (function (document, window) {
-	// explination
+	'use strict';
 
 	/**
      * FLIP!
@@ -18,7 +18,7 @@
 
 		this.elements = {
 			hero: 'cover__hero',
-			title: 'cover__title'
+			title: 'cover__titleLink'
 		};
 		for (var key in this.elements) {
 			this[key] = { node: this.post.getElementsByClassName(this.elements[key])[0] };
@@ -34,7 +34,7 @@
 			this.mainClone.classList.remove('mainContent--active');
 			this.post.classList.remove('post--list');
 
-			// apply classes / force synchrynous layout.
+			// apply classes and styles
 			this.post.classList.add('post--full');
 			document.body.appendChild(this.mainClone);
 			document.body.removeChild(this.main);
@@ -46,35 +46,68 @@
 				this[key][state] = this[key].node.getBoundingClientRect();
 			}
 		};
+		this.collectComputedStyles = function (state) {
+			for (var key in this.elements) {
+				this[key][state] = window.getComputedStyle(this[key].node);
+			}
+		};
 		this.first = function () {
 			// collect dimensions of FIRST state
 			this.collectRects('rectFirst');
+			this.collectComputedStyles('styleFirst');
 		};
 		this.last = function () {
 			// collect dimensions of LAST state
 			this.mutate();
 			this.collectRects('rectLast');
+			this.collectComputedStyles('styleLast');
 		};
 		this.invert = function () {
 			// apply INVERT css to mutate node back to its original state
-			var transform = 'translateZ(0) ';
-			var offsetX = (this.hero.rectFirst.left + (this.hero.rectFirst.width / 2)) - (this.hero.rectLast.left + (this.hero.rectLast.width / 2));
-			transform += 'translateX(' + offsetX + 'px) ';
-			var offsetY = (this.hero.rectFirst.top + (this.hero.rectFirst.height / 2)) - (this.hero.rectLast.top + (this.hero.rectLast.height / 2));
-			transform += 'translateY(' + offsetY + 'px) ';
-			var scaleX = this.hero.rectFirst.width / (this.hero.rectLast.width);
-			transform += 'scaleX(' + scaleX + ') ';
-			var scaleY = this.hero.rectFirst.height / this.hero.rectLast.height;
-			transform += 'scaleY(' + scaleY + ') ';
-			this.hero.node.style.transform = transform;
-			// this.hero.node.style.transformOrigin = '50% 50%'; // just in case
-			this.hero.node.style.transition = 'color'; // to break it
+
+			// HERO
+			var hero_transform = 'translateZ(0) ';
+			var hero_translateX = (this.hero.rectFirst.left + (this.hero.rectFirst.width / 2)) - (this.hero.rectLast.left + (this.hero.rectLast.width / 2));
+			hero_transform += 'translateX(' + hero_translateX + 'px) ';
+			var hero_translateY = (this.hero.rectFirst.top + (this.hero.rectFirst.height / 2)) - (this.hero.rectLast.top + (this.hero.rectLast.height / 2));
+			hero_transform += 'translateY(' + hero_translateY + 'px) ';
+			var hero_scaleX = this.hero.rectFirst.width / this.hero.rectLast.width;
+			hero_transform += 'scaleX(' + hero_scaleX + ') ';
+			var hero_scaleY = this.hero.rectFirst.height / this.hero.rectLast.height;
+			hero_transform += 'scaleY(' + hero_scaleY + ') ';
+			this.hero.node.style.transform = hero_transform;
+			this.hero.node.style.transformOrigin = '50% 50%'; // just in case
+			this.hero.node.style.transition = 'none'; // to break it
+
+			// TITAL
+			this.title.node.style.transformOrigin = '0 0';
+			var title_transform = 'translateZ(0) ';
+			var title_translateX = this.title.rectFirst.left - this.title.rectLast.left;
+			title_transform += 'translateX(' + title_translateX + 'px) ';
+			var title_translateY = this.title.rectFirst.top - this.title.rectLast.top;
+			title_transform += 'translateY(' + title_translateY + 'px) ';
+			var title_scale = this.title.rectFirst.height / this.title.rectLast.height;
+			title_transform += 'scale(' + title_scale + ') ';
+			// var title_lineCountFirst = Math.round(parseFloat(this.title.styleFirst.height) / parseFloat(this.title.styleFirst.lineHeight));
+			// var title_lineCountLast = Math.round(parseFloat(this.title.styleLast.height) / parseFloat(this.title.styleLast.lineHeight));
+			// console.log(title_lineCountFirst);
+			// console.log(title_lineCountLast);
+			// if (title_lineCountFirst !== title_lineCountLast) {
+			// }
+			this.title.node.style.transform = title_transform;
+			this.title.node.style.transition = 'none'; // to break it
+
+			// this.post.style.opacity = 0.5; // for debugging
 		};
 		this.play = function () {
 			// switch on transitions
 			this.hero.node.style.transition = '';
+			this.title.node.style.transition = '';
+
 			// remove INVERT css to PLAY the transitions
 			this.hero.node.style.transform = '';
+			this.title.node.style.transform = '';
+
 			var transitionEvent = window.whichTransitionEvent();
 			this.hero.node.addEventListener(transitionEvent, this.cleanup, false);
 		};

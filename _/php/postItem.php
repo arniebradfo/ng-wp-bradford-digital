@@ -56,7 +56,7 @@ function template_post_item ($type = null) {
 		<header class="cover">
 
 			<h2 class="cover__title">
-				<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+				<a class="cover__titleLink" href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
 			</h2>
 
 			<?php // posted_on(); ?>
