@@ -18,7 +18,9 @@
 
 		this.elements = {
 			hero: 'cover__hero',
-			title: 'cover__titleLink'
+			title: 'cover__titleLink',
+			imgList: 'cover__heroImg--list',
+			imgBlur: 'cover__heroImg--blur'
 		};
 		for (var key in this.elements) {
 			this[key] = { node: this.post.getElementsByClassName(this.elements[key])[0] };
@@ -54,13 +56,13 @@
 		this.first = function () {
 			// collect dimensions of FIRST state
 			this.collectRects('rectFirst');
-			this.collectComputedStyles('styleFirst');
+			// this.collectComputedStyles('styleFirst');
 		};
 		this.last = function () {
 			// collect dimensions of LAST state
 			this.mutate();
 			this.collectRects('rectLast');
-			this.collectComputedStyles('styleLast');
+			// this.collectComputedStyles('styleLast');
 		};
 		this.invert = function () {
 			// apply INVERT css to mutate node back to its original state
@@ -79,7 +81,7 @@
 			this.hero.node.style.transformOrigin = '50% 50%'; // just in case
 			this.hero.node.style.transition = 'none'; // to break it
 
-			// TITAL
+			// TITLE
 			this.title.node.style.transformOrigin = '0 0';
 			var title_transform = 'translateZ(0) ';
 			var title_translateX = this.title.rectFirst.left - this.title.rectLast.left;
@@ -92,10 +94,27 @@
 			// var title_lineCountLast = Math.round(parseFloat(this.title.styleLast.height) / parseFloat(this.title.styleLast.lineHeight));
 			// console.log(title_lineCountFirst);
 			// console.log(title_lineCountLast);
-			// if (title_lineCountFirst !== title_lineCountLast) {
-			// }
+			// if (title_lineCountFirst !== title_lineCountLast) { }
 			this.title.node.style.transform = title_transform;
 			this.title.node.style.transition = 'none'; // to break it
+
+			// IMG--LIST
+			var imgList_transform = '';
+			var hero_ratioFirst = this.hero.rectFirst.width / this.hero.rectFirst.height;
+			var hero_ratioLast = this.hero.rectLast.width / this.hero.rectLast.height;
+			// var imgList_ratio = this.imgList.node.naturalWidth / this.imgList.node.naturalHeight;
+			if (hero_ratioFirst > hero_ratioLast) { // First is wider
+				this.imgList.node.style.height = 'auto';
+				this.imgList.node.style.top = '50%';
+				imgList_transform += 'translateY(-50%)';
+				var imgList_scaleY = (this.hero.rectFirst.width * this.hero.rectLast.height) / (this.hero.rectFirst.height * this.hero.rectLast.width);
+				imgList_transform += 'scaleY(' + imgList_scaleY + ')';
+			} else { // Last is wider
+				console.log('that');
+			}
+			this.imgList.node.style.transform = imgList_transform;
+
+			// IMG--BLUR
 
 			// this.post.style.opacity = 0.5; // for debugging
 		};
@@ -103,10 +122,13 @@
 			// switch on transitions
 			this.hero.node.style.transition = '';
 			this.title.node.style.transition = '';
+			this.imgBlur.node.style.transition = this.imgList.node.style.transition = 'opacity .25s ease-out';
 
 			// remove INVERT css to PLAY the transitions
 			this.hero.node.style.transform = '';
 			this.title.node.style.transform = '';
+			this.imgList.node.style.opacity = 0;
+			this.imgBlur.node.style.opacity = 0.6;
 
 			var transitionEvent = window.whichTransitionEvent();
 			this.hero.node.addEventListener(transitionEvent, this.cleanup, false);

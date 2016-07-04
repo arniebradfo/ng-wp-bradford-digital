@@ -64,11 +64,11 @@ function template_post_item ($type = null) {
 			<figure class="cover__hero">
 				<a class="cover__heroWrapper" href="<?php the_permalink(); ?>" >
 					<?php if ($type === 'single' || $type === 'page')
-						the_post_thumbnail('full', array( 'class' => 'cover__heroImg postItem__cover--full' ) ); ?>
+						the_post_thumbnail('full', array( 'class' => 'cover__heroImg cover__heroImg--full' ) ); ?>
 					<?php if ($type === 'list')
-						the_post_thumbnail('medium', array( 'class' => 'cover__heroImg postItem__cover--blur' ) ); ?>
+						the_post_thumbnail('medium', array( 'class' => 'cover__heroImg cover__heroImg--blur' ) ); ?>
 					<?php if ($type === 'list')
-						the_post_thumbnail('medium', array( 'class' => 'cover__heroImg postItem__cover--focus' ) ); ?>
+						the_post_thumbnail('medium', array( 'class' => 'cover__heroImg cover__heroImg--list' ) ); ?>
 				</a>
 			</figure>
 

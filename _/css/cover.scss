@@ -29,13 +29,15 @@ $boxShadow: 0px 0px 10px 1px rgba(0,0,0,0.5);
 			display: block;
 			width: 100%;
 			height: 100%;
+			opacity: 0.7;
+			@include transition(opacity);
+			@include absolute(0);
 			&--blur{
-				filter: blur(10px);
+				filter: blur(6px);
+				opacity: 0;
 			}
-			&--focus{
-				@include transition(opacity);
-				@include absolute(0);
-			}
+			&--list{ }
+			&--full{ }
 		}
 	}
 	&__title{
