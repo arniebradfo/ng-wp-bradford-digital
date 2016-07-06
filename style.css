@@ -559,6 +559,7 @@ html, body {
   left: 0;
   height: 100%;
   width: 100%;
+  transition-timing-function: cubic-bezier(0.3, 0, 0.34, 1);
 }
 .cover__heroWrapper {
   display: block;

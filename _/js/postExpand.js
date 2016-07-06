@@ -99,22 +99,27 @@
 			this.title.node.style.transition = 'none'; // to break it
 
 			// IMG--LIST
-			var imgList_transform = '';
-			var hero_ratioFirst = this.hero.rectFirst.width / this.hero.rectFirst.height;
-			var hero_ratioLast = this.hero.rectLast.width / this.hero.rectLast.height;
-			// var imgList_ratio = this.imgList.node.naturalWidth / this.imgList.node.naturalHeight;
-			if (hero_ratioFirst > hero_ratioLast) { // First is wider
-				this.imgList.node.style.height = 'auto';
-				this.imgList.node.style.top = '50%';
-				imgList_transform += 'translateY(-50%)';
-				var imgList_scaleY = (this.hero.rectFirst.width * this.hero.rectLast.height) / (this.hero.rectFirst.height * this.hero.rectLast.width);
-				imgList_transform += 'scaleY(' + imgList_scaleY + ')';
-			} else { // Last is wider
-				console.log('that');
-			}
-			this.imgList.node.style.transform = imgList_transform;
+			// var imgBlur_transform = '';
+			// var hero_ratioFirst = this.hero.rectFirst.width / this.hero.rectFirst.height;
+			// var hero_ratioLast = this.hero.rectLast.width / this.hero.rectLast.height;
+			// // var imgBlur_ratio = this.imgBlur.node.naturalWidth / this.imgBlur.node.naturalHeight;
+			// if (hero_ratioFirst > hero_ratioLast) { // First is wider
+			// 	// this.imgBlur.node.style.height = 'auto';
+			// 	this.imgBlur.node.style.objectFit = 'initial';
+			// 	this.imgBlur.node.style.transformOrigin = '50% 50%';
+			// 	// this.imgBlur.node.style.top = '50%';
+			// 	// imgBlur_transform += 'translateY(-50%)';
+			// 	var imgBlur_scaleY = (this.hero.rectFirst.width * this.hero.rectLast.height) / (this.hero.rectFirst.height * this.hero.rectLast.width);
+			// 	imgBlur_transform += 'scaleY(' + imgBlur_scaleY + ')';
+			// } else { // Last is wider
+			// 	console.log('that');
+			// }
+			// this.imgBlur.node.style.transform = imgBlur_transform;
+			this.imgBlur.node.style.transition = this.imgList.node.style.transition = 'none';
 
 			// IMG--BLUR
+			this.imgList.node.style.opacity = 0;
+			this.imgBlur.node.style.opacity = 0.6;
 
 			// this.post.style.opacity = 0.5; // for debugging
 		};
@@ -122,13 +127,13 @@
 			// switch on transitions
 			this.hero.node.style.transition = '';
 			this.title.node.style.transition = '';
-			this.imgBlur.node.style.transition = this.imgList.node.style.transition = 'opacity .25s ease-out';
+			this.imgBlur.node.style.transition = '';
+			// this.imgBlur.node.style.transition = this.imgList.node.style.transition = 'opacity .25s ease-out';
 
 			// remove INVERT css to PLAY the transitions
 			this.hero.node.style.transform = '';
 			this.title.node.style.transform = '';
-			this.imgList.node.style.opacity = 0;
-			this.imgBlur.node.style.opacity = 0.6;
+			this.imgBlur.node.style.transform = '';
 
 			var transitionEvent = window.whichTransitionEvent();
 			this.hero.node.addEventListener(transitionEvent, this.cleanup, false);
@@ -150,18 +155,6 @@
 		window.requestAnimationFrame(function () {
 			postExpand.play();
 		});
-
-		// console.log(postExpand);
-		// var windowBox = {
-		// 	height: window.innerHeight,
-		// 	width: window.innerWidth
-		// };
-		// var scaleY = windowBox.height / rect.height;
-		// var scaleX = windowBox.width / rect.width;
-		// var translateX = (windowBox.width / 2) - (rect.left + rect.width / 2);
-		// var translateY = (windowBox.height / 2) - (rect.top + rect.height / 2);
-		// this.getElementsByClassName('postItem__heroTranslate')[0].style.transform = 'translate(' + translateX + 'px,' + translateY + 'px) scale(' + scaleX + ',' + scaleY + ')';
-		// this.getElementsByClassName('postItem__heroImg--focus')[0].style.opacity = '0';
 	};
 
 	var initalize = function () {
