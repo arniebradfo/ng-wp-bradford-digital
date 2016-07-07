@@ -90,6 +90,7 @@
 			title_transform += 'translateY(' + title_translateY + 'px) ';
 			var title_scale = this.title.rectFirst.height / this.title.rectLast.height;
 			title_transform += 'scale(' + title_scale + ') ';
+			// TODO: count lines
 			// var title_lineCountFirst = Math.round(parseFloat(this.title.styleFirst.height) / parseFloat(this.title.styleFirst.lineHeight));
 			// var title_lineCountLast = Math.round(parseFloat(this.title.styleLast.height) / parseFloat(this.title.styleLast.lineHeight));
 			// console.log(title_lineCountFirst);
@@ -98,26 +99,7 @@
 			this.title.node.style.transform = title_transform;
 			this.title.node.style.transition = 'none'; // to break it
 
-			// IMG--LIST
-			// var imgBlur_transform = '';
-			// var hero_ratioFirst = this.hero.rectFirst.width / this.hero.rectFirst.height;
-			// var hero_ratioLast = this.hero.rectLast.width / this.hero.rectLast.height;
-			// // var imgBlur_ratio = this.imgBlur.node.naturalWidth / this.imgBlur.node.naturalHeight;
-			// if (hero_ratioFirst > hero_ratioLast) { // First is wider
-			// 	// this.imgBlur.node.style.height = 'auto';
-			// 	this.imgBlur.node.style.objectFit = 'initial';
-			// 	this.imgBlur.node.style.transformOrigin = '50% 50%';
-			// 	// this.imgBlur.node.style.top = '50%';
-			// 	// imgBlur_transform += 'translateY(-50%)';
-			// 	var imgBlur_scaleY = (this.hero.rectFirst.width * this.hero.rectLast.height) / (this.hero.rectFirst.height * this.hero.rectLast.width);
-			// 	imgBlur_transform += 'scaleY(' + imgBlur_scaleY + ')';
-			// } else { // Last is wider
-			// 	console.log('that');
-			// }
-			// this.imgBlur.node.style.transform = imgBlur_transform;
-			// this.imgBlur.node.style.transition = this.imgList.node.style.transition = 'none';
-
-			// IMG--BLUR
+			// IMG--BLUR TODO: trim this to a single image?
 			this.imgList.node.style.opacity = 0;
 			this.imgBlur.node.style.opacity = 0.6;
 
@@ -125,30 +107,16 @@
 		};
 		this.playStart = null;
 		this.play = function (playStart) {
-			// if (!this.playStart) this.playStart = playStart;
-			//
-			// // if this is called in the same frame as it was queued, try again.
-			// if (this.playStart === playStart) {
-			// 	var self = this;
-			// 	window.requestAnimationFrame(function (timestamp) {
-			// 		self.play(timestamp);
-			// 	});
-			// 	return;
-			// }
-
 			// switch on transitions
 			this.hero.node.style.transition = '';
 			this.title.node.style.transition = '';
-			// this.imgBlur.node.style.transition = '';
-			// this.imgBlur.node.style.transition = this.imgList.node.style.transition = 'opacity .25s ease-out';
 
 			// remove INVERT css to PLAY the transitions
 			this.hero.node.style.transform = '';
 			this.title.node.style.transform = '';
-			// this.imgBlur.node.style.transform = '';
 
-			// var transitionEvent = window.whichTransitionEvent();
-			// this.hero.node.addEventListener(transitionEvent, this.cleanup, false);
+			var transitionEvent = window.whichTransitionEvent();
+			this.hero.node.addEventListener(transitionEvent, this.cleanup, false);
 		};
 		this.cleanup = function (e) {
 			// use self

@@ -1,6 +1,5 @@
 // cover.scss
 
-
 $textPADDING: fib(9);
 $boxShadow: 0px 0px 10px 1px rgba(0,0,0,0.5);
 
@@ -15,8 +14,6 @@ $boxShadow: 0px 0px 10px 1px rgba(0,0,0,0.5);
 		height: 100%;
 		width: 100%;
 		@include transition(transform);
-		// transition-timing-function: cubic-bezier(.5,-0.3,.4,1); // the bounce looks bad
-		// transition-timing-function: cubic-bezier(.3,0,.34,1); // the bounce looks bad
 		&Wrapper{
 			display: block;
 			box-shadow: $boxShadow;
@@ -33,7 +30,6 @@ $boxShadow: 0px 0px 10px 1px rgba(0,0,0,0.5);
 			width: 100%;
 			height: 100%;
 			opacity: 0.7;
-			// @include transition(opacity);
 			@include absolute(0);
 			&--blur{
 				filter: blur(6px);
@@ -50,7 +46,6 @@ $boxShadow: 0px 0px 10px 1px rgba(0,0,0,0.5);
 			display: block;
 			color: white;
 			@include transition(transform);
-			// transition-timing-function: cubic-bezier(.5,-0.5,.1,1);
 		}
 	}
 }
@@ -61,19 +56,11 @@ $boxShadow: 0px 0px 10px 1px rgba(0,0,0,0.5);
 	.cover{
 		height: calc(100vh + #{$bleed});
 		width: 100%;
-		// max-width: 100vw;
-		// position: relative;
-		// border-radius: $borderRADIUS;
-		// overflow: hidden;
 		&__hero{
 			@include parallax(-1);
 			&Wrapper{
 				box-shadow: none;
 			}
-			// @include absolute(0);
-			// object-fit: cover;
-			// height: 100%;
-			// width: 100%;
 		}
 		&__title{
 			&Link{
@@ -100,34 +87,4 @@ $boxShadow: 0px 0px 10px 1px rgba(0,0,0,0.5);
 
 .post--page{ // a page (not post) in full form
 	.cover{ }
-}
-
-// title font sizing
-// based on screen width
-// this adds about 400ms to the layout time becasue of the cascading selectors
-.post{
-	// $widthToFontSizePERCENTAGE: 6%;
-	// // TODO: increase this width at smaller widths
-	// &--list .cover__title{
-	// 	$calcValue1: (strip-unit($drawerWIDTH) * 1vw);
-	// 	$calcValue2: $textPADDING*2 + $horzMARGIN + $mainNavWIDTH;
-	// 	font-size: calc( #{$calcValue1} - #{$calcValue2} );
-	// 	line-height: $widthToFontSizePERCENTAGE;
-	// 	a{
-	// 		display: block;
-	// 		font-size: $widthToFontSizePERCENTAGE;
-	// 		line-height: 1.2em;
-	// 	}
-	// }
-	// &--full .cover__title{
-	// 	$calcValue1: 100vw;
-	// 	$calcValue2: $textPADDING*2;
-	// 	font-size: calc( #{$calcValue1} - #{$calcValue2} );
-	// 	line-height: $widthToFontSizePERCENTAGE;
-	// 	a{
-	// 		display: block;
-	// 		font-size: $widthToFontSizePERCENTAGE;
-	// 		line-height: 1.2em;
-	// 	}
-	// }
 }
