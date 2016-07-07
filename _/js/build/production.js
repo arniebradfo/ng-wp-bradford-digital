@@ -125,16 +125,16 @@
 		};
 		this.playStart = null;
 		this.play = function (playStart) {
-			if (!this.playStart) this.playStart = playStart;
-
-			// if this is called in the same frame as it was queued, try again.
-			if (this.playStart === playStart) {
-				var self = this;
-				window.requestAnimationFrame(function (timestamp) {
-					self.play(timestamp);
-				});
-				return;
-			}
+			// if (!this.playStart) this.playStart = playStart;
+			//
+			// // if this is called in the same frame as it was queued, try again.
+			// if (this.playStart === playStart) {
+			// 	var self = this;
+			// 	window.requestAnimationFrame(function (timestamp) {
+			// 		self.play(timestamp);
+			// 	});
+			// 	return;
+			// }
 
 			// switch on transitions
 			this.hero.node.style.transition = '';
@@ -164,8 +164,8 @@
 		postExpand.first();
 		postExpand.last();
 		postExpand.invert();
-		window.requestAnimationFrame(function (timestamp) {
-			postExpand.play(timestamp);
+		window.requestNextAnimationFrame(function () {
+			postExpand.play();
 		});
 	};
 
