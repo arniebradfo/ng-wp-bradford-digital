@@ -115,7 +115,7 @@
 			// 	console.log('that');
 			// }
 			// this.imgBlur.node.style.transform = imgBlur_transform;
-			this.imgBlur.node.style.transition = this.imgList.node.style.transition = 'none';
+			// this.imgBlur.node.style.transition = this.imgList.node.style.transition = 'none';
 
 			// IMG--BLUR
 			this.imgList.node.style.opacity = 0;
@@ -123,20 +123,32 @@
 
 			// this.post.style.opacity = 0.5; // for debugging
 		};
-		this.play = function () {
+		this.playStart = null;
+		this.play = function (playStart) {
+			if (!this.playStart) this.playStart = playStart;
+
+			// if this is called in the same frame as it was queued, try again.
+			if (this.playStart === playStart) {
+				var self = this;
+				window.requestAnimationFrame(function (timestamp) {
+					self.play(timestamp);
+				});
+				return;
+			}
+
 			// switch on transitions
 			this.hero.node.style.transition = '';
 			this.title.node.style.transition = '';
-			this.imgBlur.node.style.transition = '';
+			// this.imgBlur.node.style.transition = '';
 			// this.imgBlur.node.style.transition = this.imgList.node.style.transition = 'opacity .25s ease-out';
 
 			// remove INVERT css to PLAY the transitions
 			this.hero.node.style.transform = '';
 			this.title.node.style.transform = '';
-			this.imgBlur.node.style.transform = '';
+			// this.imgBlur.node.style.transform = '';
 
-			var transitionEvent = window.whichTransitionEvent();
-			this.hero.node.addEventListener(transitionEvent, this.cleanup, false);
+			// var transitionEvent = window.whichTransitionEvent();
+			// this.hero.node.addEventListener(transitionEvent, this.cleanup, false);
 		};
 		this.cleanup = function (e) {
 			// use self
@@ -152,8 +164,8 @@
 		postExpand.first();
 		postExpand.last();
 		postExpand.invert();
-		window.requestAnimationFrame(function () {
-			postExpand.play();
+		window.requestAnimationFrame(function (timestamp) {
+			postExpand.play(timestamp);
 		});
 	};
 
@@ -175,6 +187,45 @@
 		window.addEventListener('load', initalize, false);
 	} else { initalize(); }
 })(document, window);
+
+/**
+ * whichTransitionEvent
+ * crossbroswer transitionEnd event
+ * @link https://davidwalsh.name/css-animation-callback
+ */
+
+// usage: //
+// var transitionEvent = window.whichTransitionEvent();
+// transitionEvent && element.addEventListener(transitionEvent, function() {
+// 	console.log('Transition complete!  This is the callback, no library needed!');
+// });
+
+(function (window) {
+	window.requestNextAnimationFrame = function (func) {
+		var self = this;
+
+		// throw error if parameter is not function
+		if (typeof func === 'function') this.func = func;
+		else throw 'requestNextAnimationFrame() requires a function as its sole parameter';
+
+		this.queueTime = null;
+		this.testAnimationFrame = function () {
+			window.requestAnimationFrame(function (timestamp) {
+				if (!self.queueTime) self.queueTime = timestamp;
+
+				// if this is called in the same frame as it was queued, try again.
+				if (self.queueTime === timestamp) {
+					this.testAnimationFrame();
+					return;
+				}
+
+				self.func();
+			});
+		};
+
+		return this.testAnimationFrame();
+	};
+})(window);
 
 /**
  * whichTransitionEvent
