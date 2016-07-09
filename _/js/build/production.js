@@ -43,9 +43,8 @@
 			document.getElementById('mainNav--opener').checked = false;
 			this.mainClone.classList.add('mainContent--active');
 
-			// ??? //
-			this.hero.node.style.transform = 'none';
-			this.title.node.style.transform = 'none';
+			// transform from a blank origin
+			this.hero.node.style.transform = this.title.node.style.transform = 'none';
 
 		};
 		this.collectRects = function (state) {
@@ -73,11 +72,11 @@
 		};
 		this.invert = function () {
 			// apply INVERT css to mutate node back to its original state
-			this.hero.node.style.transformOrigin = this.title.node.style.transition = '50% 50%'; // just in case
+			// this.hero.node.style.transformOrigin = this.title.node.style.transition = '50% 50%'; // just in case
 			this.hero.node.style.transition = this.title.node.style.transition = 'none'; // to break it
 
 			// HERO
-			var hero_transform = 'translateZ(-0.00002px) ';
+			var hero_transform = 'translateZ(0.0001px) ';
 			var hero_translateX = (this.hero.rectFirst.left + (this.hero.rectFirst.width / 2)) - (this.hero.rectLast.left + (this.hero.rectLast.width / 2));
 			hero_transform += 'translateX(' + hero_translateX + 'px) ';
 			var hero_translateY = (this.hero.rectFirst.top + (this.hero.rectFirst.height / 2)) - (this.hero.rectLast.top + (this.hero.rectLast.height / 2));
@@ -90,12 +89,14 @@
 
 			// TITLE
 			var title_width = this.title.rectFirst.width * parseFloat(this.title.lineHeightLast) / parseFloat(this.title.lineHeightFirst);
-			var title_transform = 'translateZ(-0.00001px) ';
+			// var title_lineCount = Math.round(this.title.rectFirst.height / parseFloat(this.title.lineHeightFirst));
+			// var title_heightEstimate = title_lineCount * this.title.rectLast.height;
+			var title_transform = 'translateZ(0.0002px) ';
 			var title_translateX = (this.title.rectFirst.left + (this.title.rectFirst.width / 2)) - (this.title.rectLast.left + (title_width / 2));
 			title_transform += 'translateX(' + title_translateX + 'px) ';
-			var title_translateY = (this.title.rectFirst.top + (this.title.rectFirst.height / 2)) - (this.title.rectLast.top + (this.title.rectLast.height / 2));
+			var title_translateY = this.title.rectFirst.bottom - this.title.rectLast.bottom;
 			title_transform += 'translateY(' + title_translateY + 'px) ';
-			var title_scale = this.title.rectFirst.height / this.title.rectLast.height;
+			var title_scale = this.title.rectFirst.width / title_width;
 			title_transform += 'scale(' + title_scale + ') ';
 
 			this.title.node.style.width = title_width + 'px';
@@ -119,7 +120,7 @@
 			this.hero.node.addEventListener(transitionEvent, this.cleanup, false);
 		};
 		this.cleanup = function (e) {
-			// use self
+			// use self instead of this
 			e.target.removeEventListener(e.type, self.cleanup);
 		};
 	}

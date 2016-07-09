@@ -618,8 +618,9 @@ html, body {
   color: white;
   line-height: 1em;
   letter-spacing: 0;
-  transition:  transform 250ms cubic-bezier(0.5, 0.2, 0, 1) 1ms;
+  transition:  transform 250ms cubic-bezier(0.5, 0.2, 0, 1) 1ms,  transform-origin 250ms cubic-bezier(0.5, 0.2, 0, 1) 1ms;
   backface-visibility: hidden;
+  transform-origin: bottom;
 }
 
 .post--full {

@@ -46,8 +46,8 @@ $textPADDING: fib(9);
 			color: white;
 			line-height: 1em;
 			letter-spacing: 0;
-			@include transition(transform);
-			// transform-origin: 0 0;
+			@include transition(transform transform-origin);
+			transform-origin: bottom;
 			// perspective-origin: 0 0;
 		}
 	}
