@@ -1,17 +1,17 @@
 /**
  * whichTransitionEvent
- * crossbroswer transitionEnd event
- * @link https://davidwalsh.name/css-animation-callback
+ * crossbroswer transitionEnd event - from Modernizr?
+ * @author https://davidwalsh.name/css-animation-callback
+ * @example
+	var transitionEvent = window.whichTransitionEvent();
+	transitionEvent && element.addEventListener(transitionEvent, function() {
+		console.log('Transition complete!  This is the callback, no library needed!');
+	});
  */
 
-// usage: //
-// var transitionEvent = window.whichTransitionEvent();
-// transitionEvent && element.addEventListener(transitionEvent, function() {
-// 	console.log('Transition complete!  This is the callback, no library needed!');
-// });
-
 (function (document, window) {
-	/* From Modernizr */
+	'use strict';
+
 	window.whichTransitionEvent = function () {
 		var t;
 		var el = document.createElement('fakeelement');

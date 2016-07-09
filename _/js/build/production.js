@@ -1,4 +1,154 @@
 /**
+ * addEvent
+ * normalizes adding event listeners/handlers
+ * @author http://stackoverflow.com/questions/10149963/adding-event-listener-cross-browser
+ * @param {Element} element - the element to add the event listener to
+ * @param {Event} event - the event to listen for
+ * @param {Function} callback - the function called on the event
+ */
+
+(function (window) {
+	window.addEvent = function (element, event, callback) {
+		if (element.addEventListener) {
+			element.addEventListener(event, callback, false);
+		} else if (element.attachEvent) {
+			element.attachEvent('on' + event, function () {
+				// set the this pointer same as addEventListener when fn is called
+				return (callback.call(element, window.event));
+			});
+		}
+	};
+})(window);
+
+/**
+ * requestNextAnimationFrame
+ * calls callback function on the frame after requestNextAnimationFrame was called
+ * @param {function} callback : function to run in the next animation frame
+ * @example
+	window.requestNextAnimationFrame(function () {
+		console.log('this is the next animation frame');
+	});
+ */
+
+(function (window) {
+	window.requestNextAnimationFrame = function (callback) {
+		'use strict';
+		var self = this;
+
+		// throw error if parameter is not function
+		self.parameterError = 'requestNextAnimationFrame() requires a function as its sole parameter';
+		if (typeof callback === 'function') self.callback = callback;
+		else throw self.parameterError;
+
+		self.queueTime = null;
+		self.testAnimationFrame = function () {
+			window.requestAnimationFrame(function (timestamp) {
+				if (!self.queueTime) self.queueTime = timestamp;
+
+				// if this is called in the same frame as it was queued, try again.
+				if (self.queueTime === timestamp) {
+					self.testAnimationFrame();
+					return;
+				}
+
+				self.callback();
+			});
+		};
+
+		return self.testAnimationFrame();
+	};
+})(window);
+
+/**
+ * serializeForm
+ * Convert form elements to query string or JavaScript object.
+ * @param {HTMLFormElement} form: the form to be serialized
+ * @param {boolean} usePlusSpaces -
+	false: spaces encoded as '%20'
+	true: spaces encoded as '+'
+ * @param {boolean} asObject -
+	false: serialization returned as '&' separated string
+	true: serialization returned as an object
+ */
+
+(function (window) {
+	window.serializeForm = function (form, usePlusSpaces, asObject) {
+		'use strict';
+
+		var elements;
+		var add = function (name, value) {
+			value = encodeURIComponent(value);
+
+			// Apparetly this is helpful - @link https://stackoverflow.com/questions/4276226/ajax-xmlhttprequest-post/
+			if (usePlusSpaces) value = value.replace(/%20/g, '+');
+
+			if (asObject) elements[name] = value;
+			else elements.push(name + '=' + value);
+		};
+
+		if (asObject) elements = {};
+		else elements = [];
+
+		var i, len;
+		for (i = 0, len = form.elements.length; i < len; ++i) {
+			var element = form.elements[i];
+			if (i in form.elements) {
+				switch (element.nodeName) {
+				case 'BUTTON': // Omit these elements
+					break;
+				default:
+					switch (element.type) {
+					case 'submit': case 'button': // Omit these input types
+						break;
+					default:
+						add(element.name, element.value);
+						break;
+					}
+					break;
+				}
+			}
+		}
+
+		if (asObject) {
+			return elements;
+		}
+
+		return elements.join('&');
+	};
+})(window);
+
+/**
+ * whichTransitionEvent
+ * crossbroswer transitionEnd event - from Modernizr?
+ * @author https://davidwalsh.name/css-animation-callback
+ * @example
+	var transitionEvent = window.whichTransitionEvent();
+	transitionEvent && element.addEventListener(transitionEvent, function() {
+		console.log('Transition complete!  This is the callback, no library needed!');
+	});
+ */
+
+(function (document, window) {
+	'use strict';
+
+	window.whichTransitionEvent = function () {
+		var t;
+		var el = document.createElement('fakeelement');
+		var transitions = {
+			'transition': 'transitionend',
+			'OTransition': 'oTransitionEnd',
+			'MozTransition': 'transitionend',
+			'WebkitTransition': 'webkitTransitionEnd'
+		};
+		for (t in transitions) {
+			if (el.style[t] !== undefined) {
+				return transitions[t];
+			}
+		}
+	};
+})(document, window);
+
+/**
  * Js component boilerplate
  * description
  */
@@ -157,148 +307,17 @@
 	} else { initalize(); }
 })(document, window);
 
-/**
- * requestNextAnimationFrame
- * calls callback function on the frame after requestNextAnimationFrame was called
- * @param func : function reference or literal
- */
-
-// usage: //
-// window.requestNextAnimationFrame(function () {
-// 	animationFunction();
-// });
-
-(function (window) {
-	window.requestNextAnimationFrame = function (func) {
-		var self = this;
-
-		// throw error if parameter is not function
-		if (typeof func === 'function') this.func = func;
-		else throw 'requestNextAnimationFrame() requires a function as its sole parameter';
-
-		this.queueTime = null;
-		this.testAnimationFrame = function () {
-			window.requestAnimationFrame(function (timestamp) {
-				if (!self.queueTime) self.queueTime = timestamp;
-
-				// if this is called in the same frame as it was queued, try again.
-				if (self.queueTime === timestamp) {
-					this.testAnimationFrame();
-					return;
-				}
-
-				self.func();
-			});
-		};
-
-		return this.testAnimationFrame();
-	};
-})(window);
-
-/**
- * whichTransitionEvent
- * crossbroswer transitionEnd event
- * @link https://davidwalsh.name/css-animation-callback
- */
-
-// usage: //
-// var transitionEvent = window.whichTransitionEvent();
-// transitionEvent && element.addEventListener(transitionEvent, function() {
-// 	console.log('Transition complete!  This is the callback, no library needed!');
-// });
-
-(function (document, window) {
-	/* From Modernizr */
-	window.whichTransitionEvent = function () {
-		var t;
-		var el = document.createElement('fakeelement');
-		var transitions = {
-			'transition': 'transitionend',
-			'OTransition': 'oTransitionEnd',
-			'MozTransition': 'transitionend',
-			'WebkitTransition': 'webkitTransitionEnd'
-		};
-		for (t in transitions) {
-			if (el.style[t] !== undefined) {
-				return transitions[t];
-			}
-		}
-	};
-})(document, window);
-
-// normalizes adding event listeners/handlers (http://stackoverflow.com/questions/10149963/adding-event-listener-cross-browser)
-function addEvent (elem, event, fn) {
-	// console.log('addEvent was called on '+elem+' with function '+fn);
-	if (elem.addEventListener) {
-		elem.addEventListener(event, fn, false);
-	} else if (elem.attachEvent) {
-		elem.attachEvent('on' + event, function () {
-		// set the this pointer same as addEventListener when fn is called
-			return (fn.call(elem, window.event));
-		});
-	}
-}
-
 // finds the WP comment entry section and adds a ctrl/cmd + enter lister
 function attachCtrlEnterSubmitWPComment () {
 	var commentArea = document.getElementById('comment');
 	if (commentArea) {
-		addEvent(commentArea, 'keydown', function (e) {
+		window.addEvent(commentArea, 'keydown', function (e) {
 			if ((e.ctrlKey || e.metaKey) && (e.keyCode === 13 || e.keyCode === 10)) {
 				document.getElementById('submit').click();
 			}
 		});
 	}
 }
-
-// Convert form elements to query string or JavaScript object.
-HTMLFormElement.prototype.serialize = function (asObject) { // @param asObject: If the serialization should be returned as an object.
-	'use strict';
-	var form = this;
-	var elements;
-	var add = function (name, value) {
-		value = encodeURIComponent(value);
-		if (asObject) {
-			elements[name] = value;
-		} else {
-			elements.push(name + '=' + value);
-		}
-	};
-	if (asObject) {
-		elements = {};
-	} else {
-		elements = [];
-	}
-
-	var i, len;
-	for (i = 0, len = form.elements.length; i < len; ++i) {
-		var element = form.elements[i];
-		if (i in form.elements) {
-			switch (element.nodeName) {
-			case 'BUTTON':
-				/* Omit this elements */
-				break;
-			default:
-				switch (element.type) {
-				case 'submit':
-				case 'button':
-					/* Omit this types */
-					break;
-				default:
-					add(element.name, element.value);
-					break;
-				}
-				break;
-			}
-		}
-	}
-
-	if (asObject) {
-		return elements;
-	}
-
-	return elements.join('&');
-};
 
 var wpajax_options = { // things that might change
 	contentSelector: '#content',
@@ -345,20 +364,20 @@ var wpajax_options = { // things that might change
 			};
 			xhttp.timeout = typeof obj.timeoutTimer === 'number' ? obj.timeoutTimer : 0; // (in milliseconds) Set the amout of time until the ajax request times out.
 			if (typeof obj.started === 'function') {
-				addEvent(xhttp, 'loadstart', function () {
+				window.addEvent(xhttp, 'loadstart', function () {
 					obj.started();
 				});
 			}
 			if (typeof obj.aborted === 'function') {
-				addEvent(xhttp, 'abort', function () {
+				window.addEvent(xhttp, 'abort', function () {
 					obj.aborted(obj.href);
 				});
-				addEvent(xhttp, 'timeout', function () {
+				window.addEvent(xhttp, 'timeout', function () {
 					obj.aborted(obj.href, xhttp.timeout);
 				});
 			}
 			if (typeof obj.finished === 'function') {
-				addEvent(xhttp, 'loadend', function () {
+				window.addEvent(xhttp, 'loadend', function () {
 					obj.finished();
 				});
 			}
@@ -436,7 +455,7 @@ var wpajax_options = { // things that might change
 
 			// calls loadPage when the browser back button is pressed
 			// TODO: test browser implementation inconsistencies of popstate
-			addEvent(window, 'popstate', function (event) {
+			window.addEvent(window, 'popstate', function (event) {
 				// don't fire on the inital page load
 				// TODO: make back button paginates comments??
 				if (event.state !== null) {
@@ -447,7 +466,7 @@ var wpajax_options = { // things that might change
 			});
 
 			// transforms all the interal hyperlinks into ajax requests
-			addEvent(document, 'click', function (event) {
+			window.addEvent(document, 'click', function (event) {
 				var e = window.event || event; // http://stackoverflow.com/questions/3493033/what-is-the-meaning-of-this-var-evt-eventwindow-event
 				// var e = event != 'undefined' ? event : window.event; // this seems more safe...
 
@@ -525,7 +544,7 @@ var wpajax_options = { // things that might change
 			if (commentform && statusdiv) {
 				statusdiv.id = 'comment-status';
 				statusdiv = respond.insertBefore(statusdiv, commentform);
-				addEvent(commentform, 'submit', function (e) {
+				window.addEvent(commentform, 'submit', function (e) {
 					e.preventDefault();
 					self.submitComment(commentform, statusdiv);
 				});
@@ -537,7 +556,7 @@ var wpajax_options = { // things that might change
 			var method = commentform.method ? commentform.method.toUpperCase() : 'POST';
 
 			// Serialize and store form data
-			var formdata = commentform.serialize().replace(/%20/g, '+'); // Apparetly this is helpful - https://stackoverflow.com/questions/4276226/ajax-xmlhttprequest-post/
+			var formdata = window.serialize(commentform, true);
 			var parentCommentId = /&comment_parent=(\d+)/.exec(formdata)[1];
 
 			var commentStatus = {

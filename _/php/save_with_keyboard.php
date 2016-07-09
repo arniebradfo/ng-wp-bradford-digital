@@ -11,7 +11,7 @@ License: WTFPL (http://sam.zoy.org/wtfpl)
 
 if ( is_admin() && !function_exists('save_with_keyboard_enqueue') ){
 	function save_with_keyboard_enqueue() {
-		wp_enqueue_script( 'swk_js' , get_template_directory_uri()."/_/js/exclude/saveWithKeyboard.js" , array('jquery') );
+		wp_enqueue_script( 'swk_js' , get_template_directory_uri()."/_/php/js/saveWithKeyboard.js" , array('jquery') );
 	}
 	add_action('admin_enqueue_scripts','save_with_keyboard_enqueue');
 }

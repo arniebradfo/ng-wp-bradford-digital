@@ -1,76 +1,14 @@
-// normalizes adding event listeners/handlers (http://stackoverflow.com/questions/10149963/adding-event-listener-cross-browser)
-function addEvent (elem, event, fn) {
-	// console.log('addEvent was called on '+elem+' with function '+fn);
-	if (elem.addEventListener) {
-		elem.addEventListener(event, fn, false);
-	} else if (elem.attachEvent) {
-		elem.attachEvent('on' + event, function () {
-		// set the this pointer same as addEventListener when fn is called
-			return (fn.call(elem, window.event));
-		});
-	}
-}
-
 // finds the WP comment entry section and adds a ctrl/cmd + enter lister
 function attachCtrlEnterSubmitWPComment () {
 	var commentArea = document.getElementById('comment');
 	if (commentArea) {
-		addEvent(commentArea, 'keydown', function (e) {
+		window.addEvent(commentArea, 'keydown', function (e) {
 			if ((e.ctrlKey || e.metaKey) && (e.keyCode === 13 || e.keyCode === 10)) {
 				document.getElementById('submit').click();
 			}
 		});
 	}
 }
-
-// Convert form elements to query string or JavaScript object.
-HTMLFormElement.prototype.serialize = function (asObject) { // @param asObject: If the serialization should be returned as an object.
-	'use strict';
-	var form = this;
-	var elements;
-	var add = function (name, value) {
-		value = encodeURIComponent(value);
-		if (asObject) {
-			elements[name] = value;
-		} else {
-			elements.push(name + '=' + value);
-		}
-	};
-	if (asObject) {
-		elements = {};
-	} else {
-		elements = [];
-	}
-
-	var i, len;
-	for (i = 0, len = form.elements.length; i < len; ++i) {
-		var element = form.elements[i];
-		if (i in form.elements) {
-			switch (element.nodeName) {
-			case 'BUTTON':
-				/* Omit this elements */
-				break;
-			default:
-				switch (element.type) {
-				case 'submit':
-				case 'button':
-					/* Omit this types */
-					break;
-				default:
-					add(element.name, element.value);
-					break;
-				}
-				break;
-			}
-		}
-	}
-
-	if (asObject) {
-		return elements;
-	}
-
-	return elements.join('&');
-};
 
 var wpajax_options = { // things that might change
 	contentSelector: '#content',
@@ -117,20 +55,20 @@ var wpajax_options = { // things that might change
 			};
 			xhttp.timeout = typeof obj.timeoutTimer === 'number' ? obj.timeoutTimer : 0; // (in milliseconds) Set the amout of time until the ajax request times out.
 			if (typeof obj.started === 'function') {
-				addEvent(xhttp, 'loadstart', function () {
+				window.addEvent(xhttp, 'loadstart', function () {
 					obj.started();
 				});
 			}
 			if (typeof obj.aborted === 'function') {
-				addEvent(xhttp, 'abort', function () {
+				window.addEvent(xhttp, 'abort', function () {
 					obj.aborted(obj.href);
 				});
-				addEvent(xhttp, 'timeout', function () {
+				window.addEvent(xhttp, 'timeout', function () {
 					obj.aborted(obj.href, xhttp.timeout);
 				});
 			}
 			if (typeof obj.finished === 'function') {
-				addEvent(xhttp, 'loadend', function () {
+				window.addEvent(xhttp, 'loadend', function () {
 					obj.finished();
 				});
 			}
@@ -208,7 +146,7 @@ var wpajax_options = { // things that might change
 
 			// calls loadPage when the browser back button is pressed
 			// TODO: test browser implementation inconsistencies of popstate
-			addEvent(window, 'popstate', function (event) {
+			window.addEvent(window, 'popstate', function (event) {
 				// don't fire on the inital page load
 				// TODO: make back button paginates comments??
 				if (event.state !== null) {
@@ -219,7 +157,7 @@ var wpajax_options = { // things that might change
 			});
 
 			// transforms all the interal hyperlinks into ajax requests
-			addEvent(document, 'click', function (event) {
+			window.addEvent(document, 'click', function (event) {
 				var e = window.event || event; // http://stackoverflow.com/questions/3493033/what-is-the-meaning-of-this-var-evt-eventwindow-event
 				// var e = event != 'undefined' ? event : window.event; // this seems more safe...
 
@@ -297,7 +235,7 @@ var wpajax_options = { // things that might change
 			if (commentform && statusdiv) {
 				statusdiv.id = 'comment-status';
 				statusdiv = respond.insertBefore(statusdiv, commentform);
-				addEvent(commentform, 'submit', function (e) {
+				window.addEvent(commentform, 'submit', function (e) {
 					e.preventDefault();
 					self.submitComment(commentform, statusdiv);
 				});
@@ -309,7 +247,7 @@ var wpajax_options = { // things that might change
 			var method = commentform.method ? commentform.method.toUpperCase() : 'POST';
 
 			// Serialize and store form data
-			var formdata = commentform.serialize().replace(/%20/g, '+'); // Apparetly this is helpful - https://stackoverflow.com/questions/4276226/ajax-xmlhttprequest-post/
+			var formdata = window.serialize(commentform, true);
 			var parentCommentId = /&comment_parent=(\d+)/.exec(formdata)[1];
 
 			var commentStatus = {
