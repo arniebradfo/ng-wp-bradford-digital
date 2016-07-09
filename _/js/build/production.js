@@ -42,6 +42,11 @@
 			document.body.removeChild(this.main);
 			document.getElementById('mainNav--opener').checked = false;
 			this.mainClone.classList.add('mainContent--active');
+
+			// ??? //
+			this.hero.node.style.transform = 'none';
+			this.title.node.style.transform = 'none';
+
 		};
 		this.collectRects = function (state) {
 			for (var key in this.elements) {
@@ -56,19 +61,23 @@
 		this.first = function () {
 			// collect dimensions of FIRST state
 			this.collectRects('rectFirst');
+			this.title.lineHeightFirst = window.getComputedStyle(this.title.node).lineHeight;
 			// this.collectComputedStyles('styleFirst');
 		};
 		this.last = function () {
 			// collect dimensions of LAST state
 			this.mutate();
 			this.collectRects('rectLast');
+			this.title.lineHeightLast = window.getComputedStyle(this.title.node).lineHeight;
 			// this.collectComputedStyles('styleLast');
 		};
 		this.invert = function () {
 			// apply INVERT css to mutate node back to its original state
+			this.hero.node.style.transformOrigin = this.title.node.style.transition = '50% 50%'; // just in case
+			this.hero.node.style.transition = this.title.node.style.transition = 'none'; // to break it
 
 			// HERO
-			var hero_transform = 'translateZ(0) ';
+			var hero_transform = 'translateZ(-0.00002px) ';
 			var hero_translateX = (this.hero.rectFirst.left + (this.hero.rectFirst.width / 2)) - (this.hero.rectLast.left + (this.hero.rectLast.width / 2));
 			hero_transform += 'translateX(' + hero_translateX + 'px) ';
 			var hero_translateY = (this.hero.rectFirst.top + (this.hero.rectFirst.height / 2)) - (this.hero.rectLast.top + (this.hero.rectLast.height / 2));
@@ -78,26 +87,19 @@
 			var hero_scaleY = this.hero.rectFirst.height / this.hero.rectLast.height;
 			hero_transform += 'scaleY(' + hero_scaleY + ') ';
 			this.hero.node.style.transform = hero_transform;
-			this.hero.node.style.transformOrigin = '50% 50%'; // just in case
-			this.hero.node.style.transition = 'none'; // to break it
 
 			// TITLE
-			this.title.node.style.transformOrigin = '0 0';
-			var title_transform = 'translateZ(0) ';
-			var title_translateX = this.title.rectFirst.left - this.title.rectLast.left;
+			var title_width = this.title.rectFirst.width * parseFloat(this.title.lineHeightLast) / parseFloat(this.title.lineHeightFirst);
+			var title_transform = 'translateZ(-0.00001px) ';
+			var title_translateX = (this.title.rectFirst.left + (this.title.rectFirst.width / 2)) - (this.title.rectLast.left + (title_width / 2));
 			title_transform += 'translateX(' + title_translateX + 'px) ';
-			var title_translateY = this.title.rectFirst.top - this.title.rectLast.top;
+			var title_translateY = (this.title.rectFirst.top + (this.title.rectFirst.height / 2)) - (this.title.rectLast.top + (this.title.rectLast.height / 2));
 			title_transform += 'translateY(' + title_translateY + 'px) ';
 			var title_scale = this.title.rectFirst.height / this.title.rectLast.height;
 			title_transform += 'scale(' + title_scale + ') ';
-			// TODO: count lines
-			// var title_lineCountFirst = Math.round(parseFloat(this.title.styleFirst.height) / parseFloat(this.title.styleFirst.lineHeight));
-			// var title_lineCountLast = Math.round(parseFloat(this.title.styleLast.height) / parseFloat(this.title.styleLast.lineHeight));
-			// console.log(title_lineCountFirst);
-			// console.log(title_lineCountLast);
-			// if (title_lineCountFirst !== title_lineCountLast) { }
+
+			this.title.node.style.width = title_width + 'px';
 			this.title.node.style.transform = title_transform;
-			this.title.node.style.transition = 'none'; // to break it
 
 			// IMG--BLUR TODO: trim this to a single image?
 			this.imgList.node.style.opacity = 0;
@@ -108,12 +110,10 @@
 		this.playStart = null;
 		this.play = function (playStart) {
 			// switch on transitions
-			this.hero.node.style.transition = '';
-			this.title.node.style.transition = '';
+			this.hero.node.style.transition = this.title.node.style.transition = '';
 
 			// remove INVERT css to PLAY the transitions
-			this.hero.node.style.transform = '';
-			this.title.node.style.transform = '';
+			this.hero.node.style.transform = this.title.node.style.transform = '';
 
 			var transitionEvent = window.whichTransitionEvent();
 			this.hero.node.addEventListener(transitionEvent, this.cleanup, false);

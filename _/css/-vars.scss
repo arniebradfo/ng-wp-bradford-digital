@@ -50,7 +50,15 @@ $panelTransitionDURATION: 400ms;
 
 $borderRADIUS: fib(5);
 
-$bleed: fib(8);
+$scrollBarWIDTH: fib(8); // scroll bar elimination
+
+$boxShadowBLUR: 10px;
+$boxShadowSPREAD: 1px;
+$boxShadowX: 0;
+$boxShadowY: 0;
+$boxShadowCOLOR: black;
+$boxShadowOPACITY: 0.5;
+$boxShadow: $boxShadowX $boxShadowY $boxShadowBLUR $boxShadowSPREAD rgba($boxShadowCOLOR, $boxShadowOPACITY);
 
 
 // --------------------------------------------------------------- UTILITY CLASSES

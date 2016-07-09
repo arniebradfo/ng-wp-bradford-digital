@@ -11,10 +11,14 @@ html, body{
 }
 
 $mainNavWIDTH: fib(13);
-$drawerWIDTH: 90%;
+$drawerWIDTH: 80%;
 $mainContentSCALE: 0.9;
-$horzMARGIN: $bleed;
-$vertMARGIN: fib(11);
+
+$mainContentINSET: $borderRADIUS;
+$mainContentOFFSET: $scrollBarWIDTH + $boxShadowBLUR + $boxShadowSPREAD;
+$mainContentSPACING: $mainContentOFFSET + $mainContentINSET;
+
+$mainContentBufferX: 50px; // arbitrary value
 
 .header{
 	z-index: index($z-of, header);
@@ -25,13 +29,13 @@ $vertMARGIN: fib(11);
 .mainContent{
 	z-index: index($z-of, mainContent);
 	@include parallaxContainer();
-	// perspective-origin: center center;
+	@include transition(transform);
 	overflow-y: scroll;
 	overflow-x: hidden;
-	margin: (-$vertMARGIN) (-$horzMARGIN);
-	padding: ($vertMARGIN - $horzMARGIN)  0;
+	margin: (-($mainContentSPACING + $mainContentBufferX)) (-$mainContentSPACING);
+	padding: ($mainContentOFFSET + $mainContentBufferX) $mainContentOFFSET;
 	@include fixed(0);
-	transform-origin: $horzMARGIN center;
+	transform-origin: $mainContentOFFSET center;
 }
 
 #mainNav--opener{
@@ -60,8 +64,8 @@ $vertMARGIN: fib(11);
 		overflow: hidden;
 		height: 100%;
 		> ul{
-			margin-right: (-$horzMARGIN);
-			padding-right: $horzMARGIN;
+			margin-right: (-$scrollBarWIDTH);
+			padding-right: $scrollBarWIDTH;
 			overflow-y: scroll;
 			overflow-x: hidden;
 			height: 100%;
@@ -70,27 +74,34 @@ $vertMARGIN: fib(11);
 }
 
 .postList{
-	padding-right: $horzMARGIN;
 	&Wrapper{
 		@include fixed(0);
 		overflow-y: scroll;
 		overflow-x: hidden;
-		margin-right: (-$horzMARGIN);
+		margin-right: (-$scrollBarWIDTH);
 		padding-right: 100% - $drawerWIDTH;
 		@include parallaxContainer();
 		perspective-origin: calc( #{($drawerWIDTH / 2)} + #{($mainNavWIDTH / 2)} );
 	}
 	&--aside{
 		z-index: index($z-of, postList--header);
-		// width: 100%;
 		padding-left: $mainNavWIDTH;
-		// padding-right: $horzMARGIN;
 	}
 }
 
-.post{
-	margin-bottom: 60px;
-	text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
-	color: white;
-	position: relative;
+.frame, .footer{
+	padding: 0 $mainContentINSET;
+}
+
+.frame{
+	border-bottom-left-radius:  $borderRADIUS;
+	border-bottom-right-radius: $borderRADIUS;
+}
+
+.footer{
+	border-radius: $borderRADIUS;
+}
+
+.cover{
+	padding: $mainContentINSET;
 }

@@ -34,5 +34,5 @@ $perspective-origin   : center center;
 		translateZ($distance * $perspective * 1px)
 		scale(abs($distance - 1))
 	;
-	z-index: $distance * 1000;
+	// z-index: $distance * 1000;
 }

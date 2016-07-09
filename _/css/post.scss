@@ -1,0 +1,20 @@
+// post.scss
+
+.post{
+	margin-bottom: 60px;
+	position: relative;
+	&--list{ // posts in a list
+		text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
+		color: white;
+	}
+	&--single{ // a post (not page) in full
+	}
+	&--page{ // a page (not post) in full
+	}
+	&--full{ // a page or post in full
+		.frame, .footer{
+			background-color: white;
+			box-shadow: $boxShadow;
+		}
+	}
+}

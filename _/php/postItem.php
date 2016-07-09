@@ -74,24 +74,29 @@ function template_post_item ($type = null) {
 
 		</header>
 
-		<section class="excerpt">
-			<?php if ($type === 'list') the_excerpt(); ?>
-		</section>
-
-		<section class="content">
-			<?php if ($type === 'single' || $type === 'page') the_content(); ?>
-		</section>
-
-		<section class="comments">
-			<?php if ($type === 'single' || $type === 'page') comments_template(); ?>
-		</section>
-
 		<!-- <footer class="postmetadata">
 			<?php the_tags(__('Tags: ','wpajax'), ', ', '<br />'); ?>
 			<?php _e('Posted in','wpajax'); ?>
 			<?php the_category(', '); ?> |
 			<?php comments_popup_link(__('No Comments &#187;','wpajax'), __('1 Comment &#187;','wpajax'), __('% Comments &#187;','wpajax')); ?>
 		</footer> -->
+
+		<section class="excerpt">
+			<?php if ($type === 'list') the_excerpt(); ?>
+		</section>
+
+		<section class="frame">
+
+			<section class="content">
+				<?php if ($type === 'single' || $type === 'page') the_content(); ?>
+			</section>
+
+			<section class="comments">
+				<?php if ($type === 'single' || $type === 'page') comments_template(); ?>
+			</section>
+
+		</section>
+
 
 	</article>
 	<?php

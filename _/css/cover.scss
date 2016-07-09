@@ -1,7 +1,6 @@
 // cover.scss
 
 $textPADDING: fib(9);
-$boxShadow: 0px 0px 10px 1px rgba(0,0,0,0.5);
 
 .cover{
 	height: 40vh;
@@ -9,7 +8,7 @@ $boxShadow: 0px 0px 10px 1px rgba(0,0,0,0.5);
 	position: relative;
 	z-index: -1;
 	&__hero{
-		@include parallax(-.05);
+		@include parallax(-.2);
 		@include absolute(0);
 		height: 100%;
 		width: 100%;
@@ -45,29 +44,33 @@ $boxShadow: 0px 0px 10px 1px rgba(0,0,0,0.5);
 		&, &Link{
 			display: block;
 			color: white;
+			line-height: 1em;
+			letter-spacing: 0;
 			@include transition(transform);
+			// transform-origin: 0 0;
+			// perspective-origin: 0 0;
 		}
 	}
 }
 
 .post--full{ // a page or post in full form
-	box-shadow: $boxShadow;
 	border-radius: $borderRADIUS;
 	.cover{
-		height: calc(100vh + #{$bleed});
+		height: calc(100vh + #{$mainContentINSET * 2});
+		margin-bottom: (-$mainContentINSET);
 		width: 100%;
 		&__hero{
 			@include parallax(-1);
 			&Wrapper{
-				box-shadow: none;
 			}
 		}
 		&__title{
+			// transform: translateZ(0);
 			&Link{
-				// @include parallax(-0.5);
+				@include parallax(-0.5); // TODO
 			}
-			right: $bleed;
-			left:  $bleed;
+			right: $mainContentINSET;
+			left:  $mainContentINSET;
 			font-size: fib(10);
 		}
 	}
@@ -77,6 +80,9 @@ $boxShadow: 0px 0px 10px 1px rgba(0,0,0,0.5);
 	.cover{
 		&__title{
 			font-size: fib(9);
+			&Link{
+				@include parallax(-0.1); // TODO
+			}
 		}
 	}
 }

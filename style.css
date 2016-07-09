@@ -457,16 +457,18 @@ html, body {
   perspective: 1px;
   transform: translateZ(0);
   -webkit-overflow-scrolling: touch;
+  transition:  transform 250ms cubic-bezier(0.5, 0.2, 0, 1) 1ms;
+  backface-visibility: hidden;
   overflow-y: scroll;
   overflow-x: hidden;
-  margin: -89px -21px;
-  padding: 68px 0;
+  margin: -87px -37px;
+  padding: 82px 32px;
   position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
-  transform-origin: 21px center;
+  transform-origin: 32px center;
 }
 
 #mainNav--opener {
@@ -476,7 +478,7 @@ html, body {
   left: 0;
 }
 #mainNav--opener:checked ~ .mainContent--active {
-  transform: translateX(90%) scale(0.9);
+  transform: translateX(80%) scale(0.9);
 }
 #mainNav--opener:not(:checked) ~ .mainNav {
   display: none;
@@ -509,9 +511,6 @@ html, body {
   height: 100%;
 }
 
-.postList {
-  padding-right: 21px;
-}
 .postListWrapper {
   position: fixed;
   top: 0;
@@ -521,22 +520,45 @@ html, body {
   overflow-y: scroll;
   overflow-x: hidden;
   margin-right: -21px;
-  padding-right: 10%;
+  padding-right: 20%;
   perspective: 1px;
   transform: translateZ(0);
   -webkit-overflow-scrolling: touch;
-  perspective-origin: calc( 45% + 116.5px );
+  perspective-origin: calc( 40% + 116.5px );
 }
 .postList--aside {
   z-index: 3;
   padding-left: 233px;
 }
 
+.frame, .footer {
+  padding: 0 5px;
+}
+
+.frame {
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.footer {
+  border-radius: 5px;
+}
+
+.cover {
+  padding: 5px;
+}
+
 .post {
   margin-bottom: 60px;
+  position: relative;
+}
+.post--list {
   text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
   color: white;
-  position: relative;
+}
+.post--full .frame, .post--full .footer {
+  background-color: white;
+  box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.5);
 }
 
 .cover {
@@ -546,8 +568,7 @@ html, body {
   z-index: -1;
 }
 .cover__hero {
-  transform: translateZ(-0.05px) scale(1.05);
-  z-index: -50;
+  transform: translateZ(-0.2px) scale(1.2);
   position: absolute;
   top: 0;
   right: 0;
@@ -560,7 +581,7 @@ html, body {
 }
 .cover__heroWrapper {
   display: block;
-  box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.5);
   overflow: hidden;
   height: 100%;
   width: 100%;
@@ -595,33 +616,41 @@ html, body {
 .cover__title, .cover__titleLink {
   display: block;
   color: white;
+  line-height: 1em;
+  letter-spacing: 0;
   transition:  transform 250ms cubic-bezier(0.5, 0.2, 0, 1) 1ms;
   backface-visibility: hidden;
 }
 
 .post--full {
-  box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.5);
   border-radius: 5px;
 }
 .post--full .cover {
-  height: calc(100vh + 21px);
+  height: calc(100vh + 10px);
+  margin-bottom: -5px;
   width: 100%;
 }
 .post--full .cover__hero {
   transform: translateZ(-1px) scale(2);
-  z-index: -1000;
-}
-.post--full .cover__heroWrapper {
-  box-shadow: none;
 }
 .post--full .cover__title {
-  right: 21px;
-  left: 21px;
+  right: 5px;
+  left: 5px;
   font-size: 55px;
+}
+.post--full .cover__titleLink {
+  transform: translateZ(-0.5px) scale(1.5);
 }
 
 .post--list .cover__title {
   font-size: 34px;
+}
+.post--list .cover__titleLink {
+  transform: translateZ(-0.1px) scale(1.1);
+}
+
+.content {
+  background: white;
 }
 
 /* Required Wordpress CSS
