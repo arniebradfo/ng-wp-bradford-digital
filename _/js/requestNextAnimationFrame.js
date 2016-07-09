@@ -1,13 +1,12 @@
 /**
- * whichTransitionEvent
- * crossbroswer transitionEnd event
- * @link https://davidwalsh.name/css-animation-callback
+ * requestNextAnimationFrame
+ * calls callback function on the frame after requestNextAnimationFrame was called
+ * @param func : function reference or literal
  */
 
 // usage: //
-// var transitionEvent = window.whichTransitionEvent();
-// transitionEvent && element.addEventListener(transitionEvent, function() {
-// 	console.log('Transition complete!  This is the callback, no library needed!');
+// window.requestNextAnimationFrame(function () {
+// 	animationFunction();
 // });
 
 (function (window) {

@@ -86,15 +86,17 @@ function template_post_item ($type = null) {
 		</section>
 
 		<section class="frame">
+			<?php if ($type === 'single' || $type === 'page'): ?>
 
 			<section class="content">
-				<?php if ($type === 'single' || $type === 'page') the_content(); ?>
+				<?php the_content(); ?>
 			</section>
 
 			<section class="comments">
-				<?php if ($type === 'single' || $type === 'page') comments_template(); ?>
+				<?php comments_template(); ?>
 			</section>
 
+			<?php endif; ?>
 		</section>
 
 
