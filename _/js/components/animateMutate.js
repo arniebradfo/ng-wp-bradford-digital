@@ -3,6 +3,8 @@
  * Mutate the DOM and animate the change
  * Animate with FLIP - First, Last, Invert, play
  * @link https://aerotwist.com/blog/flip-your-animations/
+ * @param {Object} elements - list of classes to find in the context
+ * @param {Node} context - the context to search for the elements in - document by default
  */
 
 (function (document, window) {
@@ -65,18 +67,4 @@
 			});
 		};
 	};
-
-	// var initalize = function () {
-	// 	// code...
-	// };
-	//
-	// // if it just needs raw DOM HTML
-	// if (document.readyState === 'loading') {
-	// 	document.addEventListener('DOMContentLoaded', initalize, false);
-	// } else { initalize(); }
-	//
-	// // if it needs other DOM resources
-	// if (document.readyState === 'loading' || document.readyState === 'interactive') {
-	// 	window.addEventListener('load', initalize, false);
-	// } else { initalize(); }
 })(document, window);

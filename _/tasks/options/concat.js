@@ -5,6 +5,7 @@ module.exports = {
 	js: {
 		src: [
 			'_/js/libs/*.js',
+			'_/js/components/*.js',
 			'_/js/*.js'
 		],
 		dest: '_/js/build/production.js'
