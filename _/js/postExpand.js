@@ -11,7 +11,7 @@
 
 		var postExpandFLIP = new window.AnimateMutate({
 			hero: 'cover__hero',
-			title: 'cover__titleLink',
+			title: ['cover__titleLink', true],
 			imgList: 'cover__heroImg--list',
 			imgBlur: 'cover__heroImg--blur'
 		}, this);
@@ -86,9 +86,9 @@
 			// remove INVERT css to PLAY the transitions
 			hero.node.style.transform = title.node.style.transform = '';
 		};
-		postExpandFLIP.cleanup = function () {
+		postExpandFLIP.cleanUp = function () {
 		};
-		postExpandFLIP.cleanupAfter = hero.node;
+		postExpandFLIP.cleanUpAfter = hero.node;
 
 		postExpandFLIP.animate();
 	};
