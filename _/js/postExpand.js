@@ -19,6 +19,16 @@
 		var post = postExpandFLIP.el.context;
 		var hero = postExpandFLIP.el.hero;
 		var title = postExpandFLIP.el.title;
+		var imgList = postExpandFLIP.el.imgList;
+
+		var onFinish = function () {
+			if (requestFullImg.img.complete && postExpandFLIP.complete) {
+				imgList.node.style.transition = postExpandFLIP.el.imgBlur.node.style.transition = 'opacity .5s linear';
+				window.requestAnimationFrame(function () {
+					imgList.node.style.opacity = postExpandFLIP.el.imgBlur.node.style.opacity = '';
+				});
+			}
+		};
 
 		postExpandFLIP.mutate = function () {
 			// mutate node
@@ -87,10 +97,14 @@
 			hero.node.style.transform = title.node.style.transform = '';
 		};
 		postExpandFLIP.cleanUp = function () {
+			onFinish();
 		};
 		postExpandFLIP.cleanUpAfter = hero.node;
 
+		var requestFullImg = new window.RequestImg(imgList.node, onFinish);
+
 		postExpandFLIP.animate();
+		requestFullImg.mutateAtts();
 	};
 
 	var initalize = function () {

@@ -179,6 +179,7 @@
 		this.cleanUpAfter = null; // {Element}  - element to attach the transitionEnd listner to
 
 		this.state = 0;
+		this.complete = false;
 
 		this.el = { context: {} }; // TODO: change this.el to this.elements later ?
 		this.el.context.node = context || document; // right order?
@@ -213,9 +214,10 @@
 		};
 
 		this.cleanUpWrapper = function (e) {
-			self.cleanUp();
 			self.state++; // 6
+			self.complete = true;
 			e.target.removeEventListener(e.type, self.cleanUp);
+			self.cleanUp();
 		};
 
 		this.animate = function () { // execute
@@ -236,6 +238,7 @@
 					self.cleanUpAfter.addEventListener(transitionEnd, self.cleanUpWrapper, false);
 				} else {
 					self.state++; // 6
+					self.complete = true;
 				}
 			});
 		};
@@ -263,21 +266,23 @@
 })(document, window);
 
 /**
- * requestImg
+ * RequestImg
  * mutate an image from one source to another, and animate
  */
 
 (function (document, window) {
-	window.RequestImg = function (img) {
+	window.RequestImg = function (img, callback) {
 		'use strict';
 		console.dir(this); // for debugging
-		var self = this;
+		this.img = img;
+		this.callback = callback;
 
-		this.mutateSrc = function () { // edit the img src and attach onload
-
-		};
-		this.callback = function () { // what to do once the img loads
-
+		this.mutateAtts = function () { // edit the img src and attach onload
+			this.img.onload = this.callback();
+			for (var att in this.img.dataset) {
+				this.img.setAttribute(att, this.img.dataset[att]);
+				this.img.removeAttribute('data-' + att);
+			}
 		};
 	};
 })(document, window);
@@ -303,6 +308,16 @@
 		var post = postExpandFLIP.el.context;
 		var hero = postExpandFLIP.el.hero;
 		var title = postExpandFLIP.el.title;
+		var imgList = postExpandFLIP.el.imgList;
+
+		var onFinish = function () {
+			if (requestFullImg.img.complete && postExpandFLIP.complete) {
+				imgList.node.style.transition = postExpandFLIP.el.imgBlur.node.style.transition = 'opacity .5s linear';
+				window.requestAnimationFrame(function () {
+					imgList.node.style.opacity = postExpandFLIP.el.imgBlur.node.style.opacity = '';
+				});
+			}
+		};
 
 		postExpandFLIP.mutate = function () {
 			// mutate node
@@ -371,10 +386,14 @@
 			hero.node.style.transform = title.node.style.transform = '';
 		};
 		postExpandFLIP.cleanUp = function () {
+			onFinish();
 		};
 		postExpandFLIP.cleanUpAfter = hero.node;
 
+		var requestFullImg = new window.RequestImg(imgList.node, onFinish);
+
 		postExpandFLIP.animate();
+		requestFullImg.mutateAtts();
 	};
 
 	var initalize = function () {

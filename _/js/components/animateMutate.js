@@ -29,6 +29,7 @@
 		this.cleanUpAfter = null; // {Element}  - element to attach the transitionEnd listner to
 
 		this.state = 0;
+		this.complete = false;
 
 		this.el = { context: {} }; // TODO: change this.el to this.elements later ?
 		this.el.context.node = context || document; // right order?
@@ -63,9 +64,10 @@
 		};
 
 		this.cleanUpWrapper = function (e) {
-			self.cleanUp();
 			self.state++; // 6
+			self.complete = true;
 			e.target.removeEventListener(e.type, self.cleanUp);
+			self.cleanUp();
 		};
 
 		this.animate = function () { // execute
@@ -86,6 +88,7 @@
 					self.cleanUpAfter.addEventListener(transitionEnd, self.cleanUpWrapper, false);
 				} else {
 					self.state++; // 6
+					self.complete = true;
 				}
 			});
 		};

@@ -63,12 +63,20 @@ function template_post_item ($type = null) {
 
 			<figure class="cover__hero">
 				<a class="cover__heroWrapper" href="<?php the_permalink(); ?>" >
-					<?php if ($type === 'single' || $type === 'page')
-						the_post_thumbnail('full', array( 'class' => 'cover__heroImg cover__heroImg--full' ) ); ?>
-					<?php if ($type === 'list')
-						the_post_thumbnail('medium', array( 'class' => 'cover__heroImg cover__heroImg--blur' ) ); ?>
-					<?php if ($type === 'list')
-						the_post_thumbnail('medium', array( 'class' => 'cover__heroImg cover__heroImg--list' ) ); ?>
+					<?php
+						$full = get_the_post_thumbnail(null, 'full', array( 'class' => 'cover__heroImg cover__heroImg--full' ) );
+						$blur = get_the_post_thumbnail(null, 'medium', array( 'class' => 'cover__heroImg cover__heroImg--blur' ) );
+						$list = get_the_post_thumbnail(null, 'medium', array( 'class' => 'cover__heroImg cover__heroImg--list' ) );
+					?>
+					<?php if ($type === 'single' || $type === 'page'): ?>
+						<?php echo $full; ?>
+						<?php // the_post_thumbnail('full', array( 'class' => 'cover__heroImg cover__heroImg--full' ) ); ?>
+					<?php elseif ($type === 'list'): ?>
+						<?php echo $blur; ?>
+						<?php echo encode_data_atts($list, $full); ?>
+						<?php // the_post_thumbnail('medium', array( 'class' => 'cover__heroImg cover__heroImg--blur' ) ); ?>
+						<?php // the_post_thumbnail('medium', array( 'class' => 'cover__heroImg cover__heroImg--list' ) ); ?>
+					<?php endif; ?>
 				</a>
 			</figure>
 
