@@ -298,6 +298,17 @@
 	var postExpand = function (e) {
 		e.preventDefault();
 
+		// TODO: move this to click binding
+		var href;
+		var parent = e.target;
+		while (true) {
+			if (parent.href) {
+				href = parent.href;
+				break;
+			}
+			parent = parent.parentElement;
+		}
+
 		var postExpandFLIP = new window.AnimateMutate({
 			hero: 'cover__hero',
 			title: ['cover__titleLink', true],
@@ -391,6 +402,16 @@
 		postExpandFLIP.cleanUpAfter = hero.node;
 
 		var requestFullImg = new window.RequestImg(imgList.node, onFinish);
+
+		var xhr = new window.XMLHttpRequest();
+		xhr.open('GET', href, true);
+		console.dir(xhr);
+		xhr.timeout = 5000;
+		xhr.setRequestHeader('WP-Request-Type', 'GetPage');
+		xhr.onload = function () {
+			console.log(xhr.responseText);
+		};
+		xhr.send();
 
 		postExpandFLIP.animate();
 		requestFullImg.mutateAtts();
