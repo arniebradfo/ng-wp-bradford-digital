@@ -6,26 +6,15 @@
 (function (document, window) {
 	'use strict';
 
-	var postExpand = function (e) {
-		e.preventDefault();
-
-		// TODO: move this to click binding
-		var href;
-		var parent = e.target;
-		while (true) {
-			if (parent.href) {
-				href = parent.href;
-				break;
-			}
-			parent = parent.parentElement;
-		}
+	window.postExpand = function (e, context, href) {
+		// e.preventDefault();
 
 		var postExpandFLIP = new window.AnimateMutate({
 			hero: 'cover__hero',
 			title: ['cover__titleLink', true],
 			imgList: 'cover__heroImg--list',
 			imgBlur: 'cover__heroImg--blur'
-		}, this);
+		}, context);
 
 		var post = postExpandFLIP.el.context;
 		var hero = postExpandFLIP.el.hero;
@@ -128,13 +117,13 @@
 		requestFullImg.mutateAtts();
 	};
 
-	var initalize = function () {
-		var heroWraps = document.getElementsByClassName('post--postExpandJS');
-		for (var i = 0; i < heroWraps.length; i++) {
-			var heroWrap = heroWraps[i];
-			heroWrap.addEventListener('click', postExpand, true);
-		}
-	};
+	// var initalize = function () {
+	// 	var heroWraps = document.getElementsByClassName('post--postExpandJS');
+	// 	for (var i = 0; i < heroWraps.length; i++) {
+	// 		var heroWrap = heroWraps[i];
+	// 		// heroWrap.addEventListener('click', postExpand, true);
+	// 	}
+	// };
 
 	// // if it just needs raw DOM HTML
 	// if (document.readyState === 'loading') {
@@ -142,7 +131,7 @@
 	// } else { initalize(); }
 
 	// if it needs other DOM resources
-	if (document.readyState === 'loading' || document.readyState === 'interactive') {
-		window.addEventListener('load', initalize, false);
-	} else { initalize(); }
+	// if (document.readyState === 'loading' || document.readyState === 'interactive') {
+	// 	window.addEventListener('load', initalize, false);
+	// } else { initalize(); }
 })(document, window);
