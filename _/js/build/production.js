@@ -489,29 +489,56 @@
 		xhr.timeout = 5000;
 		xhr.setRequestHeader('WP-Request-Type', 'GetPage');
 		xhr.onload = function () {
-			console.log(xhr.responseText);
-		};
-		xhr.send();
+			var workspace = document.createElement('div');
+			workspace.innerHTML = xhr.responseText;
+			console.log(workspace);
 
+			// var headMeta = document.head.getElementsByTagName('meta');
+			// var newHeadMeta = workspace.querySelector('#ajax-head').getElementsByTagName('meta');
+			// for (var i = headMeta.length - 1; i > -1; --i) { // remove all meta tags
+			// 	headMeta[i].remove();
+			// }
+			// for (var j = newHeadMeta.length - 1; j > -1; --j) { // replace meta tags with new ones
+			// 	document.head.appendChild(newHeadMeta[j]);
+			// }
+
+			// update header link tags
+			// wpajax.updateLinkTag('next', workspace);
+			// wpajax.updateLinkTag('prev', workspace);
+			// wpajax.updateLinkTag('shortlink', workspace);
+			// wpajax.updateLinkTag('canonical', workspace);
+
+			// if (workspace.getElementsByTagName('title')) {
+			// 	document.title = workspace.getElementsByTagName('title')[0].innerHTML; // update the doc title
+			// }
+			// if (this.main && workspace.querySelector(this.main).innerHTML) {
+			// 	this.main.classList.add(opts.ajaxClass);
+			// 	this.main.innerHTML = workspace.querySelector(this.main).innerHTML; // update the content
+			// }
+
+			// // update the the class list of all menu items
+			// var menuItems = workspace.querySelector('#wp-all-registered-nav-menus').querySelectorAll('.menu-item');
+			// for (var k = 0; k < menuItems.length; ++k) {
+			// 	var item = menuItems[k];
+			// 	document.getElementById(item.id).className = item.className;
+			// }
+
+			// // TODO: Test this
+			// if (typeof ga === 'function') { // google universial analytics tracking
+			// 	ga('send', 'pageview'); // send a pageview connected to anayltics.js loaded in footer.php
+			// }
+
+			// // comments section will be new - need to rebind events to new elements
+			// wpajax.attachComments();
+			// attachCtrlEnterSubmitWPComment();
+			// // console.log('ajax loaded!\n'+statusText);
+			// return true;
+		};
+
+		// DO!
+		xhr.send();
 		postExpandFLIP.animate();
 		requestFullImg.mutateAtts();
 	};
 
-	// var initalize = function () {
-	// 	var heroWraps = document.getElementsByClassName('post--postExpandJS');
-	// 	for (var i = 0; i < heroWraps.length; i++) {
-	// 		var heroWrap = heroWraps[i];
-	// 		// heroWrap.addEventListener('click', postExpand, true);
-	// 	}
-	// };
-
-	// // if it just needs raw DOM HTML
-	// if (document.readyState === 'loading') {
-	// 	document.addEventListener('DOMContentLoaded', initalize, false);
-	// } else { initalize(); }
-
-	// if it needs other DOM resources
-	// if (document.readyState === 'loading' || document.readyState === 'interactive') {
-	// 	window.addEventListener('load', initalize, false);
-	// } else { initalize(); }
 })(document, window);
