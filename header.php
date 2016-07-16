@@ -48,30 +48,31 @@
 
 <head>
 
-<?php endif; // step out of ajax detection for the head ?>
+<?php else: // step out of ajax detection for the head ?>
 
-<?php if ($GLOBALS['is_ajax']){ ?><div id="ajax-head"><?php } // wrap meta info ?>
+<div id="ajax-head">
 
-	<meta charset="<?php bloginfo('charset'); ?>"/>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0 minimal-ui" />
-	<link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
-	<?php author_meta_tag(); ?>
+<?php endif; ?>
 
-	<!-- wp_head starts here -->
-	<?php wp_head(); ?>
+<meta charset="<?php bloginfo('charset'); ?>"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0 minimal-ui" />
+<link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
+<?php author_meta_tag(); ?>
+<!-- wp_head starts here -->
+<?php wp_head(); ?>
 
 <?php if ($GLOBALS['is_ajax']): ?>
 
-	</div><!-- #ajax-head -->
+</div><!-- #ajax-head -->
 
-	<nav id="wp-all-registered-nav-menus">
-		<?php
-			$menus = get_registered_nav_menus();
-			foreach ( $menus as $location => $description ) {
-				wp_nav_menu( array('theme_location' => $location) );
-			}
-		?>
-	</nav>
+<nav id="wp-all-registered-nav-menus">
+	<?php
+		$menus = get_registered_nav_menus();
+		foreach ( $menus as $location => $description ) {
+			wp_nav_menu( array('theme_location' => $location) );
+		}
+	?>
+</nav>
 
 <?php else:	// non-ajax ?>
 
@@ -110,6 +111,4 @@
 
 	<main class="mainContent mainContent--active">
 
-	<?php endif; // end ajax detection ?>
-
-		<!-- <main class="main"><?php // Pjax content wrapper element ?> -->
+<?php endif; // end ajax detection ?>

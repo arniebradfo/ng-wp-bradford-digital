@@ -107,6 +107,7 @@
 		xhr.open('GET', href, true);
 		console.dir(xhr);
 		xhr.timeout = 5000;
+		xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest'); // ALWAYS set this!
 		xhr.setRequestHeader('WP-Request-Type', 'GetPage');
 		xhr.onload = function () {
 			var workspace = document.createElement('div');
@@ -160,5 +161,4 @@
 		postExpandFLIP.animate();
 		requestFullImg.mutateAtts();
 	};
-
 })(document, window);

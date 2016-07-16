@@ -70,12 +70,9 @@ function template_post_item ($type = null) {
 					?>
 					<?php if ($type === 'single' || $type === 'page'): ?>
 						<?php echo $full; ?>
-						<?php // the_post_thumbnail('full', array( 'class' => 'cover__heroImg cover__heroImg--full' ) ); ?>
 					<?php elseif ($type === 'list'): ?>
 						<?php echo $blur; ?>
 						<?php echo encode_data_atts($list, $full); ?>
-						<?php // the_post_thumbnail('medium', array( 'class' => 'cover__heroImg cover__heroImg--blur' ) ); ?>
-						<?php // the_post_thumbnail('medium', array( 'class' => 'cover__heroImg cover__heroImg--list' ) ); ?>
 					<?php endif; ?>
 				</a>
 			</figure>
