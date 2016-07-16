@@ -65,6 +65,7 @@ $textPADDING: fib(9);
 			}
 		}
 		&__title{
+			@include absolute(null 0 0);
 			// transform: translateZ(0);
 			&Link{
 				@include parallax(-0.5); // TODO
