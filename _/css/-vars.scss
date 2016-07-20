@@ -60,6 +60,8 @@ $boxShadowCOLOR: black;
 $boxShadowOPACITY: 0.5;
 $boxShadow: $boxShadowX $boxShadowY $boxShadowBLUR $boxShadowSPREAD rgba($boxShadowCOLOR, $boxShadowOPACITY);
 
+$buttonSIZE: fib(9.5);
+
 
 // --------------------------------------------------------------- UTILITY CLASSES
 .checkbox-hack{

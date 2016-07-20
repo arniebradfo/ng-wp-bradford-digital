@@ -80,7 +80,7 @@
 
 <body <?php body_class(); ?> >
 
-	<input id="mainNav--opener" type="checkbox" />
+	<input id="mainNav--opener" type="checkbox" checked/>
 
 	<header class="mainNav nav" role="navigation">
 		<a class="mainNav__logo" href="<?php echo esc_url( home_url( '/' ) ); ?>">

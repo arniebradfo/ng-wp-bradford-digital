@@ -23,3 +23,5 @@ node_modules
 resources/*
 
 svg-defs-demo.html
+
+*.xd

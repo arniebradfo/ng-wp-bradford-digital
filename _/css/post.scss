@@ -1,18 +1,41 @@
 // post.scss
 
+$postSPACING--list: fib(9);
+
 .post{
-	margin-bottom: 60px;
+	margin-bottom: fib(11);
 	position: relative;
 	&--list{ // posts in a list
 		text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
 		color: white;
+		.author{
+			left: $postSPACING--list;
+		}
 		.frame{ display: none; }
+		.excerpt, .info{
+			padding: 0 $postSPACING--list;
+		}
+		.cover{
+			&__hero{
+				@include parallax(-0.1);
+			}
+			&__title{
+				padding: 0 $postSPACING--list;
+				font-size: fib(9);
+				&Link{
+					@include parallax(-0.05);
+				}
+			}
+		}
 	}
 	&--single{ // a post (not page) in full
 	}
 	&--page{ // a page (not post) in full
+
 	}
 	&--full{ // a page or post in full
+		// border-radius: $borderRADIUS;
+
 		.frame, .footer{
 			background-color: white;
 			box-shadow: $boxShadow;
@@ -21,5 +44,75 @@
 			min-height: 100vh;
 		}
 		.excerpt{ display: none; }
+		.cover{
+			height: calc(100vh + #{$mainContentINSET * 2});
+			margin-bottom: (-$mainContentINSET);
+			width: 100%;
+			&__hero{
+				@include parallax(-1);
+				&Wrapper{
+				}
+			}
+			&__title{
+				right: $mainContentINSET;
+				left:  $mainContentINSET;
+				bottom: 0;
+				font-size: fib(10);
+				&Link{
+					@include parallax(-0.5);
+				}
+			}
+		}
+	}
+}
+
+// cover.scss
+
+.cover{
+	height: 20vh;
+	width: 100%;
+	position: relative;
+	z-index: -1;
+	&__hero{
+		@include absolute(0);
+		height: 100%;
+		width: 100%;
+		@include transition(transform);
+		&Wrapper{
+			display: block;
+			box-shadow: $boxShadow;
+			overflow: hidden;
+			height: 100%;
+			width: 100%;
+			border-radius: $borderRADIUS;
+			position: relative;
+			background: black;
+		}
+		&Img{
+			object-fit: cover;
+			display: block;
+			width: 100%;
+			height: 100%;
+			opacity: 0.7;
+			@include absolute(0);
+			&--blur{
+				filter: blur(6px);
+				opacity: 0;
+			}
+			&--list{ }
+			&--full{ }
+		}
+	}
+	&__title{
+		@include absolute(null 0 20%);
+		&, &Link{
+			display: block;
+			color: white;
+			line-height: 1em;
+			letter-spacing: 0;
+			@include transition(transform transform-origin);
+			transform-origin: bottom;
+			// perspective-origin: 0 0;
+		}
 	}
 }

@@ -1,0 +1,31 @@
+// authorInfo.scss
+
+.author{
+	@include absolute(0 null null 0);
+	display: flex;
+	@include metaTYPOGRAPHY;
+	margin-left: (-($buttonSIZE / 2));
+	align-items: center;
+	&__text{
+		padding-left: fib(5);
+	}
+	&__avatar{
+		overflow: hidden;
+		border-radius: 9999px;
+		height: $buttonSIZE;
+		width:  $buttonSIZE;
+		&Img{
+			height: 100%;
+			width:  100%;
+		}
+	}
+	&__by{
+
+	}
+	&__authorLink{
+
+	}
+	&__dateLink{
+
+	}
+}

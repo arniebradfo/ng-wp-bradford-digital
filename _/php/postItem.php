@@ -55,11 +55,13 @@ function template_post_item ($type = null) {
 
 		<header class="cover">
 
+			<div class="linkBar">
+				<?php wpajax_the_author(); ?>
+			</div>
+
 			<h2 class="cover__title">
 				<a class="cover__titleLink" href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
 			</h2>
-
-			<?php // posted_on(); ?>
 
 			<figure class="cover__hero">
 				<a class="cover__heroWrapper" href="<?php the_permalink(); ?>" >
@@ -79,12 +81,21 @@ function template_post_item ($type = null) {
 
 		</header>
 
-		<!-- <footer class="postmetadata">
-			<?php the_tags(__('Tags: ','wpajax'), ', ', '<br />'); ?>
-			<?php _e('Posted in','wpajax'); ?>
-			<?php the_category(', '); ?> |
-			<?php comments_popup_link(__('No Comments &#187;','wpajax'), __('1 Comment &#187;','wpajax'), __('% Comments &#187;','wpajax')); ?>
-		</footer> -->
+		<footer class="info">
+			<?php if (get_the_tags()): ?>
+			<span class="info__tag info__item">
+				<?php the_tags(__('Tagged: ','wpajax'), ', ', ''); ?>
+			</span>
+			<?php endif; ?>
+			<?php if (get_the_category()):?>
+			<span class="info__category info__item">
+				<?php _e('Category: ','wpajax'); the_category(', '); ?>
+			</span>
+			<?php endif; ?>
+			<span class="info__comment info__item">
+				<?php comments_popup_link(__('No Comments','wpajax'), __('1 Comment','wpajax'), __('% Comments','wpajax'), 'commentsLink', __('Comments Off','wpajax')); ?>
+			</span>
+		</footer>
 
 		<section class="excerpt">
 			<?php if ($type === 'list') the_excerpt(); ?>

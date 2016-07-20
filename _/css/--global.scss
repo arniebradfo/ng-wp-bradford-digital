@@ -19,12 +19,14 @@
 // ------------------------------------------------------------ DEPENDENCIES
 @import "-custom-reset";
 @import "-print-styles";
+@import 'typography';
 
 // ------------------------------------------------------------ DEPENDENCIES
 @import "structure"; // contains vars
 @import "post";
-@import "cover";
 @import "content";
 @import "footer";
+@import "info";
+@import "author";
 
 @import "wp-css";

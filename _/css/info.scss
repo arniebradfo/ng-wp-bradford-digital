@@ -1,0 +1,18 @@
+// info.scss
+
+.info{
+	@include metaTYPOGRAPHY;
+	&__item{
+		display: inline-block;
+		margin-right: fib(7);
+	}
+	&__tag{
+
+	}
+	&__category{
+
+	}
+	&__comment{
+
+	}
+}
