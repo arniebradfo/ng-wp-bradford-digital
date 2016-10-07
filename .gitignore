@@ -1,7 +1,6 @@
 # global find ignore for sublime text
 # -node_modules/*,-css/build/*,-js/build/*,-svg/build/*,-resources/*,-.sass-cache/*,-style.css,-*.min.*
 
-lib-cov
 *.seed
 *.log
 *.csv
@@ -18,10 +17,8 @@ results
 npm-debug.log
 node_modules
 
-.sass-cache
+*.sass-cache
 
-resources/*
+_/resources/**
 
 svg-defs-demo.html
-
-*.xd
