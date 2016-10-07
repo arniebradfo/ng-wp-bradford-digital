@@ -24,16 +24,16 @@
     "grunt-contrib-connect": "^1.0.2",
     "grunt-contrib-jshint": "^1.0.0",
     "grunt-contrib-sass": "^1.0.0",
-    "grunt-contrib-uglify": "^1.0.1",
+    "grunt-contrib-uglify": "^2.0.0",
     "grunt-contrib-watch": "^1.0.0",
     "grunt-dev-update": "^2.0.0",
     "grunt-modernizr": "^1.0.2",
     "grunt-postcss": "^0.8.0",
     "grunt-svgstore": "^1.0.0",
     "load-grunt-tasks": "^3.1.0",
-    "normalize.css": "^4.1.1",
+    "normalize.css": "^5.0.0",
     "reset-css": "^2.0.2011012603",
-    "sanitize.css": "^3.3.0"
+    "sanitize.css": "^4.1.0"
   },
   "dependencies": {}
 }
