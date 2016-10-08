@@ -10,13 +10,13 @@ module.exports = {
 		],
 		dest: '_/js/build/production.js'
 	},
-	modernizr: {
-		src: [
-			'_/js/build/modernizr-custom.js',
-			'_/js/requires_modernizr/*.js'
-		],
-		dest: '_/js/build/modernizr-custom.js'
-	},
+	// modernizr: {
+	// 	src: [
+	// 		'_/js/build/modernizr-custom.js',
+	// 		'_/js/requires_modernizr/*.js'
+	// 	],
+	// 	dest: '_/js/build/modernizr-custom.js'
+	// },
 	normalize: {
 		src: [ 'node_modules/normalize.css/normalize.css' ],
 		dest: '_/css/libs/normalize.scss'
@@ -26,7 +26,7 @@ module.exports = {
 		dest: '_/css/libs/reset.scss'
 	},
 	sanitize: {
-		src: [ 'node_modules/sanitize.css/lib/sanitize.scss' ],
+		src: [ 'node_modules/sanitize.css/sanitize.css' ],
 		dest: '_/css/libs/sanitize.scss'
 	}
 };

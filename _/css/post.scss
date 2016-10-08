@@ -96,14 +96,16 @@ $postSPACING--list: fib(9);
 			opacity: 0.7;
 			@include absolute(0);
 			&--blur{
-				filter: blur(6px);
 				opacity: 0;
+				// filter: blur(6px); // this breaks chrome
+				// https://bugs.chromium.org/p/chromium/issues/detail?id=654170
 			}
 			&--list{ }
 			&--full{ }
 		}
 	}
 	&__title{
+		z-index: index($z-of, cover__title);
 		@include absolute(null 0 20%);
 		&, &Link{
 			display: block;

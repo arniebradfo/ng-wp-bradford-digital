@@ -254,7 +254,7 @@
 	window.Progress = function () {
 		'use strict';
 		console.dir(this); // for debugging
-		var self = this;
+		// var self = this;
 
 		this.state = 0; // progress between 0 and 1
 		this.forward = function (amount) { // update the progress element
@@ -339,6 +339,7 @@
 			e.preventDefault();
 
 			var types = {
+				// a list of animation types and their corrosponding css class identifiers
 				postExpand: 'post--postExpandJS'
 			};
 

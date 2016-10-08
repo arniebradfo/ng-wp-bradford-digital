@@ -12,7 +12,13 @@ module.exports = {
 			// '_/js/requires_modernizr/*.js',
 			'_/js/*.js'
 		],
-		tasks: ['jshint', 'concat:js', 'concat:modernizr', 'uglify', 'modernizr'],
+		tasks: [
+			'jshint',
+			'concat:js',
+			// 'concat:modernizr',
+			'uglify',
+			'modernizr'
+		],
 		options: {
 			spawn: false
 		}

@@ -13,12 +13,12 @@ module.exports = {
 		},
 		src: '_/js/build/production.js',
 		dest: '_/js/build/production.min.js'
-	},
-	modernizr: {
-		options: {
-			preserveComments: false
-		},
-		src: '_/js/build/modernizr-custom.js',
-		dest: '_/js/build/modernizr-custom.min.js'
 	}
+	// modernizr: {
+	// 	options: {
+	// 		preserveComments: false
+	// 	},
+	// 	src: '_/js/build/modernizr-custom.js',
+	// 	dest: '_/js/build/modernizr-custom.min.js'
+	// }
 };

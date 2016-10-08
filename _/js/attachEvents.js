@@ -50,6 +50,7 @@
 			e.preventDefault();
 
 			var types = {
+				// a list of animation types and their corrosponding css class identifiers
 				postExpand: 'post--postExpandJS'
 			};
 
