@@ -16,8 +16,8 @@ module.exports = {
 			'jshint',
 			'concat:js',
 			// 'concat:modernizr',
-			'uglify',
-			'modernizr'
+			'uglify'
+			// 'modernizr'
 		],
 		options: {
 			spawn: false
