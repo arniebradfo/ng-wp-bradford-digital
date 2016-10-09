@@ -61,37 +61,6 @@ function single_comment( $comment_ID ){
 	return;
 }
 
-// Posted On
-function wpajax_the_author() {
-	?>
-	<div class="author">
-		<a class="author__avatar">
-			<?php echo get_avatar(
-				get_the_author_meta('ID'),
-				32,
-				'retro',
-				'author gravatar profile image',
-				array( 'class' => 'author__avatarImg' )
-			); ?>
-		</a>
-		<div class="author__text" >
-			<span class="author__by" >
-				By:
-				<a class="author__byLink" >
-					<?php echo esc_attr( get_the_author() ); ?>
-				</a>
-			</span>
-			 <br/>
-			<a class="author__dateLink" >
-				<time datetime="<?php echo esc_attr( get_the_date( 'c' ) ); ?>" pubdate>
-					<?php echo esc_html( get_the_date() ); ?>
-				</time>
-			</a>
-		</div>
-	</div>
-	<?php
-}
-
 // add option for fallback site author
 function author_meta_tag( $nameType='display_name' ){
 	global $post;

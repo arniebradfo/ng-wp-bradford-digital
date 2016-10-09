@@ -1,6 +1,7 @@
 <?php
 /**
  *
+ * Template Part
  * postItem
  *
  * @package WordPress
@@ -9,7 +10,7 @@
 **/
 
 // HTML for a post links - use inside the loop
-function template_post_item ($type = null) {
+function wpajax_template_post_item ($type = null) {
 
 	// detect the page type
 	if ( !isset($type) ) {

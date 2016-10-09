@@ -44,7 +44,7 @@
 			*/
 		?>
 
-		<?php template_post_item(); ?>
+		<?php wpajax_template_post_item(); ?>
 
 	<?php endwhile; endif; ?>
 

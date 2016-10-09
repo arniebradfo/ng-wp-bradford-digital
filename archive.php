@@ -17,7 +17,7 @@
 		<section class="post-items">
 			<?php while ( have_posts()) : the_post(); ?>
 
-				<?php template_post_item(); ?>
+				<?php wpajax_template_post_item(); ?>
 
 			<?php endwhile; ?>
 		</section>

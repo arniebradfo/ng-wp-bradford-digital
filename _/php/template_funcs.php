@@ -8,6 +8,7 @@
  * @since 0.1.0
 **/
 
+// encodes the attributes of tag as data-attributes in a target tag
 function encode_data_atts ($targetTag, $dataTag) {
 	$dataAtts = preg_replace(
 		'/(<[^\s\/>]+)/i',
