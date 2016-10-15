@@ -180,7 +180,9 @@
 
 		this.state = 0;
 		this.stateMax = 6; // how high the state increments
-		this.complete = false;
+		this.complete = function () {
+			return this.stateMax <= this.state;
+		};
 
 		this.el = { context: {} }; // TODO: change this.el to this.elements later ?
 		this.el.context.node = context || document; // right order?
@@ -216,7 +218,6 @@
 
 		this.cleanUpWrapper = function (e) {
 			self.state++; // 6
-			self.complete = true;
 			e.target.removeEventListener(e.type, self.cleanUp);
 			self.cleanUp();
 		};
@@ -239,7 +240,6 @@
 					self.cleanUpAfter.addEventListener(transitionEnd, self.cleanUpWrapper, false);
 				} else {
 					self.state++; // 6
-					self.complete = true;
 				}
 			});
 		};
@@ -257,15 +257,14 @@
  */
 
 (function (document, window) {
-	window.Progress = function (states) {
+	window.Progress = function (trackedStates, callback) {
 		'use strict';
 		console.dir(this); // for debugging
 		var self = this;
 
-		states = [ [0, 2], [0, 5] ]; // hardcode
+		// trackedStates = [ [0, 2], [0, 5] ]; // hardcode
 
-		this.trackedStates = states;
-		this.trackedStatesComplete = false;
+		this.trackedStates = trackedStates;
 		this.trackedStatesTotal = (function () {
 			var _total = 0;
 			for (var i = 0; i < self.trackedStates.length; i++) {
@@ -273,29 +272,62 @@
 			}
 			return _total;
 		})();
-
-		this.state = 0; // progress between 0 and 1
-		this.forward = function (amount) { // update the progress element
-			if (this.state >= 1) {
-				this.complete();
-				return;
+		this.trackedState = function () {
+			var _total = 0;
+			for (var i = 0; i < self.trackedStates.length; i++) {
+				_total += self.trackedStates[i][0];
 			}
-			window.requestAnimationFrame(this.forward);
-			this.trackedStatesComplete = true;
+			return _total;
+		};
+		this.trakedStatePrevious = 0;
+		this.trackedStatesComplete = function () {
 			for (var i = 0; i < this.trackedStates.length; i++) {
-				if (this.trackedStates[i][0] !== this.trackedStates[i][1]) {
-					this.trackedStatesComplete = false;
+				console.log(this.trackedStates[i][0]());
+				console.log(this.trackedStates[i][1]);
+				if (this.trackedStates[i][0]() < this.trackedStates[i][1]) {
+					return false;
 				}
 			}
-			if (this.trackedStatesComplete) {
-				this.state = 1;
-			} else {
-				// update the state number based on other states
-			}
-			this.update();
+			return true;
 		};
+
+		this.state = 0; // progress between 0 and 1
+		this.stateMax = 1; // how high the state increments
+		this.complete = function () {
+			return this.stateMax <= this.state;
+		};
+		this.params = {
+			reserved: this.stateMax * 0.1,
+			coefficient: (1 / 100)
+		};
+
 		this.update = null; // {Function} - uses state to animate ui feedback
-		this.complete = null; // {Function} - call back for when update completes
+		this.callback = callback; // {Function} - call back for when update completes
+
+		this.forward = function () { // update the progress element
+			console.log(self.trackedStatesComplete());
+			if (self.complete()) {
+				self.callback();
+				return;
+			}
+			window.requestAnimationFrame(self.forward);
+			if (self.trackedStatesComplete()) {
+				self.state = self.stateMax;
+			} else {
+				// increase by a fraction of the remaining reserved
+				var _remaining = self.stateMax - self.state;
+				if (self.trackedState > self.trakedStatePrevious) {
+					var _difference = self.trackedState - self.trakedStatePrevious;
+					self.state += (_difference / (self.trackedStatesTotal - self.trakedStatePrevious)) * _remaining;
+					// self.state += (_difference / self.trackedStatesTotal) * (self.stateMax - self.params.reserved);
+					self.trakedStatePrevious = self.trakedState;
+				} else {
+					self.state += self.params.coefficient * _remaining;
+				}
+			}
+			self.update();
+		};
+		this.start = this.forward;
 	};
 })(document, window);
 
@@ -308,15 +340,27 @@
 	window.RequestImg = function (img, callback) {
 		'use strict';
 		console.dir(this); // for debugging
+		var self = this;
+
 		this.img = img;
 		this.callback = callback;
 
+		this.state = function () {
+			return (self.img.complete && self.attsMutated) ? 1 : 0;
+		};
+		this.stateMax = 1; // how high the state increments
+		this.complete = function () {
+			return self.stateMax <= self.state;
+		};
+
+		this.attsMutated = false;
 		this.mutateAtts = function () { // edit the img src and attach onload
-			this.img.onload = this.callback();
+			this.img.onload = this.callback;
 			for (var att in this.img.dataset) {
 				this.img.setAttribute(att, this.img.dataset[att]);
 				this.img.removeAttribute('data-' + att);
 			}
+			this.attsMutated = true;
 		};
 	};
 })(document, window);
@@ -439,18 +483,12 @@
 		var loadBar = postExpandFLIP.el.loadBar;
 
 		var onFinish = function () {
-			if (requestFullImg.img.complete && postExpandFLIP.complete) {
+			if (requestFullImg.complete() && postExpandFLIP.complete()) {
 				imgList.node.style.transition = postExpandFLIP.el.imgBlur.node.style.transition = 'opacity .5s linear';
 				window.requestAnimationFrame(function () {
 					imgList.node.style.opacity = postExpandFLIP.el.imgBlur.node.style.opacity = '';
 				});
 			}
-		};
-
-		var postExpandLoader = new window.Progress();
-		var loader = loadBar.node.getElementsByClassName('button__loadbar')[0];
-		postExpandLoader.update = function () {
-			loader.style.transform = 'translateX(' + this.state + ')';
 		};
 
 		postExpandFLIP.mutate = function () {
@@ -474,6 +512,7 @@
 			// collect rects without transform
 			hero.node.style.transform = title.node.style.transform = loadBar.node.style.transition = 'none';
 		};
+
 		postExpandFLIP.invert = function () {
 			// apply INVERT css to mutate node back to its original state
 
@@ -517,18 +556,19 @@
 
 			// post.node.style.opacity = 0.5; // for debugging
 		};
+
 		postExpandFLIP.play = function () {
 			// switch on transitions
 			hero.node.style.transition = title.node.style.transition = loadBar.node.style.transition = '';
 			// remove INVERT css to PLAY the transitions
 			hero.node.style.transform = title.node.style.transform = loadBar.node.style.transform = '';
 		};
-		postExpandFLIP.cleanUp = function () {
-			onFinish();
-		};
+
+		// postExpandFLIP.cleanUp = onFinish;
+
 		postExpandFLIP.cleanUpAfter = hero.node;
 
-		var requestFullImg = new window.RequestImg(imgList.node, onFinish);
+		var requestFullImg = new window.RequestImg(imgList.node);
 
 		var xhr = new window.XMLHttpRequest();
 		xhr.open('GET', href, true);
@@ -545,9 +585,24 @@
 			post.node.getElementsByClassName('frame')[0].innerHTML = workspace.getElementsByClassName('frame')[0].innerHTML;
 		};
 
+		// PROGRESS ELEMENT
+		var xhrReadyState = function () {
+			return xhr.readyState;
+		};
+		var trackedStates = [
+			[xhrReadyState, 4],
+			[requestFullImg.state, requestFullImg.stateMax]
+		];
+		var postExpandLoader = new window.Progress(trackedStates, onFinish);
+		var loader = loadBar.node.getElementsByClassName('button__loadbar')[0];
+		postExpandLoader.update = function () {
+			loader.style.transform = 'scaleX(' + this.state + ')';
+		};
+
 		// DO!
 		xhr.send();
 		postExpandFLIP.animate();
+		postExpandLoader.start();
 		requestFullImg.mutateAtts();
 	};
 })(document, window);

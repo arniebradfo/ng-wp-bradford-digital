@@ -24,18 +24,12 @@
 		var loadBar = postExpandFLIP.el.loadBar;
 
 		var onFinish = function () {
-			if (requestFullImg.img.complete && postExpandFLIP.complete) {
+			if (requestFullImg.complete() && postExpandFLIP.complete()) {
 				imgList.node.style.transition = postExpandFLIP.el.imgBlur.node.style.transition = 'opacity .5s linear';
 				window.requestAnimationFrame(function () {
 					imgList.node.style.opacity = postExpandFLIP.el.imgBlur.node.style.opacity = '';
 				});
 			}
-		};
-
-		var postExpandLoader = new window.Progress();
-		var loader = loadBar.node.getElementsByClassName('button__loadbar')[0];
-		postExpandLoader.update = function () {
-			loader.style.transform = 'translateX(' + this.state + ')';
 		};
 
 		postExpandFLIP.mutate = function () {
@@ -59,6 +53,7 @@
 			// collect rects without transform
 			hero.node.style.transform = title.node.style.transform = loadBar.node.style.transition = 'none';
 		};
+
 		postExpandFLIP.invert = function () {
 			// apply INVERT css to mutate node back to its original state
 
@@ -102,18 +97,19 @@
 
 			// post.node.style.opacity = 0.5; // for debugging
 		};
+
 		postExpandFLIP.play = function () {
 			// switch on transitions
 			hero.node.style.transition = title.node.style.transition = loadBar.node.style.transition = '';
 			// remove INVERT css to PLAY the transitions
 			hero.node.style.transform = title.node.style.transform = loadBar.node.style.transform = '';
 		};
-		postExpandFLIP.cleanUp = function () {
-			onFinish();
-		};
+
+		// postExpandFLIP.cleanUp = onFinish;
+
 		postExpandFLIP.cleanUpAfter = hero.node;
 
-		var requestFullImg = new window.RequestImg(imgList.node, onFinish);
+		var requestFullImg = new window.RequestImg(imgList.node);
 
 		var xhr = new window.XMLHttpRequest();
 		xhr.open('GET', href, true);
@@ -130,9 +126,24 @@
 			post.node.getElementsByClassName('frame')[0].innerHTML = workspace.getElementsByClassName('frame')[0].innerHTML;
 		};
 
+		// PROGRESS ELEMENT
+		var xhrReadyState = function () {
+			return xhr.readyState;
+		};
+		var trackedStates = [
+			[xhrReadyState, 4],
+			[requestFullImg.state, requestFullImg.stateMax]
+		];
+		var postExpandLoader = new window.Progress(trackedStates, onFinish);
+		var loader = loadBar.node.getElementsByClassName('button__loadbar')[0];
+		postExpandLoader.update = function () {
+			loader.style.transform = 'scaleX(' + this.state + ')';
+		};
+
 		// DO!
 		xhr.send();
 		postExpandFLIP.animate();
+		postExpandLoader.start();
 		requestFullImg.mutateAtts();
 	};
 })(document, window);

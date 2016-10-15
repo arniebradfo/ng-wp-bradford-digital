@@ -5,6 +5,7 @@
 	position: relative;
 	@include transition(transform);
 	&__loadbar{
+		@include transition(transform);
 		// z-index: index($z-of, button__loadbar);
 		z-index: -1;
 		@include absolute(0);

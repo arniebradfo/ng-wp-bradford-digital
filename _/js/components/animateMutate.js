@@ -30,7 +30,9 @@
 
 		this.state = 0;
 		this.stateMax = 6; // how high the state increments
-		this.complete = false;
+		this.complete = function () {
+			return this.stateMax <= this.state;
+		};
 
 		this.el = { context: {} }; // TODO: change this.el to this.elements later ?
 		this.el.context.node = context || document; // right order?
@@ -66,7 +68,6 @@
 
 		this.cleanUpWrapper = function (e) {
 			self.state++; // 6
-			self.complete = true;
 			e.target.removeEventListener(e.type, self.cleanUp);
 			self.cleanUp();
 		};
@@ -89,7 +90,6 @@
 					self.cleanUpAfter.addEventListener(transitionEnd, self.cleanUpWrapper, false);
 				} else {
 					self.state++; // 6
-					self.complete = true;
 				}
 			});
 		};
