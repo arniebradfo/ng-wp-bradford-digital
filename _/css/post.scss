@@ -35,33 +35,29 @@ $postSPACING--list: fib(9);
 	}
 	&--full{ // a page or post in full
 		// border-radius: $borderRADIUS;
-
-		.frame, .footer{
-			background-color: white;
-			box-shadow: $boxShadow;
-		}
-		.frame{
-			min-height: 100vh;
-		}
 		.excerpt{ display: none; }
 		.cover{
-			height: calc(100vh + #{$mainContentINSET * 2});
-			margin-bottom: (-$mainContentINSET);
-			width: 100%;
+			@include absolute(0);
 			&__hero{
 				@include parallax(-1);
 				&Wrapper{
 				}
 			}
 			&__title{
-				right: $mainContentINSET;
-				left:  $mainContentINSET;
-				bottom: 0;
+				@include absolute(null $mainContentINSET 0);
 				font-size: fib(10);
 				&Link{
 					@include parallax(-0.5);
 				}
 			}
+		}
+		.preview{
+			height: calc(100vh + #{$mainContentINSET * 2});
+			margin-bottom: (-$mainContentINSET);
+			width: 100%;
+		}
+		.button{
+			@include absolute(null $mainContentINSET 50px);
 		}
 	}
 }
@@ -69,16 +65,18 @@ $postSPACING--list: fib(9);
 // cover.scss
 
 .cover{
-	height: 20vh;
+	// height: 20vh;
 	width: 100%;
 	position: relative;
 	z-index: -1;
 	&__hero{
+		z-index: index($z-of, cover__hero);
 		@include absolute(0);
 		height: 100%;
 		width: 100%;
 		@include transition(transform);
 		&Wrapper{
+			z-index: index($z-of, cover__heroWrapper);
 			display: block;
 			box-shadow: $boxShadow;
 			overflow: hidden;
@@ -106,7 +104,7 @@ $postSPACING--list: fib(9);
 	}
 	&__title{
 		z-index: index($z-of, cover__title);
-		@include absolute(null 0 20%);
+		// @include absolute(null 0 20%);
 		&, &Link{
 			display: block;
 			color: white;
@@ -117,4 +115,19 @@ $postSPACING--list: fib(9);
 			// perspective-origin: 0 0;
 		}
 	}
+}
+
+// preview.scss
+
+.preview{
+
+}
+
+.frame, .footer{
+	background-color: white;
+	box-shadow: $boxShadow;
+}
+.frame{
+	min-height: 100vh;
+	padding: 1px 0;
 }

@@ -1,0 +1,20 @@
+// button.scss
+
+.button{
+	display:block;
+	position: relative;
+	@include transition(transform);
+	&__loadbar{
+		// z-index: index($z-of, button__loadbar);
+		z-index: -1;
+		@include absolute(0);
+		// width: 100%;
+		background: white;
+		transform: scaleX(0.01);
+		transform-origin: left;
+	}
+	&__text{
+		// z-index: index($z-of, button__text);
+
+	}
+}

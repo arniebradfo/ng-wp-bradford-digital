@@ -29,6 +29,7 @@
 		this.cleanUpAfter = null; // {Element}  - element to attach the transitionEnd listner to
 
 		this.state = 0;
+		this.stateMax = 6; // how high the state increments
 		this.complete = false;
 
 		this.el = { context: {} }; // TODO: change this.el to this.elements later ?

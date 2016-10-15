@@ -11,7 +11,7 @@
 		<section class="postList postList--full">
 			<?php while (have_posts()) : the_post(); ?>
 
-				<?php wpajax_template_post_item(); ?>
+				<?php wpajax_postItem(); ?>
 
 			<?php endwhile; ?>
 		</section>

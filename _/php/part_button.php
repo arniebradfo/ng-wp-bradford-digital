@@ -13,26 +13,28 @@
 
 function wpajax_button( $atts, $content=null ) {
 	extract( shortcode_atts( array( // extract turns the array['vars'] into individual $vars
+		'id' => '',
 		'class' => '',
 		'style' => '',
-	), $atts , 'divider' ));
+		'href' => '',
+		'text' => 'link',
+	), $atts ));
 
-	$classList    = $class != '' ? ' class="'.$class.'" ' : '' ;
-	$inlineStyles = $style != '' ? ' style="'.$style.'" ' : '' ;
+	$id = $id != '' ? ' id="'.$id.'" ' : '' ;
+	$style = $style != '' ? ' style="'.$style.'" ' : '' ;
+	$href = $href != '' ? ' href="'.$href.'" ' : '' ;
 
-	$div  = '<div '.$classList.$inlineStyles.'>';
-	$div .= do_shortcode($content);
-	$div .= '</div>';
+	ob_start(); ?>
+	<a class="button <?php echo $class; ?>" <?php echo $style; echo $href; echo $id; ?> >
 
-	?>
-	<a class="button">
+		<div class="button__loadbar"></div>
+
+		<span class="button__text"><?php echo $text; ?></span>
 
 		<?php echo do_shortcode( $content ); ?>
 
 	</a>
-	<?php
-
-	return $div;
+	<?php return ob_get_clean();
 }
 // add_shortcode( 'wpajax_button', 'wpajax_button' );
 

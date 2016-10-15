@@ -20,12 +20,13 @@
 @import "-print-styles";
 @import 'typography';
 
-// ------------------------------------------------------------ DEPENDENCIES
+// ------------------------------------------------------------ PARTS
 @import "structure"; // contains vars
 @import "post";
 @import "content";
 @import "footer";
 @import "info";
 @import "author";
+@import "button.scss";
 
 @import "wp-css";

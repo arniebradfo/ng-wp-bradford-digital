@@ -31,9 +31,14 @@ returned code is placed in the doc using js
 
 ## TODOs:
 
-- get content part exporting in the right place
+was just doing...
+- progress.js should update based on passing time and the state of things its connected to
+
+- build a full js test case
+- get content parts exporting in the right place
 	- then connect everything
 	- then style
+
 
 - connect js modules
 - add progress button
@@ -44,6 +49,8 @@ returned code is placed in the doc using js
 
 - prefix all functions
 - concationate all php into a single functions file
+
+
 
 - CSS:
 	- redo spacing function

@@ -794,41 +794,48 @@ html, body {
 .post--list .cover__titleLink {
   transform: translateZ(-0.05px) scale(1.05);
 }
-.post--full .frame, .post--full .footer {
-  background-color: white;
-  box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.5);
-}
-.post--full .frame {
-  min-height: 100vh;
-}
 .post--full .excerpt {
   display: none;
 }
 .post--full .cover {
-  height: calc(100vh + 10px);
-  margin-bottom: -5px;
-  width: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }
 .post--full .cover__hero {
   transform: translateZ(-1px) scale(2);
 }
 .post--full .cover__title {
+  position: absolute;
   right: 5px;
-  left: 5px;
   bottom: 0;
+  left: 5px;
   font-size: 55px;
 }
 .post--full .cover__titleLink {
   transform: translateZ(-0.5px) scale(1.5);
 }
+.post--full .preview {
+  height: calc(100vh + 10px);
+  margin-bottom: -5px;
+  width: 100%;
+}
+.post--full .button {
+  position: absolute;
+  right: 5px;
+  bottom: 50px;
+  left: 5px;
+}
 
 .cover {
-  height: 20vh;
   width: 100%;
   position: relative;
   z-index: -1;
 }
 .cover__hero {
+  z-index: 6;
   position: absolute;
   top: 0;
   right: 0;
@@ -841,6 +848,7 @@ html, body {
           backface-visibility: hidden;
 }
 .cover__heroWrapper {
+  z-index: 7;
   display: block;
   box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.5);
   overflow: hidden;
@@ -866,11 +874,7 @@ html, body {
   opacity: 0;
 }
 .cover__title {
-  z-index: 6;
-  position: absolute;
-  right: 0;
-  bottom: 20%;
-  left: 0;
+  z-index: 8;
 }
 .cover__title, .cover__titleLink {
   display: block;
@@ -881,6 +885,16 @@ html, body {
   -webkit-backface-visibility: hidden;
           backface-visibility: hidden;
   transform-origin: bottom;
+}
+
+.frame, .footer {
+  background-color: white;
+  box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.5);
+}
+
+.frame {
+  min-height: 100vh;
+  padding: 1px 0;
 }
 
 .content {
@@ -928,6 +942,25 @@ html, body {
 .author__avatarImg {
   height: 100%;
   width: 100%;
+}
+
+.button {
+  display: block;
+  position: relative;
+  transition:  transform 250ms cubic-bezier(0.5, 0.2, 0, 1) 1ms;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+}
+.button__loadbar {
+  z-index: -1;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: white;
+  transform: scaleX(0.01);
+  transform-origin: left;
 }
 
 /* Required Wordpress CSS

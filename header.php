@@ -25,7 +25,7 @@
 			<section class="post-items">
 			<?php while (have_posts()) : the_post();
 
-				wpajax_template_post_item();
+				wpajax_postItem();
 
 			endwhile; ?>
 			</section>
@@ -103,7 +103,7 @@
 		<section class="postList postList--aside">
 			<?php $q = new WP_Query(array('post_type'=>'post'));
 				if ($q->have_posts()) : while ($q->have_posts()) : $q->the_post();
-					wpajax_template_post_item('list');
+					wpajax_postItem('list');
 				endwhile; endif; wp_reset_postdata();
 			?>
 		</section>

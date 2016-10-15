@@ -10,7 +10,7 @@
 **/
 
 // HTML for a post links - use inside the loop
-function wpajax_template_post_item ($type = null) {
+function wpajax_postItem ($type = null) {
 
 	// detect the page type
 	if ( !isset($type) ) {
@@ -54,55 +54,67 @@ function wpajax_template_post_item ($type = null) {
 
 	<article <?php post_class($postItemClasses); ?> id="post-<?php the_ID(); ?>">
 
-		<header class="cover">
+		<div class="preview">
 
 			<div class="linkBar">
 				<?php wpajax_the_author(); ?>
+				<!-- instant play and queue buttons -->
 			</div>
 
-			<h2 class="cover__title">
-				<a class="cover__titleLink" href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-			</h2>
+			<header class="cover">
 
-			<figure class="cover__hero">
-				<a class="cover__heroWrapper" href="<?php the_permalink(); ?>" >
-					<?php
-						$full = get_the_post_thumbnail(null, 'full', array( 'class' => 'cover__heroImg cover__heroImg--full' ) );
-						$blur = get_the_post_thumbnail(null, 'medium', array( 'class' => 'cover__heroImg cover__heroImg--blur' ) );
-						$list = get_the_post_thumbnail(null, 'medium', array( 'class' => 'cover__heroImg cover__heroImg--list' ) );
-					?>
-					<?php if ($type === 'single' || $type === 'page'): ?>
-						<?php echo $full; ?>
-					<?php elseif ($type === 'list'): ?>
-						<?php echo $blur; ?>
-						<?php echo encode_data_atts($list, $full); ?>
-					<?php endif; ?>
-				</a>
-			</figure>
+				<h2 class="cover__title">
+					<a class="cover__titleLink" href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+				</h2>
 
-		</header>
+				<figure class="cover__hero">
+					<a class="cover__heroWrapper" href="<?php the_permalink(); ?>" >
+						<?php
+							$full = get_the_post_thumbnail(null, 'full', array( 'class' => 'cover__heroImg cover__heroImg--full' ) );
+							$blur = get_the_post_thumbnail(null, 'medium', array( 'class' => 'cover__heroImg cover__heroImg--blur' ) );
+							$list = get_the_post_thumbnail(null, 'medium', array( 'class' => 'cover__heroImg cover__heroImg--list' ) );
+						?>
+						<?php if ($type === 'single' || $type === 'page'): ?>
+							<?php echo $full; ?>
+						<?php elseif ($type === 'list'): ?>
+							<?php echo $blur; ?>
+							<?php echo encode_data_atts($list, $full); ?>
+						<?php endif; ?>
+					</a>
+				</figure>
 
-		<footer class="info">
-			<?php if (get_the_tags()): ?>
-			<span class="info__tag info__item">
-				<?php the_tags(__('Tagged: ','wpajax'), ', ', ''); ?>
-			</span>
-			<?php endif; ?>
-			<?php if (get_the_category()):?>
-			<span class="info__category info__item">
-				<?php _e('Category: ','wpajax'); the_category(', '); ?>
-			</span>
-			<?php endif; ?>
-			<span class="info__comment info__item">
-				<?php comments_popup_link(__('No Comments','wpajax'), __('1 Comment','wpajax'), __('% Comments','wpajax'), 'commentsLink', __('Comments Off','wpajax')); ?>
-			</span>
-		</footer>
+			</header>
 
-		<section class="excerpt">
-			<?php if ($type === 'list') the_excerpt(); ?>
-		</section>
+			<footer class="info">
+				<?php if (get_the_category()):?>
+					<span class="info__category info__item">
+						<?php _e('Category: ','wpajax'); the_category(', '); ?>
+					</span>
+				<?php endif; ?>
+				<?php if (get_the_tags()): ?>
+					<span class="info__tag info__item">
+						<?php the_tags(__('Tagged: ','wpajax'), ', ', ''); ?>
+					</span>
+				<?php endif; ?>
+				<!-- <span class="info__comment info__item">
+					<?php comments_popup_link(__('No Comments','wpajax'), __('1 Comment','wpajax'), __('% Comments','wpajax'), 'commentsLink', __('Comments Off','wpajax')); ?>
+				</span> -->
+			</footer>
 
-		<section class="frame">
+			<section class="excerpt">
+				<?php if ($type === 'list') the_excerpt(); ?>
+			</section>
+
+			<?php echo wpajax_button(array(
+				'id' => '',
+				'class' => '',
+				'href' => '#',
+				'text' => 'test link',
+			)); ?>
+
+		</div>
+
+		<div class="frame">
 			<?php if ($type === 'single' || $type === 'page'): ?>
 
 			<section class="content">
@@ -114,7 +126,7 @@ function wpajax_template_post_item ($type = null) {
 			</section>
 
 			<?php endif; ?>
-		</section>
+		</div>
 
 
 	</article>
