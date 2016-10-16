@@ -12,16 +12,6 @@
 	// Detect localhost dev environment
 	$GLOBALS['isDev'] = strpos(home_url(), 'localhost');
 
-	// Detect ajax request (https://rosspenman.com/pushstate-part-2/)
-	$GLOBALS['is_ajax'] = (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') ? true : false ;
-	$GLOBALS['is_ajax_post_comment'] = (!empty($_SERVER['HTTP_WP_REQUEST_TYPE']) && strtolower($_SERVER['HTTP_WP_REQUEST_TYPE']) == 'postcomment') ? true : false ;
-
-	// detect differet types of wordpress ajax requests by setting a header in the js call
-	$GLOBALS['is_ajax_get_page'] = (!empty($_SERVER['HTTP_WP_REQUEST_TYPE']) && strtolower($_SERVER['HTTP_WP_REQUEST_TYPE']) == 'getpage') ? true : false ;
-	$GLOBALS['is_ajax_get_posts'] = (!empty($_SERVER['HTTP_WP_REQUEST_TYPE']) && strtolower($_SERVER['HTTP_WP_REQUEST_TYPE']) == 'getposts') ? true : false ;
-	$GLOBALS['is_ajax_get_comments'] = (!empty($_SERVER['HTTP_WP_REQUEST_TYPE']) && strtolower($_SERVER['HTTP_WP_REQUEST_TYPE']) == 'getcommentssection') ? true : false ;
-
-
 	// runs through all .php partials in /_/php/
 	foreach (scandir(dirname(__FILE__).'/_/php') as $filename) {
 		$path = dirname(__FILE__).'/_/php/' . $filename;
@@ -31,15 +21,14 @@
 	}
 
 	function wpajax_add_query_vars_filter( $vars ){
-	  $vars[] = "wpajax";
+	  $vars[] = "ajax";
 	  return $vars;
 	}
 	add_filter( 'query_vars', 'wpajax_add_query_vars_filter' );
 
-
-	// http://www.inkthemes.com/ajax-comment-wordpress/
+	// http://www.inkthemes.com/ajax-comment-wordpress/8
 	function wpajax_load_comment($comment_ID, $comment_status) {
-		if ($GLOBALS['is_ajax']) {
+		if ($GLOBALS['is_ajax']) { // TODO: does this still work?
 			switch ($comment_status) {
 				case '0': //notify moderator of unapproved comment
 					wp_notify_moderator( $comment_ID );

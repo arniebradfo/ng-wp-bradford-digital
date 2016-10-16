@@ -10,7 +10,7 @@
 		// console.dir(this); // for debugging
 
 		// SET TYPE
-		href = window.addAjaxQueryString(href, 'page');
+		href = window.addAjaxQueryString(href, 'getpage');
 		console.log(href);
 
 		// FLIP ANIMATION SETUP
@@ -118,7 +118,7 @@
 		xhr.onload = function () {
 			var workspace = document.createElement('div');
 			workspace.innerHTML = xhr.responseText;
-			// console.log(workspace); // for debugging
+			console.log(workspace); // for debugging
 			post.node.getElementsByClassName('excerpt')[0].innerHTML = '';
 			post.node.getElementsByClassName('frame')[0].innerHTML = workspace.getElementsByClassName('frame')[0].innerHTML;
 		};
