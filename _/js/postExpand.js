@@ -7,8 +7,9 @@
 	'use strict';
 
 	window.postExpand = function (e, context, href) {
-		// e.preventDefault();
+		// console.dir(this); // for debugging
 
+		// FLIP ANIMATION SETUP
 		var postExpandFLIP = new window.AnimateMutate({
 			hero: 'cover__hero',
 			title: ['cover__titleLink', true],
@@ -23,15 +24,6 @@
 		var imgList = postExpandFLIP.el.imgList;
 		var loadBar = postExpandFLIP.el.loadBar;
 		var loader = loadBar.node.getElementsByClassName('button__loadbar')[0];
-
-		var onFinish = function () {
-			if (requestFullImg.complete() && postExpandFLIP.complete()) {
-				imgList.node.style.transition = postExpandFLIP.el.imgBlur.node.style.transition = 'opacity .5s linear';
-				window.requestAnimationFrame(function () {
-					imgList.node.style.opacity = postExpandFLIP.el.imgBlur.node.style.opacity = '';
-				});
-			}
-		};
 
 		postExpandFLIP.mutate = function () {
 			// mutate node
@@ -106,25 +98,33 @@
 			hero.node.style.transform = title.node.style.transform = loadBar.node.style.transform = '';
 		};
 
-		// postExpandFLIP.cleanUp = onFinish;
-
 		postExpandFLIP.cleanUpAfter = hero.node;
+		// postExpandFLIP.cleanUp = function () {};
 
-		var requestFullImg = new window.RequestImg(imgList.node);
+		// IMAGE LOADING
+		var requestFullImg = new window.RequestImg(imgList.node); // can take a callback
 
+		// AJAX REQUEST
 		var xhr = new window.XMLHttpRequest();
 		xhr.open('GET', href, true);
-		// console.dir(xhr);
+		// console.dir(xhr); // for debugging
 		xhr.timeout = 5000;
 		xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest'); // ALWAYS set this!
 		xhr.setRequestHeader('WP-Request-Type', 'GetPage');
 		xhr.onload = function () {
 			var workspace = document.createElement('div');
 			workspace.innerHTML = xhr.responseText;
-			// console.log(workspace);
-
+			// console.log(workspace); // for debugging
 			post.node.getElementsByClassName('excerpt')[0].innerHTML = '';
 			post.node.getElementsByClassName('frame')[0].innerHTML = workspace.getElementsByClassName('frame')[0].innerHTML;
+		};
+
+		// WHEN EVERYTHING IS DONE
+		var onFinish = function () {
+			imgList.node.style.transition = postExpandFLIP.el.imgBlur.node.style.transition = 'opacity .5s linear';
+			window.requestAnimationFrame(function () {
+				imgList.node.style.opacity = postExpandFLIP.el.imgBlur.node.style.opacity = '';
+			});
 		};
 
 		// PROGRESS ELEMENT

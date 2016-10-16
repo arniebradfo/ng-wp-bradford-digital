@@ -31,24 +31,19 @@ returned code is placed in the doc using js
 
 ## TODOs:
 
-was just doing...
-- progress.js should update based on passing time and the state of things its connected to
-
-- build a full js test case
 - get content parts exporting in the right place
 	- then connect everything
 	- then style
 
 
 - connect js modules
-- add progress button
 - wrap every template part in a shortcode compatible function
 
 - add default animate load functions
 - no difference between ajax called content and traditionally called content, to satisfy CDNs with static content
 
 - prefix all functions
-- concationate all php into a single functions file
+- concatenate all php into a single functions file
 
 
 
@@ -64,17 +59,17 @@ was just doing...
         * dynamically replace each link? - don't know how I would do this?
     + HISTORY:
         * back button should load just comments if previous post was a comment load, same with posts pagination, or maybe everything?
-        * make history-like object/array that stores the type of ajax call and along with the url? Reference this everytime we hit the back button.
-        * save a copy of the last ajax response and use that insted of querying the server?
+        * make history-like object/array that stores the type of ajax call and along with the url? Reference this every time we hit the back button.
+        * save a copy of the last ajax response and use that instead of querying the server?
     + COMMENTS:
-        * adding a comment and then paganating might produce wierd results
+        * adding a comment and then paginating might produce weird results
         * delete the last top level comment if returning a new top level comment? - if there is a second page of comments.
         * comment reply was borked
 - CSS:
     + add progress bar
 - TEST:
     + Test it with google analytics - use ga plugin?
-    + feature detect to allow graceful degredation. modernizr?
+    + feature detect to allow graceful degradation. modernizr?
         * Test browser implementation inconsistencies of popstate.
     + browser test
 
