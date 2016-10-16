@@ -160,7 +160,7 @@
  * @param {Boolean} elements.reference[1] - weather to collect its computed style
 	elements = {
 		reference: 'class-name' // just a string
-		reference: ['class-name', true] // array
+		referenceTwo: ['class-name', true] // array
 	}
  * @param {Node} context - the context to search for the elements in - document by default
  */
@@ -168,7 +168,7 @@
 (function (document, window) {
 	window.AnimateMutate = function (elements, context) {
 		'use strict';
-		console.dir(this); // for debugging
+		// console.dir(this); // for debugging
 		var self = this;
 
 		// Placeholders // set these after the constructor is called
@@ -178,10 +178,10 @@
 		this.cleanUp = null;      // {Function} - what to do after the animation is done
 		this.cleanUpAfter = null; // {Element}  - element to attach the transitionEnd listner to
 
-		this.state = 0;
-		this.stateMax = 6; // how high the state increments
+		this.readyState = 0;
+		this.readyStateMax = 6; // how high the readyState increments
 		this.complete = function () {
-			return this.stateMax <= this.state;
+			return this.readyStateMax <= this.readyState;
 		};
 
 		this.el = { context: {} }; // TODO: change this.el to this.elements later ?
@@ -204,20 +204,20 @@
 			return copy;
 		};
 
-		this.collect = function () { // Collect the first and last state of the elements
-			var state = this.collect.once ? 'last' : 'first';
+		this.collect = function () { // Collect the first and last readyState of the elements
+			var _state = this.collect.once ? 'last' : 'first';
 			this.collect.once = true;
 			for (var key in this.el) {
 				var x = this.el[key];
-				x[state] = {};
-				x[state].rect = x.node.getBoundingClientRect();
-				// x[state].compStyle = window.getComputedStyle(x.node);
-				if (x.needCompStyle) x[state].compStyle = this.copyComputedStyle(window.getComputedStyle(x.node));
+				x[_state] = {};
+				x[_state].rect = x.node.getBoundingClientRect();
+				// x[_state].compStyle = window.getComputedStyle(x.node);
+				if (x.needCompStyle) x[_state].compStyle = this.copyComputedStyle(window.getComputedStyle(x.node));
 			}
 		};
 
 		this.cleanUpWrapper = function (e) {
-			self.state++; // 6
+			self.readyState++; // 6
 			e.target.removeEventListener(e.type, self.cleanUp);
 			self.cleanUp();
 		};
@@ -225,21 +225,21 @@
 		this.animate = function () { // execute
 			if (!(this.mutate && this.invert && this.play)) return; // throw error
 			this.collect(); // FIRST
-			this.state++; // 1
+			this.readyState++; // 1
 			this.mutate();
-			this.state++; // 2
+			this.readyState++; // 2
 			this.collect(); // LAST
-			this.state++; // 3
+			this.readyState++; // 3
 			this.invert(); // INVERT
-			this.state++; // 4
+			this.readyState++; // 4
 			window.requestNextAnimationFrame(function () { // wait for the next frame
 				self.play(); // PLAY
-				self.state++; // 5
+				self.readyState++; // 5
 				if (self.cleanUpAfter && self.cleanUp) {
 					var transitionEnd = window.whichTransitionEvent();
 					self.cleanUpAfter.addEventListener(transitionEnd, self.cleanUpWrapper, false);
 				} else {
-					self.state++; // 6
+					self.readyState++; // 6
 				}
 			});
 		};
@@ -249,21 +249,24 @@
 /**
  * progress
  * track the progress of an xhr request
- * @param {Array} states - a [key,value] pair of states to track and their maximum index
-	states = [
-		[stateOne, stateOneMax]
-		[stateTwo, stateTwoMax]
+ * @param {Array} trackedStatesList - a [key,value] pair of readyStates to track and their maximum index
+ * @param {function} readyState - reference to a function that returns the value of a readyState
+ * @param {int} readyStateMax - a maximum index that readyState will get to
+	readyStates = [
+		[readyState, readyStateMax],
+		[readyStateTwo, readyStateTwoMax]
 	]
+ * @param {function} callback
  */
 
 (function (document, window) {
-	window.Progress = function (trackedStateList, callback) {
+	window.Progress = function (trackedStatesList, callback) {
 		'use strict';
-		console.dir(this); // for debugging
+		// console.dir(this); // for debugging
 		var self = this;
 
 		this.trackedStates = {};
-		this.trackedStates.list = trackedStateList;
+		this.trackedStates.list = trackedStatesList;
 		this.trackedStates.total = (function () {
 			var _total = 0;
 			for (var i = 0; i < self.trackedStates.list.length; i++) {
@@ -288,17 +291,17 @@
 			return true;
 		};
 
-		this.state = 0; // progress between 0 and 1
-		this.stateMax = 1; // how high the state increments
+		this.readyState = 0; // progress between 0 and 1
+		this.readyStateMax = 1; // how high the readyState increments
 		this.complete = function () {
-			return this.stateMax <= this.state;
+			return this.readyStateMax <= this.readyState;
 		};
 		this.params = {
-			reserved: this.stateMax * 0.1,
+			reserved: this.readyStateMax * 0.1,
 			coefficient: (1 / 100)
 		};
 
-		this.update = null; // {Function} - uses state to animate ui feedback
+		this.update = null; // {Function} - uses readyState to animate ui feedback
 		this.callback = callback; // {Function} - call back for when update completes
 
 		this.forward = function () { // update the progress element
@@ -309,17 +312,17 @@
 			window.requestAnimationFrame(self.forward);
 			// console.log(self.trackedStates.complete());
 			if (self.trackedStates.complete()) {
-				self.state = self.stateMax;
+				self.readyState = self.readyStateMax;
 			} else {
 				// increase by a fraction of the remaining reserved
-				var _remaining = self.stateMax - self.state;
+				var _remaining = self.readyStateMax - self.readyState;
 				if (self.trackedStates.current() > self.trackedStates.previous) {
 					var _difference = self.trackedStates.current() - self.trackedStates.previous;
 					var _thing = self.trackedStates.total - self.trackedStates.previous;
-					self.state += (_difference / _thing) * _remaining;
+					self.readyState += (_difference / _thing) * _remaining;
 					self.trackedStates.previous = self.trackedStates.current();
 				} else {
-					self.state += self.params.coefficient * _remaining;
+					self.readyState += self.params.coefficient * _remaining;
 				}
 			}
 			self.update();
@@ -330,24 +333,28 @@
 
 /**
  * RequestImg
- * mutate an image from one source to another, and animate
+ * mutate an image from one src to another, and attach an callback
+ * requires the image to have data-<attribute> attributes to be converted
+ * works with wpajax_encode_data_atts() .php function
+ * @param {HTMLImageElement} img - the image we want to change the attributes of
+ * @param {function} callback
  */
 
 (function (document, window) {
 	window.RequestImg = function (img, callback) {
 		'use strict';
-		console.dir(this); // for debugging
+		// console.dir(this); // for debugging
 		var self = this;
 
 		this.img = img;
 		this.callback = callback;
 
-		this.state = function () {
+		this.readyState = function () {
 			return (self.img.complete && self.attsMutated) ? 1 : 0;
 		};
-		this.stateMax = 1; // how high the state increments
+		this.readyStateMax = 1; // how high the readyState increments
 		this.complete = function () {
-			return self.stateMax <= self.state;
+			return self.readyStateMax <= self.readyState();
 		};
 
 		this.attsMutated = false;
@@ -478,6 +485,7 @@
 		var title = postExpandFLIP.el.title;
 		var imgList = postExpandFLIP.el.imgList;
 		var loadBar = postExpandFLIP.el.loadBar;
+		var loader = loadBar.node.getElementsByClassName('button__loadbar')[0];
 
 		var onFinish = function () {
 			if (requestFullImg.complete() && postExpandFLIP.complete()) {
@@ -586,14 +594,13 @@
 		var xhrReadyState = function () {
 			return xhr.readyState;
 		};
-		var trackedStates = [
+		var trackedStatesList = [
 			[xhrReadyState, 4],
-			[requestFullImg.state, requestFullImg.stateMax]
+			[requestFullImg.readyState, requestFullImg.readyStateMax]
 		];
-		var postExpandLoader = new window.Progress(trackedStates, onFinish);
-		var loader = loadBar.node.getElementsByClassName('button__loadbar')[0];
+		var postExpandLoader = new window.Progress(trackedStatesList, onFinish);
 		postExpandLoader.update = function () {
-			loader.style.transform = 'scaleX(' + this.state + ')';
+			loader.style.transform = 'scaleX(' + this.readyState + ')';
 		};
 
 		// DO!

@@ -1,23 +1,27 @@
 /**
  * RequestImg
- * mutate an image from one source to another, and animate
+ * mutate an image from one src to another, and attach an callback
+ * requires the image to have data-<attribute> attributes to be converted
+ * works with wpajax_encode_data_atts() .php function
+ * @param {HTMLImageElement} img - the image we want to change the attributes of
+ * @param {function} callback
  */
 
 (function (document, window) {
 	window.RequestImg = function (img, callback) {
 		'use strict';
-		console.dir(this); // for debugging
+		// console.dir(this); // for debugging
 		var self = this;
 
 		this.img = img;
 		this.callback = callback;
 
-		this.state = function () {
+		this.readyState = function () {
 			return (self.img.complete && self.attsMutated) ? 1 : 0;
 		};
-		this.stateMax = 1; // how high the state increments
+		this.readyStateMax = 1; // how high the readyState increments
 		this.complete = function () {
-			return self.stateMax <= self.state;
+			return self.readyStateMax <= self.readyState();
 		};
 
 		this.attsMutated = false;

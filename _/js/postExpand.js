@@ -22,6 +22,7 @@
 		var title = postExpandFLIP.el.title;
 		var imgList = postExpandFLIP.el.imgList;
 		var loadBar = postExpandFLIP.el.loadBar;
+		var loader = loadBar.node.getElementsByClassName('button__loadbar')[0];
 
 		var onFinish = function () {
 			if (requestFullImg.complete() && postExpandFLIP.complete()) {
@@ -130,14 +131,13 @@
 		var xhrReadyState = function () {
 			return xhr.readyState;
 		};
-		var trackedStates = [
+		var trackedStatesList = [
 			[xhrReadyState, 4],
-			[requestFullImg.state, requestFullImg.stateMax]
+			[requestFullImg.readyState, requestFullImg.readyStateMax]
 		];
-		var postExpandLoader = new window.Progress(trackedStates, onFinish);
-		var loader = loadBar.node.getElementsByClassName('button__loadbar')[0];
+		var postExpandLoader = new window.Progress(trackedStatesList, onFinish);
 		postExpandLoader.update = function () {
-			loader.style.transform = 'scaleX(' + this.state + ')';
+			loader.style.transform = 'scaleX(' + this.readyState + ')';
 		};
 
 		// DO!

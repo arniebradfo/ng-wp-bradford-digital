@@ -78,7 +78,7 @@ function wpajax_postItem ($type = null) {
 							<?php echo $full; ?>
 						<?php elseif ($type === 'list'): ?>
 							<?php echo $blur; ?>
-							<?php echo encode_data_atts($list, $full); ?>
+							<?php echo wpajax_encode_data_atts($list, $full); ?>
 						<?php endif; ?>
 					</a>
 				</figure>

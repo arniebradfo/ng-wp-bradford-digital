@@ -10,7 +10,7 @@
  * @param {Boolean} elements.reference[1] - weather to collect its computed style
 	elements = {
 		reference: 'class-name' // just a string
-		reference: ['class-name', true] // array
+		referenceTwo: ['class-name', true] // array
 	}
  * @param {Node} context - the context to search for the elements in - document by default
  */
@@ -18,7 +18,7 @@
 (function (document, window) {
 	window.AnimateMutate = function (elements, context) {
 		'use strict';
-		console.dir(this); // for debugging
+		// console.dir(this); // for debugging
 		var self = this;
 
 		// Placeholders // set these after the constructor is called
@@ -28,10 +28,10 @@
 		this.cleanUp = null;      // {Function} - what to do after the animation is done
 		this.cleanUpAfter = null; // {Element}  - element to attach the transitionEnd listner to
 
-		this.state = 0;
-		this.stateMax = 6; // how high the state increments
+		this.readyState = 0;
+		this.readyStateMax = 6; // how high the readyState increments
 		this.complete = function () {
-			return this.stateMax <= this.state;
+			return this.readyStateMax <= this.readyState;
 		};
 
 		this.el = { context: {} }; // TODO: change this.el to this.elements later ?
@@ -54,20 +54,20 @@
 			return copy;
 		};
 
-		this.collect = function () { // Collect the first and last state of the elements
-			var state = this.collect.once ? 'last' : 'first';
+		this.collect = function () { // Collect the first and last readyState of the elements
+			var _state = this.collect.once ? 'last' : 'first';
 			this.collect.once = true;
 			for (var key in this.el) {
 				var x = this.el[key];
-				x[state] = {};
-				x[state].rect = x.node.getBoundingClientRect();
-				// x[state].compStyle = window.getComputedStyle(x.node);
-				if (x.needCompStyle) x[state].compStyle = this.copyComputedStyle(window.getComputedStyle(x.node));
+				x[_state] = {};
+				x[_state].rect = x.node.getBoundingClientRect();
+				// x[_state].compStyle = window.getComputedStyle(x.node);
+				if (x.needCompStyle) x[_state].compStyle = this.copyComputedStyle(window.getComputedStyle(x.node));
 			}
 		};
 
 		this.cleanUpWrapper = function (e) {
-			self.state++; // 6
+			self.readyState++; // 6
 			e.target.removeEventListener(e.type, self.cleanUp);
 			self.cleanUp();
 		};
@@ -75,21 +75,21 @@
 		this.animate = function () { // execute
 			if (!(this.mutate && this.invert && this.play)) return; // throw error
 			this.collect(); // FIRST
-			this.state++; // 1
+			this.readyState++; // 1
 			this.mutate();
-			this.state++; // 2
+			this.readyState++; // 2
 			this.collect(); // LAST
-			this.state++; // 3
+			this.readyState++; // 3
 			this.invert(); // INVERT
-			this.state++; // 4
+			this.readyState++; // 4
 			window.requestNextAnimationFrame(function () { // wait for the next frame
 				self.play(); // PLAY
-				self.state++; // 5
+				self.readyState++; // 5
 				if (self.cleanUpAfter && self.cleanUp) {
 					var transitionEnd = window.whichTransitionEvent();
 					self.cleanUpAfter.addEventListener(transitionEnd, self.cleanUpWrapper, false);
 				} else {
-					self.state++; // 6
+					self.readyState++; // 6
 				}
 			});
 		};

@@ -1,21 +1,24 @@
 /**
  * progress
  * track the progress of an xhr request
- * @param {Array} states - a [key,value] pair of states to track and their maximum index
-	states = [
-		[stateOne, stateOneMax]
-		[stateTwo, stateTwoMax]
+ * @param {Array} trackedStatesList - a [key,value] pair of readyStates to track and their maximum index
+ * @param {function} readyState - reference to a function that returns the value of a readyState
+ * @param {int} readyStateMax - a maximum index that readyState will get to
+	readyStates = [
+		[readyState, readyStateMax],
+		[readyStateTwo, readyStateTwoMax]
 	]
+ * @param {function} callback
  */
 
 (function (document, window) {
-	window.Progress = function (trackedStateList, callback) {
+	window.Progress = function (trackedStatesList, callback) {
 		'use strict';
-		console.dir(this); // for debugging
+		// console.dir(this); // for debugging
 		var self = this;
 
 		this.trackedStates = {};
-		this.trackedStates.list = trackedStateList;
+		this.trackedStates.list = trackedStatesList;
 		this.trackedStates.total = (function () {
 			var _total = 0;
 			for (var i = 0; i < self.trackedStates.list.length; i++) {
@@ -40,17 +43,17 @@
 			return true;
 		};
 
-		this.state = 0; // progress between 0 and 1
-		this.stateMax = 1; // how high the state increments
+		this.readyState = 0; // progress between 0 and 1
+		this.readyStateMax = 1; // how high the readyState increments
 		this.complete = function () {
-			return this.stateMax <= this.state;
+			return this.readyStateMax <= this.readyState;
 		};
 		this.params = {
-			reserved: this.stateMax * 0.1,
+			reserved: this.readyStateMax * 0.1,
 			coefficient: (1 / 100)
 		};
 
-		this.update = null; // {Function} - uses state to animate ui feedback
+		this.update = null; // {Function} - uses readyState to animate ui feedback
 		this.callback = callback; // {Function} - call back for when update completes
 
 		this.forward = function () { // update the progress element
@@ -61,17 +64,17 @@
 			window.requestAnimationFrame(self.forward);
 			// console.log(self.trackedStates.complete());
 			if (self.trackedStates.complete()) {
-				self.state = self.stateMax;
+				self.readyState = self.readyStateMax;
 			} else {
 				// increase by a fraction of the remaining reserved
-				var _remaining = self.stateMax - self.state;
+				var _remaining = self.readyStateMax - self.readyState;
 				if (self.trackedStates.current() > self.trackedStates.previous) {
 					var _difference = self.trackedStates.current() - self.trackedStates.previous;
 					var _thing = self.trackedStates.total - self.trackedStates.previous;
-					self.state += (_difference / _thing) * _remaining;
+					self.readyState += (_difference / _thing) * _remaining;
 					self.trackedStates.previous = self.trackedStates.current();
 				} else {
-					self.state += self.params.coefficient * _remaining;
+					self.readyState += self.params.coefficient * _remaining;
 				}
 			}
 			self.update();
