@@ -257,34 +257,31 @@
  */
 
 (function (document, window) {
-	window.Progress = function (trackedStates, callback) {
+	window.Progress = function (trackedStateList, callback) {
 		'use strict';
 		console.dir(this); // for debugging
 		var self = this;
 
-		// trackedStates = [ [0, 2], [0, 5] ]; // hardcode
-
-		this.trackedStates = trackedStates;
-		this.trackedStatesTotal = (function () {
+		this.trackedStates = {};
+		this.trackedStates.list = trackedStateList;
+		this.trackedStates.total = (function () {
 			var _total = 0;
-			for (var i = 0; i < self.trackedStates.length; i++) {
-				_total += self.trackedStates[i][1];
+			for (var i = 0; i < self.trackedStates.list.length; i++) {
+				_total += self.trackedStates.list[i][1];
 			}
 			return _total;
 		})();
-		this.trackedState = function () {
-			var _total = 0;
-			for (var i = 0; i < self.trackedStates.length; i++) {
-				_total += self.trackedStates[i][0];
+		this.trackedStates.current = function () {
+			var _current = 0;
+			for (var i = 0; i < this.list.length; i++) {
+				_current += this.list[i][0];
 			}
-			return _total;
+			return _current;
 		};
-		this.trakedStatePrevious = 0;
-		this.trackedStatesComplete = function () {
-			for (var i = 0; i < this.trackedStates.length; i++) {
-				console.log(this.trackedStates[i][0]());
-				console.log(this.trackedStates[i][1]);
-				if (this.trackedStates[i][0]() < this.trackedStates[i][1]) {
+		this.trackedStates.previous = 0;
+		this.trackedStates.complete = function () {
+			for (var i = 0; i < this.list.length; i++) {
+				if (this.list[i][0]() < this.list[i][1]) {
 					return false;
 				}
 			}
@@ -305,22 +302,22 @@
 		this.callback = callback; // {Function} - call back for when update completes
 
 		this.forward = function () { // update the progress element
-			console.log(self.trackedStatesComplete());
 			if (self.complete()) {
 				self.callback();
 				return;
 			}
 			window.requestAnimationFrame(self.forward);
-			if (self.trackedStatesComplete()) {
+			// console.log(self.trackedStates.complete());
+			if (self.trackedStates.complete()) {
 				self.state = self.stateMax;
 			} else {
 				// increase by a fraction of the remaining reserved
 				var _remaining = self.stateMax - self.state;
-				if (self.trackedState > self.trakedStatePrevious) {
-					var _difference = self.trackedState - self.trakedStatePrevious;
-					self.state += (_difference / (self.trackedStatesTotal - self.trakedStatePrevious)) * _remaining;
-					// self.state += (_difference / self.trackedStatesTotal) * (self.stateMax - self.params.reserved);
-					self.trakedStatePrevious = self.trakedState;
+				if (self.trackedStates.current() > self.trackedStates.previous) {
+					var _difference = self.trackedStates.current() - self.trackedStates.previous;
+					var _thing = self.trackedStates.total - self.trackedStates.previous;
+					self.state += (_difference / _thing) * _remaining;
+					self.trackedStates.previous = self.trackedStates.current();
 				} else {
 					self.state += self.params.coefficient * _remaining;
 				}
