@@ -740,10 +740,10 @@ html, body {
   transform: translateZ(0);
   -webkit-overflow-scrolling: touch;
   perspective-origin: calc( 40% + 116.5px );
+  padding-left: 233px;
 }
 .postList--aside {
   z-index: 3;
-  padding-left: 233px;
 }
 
 .frame, .footer {

@@ -110,6 +110,8 @@
 	</header>
 
 	<aside class="postListWrapper">
+		<h1><?php single_post_title(); ?></h1>
+		<?php get_search_form(); ?>
 		<section class="postList postList--aside">
 			<?php $q = new WP_Query(array('post_type'=>'post'));
 				if ($q->have_posts()) : while ($q->have_posts()) : $q->the_post();
@@ -117,6 +119,7 @@
 				endwhile; endif; wp_reset_postdata();
 			?>
 		</section>
+		<?php wpajax_post_pagination(); ?>
 	</aside>
 
 	<main class="mainContent mainContent--active">

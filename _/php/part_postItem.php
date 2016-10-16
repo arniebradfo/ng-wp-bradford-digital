@@ -118,7 +118,6 @@ function wpajax_postItem ($type = null) {
 			<?php if ($type === 'single' || $type === 'page'): ?>
 
 			<section class="content">
-				<?php // if (get_query_var('ajax')) print "ajax = ".get_query_var('ajax'); ?>
 				<?php the_content(); ?>
 			</section>
 

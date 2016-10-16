@@ -82,10 +82,10 @@ $mainContentBufferX: 50px; // arbitrary value
 		padding-right: 100% - $drawerWIDTH;
 		@include parallaxContainer();
 		perspective-origin: calc( #{($drawerWIDTH / 2)} + #{($mainNavWIDTH / 2)} );
+		padding-left: $mainNavWIDTH;
 	}
 	&--aside{
-		z-index: index($z-of, postList--header);
-		padding-left: $mainNavWIDTH;
+		z-index: index($z-of, postList--aside);
 	}
 }
 

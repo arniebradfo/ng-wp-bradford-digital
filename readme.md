@@ -29,9 +29,7 @@ returned code is placed in the doc using js
 - MAMP
 - [Just looking for pjax?](https://github.com/defunkt/jquery-pjax)
 
-## TODOs:
-- no difference between ajax called content and traditionally called content, to satisfy CDNs with static content
-	- only switch on comment post and logout
+## TODO:
 - get content parts exporting in the right place
 - then style basic structure
 - then connect everything
