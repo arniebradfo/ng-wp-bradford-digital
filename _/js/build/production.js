@@ -1,4 +1,17 @@
 /**
+ * add a query string to the uri
+ * description
+ */
+
+(function (document, window) {
+	window.addAjaxQueryString = function (href, value) {
+		value = (value !== undefined) ? value : 'true';
+		href += '?wpajax=' + value + '';
+		return href;
+	};
+})(document, window);
+
+/**
  * addEvent
  * normalizes adding event listeners/handlers
  * @author http://stackoverflow.com/questions/10149963/adding-event-listener-cross-browser
@@ -420,6 +433,8 @@
 		!link.href.match(/\/feed/g)) { // is not an rss feed of somekind
 			e.preventDefault();
 
+			console.log(link);
+
 			var types = {
 				// a list of animation types and their corrosponding css class identifiers
 				postExpand: 'post--postExpandJS'
@@ -471,6 +486,10 @@
 
 	window.postExpand = function (e, context, href) {
 		// console.dir(this); // for debugging
+
+		// SET TYPE
+		href = window.addAjaxQueryString(href, 'page');
+		console.log(href);
 
 		// FLIP ANIMATION SETUP
 		var postExpandFLIP = new window.AnimateMutate({

@@ -9,6 +9,10 @@
 	window.postExpand = function (e, context, href) {
 		// console.dir(this); // for debugging
 
+		// SET TYPE
+		href = window.addAjaxQueryString(href, 'page');
+		console.log(href);
+
 		// FLIP ANIMATION SETUP
 		var postExpandFLIP = new window.AnimateMutate({
 			hero: 'cover__hero',

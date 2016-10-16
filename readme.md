@@ -30,21 +30,18 @@ returned code is placed in the doc using js
 - [Just looking for pjax?](https://github.com/defunkt/jquery-pjax)
 
 ## TODOs:
-
-- get content parts exporting in the right place
-	- then connect everything
-	- then style
-
-
-- connect js modules
-- wrap every template part in a shortcode compatible function
-
-- add default animate load functions
 - no difference between ajax called content and traditionally called content, to satisfy CDNs with static content
+	- only switch on comment post and logout
+- get content parts exporting in the right place
+- then style basic structure
+- then connect everything
+- then style
 
+- wrap every template part in a shortcode compatible function
 - prefix all functions
 - concatenate all php into a single functions file
 
+- add default animate load functions
 
 
 - CSS:
@@ -52,6 +49,8 @@ returned code is placed in the doc using js
 
 - WP:
     + write documentation
+		- mention CDN config
+
 - JS:
     + rename file
     + add if() checks for everything in js - fail gracefully
@@ -65,8 +64,6 @@ returned code is placed in the doc using js
         * adding a comment and then paginating might produce weird results
         * delete the last top level comment if returning a new top level comment? - if there is a second page of comments.
         * comment reply was borked
-- CSS:
-    + add progress bar
 - TEST:
     + Test it with google analytics - use ga plugin?
     + feature detect to allow graceful degradation. modernizr?

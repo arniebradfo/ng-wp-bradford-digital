@@ -118,6 +118,7 @@ function wpajax_postItem ($type = null) {
 			<?php if ($type === 'single' || $type === 'page'): ?>
 
 			<section class="content">
+				<?php if (get_query_var('wpajax')) print "wpajax = ".get_query_var('wpajax'); ?>
 				<?php the_content(); ?>
 			</section>
 

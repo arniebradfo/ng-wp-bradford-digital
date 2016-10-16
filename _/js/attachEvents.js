@@ -49,6 +49,8 @@
 		!link.href.match(/\/feed/g)) { // is not an rss feed of somekind
 			e.preventDefault();
 
+			console.log(link);
+
 			var types = {
 				// a list of animation types and their corrosponding css class identifiers
 				postExpand: 'post--postExpandJS'

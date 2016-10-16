@@ -7,8 +7,9 @@
 ?>
 
 <?php
+
 	// if this is an ajax request paganating comments
-	if ($GLOBALS['is_ajax'] && $GLOBALS['is_ajax_get_comments_section']){
+	if ($GLOBALS['is_ajax'] && $GLOBALS['is_ajax_get_comments']){
 		// return only the comments section of the current context
 		if (have_posts()) : while (have_posts()) : the_post();
 

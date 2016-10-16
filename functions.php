@@ -14,12 +14,12 @@
 
 	// Detect ajax request (https://rosspenman.com/pushstate-part-2/)
 	$GLOBALS['is_ajax'] = (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') ? true : false ;
+	$GLOBALS['is_ajax_post_comment'] = (!empty($_SERVER['HTTP_WP_REQUEST_TYPE']) && strtolower($_SERVER['HTTP_WP_REQUEST_TYPE']) == 'postcomment') ? true : false ;
+
 	// detect differet types of wordpress ajax requests by setting a header in the js call
 	$GLOBALS['is_ajax_get_page'] = (!empty($_SERVER['HTTP_WP_REQUEST_TYPE']) && strtolower($_SERVER['HTTP_WP_REQUEST_TYPE']) == 'getpage') ? true : false ;
 	$GLOBALS['is_ajax_get_posts'] = (!empty($_SERVER['HTTP_WP_REQUEST_TYPE']) && strtolower($_SERVER['HTTP_WP_REQUEST_TYPE']) == 'getposts') ? true : false ;
-	// TODO: rename is_ajax_get_comments_section to is_ajax_get_comments for continuity
-	$GLOBALS['is_ajax_get_comments_section'] = (!empty($_SERVER['HTTP_WP_REQUEST_TYPE']) && strtolower($_SERVER['HTTP_WP_REQUEST_TYPE']) == 'getcommentssection') ? true : false ;
-	$GLOBALS['is_ajax_post_comment'] = (!empty($_SERVER['HTTP_WP_REQUEST_TYPE']) && strtolower($_SERVER['HTTP_WP_REQUEST_TYPE']) == 'postcomment') ? true : false ;
+	$GLOBALS['is_ajax_get_comments'] = (!empty($_SERVER['HTTP_WP_REQUEST_TYPE']) && strtolower($_SERVER['HTTP_WP_REQUEST_TYPE']) == 'getcommentssection') ? true : false ;
 
 
 	// runs through all .php partials in /_/php/
@@ -29,6 +29,12 @@
 			require_once $path;
 		}
 	}
+
+	function wpajax_add_query_vars_filter( $vars ){
+	  $vars[] = "wpajax";
+	  return $vars;
+	}
+	add_filter( 'query_vars', 'wpajax_add_query_vars_filter' );
 
 
 	// http://www.inkthemes.com/ajax-comment-wordpress/
