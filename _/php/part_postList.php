@@ -22,17 +22,17 @@ function wpajax_postList ($type = null) {
 
 	if ($_query->have_posts()) : ?>
 
+		<h1><?php
+			if (is_home() && !is_front_page()) single_post_title();
+			if (is_archive()) the_archive_title();
+			if (is_search()) echo 'search results for: '. get_search_query();
+		?></h1>
 
-		<!-- <h1><?php echo the_archive_title(); ?></h1>
-		<?php if (the_archive_description()): ?>
-			<p><?php echo the_archive_description(); ?></p>
-		<?php endif; ?> -->
+		<p><?php
+			if (get_the_author_meta( 'description' ) && is_author()) the_author_meta( 'description' );
+			if (the_archive_description() && is_archive()) the_archive_description();
+		?></p>
 
-		<!-- <h1><?php _e('Search Results','wpajax'); ?></h1> -->
-
-		<?php if ( is_home() && ! is_front_page() ) : ?>
-			<h1 class="page-title"><?php single_post_title(); ?></h1>
-		<?php endif; ?>
 		<?php get_search_form(); ?>
 
 		<section class="postList postList--full">

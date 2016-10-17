@@ -12,25 +12,25 @@
 // Posted On
 function wpajax_the_author() {
 	?>
-	<div class="author">
-		<a class="author__avatar">
+	<div class="authorInfo">
+		<a class="authorInfo__avatar">
 			<?php echo get_avatar(
 				get_the_author_meta('ID'),
 				32,
 				'retro',
 				'author gravatar profile image',
-				array( 'class' => 'author__avatarImg' )
+				array( 'class' => 'authorInfo__avatarImg' )
 			); ?>
 		</a>
-		<div class="author__text" >
-			<span class="author__by" >
+		<div class="authorInfo__text" >
+			<span class="authorInfo__by" >
 				By:
-				<a class="author__byLink" >
+				<a class="authorInfo__byLink" >
 					<?php echo esc_attr( get_the_author() ); ?>
 				</a>
 			</span>
 			 <br/>
-			<a class="author__dateLink" >
+			<a class="authorInfo__dateLink" >
 				<time datetime="<?php echo esc_attr( get_the_date( 'c' ) ); ?>" pubdate>
 					<?php echo esc_html( get_the_date() ); ?>
 				</time>
