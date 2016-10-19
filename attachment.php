@@ -6,13 +6,13 @@
  */
 ?>
 
-<?php  get_header(); ?>
+<?php get_header(); ?>
 
 	<?php wpajax_postList('aside'); ?>
 
 	<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
-		<?php wpajax_postItem(); ?>
+		<?php wpajax_postItem();  //TODO: this should have its own template ?>
 
 	<?php endwhile; endif; ?>
 

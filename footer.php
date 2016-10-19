@@ -26,7 +26,7 @@
 
 		</footer>
 
-	</main><!-- .main -->
+	</main><!-- .main opened in postList.php -->
 
 	<?php // get_sidebar(); ?>
 
