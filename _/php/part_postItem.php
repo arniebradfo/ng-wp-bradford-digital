@@ -12,6 +12,11 @@
 // HTML for a post links - use inside the loop
 function wpajax_postItem ($type = null) {
 
+	if ($type == 'empty') {
+		?><article class="post post--empty"></article><?php
+		return;
+	}
+
 	// detect the page type
 	if ( !isset($type) ) {
 		$type = 'list';

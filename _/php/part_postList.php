@@ -20,37 +20,47 @@ function wpajax_postList ($type = null) {
 		$_query = $wp_query;
 	}
 
-	if ($_query->have_posts()) : ?>
+	?>
+
+	<aside class="postListWrapper">
 
 		<h1><?php
-			if (is_home() && !is_front_page()) single_post_title();
-			if (is_archive()) the_archive_title();
-			if (is_search()) echo 'search results for: '. get_search_query();
+			if (!$_query->have_posts()) _e('Nothing Found','wpajax');
+			elseif (is_home() && !is_front_page()) single_post_title();
+			elseif (is_archive()) the_archive_title();
+			elseif (is_search()) echo 'search results for: '. get_search_query();
 		?></h1>
 
 		<p><?php
-			if (get_the_author_meta( 'description' ) && is_author()) the_author_meta( 'description' );
-			if (the_archive_description() && is_archive()) the_archive_description();
+			if (!$_query->have_posts()) echo 'sorry :(';
+			elseif (get_the_author_meta( 'description' ) && is_author()) the_author_meta( 'description' );
+			elseif (the_archive_description() && is_archive()) the_archive_description();
 		?></p>
 
 		<?php get_search_form(); ?>
 
-		<section class="postList postList--full">
-			<?php while ($_query->have_posts()) : $_query->the_post(); ?>
+		<?php if ($_query->have_posts()) : ?>
 
-				<?php wpajax_postItem('list'); ?>
+			<section class="postList postList--full">
+				<?php while ($_query->have_posts()) : $_query->the_post(); ?>
 
-			<?php endwhile; ?>
-		</section>
+					<?php wpajax_postItem('list'); ?>
 
-		<?php wpajax_post_pagination(); ?>
+				<?php endwhile; ?>
+			</section>
 
-		<?php if (isset($type)) wp_reset_postdata(); ?>
-	<?php else : ?>
+			<?php wpajax_post_pagination(); ?>
 
-		<h1><?php _e('Nothing Found','wpajax'); ?></h1>
+			<?php if (isset($type)) wp_reset_postdata(); ?>
 
-	<?php endif;
+		<?php endif; ?>
+
+	</aside>
+
+	<main class="mainContent mainContent--active"><!-- closed in footer.php -->
+
+	<?php
+
 }
 
 ?>

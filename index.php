@@ -8,6 +8,8 @@
 
 <?php get_header(); ?>
 
-<?php wpajax_postList(); ?>
+<?php wpajax_postList('index'); ?>
+
+<?php wpajax_postItem('empty'); ?>
 
 <?php get_footer(); ?>

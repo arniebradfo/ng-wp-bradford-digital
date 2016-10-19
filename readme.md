@@ -35,7 +35,7 @@ returned code is placed in the doc using js
 - then connect everything
 - then style
 
-- wrap every template part in a shortcode compatible function
+- wrap every template component in a shortcode compatible function
 - prefix all functions
 - concatenate all php into a single functions file
 

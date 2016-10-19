@@ -10,4 +10,6 @@
 
 <?php wpajax_postList('author'); ?>
 
+<?php wpajax_postItem('empty'); ?>
+
 <?php get_footer(); ?>

@@ -8,6 +8,8 @@
 
 <?php  get_header(); ?>
 
+	<?php wpajax_postList('aside'); ?>
+
 	<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
 		<?php wpajax_postItem(); ?>

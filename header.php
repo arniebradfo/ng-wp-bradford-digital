@@ -11,10 +11,13 @@
 	$GLOBALS['is_ajax'] = get_query_var('ajax') ? true : false ;
 	if ($GLOBALS['is_ajax']) {
 		// detect differet types of wordpress ajax requests by setting a header in the js call
-		$GLOBALS['is_ajax_post_comment'] = strtolower(get_query_var('ajax')) == 'postcomment';
-		$GLOBALS['is_ajax_get_page'] = strtolower(get_query_var('ajax')) == 'getpage';
-		$GLOBALS['is_ajax_get_posts'] = strtolower(get_query_var('ajax')) == 'getposts';
-		$GLOBALS['is_ajax_get_comments'] = strtolower(get_query_var('ajax')) == 'getcomments';
+		switch (strtolower(get_query_var('ajax'))) {
+			case 'postcomment': $GLOBALS['is_ajax_post_comment'] = true; break;
+			case 'getpage':     $GLOBALS['is_ajax_get_page']     = true; break;
+			case 'getposts':    $GLOBALS['is_ajax_get_posts']    = true; break;
+			case 'getcomments': $GLOBALS['is_ajax_get_comments'] = true; break;
+			default: break;
+		}
 	}
 
 	// if this is an ajax request paganating comments
@@ -108,11 +111,5 @@
 		) );
 		?>
 	</header>
-
-	<aside class="postListWrapper">
-		<?php wpajax_postList('aside'); ?>
-	</aside>
-
-	<main class="mainContent mainContent--active">
 
 <?php endif; // end ajax detection ?>
