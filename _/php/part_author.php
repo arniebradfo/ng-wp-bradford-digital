@@ -10,8 +10,10 @@
 **/
 
 // Posted On
-function wpajax_the_author() {
-	?>
+function wpajax_the_author($type = 'info') {
+
+	if ($type == 'info'): ?>
+
 	<div class="authorInfo">
 		<a class="authorInfo__avatar">
 			<?php echo get_avatar(
@@ -37,7 +39,24 @@ function wpajax_the_author() {
 			</a>
 		</div>
 	</div>
-	<?php
+
+	<?php elseif ($type == 'bio') : ?>
+
+		<section class="authorBio">
+			<a class="authorInfo__avatar">
+				<?php echo get_avatar(
+					get_the_author_meta('ID'),
+					32,
+					'retro',
+					'author gravatar profile image',
+					array( 'class' => '' )
+				); ?>
+			</a>
+			<h2><?php echo esc_attr( get_the_author() ); ?></h2>
+			<p><?php the_author_meta('description'); ?></p>
+		</section>
+
+	<? endif;
 }
 
 ?>

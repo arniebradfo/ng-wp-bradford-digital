@@ -511,7 +511,7 @@
 			var postClone = post.node.cloneNode(true);
 			post.node.parentNode.insertBefore(postClone, post.node.nextSibling); // insert after
 			// this.postClone.style.visibility = 'hidden';
-			mainClone.replaceChild(post.node, mainClone.getElementsByClassName('post')[0]);
+			mainClone.replaceChild(post.node, mainClone.getElementsByClassName('postItem')[0]);
 			mainClone.classList.remove('mainContent--active');
 			post.node.classList.remove('post--list');
 
@@ -593,7 +593,7 @@
 		xhr.onload = function () {
 			var workspace = document.createElement('div');
 			workspace.innerHTML = xhr.responseText;
-			// console.log(workspace); // for debugging
+			console.log(workspace); // for debugging
 			post.node.getElementsByClassName('excerpt')[0].innerHTML = '';
 			post.node.getElementsByClassName('frame')[0].innerHTML = workspace.getElementsByClassName('frame')[0].innerHTML;
 		};

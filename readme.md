@@ -30,9 +30,16 @@ returned code is placed in the doc using js
 - [Just looking for pjax?](https://github.com/defunkt/jquery-pjax)
 
 ## TODO:
+- WAS JUST:
+	- adding a link to the author stuff to test it
+
 - get content parts exporting in the right place
+	- sidebar
+	- comments
+	- post author
+	- post pagination + title + search
 - then style basic structure
-- then connect everything
+- then connect everything to navigation
 - then style
 
 - wrap every template component in a shortcode compatible function

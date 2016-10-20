@@ -24,7 +24,7 @@ function wpajax_postItem ($type = null) {
 		elseif ( is_page() ) $type = 'page';
 	}
 
-	$postItemClasses = array();
+	$postItemClasses = array('postItem');
 	switch ($type) {
 		case 'list':
 			$postItemClasses[] = 'post--list';
@@ -129,6 +129,8 @@ function wpajax_postItem ($type = null) {
 			<section class="comments">
 				<?php comments_template(); ?>
 			</section>
+
+			<?php wpajax_the_author('bio') ?>
 
 			<?php endif; ?>
 		</div>

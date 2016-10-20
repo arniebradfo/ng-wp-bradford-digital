@@ -24,20 +24,46 @@ function wpajax_postList ($type = null) {
 
 	<aside class="postListWrapper">
 
-		<h1><?php
-			if (!$_query->have_posts()) _e('Nothing Found','wpajax');
-			elseif (is_home() && !is_front_page()) single_post_title();
-			elseif (is_archive()) the_archive_title();
-			elseif (is_search()) echo 'search results for: '. get_search_query();
-		?></h1>
+		<?php // if the "Posts Page" has content in it // set "Front Page" to "-- Select --"
+		$page_for_posts_id = false;
+		if ('page' == get_option('show_on_front') && get_option('page_for_posts') && is_home() && $type == 'index') :
+			the_post();
+			$page_for_posts_id = get_option('page_for_posts');
+			setup_postdata(get_page($page_for_posts_id));
+			?>
 
-		<p><?php
-			if (!$_query->have_posts()) echo 'sorry :(';
-			elseif (get_the_author_meta( 'description' ) && is_author()) the_author_meta( 'description' );
-			elseif (the_archive_description() && is_archive()) the_archive_description();
-		?></p>
+			<section class="blogPageContent" id="post-<?php the_ID(); ?>">
+				<?php the_content(); ?>
+			</section>
 
-		<?php get_search_form(); ?>
+			<?php
+			rewind_posts();
+		endif; ?>
+
+		<?php if ($type == 'author') : ?>
+			<?php wpajax_the_author('bio') ?>
+		<?php else : ?>
+
+			<h1><?php
+				if (!$_query->have_posts()) _e('Nothing Found','wpajax');
+				elseif ($page_for_posts_id) echo get_the_title($page_for_posts_id); // if "Posts Page" is set, but not "Front Page"
+				elseif (is_home() && !is_front_page()) single_post_title();
+				elseif (is_archive()) the_archive_title();
+				elseif (is_search()) echo 'search results for: '. get_search_query();
+				else echo 'Latest Posts';
+				if (is_paged()) echo ' <span>Page '.get_query_var('paged').'</span>';
+			?></h1>
+
+			<?php get_search_form(); ?>
+
+			<p><?php
+				if (!$_query->have_posts()) echo 'sorry :(';
+				elseif (get_the_author_meta('description') && is_author()) the_author_meta( 'description' );
+				elseif (the_archive_description() && is_archive()) the_archive_description();
+			?></p>
+
+		<?php endif; ?>
+
 
 		<?php if ($_query->have_posts()) : ?>
 
