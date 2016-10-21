@@ -15,7 +15,7 @@ function wpajax_the_author($type = 'info') {
 	if ($type == 'info'): ?>
 
 	<div class="authorInfo">
-		<a class="authorInfo__avatar">
+		<a class="authorInfo__avatar" href="<?php echo get_author_posts_url(get_the_author_meta('ID')); ?>">
 			<?php echo get_avatar(
 				get_the_author_meta('ID'),
 				32,
@@ -43,7 +43,7 @@ function wpajax_the_author($type = 'info') {
 	<?php elseif ($type == 'bio') : ?>
 
 		<section class="authorBio">
-			<a class="authorInfo__avatar">
+			<a class="authorInfo__avatar" href="<?php echo get_author_posts_url(get_the_author_meta('ID')); ?>">
 				<?php echo get_avatar(
 					get_the_author_meta('ID'),
 					32,

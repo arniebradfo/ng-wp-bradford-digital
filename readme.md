@@ -31,7 +31,6 @@ returned code is placed in the doc using js
 
 ## TODO:
 - WAS JUST:
-	- adding a link to the author stuff to test it
 
 - get content parts exporting in the right place
 	- sidebar
