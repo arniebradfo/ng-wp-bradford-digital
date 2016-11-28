@@ -1,19 +1,21 @@
 /**
- * Js component boilerplate
- * description
+ * navigation js class
+ * must conform to interface:
+ * @param {HTMLelement} context - an html element to look for elements inside of
+ * @param {url} href - where are we going to navigate to?
  */
 
 (function (document, window) {
 	'use strict';
 
-	window.postExpand = function (e, context, href) {
-		// console.dir(this); // for debugging
+	window.navigationJS_postExpand = function (context, href) {
+		console.dir(this); // for debugging
 
 		// SET TYPE
 		href = window.addAjaxQueryString(href, 'getpage');
 
 		// FLIP ANIMATION SETUP
-		var postExpandFLIP = new window.AnimateMutate({
+		var animateMutate = new window.AnimateMutate({
 			hero: 'cover__hero',
 			title: ['cover__titleLink', true],
 			imgList: 'cover__heroImg--list',
@@ -21,15 +23,15 @@
 			loadBar: 'button'
 		}, context);
 
-		var post = postExpandFLIP.el.context;
-		var hero = postExpandFLIP.el.hero;
-		var title = postExpandFLIP.el.title;
-		var imgList = postExpandFLIP.el.imgList;
-		var loadBar = postExpandFLIP.el.loadBar;
+		var post = animateMutate.el.context;
+		var hero = animateMutate.el.hero;
+		var title = animateMutate.el.title;
+		var imgList = animateMutate.el.imgList;
+		var loadBar = animateMutate.el.loadBar;
 		var loader = loadBar.node.getElementsByClassName('button__loadbar')[0];
 
-		postExpandFLIP.mutate = function () {
-			// mutate node
+		animateMutate.mutate = function () {
+			// MUTATE NODE
 			var main = document.getElementsByClassName('mainContent')[0];
 			var mainClone = main.cloneNode(true);
 			var postClone = post.node.cloneNode(true);
@@ -39,18 +41,16 @@
 			mainClone.classList.remove('mainContent--active');
 			post.node.classList.remove('post--list');
 
-			// apply classes and styles
+			// APPLY STYLES // collect rects without transform
 			post.node.classList.add('post--full');
 			document.body.appendChild(mainClone);
 			document.body.removeChild(main);
 			document.getElementById('mainNav--opener').checked = false;
 			mainClone.classList.add('mainContent--active');
-
-			// collect rects without transform
 			hero.node.style.transform = title.node.style.transform = loadBar.node.style.transition = 'none';
 		};
 
-		postExpandFLIP.invert = function () {
+		animateMutate.invert = function () {
 			// apply INVERT css to mutate node back to its original state
 
 			// hero.node.style.transformOrigin = title.node.style.transition = loadBar.node.style.transition = '50% 50%'; // just in case
@@ -94,18 +94,18 @@
 			// post.node.style.opacity = 0.5; // for debugging
 		};
 
-		postExpandFLIP.play = function () {
+		animateMutate.play = function () {
 			// switch on transitions
 			hero.node.style.transition = title.node.style.transition = loadBar.node.style.transition = '';
 			// remove INVERT css to PLAY the transitions
 			hero.node.style.transform = title.node.style.transform = loadBar.node.style.transform = '';
 		};
 
-		postExpandFLIP.cleanUpAfter = hero.node;
-		// postExpandFLIP.cleanUp = function () {};
+		animateMutate.cleanUpAfter = hero.node;
+		// animateMutate.cleanUp = function () {};
 
 		// IMAGE LOADING
-		var requestFullImg = new window.RequestImg(imgList.node); // can take a callback
+		var requestImg = new window.RequestImg(imgList.node); // can take a callback
 
 		// AJAX REQUEST
 		var xhr = new window.XMLHttpRequest();
@@ -124,9 +124,9 @@
 
 		// WHEN EVERYTHING IS DONE
 		var onFinish = function () {
-			imgList.node.style.transition = postExpandFLIP.el.imgBlur.node.style.transition = 'opacity .5s linear';
+			imgList.node.style.transition = animateMutate.el.imgBlur.node.style.transition = 'opacity .5s linear';
 			window.requestAnimationFrame(function () {
-				imgList.node.style.opacity = postExpandFLIP.el.imgBlur.node.style.opacity = '';
+				imgList.node.style.opacity = animateMutate.el.imgBlur.node.style.opacity = '';
 			});
 		};
 
@@ -136,17 +136,17 @@
 		};
 		var trackedStatesList = [
 			[xhrReadyState, 4],
-			[requestFullImg.readyState, requestFullImg.readyStateMax]
+			[requestImg.readyState, requestImg.readyStateMax]
 		];
-		var postExpandLoader = new window.Progress(trackedStatesList, onFinish);
-		postExpandLoader.update = function () {
+		var progressTracker = new window.ProgressTracker(trackedStatesList, onFinish);
+		progressTracker.update = function () {
 			loader.style.transform = 'scaleX(' + this.readyState + ')';
 		};
 
 		// DO!
 		xhr.send();
-		postExpandFLIP.animate();
-		postExpandLoader.start();
-		requestFullImg.mutateAtts();
+		animateMutate.animate();
+		progressTracker.start();
+		requestImg.mutateAtts();
 	};
 })(document, window);

@@ -13,7 +13,7 @@
 function wpajax_postItem ($type = null) {
 
 	if ($type == 'empty') {
-		?><article class="post post--empty"></article><?php
+		?><article class="post post--empty postItem"></article><?php
 		return;
 	}
 
@@ -28,7 +28,7 @@ function wpajax_postItem ($type = null) {
 	switch ($type) {
 		case 'list':
 			$postItemClasses[] = 'post--list';
-			$postItemClasses[] = 'post--postExpandJS'; // for postExpand.js
+			$postItemClasses[] = 'navigationJS_postExpand'; // for postExpand.js
 			break;
 		case 'single':
 			$postItemClasses[] = 'post--single';
@@ -90,7 +90,7 @@ function wpajax_postItem ($type = null) {
 
 			</header>
 
-			<footer class="info">
+			<footer class="info navigationJS_default">
 				<?php if (get_the_category()):?>
 					<span class="info__category info__item">
 						<?php _e('Category: ','wpajax'); the_category(', '); ?>
@@ -106,14 +106,14 @@ function wpajax_postItem ($type = null) {
 				</span> -->
 			</footer>
 
-			<section class="excerpt">
+			<section class="excerpt navigationJS_default">
 				<?php if ($type === 'list') the_excerpt(); ?>
 			</section>
 
 			<?php echo wpajax_button(array(
 				'id' => '',
 				'class' => '',
-				'href' => '#',
+				'href' => get_the_permalink(),
 				'text' => 'test link',
 			)); ?>
 

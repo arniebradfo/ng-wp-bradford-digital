@@ -11,13 +11,8 @@
 
 		<footer class="footer">
 
-			<nav class="footNav nav" role="navigation">
-				<?php wp_nav_menu( array(
-					'theme_location' => 'footer',
-					'menu_class' => 'footNav__menu',
-					'container' => '' // null
-				) ); ?>
-			</nav>
+			<?php get_sidebar(); ?>
+
 			<small>&copy;<?php echo date("Y"); echo " "; bloginfo('name'); ?></small>
 
 			<div id="wp_footer" style="display:none;">
@@ -27,8 +22,6 @@
 		</footer>
 
 	</main><!-- .main opened in postList.php -->
-
-	<?php // get_sidebar(); ?>
 
 </body>
 

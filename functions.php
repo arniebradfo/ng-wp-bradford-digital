@@ -61,7 +61,7 @@
 		// Nav Menus
 		register_nav_menus( array(
 			'primary'   => __( 'Navigation Menu', 'wpajax' ),
-			'footer' => __( 'Footer Menu', 'wpajax' ),
+			// 'footer' => __( 'Footer Menu', 'wpajax' ), // can add a menu to the footer with a widget
 		) );
 
 		// featured images aka thumbnails

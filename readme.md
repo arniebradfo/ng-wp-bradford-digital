@@ -36,7 +36,8 @@ returned code is placed in the doc using js
 	- sidebar
 	- comments
 	- post author
-	- post pagination + title + search
+	- post pagination + title + search + categories
+	- tags and categories in postItem
 - then style basic structure
 - then connect everything to navigation
 - then style

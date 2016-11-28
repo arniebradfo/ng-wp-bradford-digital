@@ -4,6 +4,37 @@
  */
 
 (function (document, window) {
+	// a list of animation types and their corrosponding css class identifiers
+	var defaultType = 'navigationJS_default';
+	var types = [
+		defaultType,
+		'navigationJS_postExpand'
+	];
+	var continueSearching;
+
+	var navigate = function (context, href, type) {
+		continueSearching = false;
+		console.log('navigation type: ' + type);
+		window.history.pushState({
+			type: type
+		}, '', href);
+		window[type](context, href);
+	};
+
+	var findNavigationType = function (context, href) {
+		continueSearching = true;
+		var scanContextForType = function (type) {
+			if (context.classList.contains(type))
+				navigate(context, href, type);
+		};
+		while (continueSearching) {
+			if (context.tagName === 'BODY')
+				navigate(context, href, defaultType);
+			types.forEach(scanContextForType);
+			context = context.parentElement;
+		}
+	};
+
 	// calls loadPage when the browser back button is pressed
 	var ajaxPopState = function (event) {
 		// TODO: test browser implementation inconsistencies of popstate
@@ -23,10 +54,11 @@
 
 		if (e.metaKey || e.ctrlKey || e.altKey || e.shiftKey) return; // if the click was a cmd/ctrl/alt/shift click
 
+		// find the if the click happened in a link element
 		var parent = e.target;
 		while (true) {
 			if (parent.tagName === 'BODY') return; // not a link
-			if (parent.tagName === 'A' || parent.tagName === 'AREA') break;
+			if (parent.tagName === 'A') break;
 			parent = parent.parentElement;
 		}
 		var link = parent;
@@ -48,29 +80,7 @@
 		!link.href.match(adminUrl) && // href doesn't go to the wp-admin backend
 		!link.href.match(/\/feed/g)) { // is not an rss feed of somekind
 			e.preventDefault();
-
-			var types = {
-				// a list of animation types and their corrosponding css class identifiers
-				postExpand: 'post--postExpandJS'
-			};
-
-			var context = link;
-			while (true) {
-				if (context.tagName === 'BODY') {
-					// window[type](e, parent, link.href);
-					return;
-				}
-				for (var type in types) {
-					if (context.classList.contains(types[type])) {
-						window.history.pushState({
-							type: type
-						}, '', link.href);
-						window[type](e, context, link.href);
-						return;
-					}
-				}
-				context = context.parentElement;
-			}
+			findNavigationType(link, link.href);
 		}
 	};
 

@@ -7,10 +7,8 @@ module.exports = {
 	},
 	js: {
 		files: [
-			'_/js/libs/*.js',
-			'_/js/components/*.js',
-			// '_/js/requires_modernizr/*.js',
-			'_/js/*.js'
+			'_/js/*.js',
+			'_/js/**/*.js',
 		],
 		tasks: [
 			'jshint',

@@ -260,7 +260,7 @@
 })(document, window);
 
 /**
- * progress
+ * progress tracker
  * track the progress of an xhr request
  * @param {Array} trackedStatesList - a [key,value] pair of readyStates to track and their maximum index
  * @param {function} readyState - reference to a function that returns the value of a readyState
@@ -273,7 +273,7 @@
  */
 
 (function (document, window) {
-	window.Progress = function (trackedStatesList, callback) {
+	window.ProgressTracker = function (trackedStatesList, callback) {
 		'use strict';
 		// console.dir(this); // for debugging
 		var self = this;
@@ -383,113 +383,117 @@
 })(document, window);
 
 /**
- * Js component boilerplate
- * description
- */
-
-(function (document, window) {
-	// calls loadPage when the browser back button is pressed
-	var ajaxPopState = function (event) {
-		// TODO: test browser implementation inconsistencies of popstate
-		// TODO: make back button paginate comments??
-		// if (event.state !== null) { // don't fire on the inital page load
-		// 	var optionsSurrogate = wpajax_GETPage;
-		// 	optionsSurrogate.href = window.location.href;
-		// 	self.load(optionsSurrogate);
-		// }
-	};
-
-	// transforms all the interal hyperlinks into ajax requests
-	var attachRoutedClicks = function (event) {
-		// console.dir(this); // for debugging
-
-		var e = event || window.event; // http://stackoverflow.com/questions/3493033/what-is-the-meaning-of-this-var-evt-eventwindow-event
-
-		if (e.metaKey || e.ctrlKey || e.altKey || e.shiftKey) return; // if the click was a cmd/ctrl/alt/shift click
-
-		var parent = e.target;
-		while (true) {
-			if (parent.tagName === 'BODY') return; // not a link
-			if (parent.tagName === 'A' || parent.tagName === 'AREA') break;
-			parent = parent.parentElement;
-		}
-		var link = parent;
-
-		if (!link.href) return; // if the link has no destination
-
-		if (link.href === window.location.href) { // if the page is exactly the same page
-			console.log("you're already on that page");
-			e.preventDefault();
-			return;
-		}
-
-		var currentPageWithParameters = new RegExp(window.location.origin + window.location.pathname + '[^\/]*[&#?]', 'g');
-		var adminUrl = new RegExp('\/wp-', 'g');
-
-		if ((link.href.indexOf(document.domain) > -1 || link.href.indexOf(':') === -1) && // if the link goes to the current domain
-		!link.href.match(currentPageWithParameters) && // href isnt a parameterized link of the current page
-		// href != window.location.href && // href isn't a link to the current page - we already check for this above
-		!link.href.match(adminUrl) && // href doesn't go to the wp-admin backend
-		!link.href.match(/\/feed/g)) { // is not an rss feed of somekind
-			e.preventDefault();
-
-			var types = {
-				// a list of animation types and their corrosponding css class identifiers
-				postExpand: 'post--postExpandJS'
-			};
-
-			var context = link;
-			while (true) {
-				if (context.tagName === 'BODY') {
-					// window[type](e, parent, link.href);
-					return;
-				}
-				for (var type in types) {
-					if (context.classList.contains(types[type])) {
-						window.history.pushState({
-							type: type
-						}, '', link.href);
-						window[type](e, context, link.href);
-						return;
-					}
-				}
-				context = context.parentElement;
-			}
-		}
-	};
-
-	var initalize = function () {
-		window.addEventListener('popstate', ajaxPopState, false);
-		document.addEventListener('click', attachRoutedClicks, true);
-	};
-
-	// if it just needs raw DOM HTML
-	if (document.readyState === 'loading') {
-		document.addEventListener('DOMContentLoaded', initalize, false);
-	} else { initalize(); }
-
-	// // if it needs other DOM resources
-	// if (document.readyState === 'loading' || document.readyState === 'interactive') {
-	// 	window.addEventListener('load', initalize, false);
-	// } else { initalize(); }
-})(document, window);
-
-/**
- * Js component boilerplate
- * description
+ * navigation js class
+ * must conform to interface:
+ * @param {HTMLelement} context - an html element to look for elements inside of
+ * @param {url} href - where are we going to navigate to?
  */
 
 (function (document, window) {
 	'use strict';
 
-	window.postExpand = function (e, context, href) {
-		// console.dir(this); // for debugging
+	window.navigationJS_default = function (context, href) {
+		console.dir(this); // for debugging
+
+		// SET TYPE
+		// href = window.addAjaxQueryString(href, 'getpage');
+
+		// FLIP ANIMATION SETUP
+		var animateMutate = new window.AnimateMutate({
+			// name: 'selector',
+		}, context);
+
+		animateMutate.mutate = function () {
+			// ... MUTATE elements
+
+			// ... apply styles
+
+			// ... collect rects without transform
+			// someElement.style.transform = '';
+		};
+
+		animateMutate.invert = function () {
+			// ... apply INVERT css to mutate node back to its original state
+		};
+
+		animateMutate.play = function () {
+			// ... switch on transitions
+			// someElement.style.transition = '';
+			// ... remove INVERT css to PLAY the transitions
+			// someElement.style.transform = '';
+		};
+
+		// CLEANUP
+		// animateMutate.cleanUpAfter = someElement; // follows the transition end
+		animateMutate.cleanUp = function () {
+			// ... what to do after all transitions end
+		};
+
+		// AJAX REQUEST
+		var xhr = new window.XMLHttpRequest();
+		xhr.open('GET', href, true);
+		xhr.timeout = 5000;
+		xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest'); // ALWAYS set this!
+		xhr.setRequestHeader('WP-Request-Type', 'GetPage');
+		// console.dir(xhr); // for debugging
+		xhr.onload = function () {
+			var workspace = document.createElement('div');
+			workspace.innerHTML = xhr.responseText;
+			console.log(workspace); // for debugging
+			// ... do something with the response
+			document.querySelector('.mainNav').innerHTML = workspace.querySelector('.mainNav').innerHTML;
+			document.querySelector('.postListWrapper').innerHTML = workspace.querySelector('.postListWrapper').innerHTML;
+			document.querySelector('.mainContent').innerHTML = workspace.querySelector('.mainContent').innerHTML;
+
+		};
+		xhr.onerror = xhr.onabort = xhr.ontimeout = function () {
+			console.log('ajax failed');
+			window.location = href;
+		}
+
+		// WHEN EVERYTHING IS DONE
+		var onFinish = function () {
+			// ... when all loading and animation has finished
+		};
+
+		// PROGRESS ELEMENT
+		var xhrReadyState = function () {
+			return xhr.readyState;
+		};
+		var trackedStatesList = [
+			[xhrReadyState, 4]
+		];
+		var progressTracker = new window.ProgressTracker(trackedStatesList, onFinish);
+		progressTracker.update = function () {
+			// ...update load element with the Progress.readyState
+			// someElement.style.transform = 'scaleX(' + this.readyState + ')';
+		};
+
+		// GO!
+		xhr.send();
+		animateMutate.animate();
+		progressTracker.start();
+	};
+})(document, window);
+
+/**
+ * navigation js class
+ * must conform to interface:
+ * @param {HTMLelement} context - an html element to look for elements inside of
+ * @param {url} href - where are we going to navigate to?
+ */
+
+(function (document, window) {
+	'use strict';
+
+	window.navigationJS_postExpand = function (context, href) {
+		console.dir(this); // for debugging
 
 		// SET TYPE
 		href = window.addAjaxQueryString(href, 'getpage');
 
 		// FLIP ANIMATION SETUP
-		var postExpandFLIP = new window.AnimateMutate({
+		var animateMutate = new window.AnimateMutate({
 			hero: 'cover__hero',
 			title: ['cover__titleLink', true],
 			imgList: 'cover__heroImg--list',
@@ -497,15 +501,15 @@
 			loadBar: 'button'
 		}, context);
 
-		var post = postExpandFLIP.el.context;
-		var hero = postExpandFLIP.el.hero;
-		var title = postExpandFLIP.el.title;
-		var imgList = postExpandFLIP.el.imgList;
-		var loadBar = postExpandFLIP.el.loadBar;
+		var post = animateMutate.el.context;
+		var hero = animateMutate.el.hero;
+		var title = animateMutate.el.title;
+		var imgList = animateMutate.el.imgList;
+		var loadBar = animateMutate.el.loadBar;
 		var loader = loadBar.node.getElementsByClassName('button__loadbar')[0];
 
-		postExpandFLIP.mutate = function () {
-			// mutate node
+		animateMutate.mutate = function () {
+			// MUTATE NODE
 			var main = document.getElementsByClassName('mainContent')[0];
 			var mainClone = main.cloneNode(true);
 			var postClone = post.node.cloneNode(true);
@@ -515,18 +519,16 @@
 			mainClone.classList.remove('mainContent--active');
 			post.node.classList.remove('post--list');
 
-			// apply classes and styles
+			// APPLY STYLES // collect rects without transform
 			post.node.classList.add('post--full');
 			document.body.appendChild(mainClone);
 			document.body.removeChild(main);
 			document.getElementById('mainNav--opener').checked = false;
 			mainClone.classList.add('mainContent--active');
-
-			// collect rects without transform
 			hero.node.style.transform = title.node.style.transform = loadBar.node.style.transition = 'none';
 		};
 
-		postExpandFLIP.invert = function () {
+		animateMutate.invert = function () {
 			// apply INVERT css to mutate node back to its original state
 
 			// hero.node.style.transformOrigin = title.node.style.transition = loadBar.node.style.transition = '50% 50%'; // just in case
@@ -570,18 +572,18 @@
 			// post.node.style.opacity = 0.5; // for debugging
 		};
 
-		postExpandFLIP.play = function () {
+		animateMutate.play = function () {
 			// switch on transitions
 			hero.node.style.transition = title.node.style.transition = loadBar.node.style.transition = '';
 			// remove INVERT css to PLAY the transitions
 			hero.node.style.transform = title.node.style.transform = loadBar.node.style.transform = '';
 		};
 
-		postExpandFLIP.cleanUpAfter = hero.node;
-		// postExpandFLIP.cleanUp = function () {};
+		animateMutate.cleanUpAfter = hero.node;
+		// animateMutate.cleanUp = function () {};
 
 		// IMAGE LOADING
-		var requestFullImg = new window.RequestImg(imgList.node); // can take a callback
+		var requestImg = new window.RequestImg(imgList.node); // can take a callback
 
 		// AJAX REQUEST
 		var xhr = new window.XMLHttpRequest();
@@ -600,9 +602,9 @@
 
 		// WHEN EVERYTHING IS DONE
 		var onFinish = function () {
-			imgList.node.style.transition = postExpandFLIP.el.imgBlur.node.style.transition = 'opacity .5s linear';
+			imgList.node.style.transition = animateMutate.el.imgBlur.node.style.transition = 'opacity .5s linear';
 			window.requestAnimationFrame(function () {
-				imgList.node.style.opacity = postExpandFLIP.el.imgBlur.node.style.opacity = '';
+				imgList.node.style.opacity = animateMutate.el.imgBlur.node.style.opacity = '';
 			});
 		};
 
@@ -612,17 +614,119 @@
 		};
 		var trackedStatesList = [
 			[xhrReadyState, 4],
-			[requestFullImg.readyState, requestFullImg.readyStateMax]
+			[requestImg.readyState, requestImg.readyStateMax]
 		];
-		var postExpandLoader = new window.Progress(trackedStatesList, onFinish);
-		postExpandLoader.update = function () {
+		var progressTracker = new window.ProgressTracker(trackedStatesList, onFinish);
+		progressTracker.update = function () {
 			loader.style.transform = 'scaleX(' + this.readyState + ')';
 		};
 
 		// DO!
 		xhr.send();
-		postExpandFLIP.animate();
-		postExpandLoader.start();
-		requestFullImg.mutateAtts();
+		animateMutate.animate();
+		progressTracker.start();
+		requestImg.mutateAtts();
 	};
+})(document, window);
+
+/**
+ * Js component boilerplate
+ * description
+ */
+
+(function (document, window) {
+	// a list of animation types and their corrosponding css class identifiers
+	var defaultType = 'navigationJS_default';
+	var types = [
+		defaultType,
+		'navigationJS_postExpand'
+	];
+	var continueSearching;
+
+	var navigate = function (context, href, type) {
+		continueSearching = false;
+		console.log('navigation type: ' + type);
+		window.history.pushState({
+			type: type
+		}, '', href);
+		window[type](context, href);
+	};
+
+	var findNavigationType = function (context, href) {
+		continueSearching = true;
+		var scanContextForType = function (type) {
+			if (context.classList.contains(type))
+				navigate(context, href, type);
+		};
+		while (continueSearching) {
+			if (context.tagName === 'BODY')
+				navigate(context, href, defaultType);
+			types.forEach(scanContextForType);
+			context = context.parentElement;
+		}
+	};
+
+	// calls loadPage when the browser back button is pressed
+	var ajaxPopState = function (event) {
+		// TODO: test browser implementation inconsistencies of popstate
+		// TODO: make back button paginate comments??
+		// if (event.state !== null) { // don't fire on the inital page load
+		// 	var optionsSurrogate = wpajax_GETPage;
+		// 	optionsSurrogate.href = window.location.href;
+		// 	self.load(optionsSurrogate);
+		// }
+	};
+
+	// transforms all the interal hyperlinks into ajax requests
+	var attachRoutedClicks = function (event) {
+		// console.dir(this); // for debugging
+
+		var e = event || window.event; // http://stackoverflow.com/questions/3493033/what-is-the-meaning-of-this-var-evt-eventwindow-event
+
+		if (e.metaKey || e.ctrlKey || e.altKey || e.shiftKey) return; // if the click was a cmd/ctrl/alt/shift click
+
+		// find the if the click happened in a link element
+		var parent = e.target;
+		while (true) {
+			if (parent.tagName === 'BODY') return; // not a link
+			if (parent.tagName === 'A') break;
+			parent = parent.parentElement;
+		}
+		var link = parent;
+
+		if (!link.href) return; // if the link has no destination
+
+		if (link.href === window.location.href) { // if the page is exactly the same page
+			console.log("you're already on that page");
+			e.preventDefault();
+			return;
+		}
+
+		var currentPageWithParameters = new RegExp(window.location.origin + window.location.pathname + '[^\/]*[&#?]', 'g');
+		var adminUrl = new RegExp('\/wp-', 'g');
+
+		if ((link.href.indexOf(document.domain) > -1 || link.href.indexOf(':') === -1) && // if the link goes to the current domain
+		!link.href.match(currentPageWithParameters) && // href isnt a parameterized link of the current page
+		// href != window.location.href && // href isn't a link to the current page - we already check for this above
+		!link.href.match(adminUrl) && // href doesn't go to the wp-admin backend
+		!link.href.match(/\/feed/g)) { // is not an rss feed of somekind
+			e.preventDefault();
+			findNavigationType(link, link.href);
+		}
+	};
+
+	var initalize = function () {
+		window.addEventListener('popstate', ajaxPopState, false);
+		document.addEventListener('click', attachRoutedClicks, true);
+	};
+
+	// if it just needs raw DOM HTML
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', initalize, false);
+	} else { initalize(); }
+
+	// // if it needs other DOM resources
+	// if (document.readyState === 'loading' || document.readyState === 'interactive') {
+	// 	window.addEventListener('load', initalize, false);
+	// } else { initalize(); }
 })(document, window);

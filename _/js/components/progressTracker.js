@@ -1,5 +1,5 @@
 /**
- * progress
+ * progress tracker
  * track the progress of an xhr request
  * @param {Array} trackedStatesList - a [key,value] pair of readyStates to track and their maximum index
  * @param {function} readyState - reference to a function that returns the value of a readyState
@@ -12,7 +12,7 @@
  */
 
 (function (document, window) {
-	window.Progress = function (trackedStatesList, callback) {
+	window.ProgressTracker = function (trackedStatesList, callback) {
 		'use strict';
 		// console.dir(this); // for debugging
 		var self = this;
