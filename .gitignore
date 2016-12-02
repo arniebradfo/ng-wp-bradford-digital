@@ -9,6 +9,7 @@
 *.pid
 *.gz
 *.map
+.DS_Store
 
 pids
 logs

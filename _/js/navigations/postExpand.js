@@ -45,7 +45,7 @@
 			post.node.classList.add('post--full');
 			document.body.appendChild(mainClone);
 			document.body.removeChild(main);
-			document.getElementById('mainNav--opener').checked = false;
+			window.navigationJS_mainNavToggle();
 			mainClone.classList.add('mainContent--active');
 			hero.node.style.transform = title.node.style.transform = loadBar.node.style.transition = 'none';
 		};

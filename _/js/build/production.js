@@ -393,7 +393,7 @@
 	'use strict';
 
 	window.navigationJS_default = function (context, href) {
-		console.dir(this); // for debugging
+		// console.dir(this); // for debugging
 
 		// SET TYPE
 		// href = window.addAjaxQueryString(href, 'getpage');
@@ -439,7 +439,7 @@
 		xhr.onload = function () {
 			var workspace = document.createElement('div');
 			workspace.innerHTML = xhr.responseText;
-			console.log(workspace); // for debugging
+			// console.log(workspace); // for debugging
 			// ... do something with the response
 			document.querySelector('.mainNav').innerHTML = workspace.querySelector('.mainNav').innerHTML;
 			document.querySelector('.postListWrapper').innerHTML = workspace.querySelector('.postListWrapper').innerHTML;
@@ -473,6 +473,32 @@
 		xhr.send();
 		animateMutate.animate();
 		progressTracker.start();
+	};
+})(document, window);
+
+/**
+ * navigation js class
+ * must conform to interface:
+ * @param {HTMLelement} context - an html element to look for elements inside of
+ * @param {url} href - where are we going to navigate to?
+ */
+
+(function (document, window) {
+	'use strict';
+
+	window.navigationJS_mainNavToggle = function (context, href) {
+		console.dir(this); // for debugging
+
+        console.log(context);
+
+        if (document.body.classList.contains('body--mainNavOpen')) {
+            document.body.classList.remove('body--mainNavOpen');
+            document.body.classList.add('body--mainNavClosed');
+        } else {
+            document.body.classList.remove('body--mainNavClosed');
+            document.body.classList.add('body--mainNavOpen');
+        }
+
 	};
 })(document, window);
 
@@ -523,7 +549,7 @@
 			post.node.classList.add('post--full');
 			document.body.appendChild(mainClone);
 			document.body.removeChild(main);
-			document.getElementById('mainNav--opener').checked = false;
+			window.navigationJS_mainNavToggle();
 			mainClone.classList.add('mainContent--active');
 			hero.node.style.transform = title.node.style.transform = loadBar.node.style.transition = 'none';
 		};
@@ -636,32 +662,42 @@
 
 (function (document, window) {
 	// a list of animation types and their corrosponding css class identifiers
-	var defaultType = 'navigationJS_default';
-	var types = [
-		defaultType,
-		'navigationJS_postExpand'
-	];
+	// var defaultType = 'navigationJS_default';
+	// var types = [
+	// 	defaultType,
+	// 	'navigationJS_postExpand',
+	// 	'navigationJS_mainNavOpen'
+	// ];
+	var defaultNav = {
+		forward: 'navigationJS_default',
+		back: 'navigationJS_default'
+	};
 	var continueSearching;
 
-	var navigate = function (context, href, type) {
+	var navigate = function (context, href) {
 		continueSearching = false;
-		console.log('navigation type: ' + type);
+		// console.log('navigation type: ' + type);
+		if (!context.dataset.navforward) context.dataset.navforward = defaultNav.forward;
+		if (!context.dataset.navback) context.dataset.navback = defaultNav.back;
+
 		window.history.pushState({
-			type: type
+			navforward: context.dataset.navforward,
+			navback: context.dataset.navback
 		}, '', href);
-		window[type](context, href);
+		window[context.dataset.navforward](context, href);
 	};
 
 	var findNavigationType = function (context, href) {
 		continueSearching = true;
-		var scanContextForType = function (type) {
-			if (context.classList.contains(type))
-				navigate(context, href, type);
-		};
+		// var scanContextForNav = function (type) {
+		// };
 		while (continueSearching) {
-			if (context.tagName === 'BODY')
-				navigate(context, href, defaultType);
-			types.forEach(scanContextForType);
+			// if (context.tagName === 'BODY')
+			// 	navigate(context, href);
+			// types.forEach(scanContextForNav);
+			console.log(context.dataset.navforward);
+			if (context.dataset.navforward || context.tagName === 'BODY')
+				navigate(context, href);
 			context = context.parentElement;
 		}
 	};
@@ -669,12 +705,10 @@
 	// calls loadPage when the browser back button is pressed
 	var ajaxPopState = function (event) {
 		// TODO: test browser implementation inconsistencies of popstate
-		// TODO: make back button paginate comments??
-		// if (event.state !== null) { // don't fire on the inital page load
-		// 	var optionsSurrogate = wpajax_GETPage;
-		// 	optionsSurrogate.href = window.location.href;
-		// 	self.load(optionsSurrogate);
-		// }
+		// console.log(event);
+		if (event.state !== null) { // don't fire on the inital page load
+			window[event.state.navback](document.body, document.location);
+		}
 	};
 
 	// transforms all the interal hyperlinks into ajax requests
@@ -694,19 +728,21 @@
 		}
 		var link = parent;
 
-		if (!link.href) return; // if the link has no destination
+		// if (!link.href) return; // if the link has no destination
 
-		if (link.href === window.location.href) { // if the page is exactly the same page
+		console.log(link.href);
+		console.log(window.location.href);
+		if (link.href === window.location.href && !window.location.hash) { // if the page is exactly the same page
 			console.log("you're already on that page");
 			e.preventDefault();
 			return;
 		}
 
-		var currentPageWithParameters = new RegExp(window.location.origin + window.location.pathname + '[^\/]*[&#?]', 'g');
+		// var currentPageWithParameters = new RegExp(window.location.origin + window.location.pathname + '[^\/]*[&#?]', 'g');
 		var adminUrl = new RegExp('\/wp-', 'g');
 
 		if ((link.href.indexOf(document.domain) > -1 || link.href.indexOf(':') === -1) && // if the link goes to the current domain
-		!link.href.match(currentPageWithParameters) && // href isnt a parameterized link of the current page
+		// !link.href.match(currentPageWithParameters) && // href isnt a parameterized link of the current page
 		// href != window.location.href && // href isn't a link to the current page - we already check for this above
 		!link.href.match(adminUrl) && // href doesn't go to the wp-admin backend
 		!link.href.match(/\/feed/g)) { // is not an rss feed of somekind

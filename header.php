@@ -16,6 +16,7 @@
 		$GLOBALS['is_ajax_get_posts']    = strtolower(get_query_var('ajax')) == 'getposts';
 		$GLOBALS['is_ajax_get_comments'] = strtolower(get_query_var('ajax')) == 'getcomments';
 	} else {
+		// set every false
 		$GLOBALS['is_ajax_post_comment'] =
 		$GLOBALS['is_ajax_get_page'] =
 		$GLOBALS['is_ajax_get_posts'] =
@@ -93,11 +94,11 @@
 
 </head>
 
-<body <?php body_class(); ?> >
+<body <?php body_class(['body--mainNavOpen']); ?> >
 
-	<input id="mainNav--opener" type="checkbox" checked/>
+	<a id="mainNav--toggle" href="#mainNav" data-navforward="navigationJS_mainNavToggle" data-navback="navigationJS_mainNavToggle" >nav</a>
 
-	<header class="mainNav nav" role="navigation">
+	<header id="mainNav" class="mainNav nav" role="navigation">
 		<a class="mainNav__logo" href="<?php echo esc_url( home_url( '/' ) ); ?>">
 			<?php bloginfo( 'name' ); ?>
 		</a>

@@ -9,7 +9,7 @@
 	'use strict';
 
 	window.navigationJS_default = function (context, href) {
-		console.dir(this); // for debugging
+		// console.dir(this); // for debugging
 
 		// SET TYPE
 		// href = window.addAjaxQueryString(href, 'getpage');
@@ -55,7 +55,7 @@
 		xhr.onload = function () {
 			var workspace = document.createElement('div');
 			workspace.innerHTML = xhr.responseText;
-			console.log(workspace); // for debugging
+			// console.log(workspace); // for debugging
 			// ... do something with the response
 			document.querySelector('.mainNav').innerHTML = workspace.querySelector('.mainNav').innerHTML;
 			document.querySelector('.postListWrapper').innerHTML = workspace.querySelector('.postListWrapper').innerHTML;

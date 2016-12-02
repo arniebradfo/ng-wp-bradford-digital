@@ -38,16 +38,19 @@ $mainContentBufferX: 50px; // arbitrary value
 	transform-origin: $mainContentOFFSET center;
 }
 
-#mainNav--opener{
+#mainNav--toggle{
 	z-index: index($z-of, mainNav--opener);
 	@include fixed(0 null null 0);
-	&:checked {
-		~ .mainContent--active{
+}
+
+.body{
+	&--mainNavOpen{
+		.mainContent--active{
 			transform: translateX($drawerWIDTH) scale($mainContentSCALE);
 		}
 	}
-	&:not(:checked){
-		~ .mainNav{
+	&--mainNavClosed{
+		.mainNav{
 			display: none;
 		}
 	}

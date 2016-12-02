@@ -690,16 +690,17 @@ html, body {
   transform-origin: 32px center;
 }
 
-#mainNav--opener {
+#mainNav--toggle {
   z-index: 5;
   position: fixed;
   top: 0;
   left: 0;
 }
-#mainNav--opener:checked ~ .mainContent--active {
+
+.body--mainNavOpen .mainContent--active {
   transform: translateX(80%) scale(0.9);
 }
-#mainNav--opener:not(:checked) ~ .mainNav {
+.body--mainNavClosed .mainNav {
   display: none;
 }
 

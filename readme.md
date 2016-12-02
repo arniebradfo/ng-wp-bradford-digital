@@ -31,6 +31,8 @@ returned code is placed in the doc using js
 
 ## TODO:
 - WAS JUST:
+ - figureing out how to remove the #mainNav hash
+ - alt behavior for hash hrefs
 
 - get content parts exporting in the right place
 	- sidebar
