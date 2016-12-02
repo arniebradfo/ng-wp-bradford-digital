@@ -9,9 +9,7 @@
 	'use strict';
 
 	window.navigationJS_mainNavToggle = function (context, href) {
-		console.dir(this); // for debugging
-
-        console.log(context);
+		// console.dir(this); // for debugging
 
         if (document.body.classList.contains('body--mainNavOpen')) {
             document.body.classList.remove('body--mainNavOpen');

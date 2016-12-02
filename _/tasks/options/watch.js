@@ -11,7 +11,7 @@ module.exports = {
 			'_/js/**/*.js',
 		],
 		tasks: [
-			'jshint',
+			// 'jshint',
 			'concat:js',
 			// 'concat:modernizr',
 			'uglify'

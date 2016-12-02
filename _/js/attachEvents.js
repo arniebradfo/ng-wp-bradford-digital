@@ -4,13 +4,7 @@
  */
 
 (function (document, window) {
-	// a list of animation types and their corrosponding css class identifiers
-	// var defaultType = 'navigationJS_default';
-	// var types = [
-	// 	defaultType,
-	// 	'navigationJS_postExpand',
-	// 	'navigationJS_mainNavOpen'
-	// ];
+
 	var defaultNav = {
 		forward: 'navigationJS_default',
 		back: 'navigationJS_default'
@@ -19,25 +13,22 @@
 
 	var navigate = function (context, href) {
 		continueSearching = false;
-		// console.log('navigation type: ' + type);
+
 		if (!context.dataset.navforward) context.dataset.navforward = defaultNav.forward;
 		if (!context.dataset.navback) context.dataset.navback = defaultNav.back;
 
+		// TODO: save copy of DOM as a string?
 		window.history.pushState({
 			navforward: context.dataset.navforward,
 			navback: context.dataset.navback
 		}, '', href);
+
 		window[context.dataset.navforward](context, href);
 	};
 
 	var findNavigationType = function (context, href) {
 		continueSearching = true;
-		// var scanContextForNav = function (type) {
-		// };
 		while (continueSearching) {
-			// if (context.tagName === 'BODY')
-			// 	navigate(context, href);
-			// types.forEach(scanContextForNav);
 			if (context.dataset.navforward || context.tagName === 'BODY')
 				navigate(context, href);
 			context = context.parentElement;
@@ -47,8 +38,8 @@
 	// calls loadPage when the browser back button is pressed
 	var ajaxPopState = function (event) {
 		// TODO: test browser implementation inconsistencies of popstate
-		// console.log(event);
 		if (event.state !== null) { // don't fire on the inital page load
+			// TODO: get better context.
 			window[event.state.navback](document.body, document.location);
 		}
 	};
@@ -99,9 +90,8 @@
 	};
 
 	// if it just needs raw DOM HTML
-	if (document.readyState === 'loading') {
-		document.addEventListener('DOMContentLoaded', initalize, false);
-	} else { initalize(); }
+	if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initalize, false);
+	else initalize();
 
 	// // if it needs other DOM resources
 	// if (document.readyState === 'loading' || document.readyState === 'interactive') {

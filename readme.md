@@ -44,6 +44,10 @@ returned code is placed in the doc using js
 - then connect everything to navigation
 - then style
 
+- remove jshint
+- get vscode extensions from work computer
+- get .vscode tasks setup
+
 - wrap every template component in a shortcode compatible function
 - prefix all functions
 - concatenate all php into a single functions file

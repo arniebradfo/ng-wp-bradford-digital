@@ -487,9 +487,7 @@
 	'use strict';
 
 	window.navigationJS_mainNavToggle = function (context, href) {
-		console.dir(this); // for debugging
-
-        console.log(context);
+		// console.dir(this); // for debugging
 
         if (document.body.classList.contains('body--mainNavOpen')) {
             document.body.classList.remove('body--mainNavOpen');
@@ -661,13 +659,7 @@
  */
 
 (function (document, window) {
-	// a list of animation types and their corrosponding css class identifiers
-	// var defaultType = 'navigationJS_default';
-	// var types = [
-	// 	defaultType,
-	// 	'navigationJS_postExpand',
-	// 	'navigationJS_mainNavOpen'
-	// ];
+
 	var defaultNav = {
 		forward: 'navigationJS_default',
 		back: 'navigationJS_default'
@@ -676,26 +668,22 @@
 
 	var navigate = function (context, href) {
 		continueSearching = false;
-		// console.log('navigation type: ' + type);
+
 		if (!context.dataset.navforward) context.dataset.navforward = defaultNav.forward;
 		if (!context.dataset.navback) context.dataset.navback = defaultNav.back;
 
+		// TODO: save copy of DOM as a string?
 		window.history.pushState({
 			navforward: context.dataset.navforward,
 			navback: context.dataset.navback
 		}, '', href);
+
 		window[context.dataset.navforward](context, href);
 	};
 
 	var findNavigationType = function (context, href) {
 		continueSearching = true;
-		// var scanContextForNav = function (type) {
-		// };
 		while (continueSearching) {
-			// if (context.tagName === 'BODY')
-			// 	navigate(context, href);
-			// types.forEach(scanContextForNav);
-			console.log(context.dataset.navforward);
 			if (context.dataset.navforward || context.tagName === 'BODY')
 				navigate(context, href);
 			context = context.parentElement;
@@ -705,8 +693,8 @@
 	// calls loadPage when the browser back button is pressed
 	var ajaxPopState = function (event) {
 		// TODO: test browser implementation inconsistencies of popstate
-		// console.log(event);
 		if (event.state !== null) { // don't fire on the inital page load
+			// TODO: get better context.
 			window[event.state.navback](document.body, document.location);
 		}
 	};
@@ -728,11 +716,11 @@
 		}
 		var link = parent;
 
-		// if (!link.href) return; // if the link has no destination
+		if (!link.href) return; // if the link has no destination
 
-		console.log(link.href);
-		console.log(window.location.href);
-		if (link.href === window.location.href && !window.location.hash) { // if the page is exactly the same page
+		if (link.href === window.location.href // if the page is exactly the same page
+			&& !window.location.hash
+		) { 
 			console.log("you're already on that page");
 			e.preventDefault();
 			return;
@@ -741,11 +729,11 @@
 		// var currentPageWithParameters = new RegExp(window.location.origin + window.location.pathname + '[^\/]*[&#?]', 'g');
 		var adminUrl = new RegExp('\/wp-', 'g');
 
-		if ((link.href.indexOf(document.domain) > -1 || link.href.indexOf(':') === -1) && // if the link goes to the current domain
-		// !link.href.match(currentPageWithParameters) && // href isnt a parameterized link of the current page
-		// href != window.location.href && // href isn't a link to the current page - we already check for this above
-		!link.href.match(adminUrl) && // href doesn't go to the wp-admin backend
-		!link.href.match(/\/feed/g)) { // is not an rss feed of somekind
+		if ((link.href.indexOf(document.domain) > -1 || link.href.indexOf(':') === -1) // if the link goes to the current domain
+			// && !link.href.match(currentPageWithParameters)  // href isnt a parameterized link of the current page
+			&& !link.href.match(adminUrl)  // href doesn't go to the wp-admin backend
+			&& !link.href.match(/\/feed/g) // is not an rss feed of somekind
+		) { 
 			e.preventDefault();
 			findNavigationType(link, link.href);
 		}
@@ -757,9 +745,8 @@
 	};
 
 	// if it just needs raw DOM HTML
-	if (document.readyState === 'loading') {
-		document.addEventListener('DOMContentLoaded', initalize, false);
-	} else { initalize(); }
+	if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initalize, false);
+	else initalize();
 
 	// // if it needs other DOM resources
 	// if (document.readyState === 'loading' || document.readyState === 'interactive') {
