@@ -38,14 +38,15 @@ $mainContentBufferX: 50px; // arbitrary value
 	transform-origin: $mainContentOFFSET center;
 }
 
-#mainNav--toggle{
+.mainNav__toggle{
 	z-index: index($z-of, mainNav--opener);
 	@include fixed(0 null null 0);
 }
 
 .body{
 	&--mainNavOpen{
-		.mainContent--active{
+		// .mainContent--active{
+		.mainContent{
 			transform: translateX($drawerWIDTH) scale($mainContentSCALE);
 		}
 	}

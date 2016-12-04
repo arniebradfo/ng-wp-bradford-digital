@@ -94,9 +94,9 @@
 
 </head>
 
-<body <?php body_class(['body--mainNavOpen']); ?> >
+<body <?php body_class(); ?> >
 
-	<a id="mainNav--toggle" href="#mainNav" data-navforward="navigationJS_mainNavToggle" data-navback="navigationJS_mainNavToggle" >nav</a>
+	<a id="mainNav__toggle" class="mainNav__toggle" href="#navOpen" data-navforward="navigationJS_mainNavToggle" data-navback="navigationJS_mainNavToggle" data-routersetstate="navigationJS_mainNavToggle">nav</a>
 
 	<header id="mainNav" class="mainNav nav" role="navigation">
 		<a class="mainNav__logo" href="<?php echo esc_url( home_url( '/' ) ); ?>">

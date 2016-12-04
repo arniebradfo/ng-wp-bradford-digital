@@ -9,36 +9,53 @@
 		forward: 'navigationJS_default',
 		back: 'navigationJS_default'
 	};
-	var continueSearching;
+	// var continueSearching;
+
+	var setState = function () {
+		var setStateContexts = document.querySelectorAll('[data-routersetstate]');
+		// console.log(setStateContexts);
+		setStateContexts.forEach(function (context) {
+			// console.log(context);			
+			// console.log(context.dataset.routersetstate);
+			window[context.dataset.routersetstate](context, context.href);
+		});
+	};
 
 	var navigate = function (context, href) {
-		continueSearching = false;
+		// continueSearching = false;
 
 		if (!context.dataset.navforward) context.dataset.navforward = defaultNav.forward;
 		if (!context.dataset.navback) context.dataset.navback = defaultNav.back;
 
-		// TODO: save copy of DOM as a string?
+		console.log('pushState');
+		// TODO: save copy of DOM as a string for back navigation?
 		window.history.pushState({
 			navforward: context.dataset.navforward,
 			navback: context.dataset.navback
 		}, '', href);
+		console.log(window.history.state);
 
 		window[context.dataset.navforward](context, href);
 	};
 
 	var findNavigationType = function (context, href) {
 		continueSearching = true;
-		while (continueSearching) {
-			if (context.dataset.navforward || context.tagName === 'BODY')
+		while (true) {
+			if (context.dataset.navforward || context.tagName === 'BODY') {
 				navigate(context, href);
+				return;
+			}
 			context = context.parentElement;
 		}
 	};
 
 	// calls loadPage when the browser back button is pressed
 	var ajaxPopState = function (event) {
+		console.log(event);		
+		console.log(window.history);
+		console.log('popState');
 		// TODO: test browser implementation inconsistencies of popstate
-		if (event.state !== null) { // don't fire on the inital page load
+		if (event.state != null) { // don't fire on the inital page load
 			// TODO: get better context.
 			window[event.state.navback](document.body, document.location);
 		}
@@ -87,6 +104,7 @@
 	var initalize = function () {
 		window.addEventListener('popstate', ajaxPopState, false);
 		document.addEventListener('click', attachRoutedClicks, true);
+		setState();
 	};
 
 	// if it just needs raw DOM HTML

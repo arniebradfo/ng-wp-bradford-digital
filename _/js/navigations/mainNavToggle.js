@@ -11,13 +11,17 @@
 	window.navigationJS_mainNavToggle = function (context, href) {
 		// console.dir(this); // for debugging
 
-        if (document.body.classList.contains('body--mainNavOpen')) {
-            document.body.classList.remove('body--mainNavOpen');
-            document.body.classList.add('body--mainNavClosed');
-        } else {
+        context = context == null ? document.querySelector('.mainNav__toggle') : context ; 
+
+        if (window.location.hash === '#navOpen') {
+            context.hash = '#navClosed';
             document.body.classList.remove('body--mainNavClosed');
             document.body.classList.add('body--mainNavOpen');
+        } else {
+            context.hash = '#navOpen';
+            document.body.classList.remove('body--mainNavOpen');
+            document.body.classList.add('body--mainNavClosed');
         }
-
 	};
+
 })(document, window);

@@ -489,15 +489,19 @@
 	window.navigationJS_mainNavToggle = function (context, href) {
 		// console.dir(this); // for debugging
 
-        if (document.body.classList.contains('body--mainNavOpen')) {
-            document.body.classList.remove('body--mainNavOpen');
-            document.body.classList.add('body--mainNavClosed');
-        } else {
+        context = context == null ? document.querySelector('.mainNav__toggle') : context ; 
+
+        if (window.location.hash === '#navOpen') {
+            context.hash = '#navClosed';
             document.body.classList.remove('body--mainNavClosed');
             document.body.classList.add('body--mainNavOpen');
+        } else {
+            context.hash = '#navOpen';
+            document.body.classList.remove('body--mainNavOpen');
+            document.body.classList.add('body--mainNavClosed');
         }
-
 	};
+
 })(document, window);
 
 /**
@@ -540,7 +544,7 @@
 			post.node.parentNode.insertBefore(postClone, post.node.nextSibling); // insert after
 			// this.postClone.style.visibility = 'hidden';
 			mainClone.replaceChild(post.node, mainClone.getElementsByClassName('postItem')[0]);
-			mainClone.classList.remove('mainContent--active');
+			// mainClone.classList.remove('mainContent--active');
 			post.node.classList.remove('post--list');
 
 			// APPLY STYLES // collect rects without transform
@@ -548,7 +552,7 @@
 			document.body.appendChild(mainClone);
 			document.body.removeChild(main);
 			window.navigationJS_mainNavToggle();
-			mainClone.classList.add('mainContent--active');
+			// mainClone.classList.add('mainContent--active');
 			hero.node.style.transform = title.node.style.transform = loadBar.node.style.transition = 'none';
 		};
 
@@ -664,36 +668,53 @@
 		forward: 'navigationJS_default',
 		back: 'navigationJS_default'
 	};
-	var continueSearching;
+	// var continueSearching;
+
+	var setState = function () {
+		var setStateContexts = document.querySelectorAll('[data-routersetstate]');
+		// console.log(setStateContexts);
+		setStateContexts.forEach(function (context) {
+			// console.log(context);			
+			// console.log(context.dataset.routersetstate);
+			window[context.dataset.routersetstate](context, context.href);
+		});
+	};
 
 	var navigate = function (context, href) {
-		continueSearching = false;
+		// continueSearching = false;
 
 		if (!context.dataset.navforward) context.dataset.navforward = defaultNav.forward;
 		if (!context.dataset.navback) context.dataset.navback = defaultNav.back;
 
-		// TODO: save copy of DOM as a string?
+		console.log('pushState');
+		// TODO: save copy of DOM as a string for back navigation?
 		window.history.pushState({
 			navforward: context.dataset.navforward,
 			navback: context.dataset.navback
 		}, '', href);
+		console.log(window.history.state);
 
 		window[context.dataset.navforward](context, href);
 	};
 
 	var findNavigationType = function (context, href) {
 		continueSearching = true;
-		while (continueSearching) {
-			if (context.dataset.navforward || context.tagName === 'BODY')
+		while (true) {
+			if (context.dataset.navforward || context.tagName === 'BODY') {
 				navigate(context, href);
+				return;
+			}
 			context = context.parentElement;
 		}
 	};
 
 	// calls loadPage when the browser back button is pressed
 	var ajaxPopState = function (event) {
+		console.log(event);		
+		console.log(window.history);
+		console.log('popState');
 		// TODO: test browser implementation inconsistencies of popstate
-		if (event.state !== null) { // don't fire on the inital page load
+		if (event.state != null) { // don't fire on the inital page load
 			// TODO: get better context.
 			window[event.state.navback](document.body, document.location);
 		}
@@ -742,6 +763,7 @@
 	var initalize = function () {
 		window.addEventListener('popstate', ajaxPopState, false);
 		document.addEventListener('click', attachRoutedClicks, true);
+		setState();
 	};
 
 	// if it just needs raw DOM HTML

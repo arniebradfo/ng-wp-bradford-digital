@@ -689,14 +689,14 @@ html, body {
   transform-origin: 32px center;
 }
 
-#mainNav--toggle {
+.mainNav__toggle {
   z-index: 5;
   position: fixed;
   top: 0;
   left: 0;
 }
 
-.body--mainNavOpen .mainContent--active {
+.body--mainNavOpen .mainContent {
   transform: translateX(80%) scale(0.9);
 }
 .body--mainNavClosed .mainNav {

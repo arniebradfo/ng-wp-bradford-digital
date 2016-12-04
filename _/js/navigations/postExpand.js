@@ -38,7 +38,7 @@
 			post.node.parentNode.insertBefore(postClone, post.node.nextSibling); // insert after
 			// this.postClone.style.visibility = 'hidden';
 			mainClone.replaceChild(post.node, mainClone.getElementsByClassName('postItem')[0]);
-			mainClone.classList.remove('mainContent--active');
+			// mainClone.classList.remove('mainContent--active');
 			post.node.classList.remove('post--list');
 
 			// APPLY STYLES // collect rects without transform
@@ -46,7 +46,7 @@
 			document.body.appendChild(mainClone);
 			document.body.removeChild(main);
 			window.navigationJS_mainNavToggle();
-			mainClone.classList.add('mainContent--active');
+			// mainClone.classList.add('mainContent--active');
 			hero.node.style.transform = title.node.style.transform = loadBar.node.style.transition = 'none';
 		};
 
