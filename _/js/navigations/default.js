@@ -8,7 +8,7 @@
 (function (document, window) {
 	'use strict';
 
-	window.navigationJS_default = function (context, href) {
+	window.navigationJS_default = function (context, href, xhr) {
 		// console.dir(this); // for debugging
 
 		// SET TYPE
@@ -46,12 +46,6 @@
 		};
 
 		// AJAX REQUEST
-		var xhr = new window.XMLHttpRequest();
-		xhr.open('GET', href, true);
-		xhr.timeout = 5000;
-		xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest'); // ALWAYS set this!
-		xhr.setRequestHeader('WP-Request-Type', 'GetPage');
-		// console.dir(xhr); // for debugging
 		xhr.onload = function () {
 			var workspace = document.createElement('div');
 			workspace.innerHTML = xhr.responseText;
@@ -62,10 +56,6 @@
 			document.querySelector('.mainContent').innerHTML = workspace.querySelector('.mainContent').innerHTML;
 
 		};
-		xhr.onerror = xhr.onabort = xhr.ontimeout = function () {
-			console.log('ajax failed');
-			window.location = href;
-		}
 
 		// WHEN EVERYTHING IS DONE
 		var onFinish = function () {

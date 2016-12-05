@@ -8,8 +8,8 @@
 (function (document, window) {
 	'use strict';
 
-	window.navigationJS_postExpand = function (context, href) {
-		console.dir(this); // for debugging
+	window.navigationJS_postExpand = function (context, href, xhr) {
+		// console.dir(this); // for debugging
 
 		// SET TYPE
 		href = window.addAjaxQueryString(href, 'getpage');
@@ -108,16 +108,10 @@
 		var requestImg = new window.RequestImg(imgList.node); // can take a callback
 
 		// AJAX REQUEST
-		var xhr = new window.XMLHttpRequest();
-		xhr.open('GET', href, true);
-		// console.dir(xhr); // for debugging
-		xhr.timeout = 5000;
-		xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest'); // ALWAYS set this!
-		xhr.setRequestHeader('WP-Request-Type', 'GetPage');
 		xhr.onload = function () {
 			var workspace = document.createElement('div');
 			workspace.innerHTML = xhr.responseText;
-			console.log(workspace); // for debugging
+			// console.log(workspace); // for debugging
 			post.node.getElementsByClassName('excerpt')[0].innerHTML = '';
 			post.node.getElementsByClassName('frame')[0].innerHTML = workspace.getElementsByClassName('frame')[0].innerHTML;
 		};

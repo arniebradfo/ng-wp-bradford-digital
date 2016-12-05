@@ -31,15 +31,16 @@ returned code is placed in the doc using js
 
 ## TODO:
 - WAS JUST:
- - figureing out how to remove the #mainNav hash
- - alt behavior for hash hrefs
+    - figuring #mainNav hash bugs
+    - renaming navigation to router
+    - alt behavior for hash hrefs?
 
 - get content parts exporting in the right place
-	- sidebar
-	- comments
-	- post author
-	- post pagination + title + search + categories
-	- tags and categories in postItem
+    - sidebar
+    - comments
+    - post author
+    - post pagination + title + search + categories
+    - tags and categories in postItem
 - then style basic structure
 - then connect everything to navigation
 - then style

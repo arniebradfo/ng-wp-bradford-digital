@@ -9,33 +9,43 @@
 		forward: 'navigationJS_default',
 		back: 'navigationJS_default'
 	};
-	// var continueSearching;
 
 	var setState = function () {
 		var setStateContexts = document.querySelectorAll('[data-routersetstate]');
-		// console.log(setStateContexts);
 		setStateContexts.forEach(function (context) {
-			// console.log(context);			
-			// console.log(context.dataset.routersetstate);
 			window[context.dataset.routersetstate](context, context.href);
 		});
 	};
 
 	var navigate = function (context, href) {
-		// continueSearching = false;
 
 		if (!context.dataset.navforward) context.dataset.navforward = defaultNav.forward;
 		if (!context.dataset.navback) context.dataset.navback = defaultNav.back;
 
-		console.log('pushState');
 		// TODO: save copy of DOM as a string for back navigation?
-		window.history.pushState({
-			navforward: context.dataset.navforward,
-			navback: context.dataset.navback
-		}, '', href);
-		console.log(window.history.state);
 
-		window[context.dataset.navforward](context, href);
+		var newState = window.history.state ? window.history.state : {} ;
+		newState.navback = context.dataset.navback;
+		context.dataset.context = true;
+		newState.dom = document.documentElement.innerHTML;		
+		window.history.replaceState(newState, '');
+
+		window.history.pushState({
+			navforward: context.dataset.navforward
+		}, '', href);
+
+		var xhr = new window.XMLHttpRequest();
+		xhr.open('GET', href, true);
+		// console.dir(xhr); // for debugging
+		xhr.timeout = 5000;
+		xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest'); // ALWAYS set this!
+		xhr.setRequestHeader('WP-Request-Type', 'GetPage');
+		xhr.onerror = xhr.onabort = xhr.ontimeout = function () {
+			console.log('ajax failed');
+			window.location = href;
+		}
+
+		window[context.dataset.navforward](context, href, xhr);
 	};
 
 	var findNavigationType = function (context, href) {
@@ -51,13 +61,14 @@
 
 	// calls loadPage when the browser back button is pressed
 	var ajaxPopState = function (event) {
-		console.log(event);		
-		console.log(window.history);
-		console.log('popState');
+		console.log(event)
+
+		var xhr = new window.xhrCached(document.location);
+
 		// TODO: test browser implementation inconsistencies of popstate
 		if (event.state != null) { // don't fire on the inital page load
 			// TODO: get better context.
-			window[event.state.navback](document.body, document.location);
+			window[event.state.navback](document.body, document.location, xhr);
 		}
 	};
 

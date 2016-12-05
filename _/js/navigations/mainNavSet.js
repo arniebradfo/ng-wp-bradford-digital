@@ -8,13 +8,9 @@
 (function (document, window) {
 	'use strict';
 
-	window.navigationJS_mainNavToggle = function (context, href, xhr) {
+	window.navigationJS_mainNavSet = function (context) {
 		// console.dir(this); // for debugging
 
-        var toggle = document.querySelector('.mainNav__toggle') ; 
-
-        // console.log(toggle);
-        // console.log(toggle.hash);
         if (window.location.hash !== '#navOpen') {
             // context.hash = '#navOpen';
             document.body.classList.remove('body--mainNavOpen');

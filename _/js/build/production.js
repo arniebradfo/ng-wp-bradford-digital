@@ -383,6 +383,39 @@
 })(document, window);
 
 /**
+ * xhrCached
+ * similar interface to XMLHttpRequest
+ */
+
+(function (document, window) {
+	window.xhrCached = function (simulatedResponseText) {
+		'use strict';
+		// console.dir(this); // for debugging
+		// var self = this;
+
+		this.responseText = simulatedResponseText;
+
+		this.readyState = 1;
+
+		this.onreadystatechange;
+		this.onload;
+		this.onloadend;
+		this.progress;
+
+		this.send = function () {
+			this.readyState = 4;
+			if (typeof this.onreadystatechange === 'function' ) this.onreadystatechange();
+			if (typeof this.progress === 'function' ) this.onreadystatechange();
+			if (typeof this.onload === 'function' ) this.onreadystatechange();
+			if (typeof this.onloadend === 'function' ) this.onreadystatechange();
+			this.status = 200;
+			this.statusText = '200 This was cached in history.state';
+		};
+
+	};
+})(document, window);
+
+/**
  * navigation js class
  * must conform to interface:
  * @param {HTMLelement} context - an html element to look for elements inside of
@@ -392,7 +425,7 @@
 (function (document, window) {
 	'use strict';
 
-	window.navigationJS_default = function (context, href) {
+	window.navigationJS_default = function (context, href, xhr) {
 		// console.dir(this); // for debugging
 
 		// SET TYPE
@@ -430,12 +463,6 @@
 		};
 
 		// AJAX REQUEST
-		var xhr = new window.XMLHttpRequest();
-		xhr.open('GET', href, true);
-		xhr.timeout = 5000;
-		xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest'); // ALWAYS set this!
-		xhr.setRequestHeader('WP-Request-Type', 'GetPage');
-		// console.dir(xhr); // for debugging
 		xhr.onload = function () {
 			var workspace = document.createElement('div');
 			workspace.innerHTML = xhr.responseText;
@@ -446,10 +473,6 @@
 			document.querySelector('.mainContent').innerHTML = workspace.querySelector('.mainContent').innerHTML;
 
 		};
-		xhr.onerror = xhr.onabort = xhr.ontimeout = function () {
-			console.log('ajax failed');
-			window.location = href;
-		}
 
 		// WHEN EVERYTHING IS DONE
 		var onFinish = function () {
@@ -486,19 +509,17 @@
 (function (document, window) {
 	'use strict';
 
-	window.navigationJS_mainNavToggle = function (context, href) {
+	window.navigationJS_mainNavSet = function (context) {
 		// console.dir(this); // for debugging
 
-        context = context == null ? document.querySelector('.mainNav__toggle') : context ; 
-
-        if (window.location.hash === '#navOpen') {
-            context.hash = '#navClosed';
-            document.body.classList.remove('body--mainNavClosed');
-            document.body.classList.add('body--mainNavOpen');
-        } else {
-            context.hash = '#navOpen';
+        if (window.location.hash !== '#navOpen') {
+            // context.hash = '#navOpen';
             document.body.classList.remove('body--mainNavOpen');
             document.body.classList.add('body--mainNavClosed');
+        } else {
+            // context.hash = '#navClosed';
+            document.body.classList.remove('body--mainNavClosed');
+            document.body.classList.add('body--mainNavOpen');
         }
 	};
 
@@ -514,8 +535,38 @@
 (function (document, window) {
 	'use strict';
 
-	window.navigationJS_postExpand = function (context, href) {
-		console.dir(this); // for debugging
+	window.navigationJS_mainNavToggle = function (context, href, xhr) {
+		// console.dir(this); // for debugging
+
+        var toggle = document.querySelector('.mainNav__toggle') ; 
+
+        // console.log(toggle);
+        // console.log(toggle.hash);
+        if (window.location.hash !== '#navOpen') {
+            // context.hash = '#navOpen';
+            document.body.classList.remove('body--mainNavOpen');
+            document.body.classList.add('body--mainNavClosed');
+        } else {
+            // context.hash = '#navClosed';
+            document.body.classList.remove('body--mainNavClosed');
+            document.body.classList.add('body--mainNavOpen');
+        }
+	};
+
+})(document, window);
+
+/**
+ * navigation js class
+ * must conform to interface:
+ * @param {HTMLelement} context - an html element to look for elements inside of
+ * @param {url} href - where are we going to navigate to?
+ */
+
+(function (document, window) {
+	'use strict';
+
+	window.navigationJS_postExpand = function (context, href, xhr) {
+		// console.dir(this); // for debugging
 
 		// SET TYPE
 		href = window.addAjaxQueryString(href, 'getpage');
@@ -614,16 +665,10 @@
 		var requestImg = new window.RequestImg(imgList.node); // can take a callback
 
 		// AJAX REQUEST
-		var xhr = new window.XMLHttpRequest();
-		xhr.open('GET', href, true);
-		// console.dir(xhr); // for debugging
-		xhr.timeout = 5000;
-		xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest'); // ALWAYS set this!
-		xhr.setRequestHeader('WP-Request-Type', 'GetPage');
 		xhr.onload = function () {
 			var workspace = document.createElement('div');
 			workspace.innerHTML = xhr.responseText;
-			console.log(workspace); // for debugging
+			// console.log(workspace); // for debugging
 			post.node.getElementsByClassName('excerpt')[0].innerHTML = '';
 			post.node.getElementsByClassName('frame')[0].innerHTML = workspace.getElementsByClassName('frame')[0].innerHTML;
 		};
@@ -668,33 +713,43 @@
 		forward: 'navigationJS_default',
 		back: 'navigationJS_default'
 	};
-	// var continueSearching;
 
 	var setState = function () {
 		var setStateContexts = document.querySelectorAll('[data-routersetstate]');
-		// console.log(setStateContexts);
 		setStateContexts.forEach(function (context) {
-			// console.log(context);			
-			// console.log(context.dataset.routersetstate);
 			window[context.dataset.routersetstate](context, context.href);
 		});
 	};
 
 	var navigate = function (context, href) {
-		// continueSearching = false;
 
 		if (!context.dataset.navforward) context.dataset.navforward = defaultNav.forward;
 		if (!context.dataset.navback) context.dataset.navback = defaultNav.back;
 
-		console.log('pushState');
 		// TODO: save copy of DOM as a string for back navigation?
-		window.history.pushState({
-			navforward: context.dataset.navforward,
-			navback: context.dataset.navback
-		}, '', href);
-		console.log(window.history.state);
 
-		window[context.dataset.navforward](context, href);
+		var newState = window.history.state ? window.history.state : {} ;
+		newState.navback = context.dataset.navback;
+		context.dataset.context = true;
+		newState.dom = document.documentElement.innerHTML;		
+		window.history.replaceState(newState, '');
+
+		window.history.pushState({
+			navforward: context.dataset.navforward
+		}, '', href);
+
+		var xhr = new window.XMLHttpRequest();
+		xhr.open('GET', href, true);
+		// console.dir(xhr); // for debugging
+		xhr.timeout = 5000;
+		xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest'); // ALWAYS set this!
+		xhr.setRequestHeader('WP-Request-Type', 'GetPage');
+		xhr.onerror = xhr.onabort = xhr.ontimeout = function () {
+			console.log('ajax failed');
+			window.location = href;
+		}
+
+		window[context.dataset.navforward](context, href, xhr);
 	};
 
 	var findNavigationType = function (context, href) {
@@ -710,13 +765,14 @@
 
 	// calls loadPage when the browser back button is pressed
 	var ajaxPopState = function (event) {
-		console.log(event);		
-		console.log(window.history);
-		console.log('popState');
+		console.log(event)
+
+		var xhr = new window.xhrCached(document.location);
+
 		// TODO: test browser implementation inconsistencies of popstate
 		if (event.state != null) { // don't fire on the inital page load
 			// TODO: get better context.
-			window[event.state.navback](document.body, document.location);
+			window[event.state.navback](document.body, document.location, xhr);
 		}
 	};
 
