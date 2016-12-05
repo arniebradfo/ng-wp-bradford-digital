@@ -31,10 +31,9 @@ returned code is placed in the doc using js
 
 ## TODO:
 - WAS JUST:
-    - figuring #mainNav hash bugs
-    - renaming navigation to router
-    - alt behavior for hash hrefs?
+    - redesigning the whole router
 
+- alt behavior for hash hrefs?
 - get content parts exporting in the right place
     - sidebar
     - comments

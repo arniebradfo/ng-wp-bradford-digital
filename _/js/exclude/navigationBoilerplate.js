@@ -8,7 +8,7 @@
 (function (document, window) {
 	'use strict';
 
-	window.navigationJS_name = function (context, href) {
+	window.WpRouter_name = function (context, href) {
 		console.dir(this); // for debugging
 
 		// SET TYPE

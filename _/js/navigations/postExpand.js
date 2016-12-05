@@ -8,7 +8,7 @@
 (function (document, window) {
 	'use strict';
 
-	window.navigationJS_postExpand = function (context, href, xhr) {
+	window.WpRouter_postExpand = function (context, href, xhr) {
 		// console.dir(this); // for debugging
 
 		// SET TYPE
@@ -45,7 +45,7 @@
 			post.node.classList.add('post--full');
 			document.body.appendChild(mainClone);
 			document.body.removeChild(main);
-			window.navigationJS_mainNavToggle();
+			window.WpRouter_mainNavToggle();
 			// mainClone.classList.add('mainContent--active');
 			hero.node.style.transform = title.node.style.transform = loadBar.node.style.transition = 'none';
 		};

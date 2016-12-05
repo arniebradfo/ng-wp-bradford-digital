@@ -6,32 +6,33 @@
 (function (document, window) {
 
 	var defaultNav = {
-		forward: 'navigationJS_default',
-		back: 'navigationJS_default'
+		forward: 'WpRouter_default',
+		back: 'WpRouter_default'
 	};
 
-	var setState = function () {
+	var initalizeState = function () {
+		// only include one thing here
 		var setStateContexts = document.querySelectorAll('[data-routersetstate]');
 		setStateContexts.forEach(function (context) {
 			window[context.dataset.routersetstate](context, context.href);
 		});
 	};
 
-	var navigate = function (context, href) {
+	var newState = function (context, href) {
 
-		if (!context.dataset.navforward) context.dataset.navforward = defaultNav.forward;
-		if (!context.dataset.navback) context.dataset.navback = defaultNav.back;
+		if (!context.dataset.routeforward) context.dataset.routeforward = defaultNav.forward;
+		if (!context.dataset.routeback) context.dataset.routeback = defaultNav.back;
 
 		// TODO: save copy of DOM as a string for back navigation?
 
 		var newState = window.history.state ? window.history.state : {} ;
-		newState.navback = context.dataset.navback;
+		newState.routeback = context.dataset.routeback;
 		context.dataset.context = true;
 		newState.dom = document.documentElement.innerHTML;		
 		window.history.replaceState(newState, '');
 
 		window.history.pushState({
-			navforward: context.dataset.navforward
+			routeforward: context.dataset.routeforward
 		}, '', href);
 
 		var xhr = new window.XMLHttpRequest();
@@ -45,35 +46,34 @@
 			window.location = href;
 		}
 
-		window[context.dataset.navforward](context, href, xhr);
+		window[context.dataset.routeforward](context, href, xhr);
 	};
 
 	var findNavigationType = function (context, href) {
 		continueSearching = true;
 		while (true) {
-			if (context.dataset.navforward || context.tagName === 'BODY') {
-				navigate(context, href);
+			if (context.dataset.routeforward || context.tagName === 'BODY') {
+				newState(context, href);
 				return;
 			}
 			context = context.parentElement;
 		}
 	};
 
-	// calls loadPage when the browser back button is pressed
-	var ajaxPopState = function (event) {
+	var popState = function (event) {
 		console.log(event)
 
-		var xhr = new window.xhrCached(document.location);
+		var xhr = new window.xhrCached(event.state.dom);
 
 		// TODO: test browser implementation inconsistencies of popstate
 		if (event.state != null) { // don't fire on the inital page load
 			// TODO: get better context.
-			window[event.state.navback](document.body, document.location, xhr);
+			window[event.state.routeback](document.body, document.location, xhr);
 		}
 	};
 
 	// transforms all the interal hyperlinks into ajax requests
-	var attachRoutedClicks = function (event) {
+	var routeLinkClicks = function (event) {
 		// console.dir(this); // for debugging
 
 		var e = event || window.event; // http://stackoverflow.com/questions/3493033/what-is-the-meaning-of-this-var-evt-eventwindow-event
@@ -113,9 +113,9 @@
 	};
 
 	var initalize = function () {
-		window.addEventListener('popstate', ajaxPopState, false);
-		document.addEventListener('click', attachRoutedClicks, true);
-		setState();
+		window.addEventListener('popstate', popState, false);
+		document.addEventListener('click', routeLinkClicks, true);
+		initalizeState();
 	};
 
 	// if it just needs raw DOM HTML

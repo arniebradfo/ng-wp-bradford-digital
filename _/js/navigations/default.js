@@ -8,7 +8,7 @@
 (function (document, window) {
 	'use strict';
 
-	window.navigationJS_default = function (context, href, xhr) {
+	window.WpRouter_default = function (context, href, xhr) {
 		// console.dir(this); // for debugging
 
 		// SET TYPE

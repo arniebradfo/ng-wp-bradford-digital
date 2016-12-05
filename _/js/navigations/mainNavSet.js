@@ -8,7 +8,7 @@
 (function (document, window) {
 	'use strict';
 
-	window.navigationJS_mainNavSet = function (context) {
+	window.WpRouter_mainNavSet = function (context) {
 		// console.dir(this); // for debugging
 
         if (window.location.hash !== '#navOpen') {

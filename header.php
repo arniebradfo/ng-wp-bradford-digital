@@ -100,9 +100,9 @@
 		id="mainNav__toggle" 
 		class="mainNav__toggle" 
 		href="#navOpen" 
-		data-navforward="navigationJS_mainNavToggle" 
-		data-navback="navigationJS_mainNavToggle" 
-		data-routersetstate="navigationJS_mainNavSet"
+		data-routeforward="WpRouter_mainNavToggle" 
+		data-routeback="WpRouter_mainNavToggle" 
+		data-routersetstate="WpRouter_mainNavSet"
 		>
 		nav
 	</a>

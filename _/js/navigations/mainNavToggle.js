@@ -8,7 +8,7 @@
 (function (document, window) {
 	'use strict';
 
-	window.navigationJS_mainNavToggle = function (context, href, xhr) {
+	window.WpRouter_mainNavToggle = function (context, href, xhr) {
 		// console.dir(this); // for debugging
 
         var toggle = document.querySelector('.mainNav__toggle') ; 

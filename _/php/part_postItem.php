@@ -28,7 +28,7 @@ function wpajax_postItem ($type = null) {
 	switch ($type) {
 		case 'list':
 			$postItemClasses[] = 'post--list';
-			// $postItemClasses[] = 'navigationJS_postExpand'; // for postExpand.js
+			// $postItemClasses[] = 'WpRouter_postExpand'; // for postExpand.js
 			break;
 		case 'single':
 			$postItemClasses[] = 'post--single';
@@ -57,7 +57,7 @@ function wpajax_postItem ($type = null) {
 	<?php break; default: // marked 'standard'?>
 	<?php endswitch;?>
 
-	<article <?php post_class($postItemClasses); ?> id="post-<?php the_ID(); ?>" data-navforward="navigationJS_postExpand" data-navback="navigationJS_mainNavToggle">
+	<article <?php post_class($postItemClasses); ?> id="post-<?php the_ID(); ?>" data-routeforward="WpRouter_postExpand" data-routeback="WpRouter_mainNavToggle">
 
 		<div class="preview">
 
@@ -90,7 +90,7 @@ function wpajax_postItem ($type = null) {
 
 			</header>
 
-			<footer class="info" data-navforward="navigationJS_default" data-navback="navigationJS_default">
+			<footer class="info" data-routeforward="WpRouter_default" data-routeback="WpRouter_default">
 				<?php if (get_the_category()):?>
 					<span class="info__category info__item">
 						<?php _e('Category: ','wpajax'); the_category(', '); ?>
@@ -106,7 +106,7 @@ function wpajax_postItem ($type = null) {
 				</span> -->
 			</footer>
 
-			<section class="excerpt navigationJS_default">
+			<section class="excerpt WpRouter_default">
 				<?php if ($type === 'list') the_excerpt(); ?>
 			</section>
 
