@@ -1,39 +1,46 @@
 {
-  "name": "Bradfolio",
-  "email": "arniebradfo@gmail.com",
-  "homepage": "arniebradfo.com",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/arniebradfo/Bradfolio"
+  "name": "ngwp",
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "test": "ng test",
+    "lint": "ng lint",
+    "e2e": "ng e2e"
   },
-  "bugs": {
-    "url": "https://github.com/arniebradfo/Bradfolio/issues/new",
-    "email": "arniebradfo@gmail.com"
+  "private": true,
+  "dependencies": {
+    "@angular/common": "^5.2.3",
+    "@angular/compiler": "^5.2.3",
+    "@angular/core": "^5.2.3",
+    "@angular/forms": "^5.2.3",
+    "@angular/http": "^5.2.3",
+    "@angular/platform-browser": "^5.2.3",
+    "@angular/platform-browser-dynamic": "^5.2.3",
+    "@angular/router": "^5.2.3",
+    "core-js": "^2.5.3",
+    "rxjs": "^5.5.6",
+    "zone.js": "^0.8.20"
   },
-  "license": "GPL-3.0",
-  "description": "the bradford portfolio wordpress theme",
-  "keywords": [],
-  "version": "0.1.0",
   "devDependencies": {
-    "autoprefixer": "^6.3.1",
-    "css-mqpacker": "^5.0.1",
-    "cssnano": "^3.4.0",
-    "glob": "^7.0.3",
-    "grunt": "^1.0.1",
-    "grunt-contrib-concat": "^1.0.1",
-    "grunt-contrib-connect": "^1.0.2",
-    "grunt-contrib-jshint": "^1.0.0",
-    "grunt-contrib-sass": "^1.0.0",
-    "grunt-contrib-uglify": "^2.0.0",
-    "grunt-contrib-watch": "^1.0.0",
-    "grunt-dev-update": "^2.0.0",
-    "grunt-modernizr": "^1.0.2",
-    "grunt-postcss": "^0.8.0",
-    "grunt-svgstore": "^1.0.0",
-    "load-grunt-tasks": "^3.1.0",
-    "normalize.css": "^5.0.0",
-    "reset-css": "^2.0.2011012603",
-    "sanitize.css": "^4.1.0"
-  },
-  "dependencies": {}
+    "@angular/cli": "1.6.7",
+    "@angular/compiler-cli": "^5.2.3",
+    "@types/jasmine": "2.8.6",
+    "@types/node": "^9.4.1",
+    "codelyzer": "~4.1.0",
+    "jasmine-core": "~3.0.0",
+    "jasmine-spec-reporter": "~4.2.1",
+    "karma": "~2.0.0",
+    "karma-chrome-launcher": "~2.2.0",
+    "karma-cli": "~1.0.1",
+    "karma-coverage-istanbul-reporter": "^1.4.1",
+    "karma-jasmine": "^1.1.1",
+    "karma-jasmine-html-reporter": "^0.2.2",
+    "protractor": "^5.3.0",
+    "ts-node": "~4.1.0",
+    "tslint": "~5.9.1",
+    "typescript": "^2.6.2"
+  }
 }

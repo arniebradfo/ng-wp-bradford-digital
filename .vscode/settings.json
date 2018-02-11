@@ -1,3 +1,13 @@
-// Place your settings in this file to overwrite default and user settings.
 {
+    "files.exclude": {
+        "node_modules/": true,
+        "dist/": true,
+        "_old/": true,
+
+        // Angular Testing Stuff
+        "e2e/": true,
+        "**/*.spec.ts":true,
+        "karma.conf.js":true,
+        "protractor.conf.js":true
+    }
 }

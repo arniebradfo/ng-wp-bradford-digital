@@ -1,25 +1,45 @@
-# global find ignore for sublime text
-# -node_modules/*,-css/build/*,-js/build/*,-svg/build/*,-resources/*,-.sass-cache/*,-style.css,-*.min.*
+# See http://help.github.com/ignore-files/ for more about ignoring files.
 
-*.seed
-*.log
-*.csv
-*.dat
-*.out
-*.pid
-*.gz
-*.map
-.DS_Store
+# compiled output
+/dist
+/tmp
+/out-tsc
 
-pids
-logs
-results
+# dependencies
+/node_modules
 
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# misc
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
 npm-debug.log
-node_modules
+testem.log
+/typings
 
-*.sass-cache
+# e2e
+/e2e/*.js
+/e2e/*.map
 
-_/resources/**
+# System Files
+.DS_Store
+Thumbs.db
 
-svg-defs-demo.html
+# other stuff
+_old/**/*

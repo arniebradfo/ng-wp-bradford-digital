@@ -1,82 +1,35 @@
 <?php
-/**
- * @package    	WordPress
- * @subpackage 	wpajax
- * @since      	0.1.0
- * @author     	James Bradford &lt;james@polaris.graphics&gt;
- * @copyright  	Copyright (c) 2016, James Bradford
- * @link       	https://github.com/arniebradfo/wpajax-Theme
- * @license    	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- */
 
-	// Detect localhost dev environment
-	$GLOBALS['isDev'] = strpos(home_url(), 'localhost');
+	function ngwp_theme_setup() {
 
-	// runs through all .php partials in /_/php/
-	foreach (scandir(dirname(__FILE__).'/_/php') as $filename) {
-		$path = dirname(__FILE__).'/_/php/' . $filename;
-		if ( is_file($path) && pathinfo($path,PATHINFO_EXTENSION) == 'php') {
-			require_once $path;
-		}
-	}
+		// load_theme_textdomain( 'ngwp', get_template_directory() . '/languages' );
 
-	function wpajax_add_query_vars_filter( $vars ){
-	  $vars[] = "ajax";
-	  return $vars;
-	}
-	add_filter( 'query_vars', 'wpajax_add_query_vars_filter' );
-
-	// http://www.inkthemes.com/ajax-comment-wordpress/8
-	function wpajax_load_comment($comment_ID, $comment_status) {
-		if ($GLOBALS['is_ajax']) { // TODO: does this still work?
-			switch ($comment_status) {
-				case '0': //notify moderator of unapproved comment
-					wp_notify_moderator( $comment_ID );
-					break;
-				case '1': //Approved comment
-					single_comment( $comment_ID );
-					wp_notify_postauthor( $comment_ID );
-					break;
-				default: // $comment_status was null
-					echo "error";
-			}
-			exit; // better than wp_die() ?
-		}
-	}
-	add_action('comment_post', 'wpajax_load_comment', 25, 2);
-
-
-	// Theme Setup (based on twentythirteen: http://make.wordpress.org/core/tag/twentythirteen/)
-	function wpajax_theme_setup() {
-
-		load_theme_textdomain( 'wpajax', get_template_directory() . '/languages' );
-
-		add_theme_support( 'html5', array( 'comment-list', 'comment-form', 'search-form', 'gallery', 'caption' ) );
-		add_theme_support( 'automatic-feed-links' );
-		add_theme_support( 'title-tag' );
+		// add_theme_support( 'html5', array( 'comment-list', 'comment-form', 'search-form', 'gallery', 'caption' ) );
+		// add_theme_support( 'automatic-feed-links' );
+		// add_theme_support( 'title-tag' );
 		add_theme_support( 'post-formats', array( 'link', 'video', 'aside', 'audio', 'chat', 'gallery', 'image', 'quote', 'status' ) );
 		add_post_type_support( 'post', 'post-formats' );
 		add_post_type_support( 'page', 'post-formats' );
 
 		// Nav Menus
 		register_nav_menus( array(
-			'primary'   => __( 'Navigation Menu', 'wpajax' ),
-			// 'footer' => __( 'Footer Menu', 'wpajax' ), // can add a menu to the footer with a widget
+			'primary'   => __( 'Navigation Menu', 'ngwp' ),
+			'secondary' => __( 'Footer Menu', 'ngwp' ),
 		) );
 
 		// featured images aka thumbnails
 		add_theme_support( 'post-thumbnails' );
-		set_post_thumbnail_size( 150, 150, true ); // default Post Thumbnail dimensions: 150px width x 150px height (cropped)
-		update_option( 'thumbnail_size_w', 150 ); // don't depend on these
+ 		set_post_thumbnail_size( 150, 150, true ); // default Post Thumbnail dimensions: 150px width x 150px height (cropped)
+		update_option( 'thumbnail_size_w', 150 ); // don't depend on these 
 		update_option( 'thumbnail_size_h', 150 ); // the size of these can be edited by the user
 
 		// add image and manage image sizes
 		add_image_size( 'small', 100 );
-		update_option( 'medium_size_w', 300 ); // don't depend on these
+		update_option( 'medium_size_w', 300 ); // don't depend on these 
 		update_option( 'medium_size_h', 300 ); // the size of these can be edited by the user
 		update_option( 'medium_large_size_w', 768 );
-		update_option( 'medium_large_size_h', 768 );
-		update_option( 'large_size_w', 1024 ); // don't depend on these
+		update_option( 'medium_large_size_h', 768 );	
+		update_option( 'large_size_w', 1024 ); // don't depend on these 
 		update_option( 'large_size_h', 1024 ); // the size of these can be edited by the user
 		add_image_size( 'extralarge', 1600 );
 		// more image sizes is good for page speed now that srcset is in wp core:
@@ -86,25 +39,10 @@
 		update_option('image_default_link_type', 'none');
 		update_option('image_default_align', 'none');
 		update_option('uploads_use_yearmonth_folders', 0); // keep all uploaded images in the same folder
-		update_option('use_smilies', 0); // becasue fuck smiling >:(
+		update_option('use_smilies', 0); // becasue fuck smiling >:( 
 
 	}
-	add_action( 'after_setup_theme', 'wpajax_theme_setup' );
-
-
-	// Widgets
-	function wpajax_widget_setup() {
-		register_sidebar( array(
-			'name'          => __( 'Sidebar Widgets', 'wpajax' ),
-			'id'            => 'sidebar-primary',
-			'before_widget' => '<div id="%1$s" class="widget %2$s">',
-			'after_widget'  => '</div>',
-			'before_title'  => '<h3 class="widget-title">',
-			'after_title'   => '</h3>',
-		) );
-	}
-	add_action( 'widgets_init', 'wpajax_widget_setup' );
-
+	add_action( 'after_setup_theme', 'ngwp_theme_setup' );
 
 	// add custom css to style inside the tinyMCE editor
 	function add_editor_styles() {
@@ -112,66 +50,103 @@
 	}
 	add_action( 'admin_init', 'add_editor_styles' );
 
+	// NG-SHORTCODES //
+	// transform Shortcodes into angular Tags
+    function shortcode_func( $atts, $content=null, $tag='' ) {
+		$output = '<'.$tag.' ';               // opening tag
+		foreach($atts as $att => $val)
+            $output .= $att.'="'.$val.'" ';   // echo all attributes from the shorcode
+        $output .= '>';                       // close the opening tag
+        $output .= do_shortcode($content);    // content
+		$output .= '</'.$tag.'>';             // closing tag
+		return $output;
+    }
+    add_shortcode( 'ngwp-example', 'shortcode_func' );
+    add_shortcode( 'ngwp-example-2', 'shortcode_func' );
+	// add_shortcode( 'any-tag-name-you-want', 'shortcode_func' );
 
-	if ( ! isset( $content_width ) ) { // this guy sucks - https://codex.wordpress.org/Content_Width
-		$content_width = 2000;
+	// wpautop tries to add <p> tags around EVERYTHING. 
+	remove_filter('the_content', 'wpautop');
+	remove_filter('the_excerpt', 'wpautop');
+	
+	// Ng OPTIONS //
+	// register route to get options needed for Angular
+	add_action( 'rest_api_init', function () {
+		register_rest_route( 'ngwp/v2', '/options', array(
+			array(
+				'methods'  => WP_REST_Server::READABLE,
+				'callback' => 'ngwp_get_wp_options',
+			)
+		) );
+	});
+	function ngwp_get_wp_options( WP_REST_Request $request ) {
+
+		// WP SETTINGS OPTIONS //
+		// @link: https://codex.wordpress.org/Option_Reference
+		return new WP_REST_Response(array(
+			'discussion' => array(
+				'require_name_email' => boolval(get_option('require_name_email')),
+				'thread_comments' => boolval(get_option('thread_comments')),
+				'thread_comments_depth' => intval(get_option('thread_comments_depth')),
+				'show_avatars' => boolval(get_option('show_avatars')),
+				'avatar_default' => get_option('avatar_default'),
+				'page_comments' => boolval(get_option('page_comments')),
+				'comments_per_page' => intval(get_option('comments_per_page')),
+				'default_comments_page' => get_option('default_comments_page'),
+				'comment_order' => get_option('comment_order'),
+			),
+			'general' => array(
+				'admin_email' => get_option('admin_email'),
+				'blogdescription' => get_option('blogdescription'),
+				'blogname' => get_option('blogname'),
+				'comment_registration' => boolval(get_option('comment_registration')),
+				'date_format' => get_option('date_format'),
+				'home' => get_option('home'),
+				'siteurl' => get_option('siteurl'),
+				'start_of_week' => intval(get_option('start_of_week')),
+				'time_format' => get_option('time_format'),
+				'users_can_register' => boolval(get_option('users_can_register')),
+			),
+			'permalinks' => array(
+				'permalink_structure' => get_option('permalink_structure'),
+				'category_base' => get_option('category_base'),
+				'tag_base' => get_option('tag_base'),
+			),
+			'reading' => array(
+				'page_on_front' => intval(get_option('page_on_front')),
+				'page_for_posts' => intval(get_option('page_for_posts')),
+				'posts_per_page' => intval(get_option('posts_per_page')),
+				'show_on_front' => get_option('show_on_front'),
+				'sticky_posts' => get_option('sticky_posts'),
+			),
+			'widgets' => array(
+				'sidebars_widgets' => get_option('sidebars_widgets'),
+				'widget_categories' => get_option('widget_categories'),
+				// not sure what these are for...
+				// 'widget_text' => get_option('widget_text'),
+				// 'widget_rss' => get_option('widget_rss'),
+			),
+			// 'nonce' => wp_create_nonce( 'wp_rest' )
+		));
 	}
 
+	// need this in order to post comments from the rest api
+	// maybe wouldn't need it if you can figure out how to use a nonce here
+	add_filter('rest_allow_anonymous_comments', '__return_true');
 
-	function load_theme_scripts_and_styles() {
-		global $post;
-		$themeVersion = wp_get_theme()->get( 'Version' );
+	// WIDGETS //
+	// can't do widgets right now
+	// function ngwp_widget_setup() {
+	// 	register_sidebar( array(
+	// 		'name'          => __( 'Footer Widgets', 'ngwp' ),
+	// 		'id'            => 'footer-widgets',
+	// 		'before_widget' => '<div id="%1$s" class="widget %2$s">',
+	// 		'after_widget'  => '</div>',
+	// 		'before_title'  => '<h3 class="widget-title">',
+	// 		'after_title'   => '</h3>',
+	// 	) );
+	// }
+	// add_action( 'widgets_init', 'ngwp_widget_setup' );
 
-		// Load Custom Styles
-		wp_register_style( 'style', get_stylesheet_uri(), false, $themeVersion);
-		wp_enqueue_style( 'style' );
-		// Remove widget css from head - https://wordpress.org/support/topic/remove-css-from-head
-
-		// Load jQuery scripts - jq v1.12.0 is for < IE8
-		wp_dequeue_script( 'jquery' ); // if using vanilla .js
-		// google Hosted jQuery
-		// wp_register_script( 'jquery', "http://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js", false, null, false, true);
-		// wp_enqueue_script( 'jquery' );
-
-		// add the wp comment-reply.js to manage comments
-		if ( is_singular() && comments_open() && get_option( 'thread_comments' ) )
-			wp_enqueue_script( 'comment-reply' );
-
-		if ($GLOBALS['isDev'])
-			wp_enqueue_script( 'livereload', '//localhost:35729/livereload.js', false, $themeVersion, true );
-
-		// Load Custom Scripts
-		wp_register_script( 'wpajaxjs', get_template_directory_uri()."/_/js/wpajax.js", false, $themeVersion, true );
-		// wp_enqueue_script( 'wpajaxjs' );
-
-		wp_register_script( 'production', get_template_directory_uri()."/_/js/build/production.js", false, $themeVersion, true );
-		wp_enqueue_script( 'production' );
-
-	}
-	add_action( 'wp_enqueue_scripts', 'load_theme_scripts_and_styles' );
-
-
-	// DISABLE EMOJIs  -  http://wordpress.stackexchange.com/questions/185577/disable-emojicons-introduced-with-wp-4-2
-	function disable_wp_emojicons() {
-		// all actions related to emojis
-		remove_action( 'admin_print_styles', 'print_emoji_styles' );
-		remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
-		remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
-		remove_action( 'wp_print_styles', 'print_emoji_styles' );
-		remove_filter( 'wp_mail', 'wp_staticize_emoji_for_email' );
-		remove_filter( 'the_content_feed', 'wp_staticize_emoji' );
-		remove_filter( 'comment_text_rss', 'wp_staticize_emoji' );
-		// filter to remove TinyMCE emojis
-		function disable_emojicons_tinymce( $plugins ) {
-			if ( is_array( $plugins ) ) {
-				return array_diff( $plugins, array( 'wpemoji' ) );
-			} else {
-				return array();
-			}
-		}
-		add_filter( 'tiny_mce_plugins', 'disable_emojicons_tinymce' );
-	}
-	add_action( 'init', 'disable_wp_emojicons' );
-
-
+// stay cool y'all! 
 ?>

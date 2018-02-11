@@ -1,0 +1,58 @@
+<ul>
+  <li *ngFor="let post of posts" >
+    <h3 [routerLink]="'/' + post.slug">
+      {{ post.title.rendered }}
+    </h3>
+    <img 
+      *ngIf="post.featured_media_ref" 
+      [src]="post.featured_media_ref.media_details.sizes.thumbnail.source_url" 
+      />
+    <p>
+      <strong>By: </strong>
+      <a [routerLink]="'/author/' + post.author_ref.slug" >
+        {{ post.author_ref.name }}
+      </a>
+      <span>
+        {{ post.date | date: 'MMM d, y, h:mm a' }}
+      </span>
+    </p>
+    <p><small>
+      {{ post.excerpt.rendered }}
+    </small></p>
+    <p *ngIf="post.tags_ref != null && post.tags_ref.length > 0">
+        <strong>Tags: </strong>
+        <a 
+        *ngFor="let tag of post.tags_ref"
+        [routerLink]="'/tag/' + tag.slug"
+        >
+        {{'#' + tag.name}}
+      </a>
+    </p>
+    <p *ngIf="post.categories_ref != null && post.categories_ref.length > 0">
+        <strong>Categories: </strong>
+        <a 
+        *ngFor="let category of post.categories_ref"
+        [routerLink]="'/category/' + category.slug"
+        >
+        {{category.name}}
+      </a>
+    </p>
+  </li>
+</ul>
+
+<span>Pagination</span>
+<nav>
+  <ul>
+    <li 
+    *ngFor="let count of pageCount; let i = index" 
+    [routerLink]="routerPrefix + '/page/' + (i+1)"
+    [queryParams]="queryParams"
+    >
+    {{i+1}}
+    </li>
+  </ul>
+</nav>
+
+<div *ngIf="error">
+  Error: {{error}}
+</div>

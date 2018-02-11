@@ -1,9 +1,0 @@
-//debug.scss
-// hurts performance
-
-// OUTLINE
-*,*::before,*::after{
-	outline: 1px solid rgba(255,0,0,0.2);  // outlines all elements in the doc without affecting the flow
-	outline-offset: -1px;                  // insets the outline
-	// transition: all 0.1s ease;
-}

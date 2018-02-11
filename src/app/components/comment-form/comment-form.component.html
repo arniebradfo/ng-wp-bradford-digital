@@ -1,0 +1,19 @@
+<form #commmentForm="ngForm" (ngSubmit)="onSubmit()">
+  <p>
+    <label for="name">Name</label>
+    <input id="name" type="text" [(ngModel)]="name" name="name" required/>
+  </p>
+
+  <p>
+    <label for="email">eMail</label>
+    <input id="email" type="email" [(ngModel)]="email" name="email" required/>
+  </p>
+
+  <p>
+    <label for="comment">Comment</label>
+    <textarea id="comment" [(ngModel)]="message" name="message" required></textarea>
+  </p>
+
+  <button type="submit" [disabled]="!commmentForm.form.valid">Post Comment!</button>
+
+</form>
