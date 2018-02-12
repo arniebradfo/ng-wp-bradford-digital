@@ -7,23 +7,23 @@ import { ShortcodesModule } from './shortcodes/shortcodes.module';
 
 import { WpRestService } from './services/wp-rest.service';
 
-import { NgWpComponent } from './ngwp.component';
-import { NavComponent } from './components/nav/nav.component';
-import { PostComponent } from './components/post/post.component';
-import { PostListComponent } from './components/post-list/post-list.component';
-import { CommentFormComponent } from './components/comment-form/comment-form.component';
-import { SearchComponent } from './components/search/search.component';
-import { ContentComponent } from './components/content/content.component';
+import { NavComponent } from './components-old/nav/nav.component';
+import { PostComponent } from './components-old/post/post.component';
+import { PostListComponent } from './components-old/post-list/post-list.component';
+import { CommentFormComponent } from './components-old/comment-form/comment-form.component';
+import { SearchComponent } from './components-old/search/search.component';
+import { ContentComponent } from './components-old/content/content.component';
+import { RootComponent } from './components/root/root.component';
 
 @NgModule({
   declarations: [
-    NgWpComponent,
     NavComponent,
     PostComponent,
     PostListComponent,
     CommentFormComponent,
     SearchComponent,
     ContentComponent,
+    RootComponent,
   ],
   imports: [
     ShortcodesModule,
@@ -35,6 +35,6 @@ import { ContentComponent } from './components/content/content.component';
   providers: [
     WpRestService,
   ],
-  bootstrap: [NgWpComponent],
+  bootstrap: [RootComponent],
 })
 export class NgWpModule { }

@@ -1,12 +1,13 @@
-import { Component } from '@angular/core';
-import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
+import { Component, OnInit } from '@angular/core';
 import { WpRestService } from 'app/services/wp-rest.service';
 
 @Component({
   selector: 'ngwp-root',
-  templateUrl: './ngwp.component.html',
+  templateUrl: './root.component.html',
+  styleUrls: ['./root.component.less']
 })
-export class NgWpComponent implements OnInit {
+export class RootComponent implements OnInit {
+
   public blogName: string;
   public blogDescription: string;
 
@@ -20,4 +21,5 @@ export class NgWpComponent implements OnInit {
       this.blogDescription = options.general.blogdescription;
     });
   }
+
 }
