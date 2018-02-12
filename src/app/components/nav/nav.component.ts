@@ -8,6 +8,7 @@ import { WpRestService } from '../../services/wp-rest.service';
 @Component({
   selector: 'ngwp-nav',
   templateUrl: './nav.component.html',
+  styleUrls: ['./nav.component.less']
 })
 export class NavComponent implements OnInit {
 

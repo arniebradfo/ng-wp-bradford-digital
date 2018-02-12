@@ -1,37 +1,36 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { PostListComponent } from './components-old/post-list/post-list.component';
-import { PostComponent } from './components-old/post/post.component';
+import { ViewComponent } from './components/view/view.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: PostListComponent,
+    component: ViewComponent,
     pathMatch: 'full'
   },
   {
     path: 'page/:pageNumber',
-    component: PostListComponent,
+    component: ViewComponent,
   },
   {
     path: ':slug',
-    component: PostComponent
+    component: ViewComponent
   },
   {
     path: ':slug/comments-page/:commentsPageNumber',
-    component: PostComponent
+    component: ViewComponent
   },
   {
     path: ':slug/page/:pageNumber',
-    component: PostComponent
+    component: ViewComponent
   },
   {
     path: ':type/:slug',
-    component: PostListComponent
+    component: ViewComponent
   },
   {
     path: ':type/:slug/page/:pageNumber',
-    component: PostListComponent
+    component: ViewComponent
   },
 ];
 

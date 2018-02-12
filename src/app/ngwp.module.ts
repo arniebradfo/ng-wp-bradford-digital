@@ -7,13 +7,15 @@ import { ShortcodesModule } from './shortcodes/shortcodes.module';
 
 import { WpRestService } from './services/wp-rest.service';
 
-import { NavComponent } from './components-old/nav/nav.component';
+import { RootComponent } from './components/root/root.component';
+import { NavComponent } from './components/nav/nav.component';
+
 import { PostComponent } from './components-old/post/post.component';
 import { PostListComponent } from './components-old/post-list/post-list.component';
 import { CommentFormComponent } from './components-old/comment-form/comment-form.component';
 import { SearchComponent } from './components-old/search/search.component';
 import { ContentComponent } from './components-old/content/content.component';
-import { RootComponent } from './components/root/root.component';
+import { ViewComponent } from './components/view/view.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,7 @@ import { RootComponent } from './components/root/root.component';
     SearchComponent,
     ContentComponent,
     RootComponent,
+    ViewComponent,
   ],
   imports: [
     ShortcodesModule,

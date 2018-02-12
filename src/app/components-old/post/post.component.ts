@@ -58,8 +58,7 @@ export class PostComponent implements OnInit {
   }
 
   public getPost(slug) {
-    this.wpRestService
-      .getPostOrPage(slug)
+    this.wpRestService.getPostOrPage(slug)
       .then(post => {
         if (!post) return;
 
