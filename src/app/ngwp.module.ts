@@ -9,13 +9,13 @@ import { WpRestService } from './services/wp-rest.service';
 
 import { RootComponent } from './components/root/root.component';
 import { NavComponent } from './components/nav/nav.component';
+import { PostComponent } from './components/post/post.component';
+import { ViewComponent } from './components/view/view.component';
+import { ContentComponent } from './components-old/content/content.component';
 
-import { PostComponent } from './components-old/post/post.component';
 import { PostListComponent } from './components-old/post-list/post-list.component';
 import { CommentFormComponent } from './components-old/comment-form/comment-form.component';
 import { SearchComponent } from './components-old/search/search.component';
-import { ContentComponent } from './components-old/content/content.component';
-import { ViewComponent } from './components/view/view.component';
 
 @NgModule({
   declarations: [

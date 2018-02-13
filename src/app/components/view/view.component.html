@@ -1,7 +1,7 @@
 <section class="post-list">
-  post list
+  <ngwp-post *ngFor="let post of currentList" [post]="post" ></ngwp-post>
 </section>
 
 <section class="current-post">
-  current post
+  <ngwp-post [post]="currentPost" [showFull]="true"></ngwp-post>
 </section>
