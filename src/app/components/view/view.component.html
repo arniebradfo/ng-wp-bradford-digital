@@ -1,7 +1,7 @@
 <section class="post-list">
-  <ngwp-post *ngFor="let post of currentList" [post]="post" ></ngwp-post>
+  <ngwp-post *ngFor="let post of viewModelService.currentList | async" [post]="post" ></ngwp-post>
 </section>
 
-<section class="current-post">
-  <ngwp-post [post]="currentPost" [showFull]="true"></ngwp-post>
-</section>
+<!-- <section class="current-post">
+  <ngwp-post [post]="viewModelService.currentPost | async" [showFull]="true"></ngwp-post>
+</section> -->

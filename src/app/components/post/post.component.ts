@@ -11,6 +11,9 @@ export class PostComponent implements OnInit {
   @Input() post: IWpPage | IWpPost;
   @Input() showFull: boolean = false;
 
+  private showPasswordForm: boolean = false;
+  private password: string;
+
   constructor() { }
 
   ngOnInit() { }

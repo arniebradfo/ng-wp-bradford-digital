@@ -6,6 +6,7 @@ import { NgWpRoutingModule } from './ngwp-routing.module';
 import { ShortcodesModule } from './shortcodes/shortcodes.module';
 
 import { WpRestService } from './services/wp-rest.service';
+import { ViewModelService } from './services/view-model.service';
 
 import { RootComponent } from './components/root/root.component';
 import { NavComponent } from './components/nav/nav.component';
@@ -37,6 +38,7 @@ import { SearchComponent } from './components-old/search/search.component';
   ],
   providers: [
     WpRestService,
+    ViewModelService
   ],
   bootstrap: [RootComponent],
 })
