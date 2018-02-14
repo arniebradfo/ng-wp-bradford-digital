@@ -3,5 +3,5 @@
 </section>
 
 <section class="current-post">
-  <ngwp-post [post]="viewModelService.currentPost | async" [showFull]="true"></ngwp-post>
+  <ngwp-post *ngIf="viewModelService.currentPost | async; let post" [post]="post" [showFull]="true"></ngwp-post>
 </section>

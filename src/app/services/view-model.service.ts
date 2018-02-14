@@ -48,7 +48,7 @@ export class ViewModelService {
     private wpRestService: WpRestService,
     private activatedRoute: ActivatedRoute,
   ) {
-    this.activatedRoute.params
+    this.activatedRoute.children[0].params
       .combineLatest(this.activatedRoute.queryParams)
       .forEach(this.updateView.bind(this));
   }
@@ -61,13 +61,8 @@ export class ViewModelService {
   }
 
   private updateView(routerParams: { [key: string]: any }[]): void {
-    console.log(this.activatedRoute);
-    const params = this.activatedRoute.snapshot.children[0].params;
-
-    // const params = routerParams[0];
+    const params = routerParams[0];
     const queryParams = routerParams[1];
-
-    console.log(params, queryParams);
 
     // const listPageNumber = +params['pageNumber'] || 1;
     this._currentListPageNumber
@@ -90,7 +85,7 @@ export class ViewModelService {
 
     console.log(!!(!this.type && this.slug));
 
-    if (!!(!this.type && this.slug))
+    if (this.type === undefined && this.slug)
       this.getPost();
 
     this.getList();
