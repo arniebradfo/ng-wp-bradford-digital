@@ -1,36 +1,36 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ViewComponent } from './components/view/view.component';
+import { EmptyComponent } from './components/empty/empty.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: ViewComponent,
+    component: EmptyComponent,
     pathMatch: 'full'
   },
   {
     path: 'page/:pageNumber',
-    component: ViewComponent,
+    component: EmptyComponent,
   },
   {
     path: ':slug',
-    component: ViewComponent
+    component: EmptyComponent
   },
   {
     path: ':slug/comments-page/:commentsPageNumber',
-    component: ViewComponent
+    component: EmptyComponent
   },
   {
     path: ':slug/page/:pageNumber',
-    component: ViewComponent
+    component: EmptyComponent
   },
   {
     path: ':type/:slug',
-    component: ViewComponent
+    component: EmptyComponent
   },
   {
     path: ':type/:slug/page/:pageNumber',
-    component: ViewComponent
+    component: EmptyComponent
   },
 ];
 

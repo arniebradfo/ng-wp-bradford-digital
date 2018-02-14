@@ -17,6 +17,7 @@ import { ContentComponent } from './components-old/content/content.component';
 import { PostListComponent } from './components-old/post-list/post-list.component';
 import { CommentFormComponent } from './components-old/comment-form/comment-form.component';
 import { SearchComponent } from './components-old/search/search.component';
+import { EmptyComponent } from './components/empty/empty.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { SearchComponent } from './components-old/search/search.component';
     ContentComponent,
     RootComponent,
     ViewComponent,
+    EmptyComponent,
   ],
   imports: [
     ShortcodesModule,
