@@ -2,13 +2,22 @@
     <h1 routerLink="/">{{blogName}}</h1>
     <span>{{blogDescription}}</span>
     <ngwp-nav name="primary"></ngwp-nav>
+    <ngwp-search></ngwp-search>
+    <small>NGWP by
+        <a href="http://bradford.digital">James Bradford</a>
+    </small>
 </header>
 
 <main>
-    <router-outlet></router-outlet>
+
+    <section class="post-list">
+        <ngwp-post *ngFor="let post of viewModelService.currentList | async" [post]="post"></ngwp-post>
+    </section>
+
+    <section class="current-post">
+        <ngwp-post *ngIf="viewModelService.currentPost | async as post" [post]="post" [showFull]="true"></ngwp-post>
+    </section>
+
 </main>
 
-<footer>
-    <ngwp-search></ngwp-search>
-    <small>NGWP by <a href="http://bradford.digital">James Bradford</a></small>
-</footer>
+<router-outlet></router-outlet>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IWpPost, IWpPage, IWpComment } from 'app/interfaces/wp-rest-types';
 import { WpRestService } from './wp-rest.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, ActivationEnd } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/'
 
@@ -47,22 +47,30 @@ export class ViewModelService {
   constructor(
     private wpRestService: WpRestService,
     private activatedRoute: ActivatedRoute,
+    private router: Router,
   ) {
-    this.activatedRoute.children[0].params
-      .combineLatest(this.activatedRoute.queryParams)
-      .forEach(this.updateView.bind(this));
+    // this.activatedRoute.children[0].params
+    //   .combineLatest(this.activatedRoute.queryParams)
+    //   .forEach(this.updateView.bind(this));
+    this.router.events.subscribe(event => {
+      if (event instanceof ActivationEnd)
+        this.updateView(event)
+    })
   }
 
   private emitIfNew<T>(value: T, backer: T, subject: Subject<T>): T {
     if (value === backer) return backer;
     subject.next(value);
-    console.log('emit', value);
+    // console.log('emit', value);
     return value;
   }
 
-  private updateView(routerParams: { [key: string]: any }[]): void {
-    const params = routerParams[0];
-    const queryParams = routerParams[1];
+  private updateView(event: ActivationEnd): void {
+    // private updateView(routerParams: { [key: string]: any }[]): void {
+    // const params = routerParams[0];
+    // const queryParams = routerParams[1];
+    const params = event.snapshot.params;
+    const queryParams = event.snapshot.queryParams;
 
     // const listPageNumber = +params['pageNumber'] || 1;
     this._currentListPageNumber
@@ -83,18 +91,18 @@ export class ViewModelService {
     // if (type != null && slug != null)
     //   this.routerPrefix = `/${type}/${slug}`;
 
-    console.log(!!(!this.type && this.slug));
+    // console.log(!!(!this.type && this.slug));
 
     if (this.type === undefined && this.slug)
       this.getPost();
-
-    this.getList();
+    else
+      this.getList();
   }
 
   public getPost() {
     this.wpRestService.getPostOrPage(this.slug)
       .then(post => {
-        // if (!post) return;
+        if (!post) return;
 
         // this.currentPost = post;
         this._currentPost
@@ -115,7 +123,8 @@ export class ViewModelService {
         // if (this.currentPost.content.protected)
         //   this.showPasswordForm = true;
         // else
-        this.getPostComments();
+
+        // this.getPostComments();
       });
   }
 

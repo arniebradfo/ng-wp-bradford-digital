@@ -1,6 +1,6 @@
-<article>
+<article *ngIf="post">
 
-  <h1>
+  <h1 [routerLink]="'/'+post.slug">
     {{ post?.title.rendered }}
   </h1>
 

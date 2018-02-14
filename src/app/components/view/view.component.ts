@@ -14,7 +14,7 @@ import { ViewModelService } from 'app/services/view-model.service';
 export class ViewComponent implements OnInit {
 
   constructor(
-    public viewModelService: ViewModelService,
+    // public viewModelService: ViewModelService,
   ) { }
 
   ngOnInit() {

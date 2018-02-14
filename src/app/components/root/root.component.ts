@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { WpRestService } from 'app/services/wp-rest.service';
+import { ViewModelService } from 'app/services/view-model.service';
 
 @Component({
   selector: 'ngwp-root',
@@ -13,6 +14,7 @@ export class RootComponent implements OnInit {
 
   constructor(
     private wpRestService: WpRestService,
+    public viewModelService: ViewModelService,
   ) { }
 
   ngOnInit(): void {
