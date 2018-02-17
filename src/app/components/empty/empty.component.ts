@@ -5,5 +5,5 @@ import { Component } from '@angular/core';
   template: '',
 })
 export class EmptyComponent {
-  // this component is EMPTY!
+  // this space was intentionally left blank
 }

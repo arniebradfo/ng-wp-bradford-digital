@@ -2,7 +2,6 @@
     <h1 routerLink="/">{{blogName}}</h1>
     <span>{{blogDescription}}</span>
     <ngwp-nav name="primary"></ngwp-nav>
-    <ngwp-search></ngwp-search>
     <small>NGWP by
         <a href="http://bradford.digital">James Bradford</a>
     </small>
@@ -10,12 +9,31 @@
 
 <main>
 
-    <section class="post-list">
-        <ngwp-post *ngFor="let post of viewModelService.currentList | async" [post]="post"></ngwp-post>
+    <section class="post-list" *ngIf="viewModelService.postList$ | async as postList">
+        <h1>title</h1>
+        <span>{{postList.currentListPageNumber}}</span>
+        <ngwp-search></ngwp-search>
+        <ngwp-post *ngFor="let post of postList.currentList" [post]="post"></ngwp-post>
+        <p>
+            <button>load more</button>
+        </p>
+        <ngwp-search></ngwp-search> 
+        <nav>
+            <strong>go to page:</strong>
+            <ul>
+                <li 
+                *ngFor="let count of postList.currentListPageCount | numberToArray; let i = index" 
+                [routerLink]="postList.currentListRouterPrefix + '/page/' + (i+1)"
+                [queryParams]="postList.currentListQueryParams"
+                >
+                {{i+1}}
+                </li>
+            </ul>
+            </nav>
     </section>
 
     <section class="current-post">
-        <ngwp-post *ngIf="viewModelService.currentPost | async as post" [post]="post" [showFull]="true"></ngwp-post>
+        <ngwp-post *ngIf="viewModelService.post$ | async as post" [post]="post.currentPost" [showFull]="true"></ngwp-post>
     </section>
 
 </main>

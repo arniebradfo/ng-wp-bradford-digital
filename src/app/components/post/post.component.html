@@ -4,6 +4,31 @@
     {{ post?.title.rendered }}
   </h1>
 
+  <p>
+    <strong>By: </strong>
+    <a [routerLink]="'/author/' + post.author_ref.slug">
+      {{ post.author_ref.name }}
+    </a>
+    <span>
+      {{ post.date | date: 'MMM d, y, h:mm a' }}
+    </span>
+  </p>
+
+  <img *ngIf="post.featured_media_ref" [src]="post.featured_media_ref.media_details.sizes.thumbnail.source_url" />
+
+  <p *ngIf="post.tags_ref != null && post.tags_ref.length > 0">
+    <strong>Tags: </strong>
+    <a *ngFor="let tag of post.tags_ref" [routerLink]="'/tag/' + tag.slug">
+      {{'#' + tag.name}}
+    </a>
+  </p>
+  <p *ngIf="post.categories_ref != null && post.categories_ref.length > 0">
+    <strong>Categories: </strong>
+    <a *ngFor="let category of post.categories_ref" [routerLink]="'/category/' + category.slug">
+      {{category.name}}
+    </a>
+  </p>
+
   <!-- <form *ngIf="showPasswordForm" #passwordForm="ngForm" (ngSubmit)="onSubmitPassword()">
       <h4>This post is password protected</h4>
       <input type="password" [(ngModel)]="password" name="password" placeholder="password" required/>
@@ -38,11 +63,8 @@
     <nav *ngIf="commentsPageCount?.length > 0">
       <span>Comments Pagination</span>
       <ul>
-        <li 
-        *ngFor="let count of commentsPageCount; let i = index" 
-        [routerLink]="'/' + post.slug + '/comments-page/' + (i+1)"
-        >
-        {{i+1}}
+        <li *ngFor="let count of commentsPageCount; let i = index" [routerLink]="'/' + post.slug + '/comments-page/' + (i+1)">
+          {{i+1}}
         </li>
       </ul>
     </nav>
