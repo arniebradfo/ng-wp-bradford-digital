@@ -25,11 +25,11 @@ const routes: Routes = [
     component: EmptyComponent
   },
   {
-    path: ':type/:slug',
+    path: ':type/:typeSlug',
     component: EmptyComponent
   },
   {
-    path: ':type/:slug/page/:pageNumber',
+    path: ':type/:typeSlug/page/:pageNumber',
     component: EmptyComponent
   },
 ];
