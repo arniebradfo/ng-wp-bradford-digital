@@ -50,6 +50,8 @@ export class ViewModelService {
     currentListQueryParams: { [key: string]: string; };
     canLoadMorePages: boolean;
     loadMorePageCount: number;
+    title: string;
+    type: 'tag' | 'category' | 'author' | undefined;
   }> = new Subject();
 
   private _allComments: IWpComment[];
@@ -102,7 +104,9 @@ export class ViewModelService {
       currentListRouterPrefix: this._type && this._typeSlug ? `/${this._type}/${this._typeSlug}` : '',
       currentListQueryParams: this._queryParams,
       canLoadMorePages: this._canLoadMorePages,
-      loadMorePageCount: this._loadMorePageCount
+      loadMorePageCount: this._loadMorePageCount,
+      title: this._typeSlug || this._searchSlug || 'Posts',
+      type: this._type
     });
   }
 
