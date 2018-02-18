@@ -11,11 +11,11 @@
 
     <section class="post-list" *ngIf="viewModelService.postList$ | async as postList">
         <h1>title</h1>
-        <span>{{postList.currentListPageNumber}}</span>
+        <span>page {{postList.currentListPageNumber}}</span>
         <ngwp-search></ngwp-search>
         <ngwp-post *ngFor="let post of postList.currentList" [post]="post"></ngwp-post>
         <p>
-            <button>load more</button>
+            <button (click)="viewModelService.loadMorePosts()" *ngIf="postList.canLoadMorePages">load more</button>
         </p>
         <ngwp-search></ngwp-search> 
         <nav>
@@ -29,7 +29,7 @@
                 {{i+1}}
                 </li>
             </ul>
-            </nav>
+        </nav>
     </section>
 
     <section class="current-post">
@@ -38,4 +38,6 @@
 
 </main>
 
-<router-outlet></router-outlet>
+<div style="display:none">
+    <router-outlet></router-outlet>
+</div>

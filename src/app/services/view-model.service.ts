@@ -36,8 +36,11 @@ export class ViewModelService {
   }> = new Subject();
 
   private _currentList: (IWpPost | IWpPage)[];
+  private _wholeList: (IWpPost | IWpPage)[];
   private _postsPerPage: number;
   private _currentListPageCount: number;
+  private _canLoadMorePages: boolean;
+  private _loadMorePageCount: number = 1;
   postList$: Subject<{
     currentList: (IWpPost | IWpPage)[];
     postsPerPage: number;
@@ -45,6 +48,8 @@ export class ViewModelService {
     currentListPageCount: number;
     currentListRouterPrefix: string;
     currentListQueryParams: { [key: string]: string; };
+    canLoadMorePages: boolean;
+    loadMorePageCount: number;
   }> = new Subject();
 
   private _allComments: IWpComment[];
@@ -95,7 +100,9 @@ export class ViewModelService {
       currentListPageNumber: this._pageNumber,
       currentListPageCount: this._currentListPageCount,
       currentListRouterPrefix: this._type && this._typeSlug ? `/${this._type}/${this._typeSlug}` : '',
-      currentListQueryParams: this._queryParams
+      currentListQueryParams: this._queryParams,
+      canLoadMorePages: this._canLoadMorePages,
+      loadMorePageCount: this._loadMorePageCount
     });
   }
 
@@ -181,27 +188,41 @@ export class ViewModelService {
     });
   }
 
-  public updatePostList(type?: 'tag' | 'category' | 'author' | 'search', slug?: string): void {
+  public updatePostList(
+    type?: 'tag' | 'category' | 'author' | 'search',
+    slug?: string,
+  ): void {
     // retrieve the requested set of posts from the WpRestService
     Promise.all([
       this.wpRestService.getPosts(type, slug),
       this.wpRestService.options
     ]).then(res => {
-      const posts = res[0];
+      this._wholeList = res[0];
       const options = res[1];
+
+      this._loadMorePageCount = 1;
 
       // get the number of post-list pages
       this._postsPerPage = options.reading.posts_per_page;
-      this._currentListPageCount = Math.ceil(posts.length / this._postsPerPage);
+      this._currentListPageCount = Math.ceil(this._wholeList.length / this._postsPerPage);
 
       // get the current page's set of posts
       const lowerIndex = this._postsPerPage * (this._pageNumber - 1);
       const upperIndex = this._postsPerPage * this._pageNumber;
+      this._canLoadMorePages = this._wholeList.length > upperIndex
+      this._currentList = this._wholeList.slice(lowerIndex, upperIndex);
 
-      this._currentList = posts.slice(lowerIndex, upperIndex);
       this.emitPostList();
-
     });
+  }
+
+  public loadMorePosts() {
+    this._loadMorePageCount++;
+    const lowerIndex = this._postsPerPage * (this._pageNumber - 1);
+    const upperIndex = this._postsPerPage * this._pageNumber * this._loadMorePageCount;
+    this._canLoadMorePages = this._wholeList.length > upperIndex
+    this._currentList = this._wholeList.slice(lowerIndex, upperIndex);
+    this.emitPostList();
   }
 
 
