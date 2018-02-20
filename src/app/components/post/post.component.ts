@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { IWpPage, IWpPost } from '../../interfaces/wp-rest-types';
+import { ViewModelService } from '../../services/view-model.service';
 
 @Component({
   selector: 'ngwp-post',

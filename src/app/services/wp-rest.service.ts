@@ -342,6 +342,8 @@ export class WpRestService {
         comment = this.tryConvertingDates(comment);
       });
       const hierarchicalComments = this.generateCommentHeiarchy(comments);
+      console.log(hierarchicalComments);
+      
       return hierarchicalComments;
     });
   }

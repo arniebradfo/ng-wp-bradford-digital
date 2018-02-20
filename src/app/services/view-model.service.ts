@@ -58,7 +58,7 @@ export class ViewModelService {
   private _commentsPerPage: number;
   private _commentsPageCount: number;
   private _comments: IWpComment[];
-  comments$: Subject<{
+  commentList$: Subject<{
     allComments: IWpComment[];
     commentsPerPage: number;
     commentsPageNumber: number;
@@ -111,7 +111,7 @@ export class ViewModelService {
   }
 
   private emitComments() {
-    this.comments$.next({
+    this.commentList$.next({
       allComments: this._allComments,
       commentsPerPage: this._commentsPerPage,
       commentsPageNumber: this._commentsPageNumber,
