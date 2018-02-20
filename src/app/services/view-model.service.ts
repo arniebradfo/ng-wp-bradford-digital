@@ -29,10 +29,10 @@ export class ViewModelService {
   }> = new Subject();
 
   private _currentPost: IWpPost | IWpPage;
-  private _currentAdjcentPosts: { next: IWpPost; previous: IWpPost; };
+  // private _currentAdjcentPosts: { next: IWpPost; previous: IWpPost; };
   post$: Subject<{
     currentPost: (IWpPost | IWpPage);
-    currentAdjcentPosts: { next: IWpPost; previous: IWpPost; };
+    // currentAdjcentPosts: { next: IWpPost; previous: IWpPost; };
   }> = new Subject();
 
   private _currentList: (IWpPost | IWpPage)[];
@@ -91,7 +91,7 @@ export class ViewModelService {
   private emitPost() {
     this.post$.next({
       currentPost: this._currentPost,
-      currentAdjcentPosts: this._currentAdjcentPosts
+      // currentAdjcentPosts: this._currentAdjcentPosts
     });
   }
 
@@ -151,13 +151,13 @@ export class ViewModelService {
         this._currentPost = post;
 
         // if this is a post, not a page, get adjcent posts for routing
-        if (post.type === 'post')
-          this.wpRestService.getAdjcentPosts(this._slug)
-            .then(adjcentPosts => {
-              this._currentAdjcentPosts = adjcentPosts;
-              this.emitPost();
-            });
-        else
+        // if (post.type === 'post')
+        //   this.wpRestService.getAdjcentPosts(this._slug)
+        //     .then(adjcentPosts => {
+        //       this._currentAdjcentPosts = adjcentPosts;
+        //       this.emitPost();
+        //     });
+        // else
           this.emitPost();
 
         // if this is a password protected post, show the password form

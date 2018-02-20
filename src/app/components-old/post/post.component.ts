@@ -66,9 +66,9 @@ export class PostComponent implements OnInit {
         // console.log('current post', this.post); // for debug
 
         // if this is a post, not a page, get adjcent posts for routing
-        if (post.type === 'post')
-          this.wpRestService.getAdjcentPosts(slug)
-            .then(posts => this.adjcentPosts = posts);
+        // if (post.type === 'post')
+        //   this.wpRestService.getAdjcentPosts(slug)
+        //     .then(posts => this.adjcentPosts = posts);
 
         // if this is a password protected post, show the password form
         if (this.post.content.protected)

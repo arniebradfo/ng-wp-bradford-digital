@@ -69,12 +69,13 @@ export class WpRestService {
     this.posts = this.requestType('posts');
     this.posts = Promise.all([this.posts, this._mediaById, this._tagsById, this._categoriesById, this._usersById])
       .then(res => {
-        const posts = res[0];
+        let posts = res[0];
         const mediaById = res[1];
         const tagsById = res[2];
         const categoriesById = res[3];
         const usersById = res[4];
-        posts.forEach(post => {
+        posts = this.putStickyPostsFirst(posts);
+        posts.forEach((post, i) => {
 
           post.tags_ref = [];
           post.tags.forEach(tagId => post.tags_ref.push(tagsById[tagId]));
@@ -85,10 +86,14 @@ export class WpRestService {
           post.author_ref = usersById[post.author];
           post.featured_media_ref = mediaById[post.featured_media];
 
+          post.adjcentPosts = {
+            previous: i > 0 ? posts[i - 1] : posts[posts.length - 1],
+            next: i < posts.length - 1 ? posts[i + 1] : posts[0]
+          };
+
           post = this.tryConvertingDates(post);
         });
-        const postsReordered = this.putStickyPostsFirst(posts);
-        return postsReordered;
+        return posts;
       });
     this._postsById = <Promise<IWpPost[]>>this.orderById(this.posts);
   }
@@ -177,7 +182,7 @@ export class WpRestService {
               page++;
               requestPostSet();
             } else {
-              // console.log(type, store); // for debug
+              // console.log(type, set); // for debug
               // we've got all the data, return it
               resolve(set);
             }
@@ -228,25 +233,25 @@ export class WpRestService {
   }
 
   // get the posts that are before and after the requested post in the posts array
-  public getAdjcentPosts(slug: string): Promise<{
-    previous: IWpPost | undefined;
-    next: IWpPost | undefined;
-  }> {
-    return this.posts.then(posts => {
-      let previous, next;
-      for (let i = 0; i < posts.length; i++) {
-        const post = posts[i];
-        if (post.slug === slug) {
-          previous = i > 0 ? posts[i - 1] : posts[posts.length - 1];
-          next = i < posts.length - 1 ? posts[i + 1] : posts[0];
-        }
-      }
-      return {
-        previous: previous,
-        next: next
-      };
-    });
-  }
+  // public getAdjcentPosts(slug: string): Promise<{
+  //   previous: IWpPost | undefined;
+  //   next: IWpPost | undefined;
+  // }> {
+  //   return this.posts.then(posts => {
+  //     let previous, next;
+  //     for (let i = 0; i < posts.length; i++) {
+  //       const post = posts[i];
+  //       if (post.slug === slug) {
+  //         previous = i > 0 ? posts[i - 1] : posts[posts.length - 1];
+  //         next = i < posts.length - 1 ? posts[i + 1] : posts[0];
+  //       }
+  //     }
+  //     return {
+  //       previous: previous,
+  //       next: next
+  //     };
+  //   });
+  // }
 
   public getPosts(type?: 'tag' | 'category' | 'author' | 'search', slug?: string): Promise<(IWpPage | IWpPost)[]> {
 
@@ -342,8 +347,6 @@ export class WpRestService {
         comment = this.tryConvertingDates(comment);
       });
       const hierarchicalComments = this.generateCommentHeiarchy(comments);
-      console.log(hierarchicalComments);
-      
       return hierarchicalComments;
     });
   }

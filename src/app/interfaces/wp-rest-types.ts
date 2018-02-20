@@ -81,6 +81,10 @@ export interface IWpPost extends IWpPage {
         }[];
     };
     parent: undefined;
+    adjcentPosts: {
+        next: IWpPost;
+        previous: IWpPost;
+    };
 }
 
 export interface IWpMedia extends IWpPage {
