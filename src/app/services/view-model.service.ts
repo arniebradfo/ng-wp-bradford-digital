@@ -29,10 +29,8 @@ export class ViewModelService {
   }> = new Subject();
 
   private _currentPost: IWpPost | IWpPage;
-  // private _currentAdjcentPosts: { next: IWpPost; previous: IWpPost; };
   post$: Subject<{
     currentPost: (IWpPost | IWpPage);
-    // currentAdjcentPosts: { next: IWpPost; previous: IWpPost; };
   }> = new Subject();
 
   private _currentList: (IWpPost | IWpPage)[];
@@ -59,6 +57,7 @@ export class ViewModelService {
   private _commentsPageCount: number;
   private _comments: IWpComment[];
   commentList$: Subject<{
+    currentPost: (IWpPost | IWpPage);
     allComments: IWpComment[];
     commentsPerPage: number;
     commentsPageNumber: number;
@@ -91,7 +90,6 @@ export class ViewModelService {
   private emitPost() {
     this.post$.next({
       currentPost: this._currentPost,
-      // currentAdjcentPosts: this._currentAdjcentPosts
     });
   }
 
@@ -112,6 +110,7 @@ export class ViewModelService {
 
   private emitComments() {
     this.commentList$.next({
+      currentPost: this._currentPost,
       allComments: this._allComments,
       commentsPerPage: this._commentsPerPage,
       commentsPageNumber: this._commentsPageNumber,
@@ -150,15 +149,7 @@ export class ViewModelService {
 
         this._currentPost = post;
 
-        // if this is a post, not a page, get adjcent posts for routing
-        // if (post.type === 'post')
-        //   this.wpRestService.getAdjcentPosts(this._slug)
-        //     .then(adjcentPosts => {
-        //       this._currentAdjcentPosts = adjcentPosts;
-        //       this.emitPost();
-        //     });
-        // else
-          this.emitPost();
+        this.emitPost();
 
         // if this is a password protected post, show the password form
         // if (this.currentPost.content.protected)
@@ -166,6 +157,10 @@ export class ViewModelService {
         // else
         this.updateComments();
       });
+  }
+
+  public thing(): void {
+
   }
 
   public updateComments(): void {

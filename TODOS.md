@@ -1,11 +1,13 @@
 # TODOs:
-- comment on code
+- posting comments
+- change title tag
+- password protection
+- images
 
 
 ### TODOs: less important
 - sitemap
 - configure to not require a wpBase environment var
-- change title tag
 - what to do when network fails?
 - imporove network performance with more, smaller requests returning `Observables`
 - [oembed?](https://codex.wordpress.org/Embeds)

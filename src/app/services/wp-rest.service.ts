@@ -232,27 +232,6 @@ export class WpRestService {
     });
   }
 
-  // get the posts that are before and after the requested post in the posts array
-  // public getAdjcentPosts(slug: string): Promise<{
-  //   previous: IWpPost | undefined;
-  //   next: IWpPost | undefined;
-  // }> {
-  //   return this.posts.then(posts => {
-  //     let previous, next;
-  //     for (let i = 0; i < posts.length; i++) {
-  //       const post = posts[i];
-  //       if (post.slug === slug) {
-  //         previous = i > 0 ? posts[i - 1] : posts[posts.length - 1];
-  //         next = i < posts.length - 1 ? posts[i + 1] : posts[0];
-  //       }
-  //     }
-  //     return {
-  //       previous: previous,
-  //       next: next
-  //     };
-  //   });
-  // }
-
   public getPosts(type?: 'tag' | 'category' | 'author' | 'search', slug?: string): Promise<(IWpPage | IWpPost)[]> {
 
     // return all posts if there are no filter parameters
@@ -370,7 +349,7 @@ export class WpRestService {
         author_url: newComment.author_url,
         author_user_agent: window.navigator.userAgent,
         content: { raw: newComment.content, },
-        date_gmt: new Date(Date.now()).toISOString(),
+        // date_gmt: new Date(Date.now()).toISOString(),
         parent: newComment.parent,
         post: newComment.post
         // meta:	[]
