@@ -15,7 +15,9 @@ export class PostComponent implements OnInit {
   private showPasswordForm: boolean = false;
   private password: string;
 
-  constructor() { }
+  constructor(
+    public viewModelService: ViewModelService,
+  ) { }
 
   ngOnInit() { }
 

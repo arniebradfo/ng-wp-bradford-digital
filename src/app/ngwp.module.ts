@@ -18,7 +18,6 @@ import { CommentFormComponent } from './components-old/comment-form/comment-form
 import { SearchComponent } from './components-old/search/search.component';
 import { EmptyComponent } from './components/empty/empty.component';
 import { NumberToArrayPipe } from './pipes/number-to-array.pipe';
-import { CommentsComponent } from './components/comments/comments.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +30,6 @@ import { CommentsComponent } from './components/comments/comments.component';
     RootComponent,
     EmptyComponent,
     NumberToArrayPipe,
-    CommentsComponent,
   ],
   imports: [
     ShortcodesModule,
