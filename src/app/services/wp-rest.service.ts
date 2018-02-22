@@ -312,6 +312,10 @@ export class WpRestService {
   public getComments(post: IWpPage, password?: string): Promise<IWpComment[]> {
     // TODO: maybe save the comments somehow?
 
+    // if asking for password protected comments that have been accessed before
+    if (!password && post.content.protected && post.comments)
+      return Promise.resolve(post.comments);
+
     const requestObj = password ? { params: { password: password } } : undefined;
 
     const commentsRequest: Promise<IWpComment[]> = this._http
@@ -331,6 +335,7 @@ export class WpRestService {
         comment = this.tryConvertingDates(comment);
       });
       const hierarchicalComments = this.generateCommentHeiarchy(comments);
+      post.comments = hierarchicalComments;
       return hierarchicalComments;
     });
   }

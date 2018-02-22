@@ -57,6 +57,7 @@ export interface IWpPage extends IWpId {
     };
     isLocked?: boolean;
     error?: IWpError;
+    comments?: IWpComment[];
 }
 
 export interface IWpPost extends IWpPage {
