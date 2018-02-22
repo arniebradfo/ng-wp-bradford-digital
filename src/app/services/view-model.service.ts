@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IWpPost, IWpPage, IWpComment } from 'app/interfaces/wp-rest-types';
+import { IWpPost, IWpPage, IWpComment, IWpError } from 'app/interfaces/wp-rest-types';
 import { WpRestService } from './wp-rest.service';
 import { Router, ActivationEnd } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
@@ -29,8 +29,12 @@ export class ViewModelService {
   }> = new Subject();
 
   private _currentPost: IWpPost | IWpPage;
+  private _isPostLocked: boolean;
+  private _errorMessage: IWpError;
   post$: Subject<{
     currentPost: (IWpPost | IWpPage);
+    isPostLocked: boolean;
+    errorMessage: IWpError;
   }> = new Subject();
 
   private _currentList: (IWpPost | IWpPage)[];
@@ -90,6 +94,8 @@ export class ViewModelService {
   private emitPost() {
     this.post$.next({
       currentPost: this._currentPost,
+      isPostLocked: this._isPostLocked,
+      errorMessage: this._errorMessage
     });
   }
 
@@ -148,23 +154,36 @@ export class ViewModelService {
         if (!post) return;
 
         this._currentPost = post;
-
+        this._isPostLocked = this._currentPost.content.protected;
         this.emitPost();
 
         // if this is a password protected post, show the password form
-        // if (this.currentPost.content.protected)
         //   this.showPasswordForm = true;
         // else
-        this.updateComments();
+        if (!this._isPostLocked)
+          this.updateComments();
       });
   }
 
-  public thing(): void {
-
+  public getPasswordProtected(id: number, password: string) {
+    this.wpRestService.getPasswordProtected(id, password)
+      .then(post => {
+        if (!post) return;
+        this._isPostLocked = false;
+        this._currentPost = post;
+        this.updateComments(password);
+        this.emitPost();
+        // emit !!
+      }, (err: IWpError) => {
+        this._errorMessage = err;
+        this.emitPost();
+        // this.errorMessage = err.message;
+        // TODO: show try again message
+      });
   }
 
-  public updateComments(): void {
-    const password = undefined; // figure this out later
+  public updateComments(password?: string): void {
+    // const password = undefined; // figure this out later
 
     // get the comments for the current post from the WpRestService
     Promise.all([

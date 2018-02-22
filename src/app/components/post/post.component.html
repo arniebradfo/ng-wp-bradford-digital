@@ -29,17 +29,17 @@
     </a>
   </p>
 
-  <!-- <form *ngIf="showPasswordForm" #passwordForm="ngForm" (ngSubmit)="onSubmitPassword()">
-      <h4>This post is password protected</h4>
-      <input type="password" [(ngModel)]="password" name="password" placeholder="password" required/>
-      <button type="submit" [disabled]="!passwordForm.form.valid">Submit</button>
-      {{errorMessage}}
-      <hr/>
-    </form> -->
+  <form *ngIf="showPasswordForm" #passwordForm="ngForm" (ngSubmit)="onSubmitPassword()">
+    <h4>This post is password protected</h4>
+    <input type="password" [(ngModel)]="password" name="password" placeholder="password" required/>
+    <button type="submit" [disabled]="!passwordForm.form.valid">Submit</button>
+    {{errorMessage}}
+    <hr/>
+  </form>
 
   <ngwp-content [content]="showFull ? post?.content.rendered : post?.excerpt.rendered"></ngwp-content>
 
-  <ngwp-comments *ngIf="showFull" ></ngwp-comments>
+  <ngwp-comments *ngIf="showFull"></ngwp-comments>
 
   <nav *ngIf="post.adjcentPosts && showFull">
     <strong>Previous Post:</strong>

@@ -15,8 +15,16 @@ export class PostComponent implements OnInit {
   private showPasswordForm: boolean = false;
   private password: string;
 
-  constructor() { }
+  constructor(
+    private viewModelService: ViewModelService
+  ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.showPasswordForm = !!this.post.content.protected;
+  }
+
+  public onSubmitPassword(): void {
+    this.viewModelService.getPasswordProtected(this.post.id, this.password);
+  }
 
 }
