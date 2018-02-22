@@ -91,6 +91,8 @@ export class WpRestService {
             next: i < posts.length - 1 ? posts[i + 1] : posts[0]
           };
 
+          post.isLocked = post.content.protected;
+
           post = this.tryConvertingDates(post);
         });
         return posts;
@@ -108,6 +110,7 @@ export class WpRestService {
       pages.forEach(page => {
         page.author_ref = usersById[page.author];
         page.featured_media_ref = mediaById[page.featured_media];
+        page.isLocked = page.content.protected;
         page = this.tryConvertingDates(page);
       });
       return pages;
@@ -219,13 +222,15 @@ export class WpRestService {
           .map((res: Response) => res.json())
           .catch((err: Response) => {
             const wpErr: IWpError = err.json();
-            reject(wpErr);
+            post.error = wpErr;
+            reject(post);
             return Observable.throw(wpErr);
           })
           .forEach(postRes => {
             // add the newly returned content and excerpt to the post and return the post
             post.content = postRes.content;
             post.excerpt = postRes.excerpt;
+            post.isLocked = false;
             resolve(post);
           });
       });

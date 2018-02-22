@@ -29,12 +29,8 @@ export class ViewModelService {
   }> = new Subject();
 
   private _currentPost: IWpPost | IWpPage;
-  private _isPostLocked: boolean;
-  private _errorMessage: IWpError;
   post$: Subject<{
     currentPost: (IWpPost | IWpPage);
-    isPostLocked: boolean;
-    errorMessage: IWpError;
   }> = new Subject();
 
   private _currentList: (IWpPost | IWpPage)[];
@@ -94,8 +90,6 @@ export class ViewModelService {
   private emitPost() {
     this.post$.next({
       currentPost: this._currentPost,
-      isPostLocked: this._isPostLocked,
-      errorMessage: this._errorMessage
     });
   }
 
@@ -154,13 +148,9 @@ export class ViewModelService {
         if (!post) return;
 
         this._currentPost = post;
-        this._isPostLocked = this._currentPost.content.protected;
         this.emitPost();
 
-        // if this is a password protected post, show the password form
-        //   this.showPasswordForm = true;
-        // else
-        if (!this._isPostLocked)
+        if (!this._currentPost.isLocked)
           this.updateComments();
       });
   }
@@ -169,16 +159,11 @@ export class ViewModelService {
     this.wpRestService.getPasswordProtected(id, password)
       .then(post => {
         if (!post) return;
-        this._isPostLocked = false;
         this._currentPost = post;
         this.updateComments(password);
         this.emitPost();
-        // emit !!
       }, (err: IWpError) => {
-        this._errorMessage = err;
         this.emitPost();
-        // this.errorMessage = err.message;
-        // TODO: show try again message
       });
   }
 

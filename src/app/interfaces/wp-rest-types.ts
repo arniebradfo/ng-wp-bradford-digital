@@ -55,6 +55,8 @@ export interface IWpPage extends IWpId {
         'version-history': IWpLinkHref[];
         'wp:attachment': IWpLinkHref[];
     };
+    isLocked?: boolean;
+    error?: IWpError;
 }
 
 export interface IWpPost extends IWpPage {
