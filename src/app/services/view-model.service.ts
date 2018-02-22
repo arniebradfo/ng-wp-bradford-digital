@@ -149,7 +149,7 @@ export class ViewModelService {
     this.wpRestService.options
       .then(options => {
         console.log(options);
-        const subtitle = this._typeSlug || this._slug; // should be slug reneder name
+        const subtitle = this._typeSlug || this._slug || this._searchSlug || options.general.blogdescription; // should be slug reneder name
         this.titleService.setTitle(`${options.general.blogname} // ${subtitle}`);
       });
   }
