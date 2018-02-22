@@ -148,7 +148,6 @@ export class ViewModelService {
   private updateTitle() {
     this.wpRestService.options
       .then(options => {
-        console.log(options);
         const subtitle = this._typeSlug || this._slug || this._searchSlug || options.general.blogdescription; // should be slug reneder name
         this.titleService.setTitle(`${options.general.blogname} // ${subtitle}`);
       });
@@ -158,7 +157,6 @@ export class ViewModelService {
     this.wpRestService.getPostOrPage(this._slug)
       .then(post => {
         if (!post) return;
-
         this._currentPost = post;
         this.emitPost();
 

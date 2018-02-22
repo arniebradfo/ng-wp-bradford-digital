@@ -8,30 +8,28 @@ import { ShortcodesModule } from './shortcodes/shortcodes.module';
 import { WpRestService } from './services/wp-rest.service';
 import { ViewModelService } from './services/view-model.service';
 
+import { NumberToArrayPipe } from './pipes/number-to-array.pipe';
+
 import { RootComponent } from './components/root/root.component';
 import { NavComponent } from './components/nav/nav.component';
 import { PostComponent } from './components/post/post.component';
-import { ContentComponent } from './components-old/content/content.component';
-
-import { PostListComponent } from './components-old/post-list/post-list.component';
-import { CommentFormComponent } from './components-old/comment-form/comment-form.component';
-import { SearchComponent } from './components-old/search/search.component';
+import { ContentComponent } from './components/content/content.component';
+import { SearchComponent } from './components/search/search.component';
 import { EmptyComponent } from './components/empty/empty.component';
-import { NumberToArrayPipe } from './pipes/number-to-array.pipe';
 import { CommentsComponent } from './components/comments/comments.component';
+import { CommentFormComponent } from './components/comment-form/comment-form.component';
 
 @NgModule({
   declarations: [
     NavComponent,
     PostComponent,
-    PostListComponent,
-    CommentFormComponent,
     SearchComponent,
     ContentComponent,
     RootComponent,
     EmptyComponent,
-    NumberToArrayPipe,
     CommentsComponent,
+    CommentFormComponent,
+    NumberToArrayPipe,
   ],
   imports: [
     ShortcodesModule,

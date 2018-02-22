@@ -1,7 +1,6 @@
 # TODOs:
-- change title tag
-- password protection
-- images
+- css 
+- animations
 
 
 ### TODOs: less important
