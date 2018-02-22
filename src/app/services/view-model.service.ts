@@ -4,6 +4,7 @@ import { WpRestService } from './wp-rest.service';
 import { Router, ActivationEnd } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/'
+import { Title } from '@angular/platform-browser';
 
 
 
@@ -68,6 +69,7 @@ export class ViewModelService {
   constructor(
     private wpRestService: WpRestService,
     private router: Router,
+    private titleService: Title
   ) {
     this.router.events.subscribe(event => {
       if (event instanceof ActivationEnd)
@@ -130,6 +132,7 @@ export class ViewModelService {
     this._slug = params.slug;
     this._searchSlug = this._queryParams.s;
 
+    this.updateTitle();
     this.emitRouterInfo();
 
     if (this._slug)
@@ -140,6 +143,15 @@ export class ViewModelService {
       this.updatePostList('search', this._searchSlug);
     else if ( !this._currentList || (!this._type && !this._typeSlug && !this._slug && !this._searchSlug))
       this.updatePostList();
+  }
+
+  private updateTitle() {
+    this.wpRestService.options
+      .then(options => {
+        console.log(options);
+        const subtitle = this._typeSlug || this._slug; // should be slug reneder name
+        this.titleService.setTitle(`${options.general.blogname} // ${subtitle}`);
+      });
   }
 
   public updatePost() {

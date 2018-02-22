@@ -1,5 +1,4 @@
 # TODOs:
-- posting comments
 - change title tag
 - password protection
 - images
