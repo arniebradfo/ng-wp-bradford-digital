@@ -1,0 +1,27 @@
+// RADIO AND CHECKBOX INPUT //
+
+.input_RadioCheckbox{
+	-webkit-appearance: none; // not -moz-
+}
+
+.input_Radio{
+	.input_RadioCheckbox();
+  border-radius: 99px;
+}
+
+.input_Checkbox{
+	.input_RadioCheckbox();
+}
+
+input[type="checkbox"] { .input_Checkbox(); }
+input[type="radio"]    { .input_Radio(); }
+
+input[type="checkbox"],
+input[type="radio"]
+{
+	&::-ms-check{
+		// display: none;
+		color: transparent;
+		background: transparent;
+	}
+}

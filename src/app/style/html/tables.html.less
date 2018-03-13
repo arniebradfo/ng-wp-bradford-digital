@@ -1,0 +1,73 @@
+// TABLES //
+// .data class creates an alternating background
+
+table {
+    width: 100%;
+    margin: 1em 0;
+    tr {
+        vertical-align: baseline;
+    }
+    th {
+        .meta_Type();
+    }
+    thead,
+    tfoot {
+        font-weight: bold;
+    }
+    thead {
+        color: var(--fgStrong_ThemeColor);
+    }
+    td,
+    th {
+        text-align: left;
+        padding: 0;
+        padding-right: 2em;
+    }
+    caption {
+        font-weight: bold;
+        padding: 0.5em 1em;
+    }
+    tbody {}
+    &:not(.data) {
+        tbody tr {
+            border-bottom: 1px solid;
+            border-color: var(--bgOverlay_ThemeColor);
+            &:last-of-type {
+                border: 0;
+            }
+        }
+        thead tr {
+            border-bottom: 1px solid;
+            border-color: var(--disabledBg_ThemeColor);
+        }
+        tfoot tr {
+            border-bottom: 0;
+            border-top: 1px solid;
+            border-color: var(--disabledBg_ThemeColor);
+        }
+        td,
+        th {
+            padding-top: var(--s12);
+            &:last-child {
+                padding-right: 0;
+            }
+        }
+    }
+    &.data {
+        thead,
+        tfoot {
+            tr:nth-of-type(2n-1) {
+                background-color: var(--bg1_ThemeColor);
+            }
+        }
+        tbody tr:nth-of-type(2n-1) {
+            background-color: var(--bgOverlay_ThemeColor);
+        }
+        td,
+        th {
+            padding-left: var(--s12);
+            padding-top: 0.5em;
+            padding-bottom: 0.5em;
+        }
+    }
+}

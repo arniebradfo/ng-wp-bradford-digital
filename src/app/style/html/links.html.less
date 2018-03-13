@@ -1,0 +1,17 @@
+// LINKS //
+
+.a() {
+	// later...
+}
+
+.a-inline-block() {
+    @inlineBackground_Spacing: 4px;
+    display: inline-block;
+    padding: 0 @inlineBackground_Spacing;
+    margin: 0 -(@inlineBackground_Spacing);
+}
+
+a {
+    .a();
+    .a-inline-block();
+}

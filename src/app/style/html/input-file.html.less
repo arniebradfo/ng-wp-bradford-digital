@@ -1,0 +1,22 @@
+// FILE INPUT //
+// please never use this element in its native appearance
+
+.input_FileButton {
+    border: 0;
+    height: 100%;
+    margin: 0;
+    outline: 0;
+}
+
+input[type="file"] {
+    display: block;
+    .input_Field();
+		box-sizing: content-box;
+		
+    &::-webkit-file-upload-button {
+        .input_FileButton()
+    }
+    &::-ms-browse {
+        .input_FileButton()
+    }
+}

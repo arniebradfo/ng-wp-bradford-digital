@@ -1,6 +1,3 @@
-
-
-  
 @import url('https://fonts.googleapis.com/css?family=Cairo:300,600,900');
 
 // FAMILIES //
@@ -8,35 +5,57 @@
 @monospace_Family: 'Consolas', monospace;
 // -webkit-font-smoothing:antialiased; // ??
 
+// WEIGHT //
+@light_Weight:       300; // light
+@regular_Weight:     600; // semi-bold
+@bold_Weight:        900; // black
 
-// // WEIGHT //
-// @thin_Weight:        100;
-// @light_Weight:       300;
-// @regular_Weight:     400;
-// @bold_Weight:        700;
+// HEADING //
+@heading1_Font:     @light_Weight     ~'36px/1.1em'   @cairo_Family ; // h1
+@heading2_Font:     @light_Weight     ~'30px/1.1em'   @cairo_Family ; // h2
+@heading3_Font:     @light_Weight     ~'24px/1.1em'   @cairo_Family ; // h3
+@heading4_Font:     @regular_Weight   ~'18px/1.1em'   @cairo_Family ; // h4
 
-    
-    // :root, .font-theme-cairo{
-  
-	// EXPORT //
+// META //
+@meta_Font:          @bold_Weight    ~'14px/1em'    @cairo_Family ; // h5
+@metaSm_Font:        @bold_Weight    ~'11px/1em'    @cairo_Family ; // h6
+
+// BODY //
+// body_Font is applied to the body tag, inherited by everything //
+// this font size here is then equal to 1rem unit //
+@body_Font:          @regular_Weight ~'14px/1.7em'   @cairo_Family  ; // p
+@bodySm_Font:        @regular_Weight ~'11px/1.7em'   @cairo_Family  ; // caption
+
+// OTHER //
+@quote_Font:         italic @bold_Weight ~'1em/1em' @cairo_Family    ; // blockquote
+@monoSpace_Font:                  normal ~'1em/1em' @monospace_Family  ; // code, pre
 	
-	// --docTitle_Font:      @bold_Weight    ~'60px/0.8em' @cairoCondensed_Family ;
-	// --sectionTitle_Font:  @bold_Weight    ~'18px/1em'   @cairo_Family          ;
-	
-	// --headingLg_Font:     @light_Weight    ~'36px/1.1em'   @cairo_Family       ; // h1
-	// --headingMd_Font:     @light_Weight    ~'24px/1.1em'   @cairo_Family       ; // h2
-	// --headingSm_Font:     @regular_Weight   ~'18px/1.1em'   @cairo_Family      ; // h3
-	
-	// --meta_Font:          @bold_Weight    ~'14px/0.8em' @cairoCondensed_Family ; // h4
-	// --metaSm_Font:        @bold_Weight    ~'11px/0.8em' @cairoCondensed_Family ; // h5
-	
-	// body_Font is applied to the body tag, inherited by everything //
-	// this font size here is then equal to 1rem unit //
-	// --body_Font:          @regular_Weight ~'14px/1.2em'   @cairo_Family        ; // p
-	// --bodySm_Font:        @regular_Weight ~'11px/1.2em'   @cairo_Family        ; // caption
-			
-	// --quote_Font:         italic @bold_Weight ~'1em/1em' @georgia_Family        ; // blockquote
-	// --monoSpace_Font:     @monospace_Family                                     ; // code, pre
-	
-	// font: font-style font-variant font-weight font-size/line-height font-family; 
+// font: font-style font-variant font-weight font-size/line-height font-family; 
+
+
+// TYPOGRPAHY MIXINS //
+.heading1_Type(){  font: @heading1_Font; }
+.heading2_Type(){  font: @heading2_Font; }
+.heading3_Type(){  font: @heading3_Font; }
+.heading4_Type(){  font: @heading4_Font; }
+.meta_Type(){      font: @meta_Font;   text-transform: uppercase; }
+.metaSm_Type(){    font: @metaSm_Font; text-transform: uppercase; }
+.body_Type(){      font: @body_Font; }
+.bodySm_Type(){    font: @bodySm_Font; }
+.quote_Type(){     font: @quote_Font; }
+.monoSpace_Type(){ font: @monoSpace_Font; }
+
+
+// VARS //    
+// :root, .font-theme-cairo{ // do I need this?
+// 	--heading1_Font:    @heading1_Font;
+// 	--heading2_Font:    @heading2_Font;
+// 	--heading3_Font:    @heading3_Font; 
+// 	--heading4_Font:    @heading4_Font; 
+// 	--meta_Font:        @meta_Font;
+// 	--metaSm_Font:      @metaSm_Font;
+// 	--body_Font:        @body_Font;
+// 	--bodySm_Font:      @bodySm_Font;
+// 	--quote_Font:       @quote_Font;
+// 	--monoSpace_Font:   @monoSpace_Font;
 // }

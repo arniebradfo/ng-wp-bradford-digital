@@ -1,0 +1,57 @@
+// METER //
+.meter-bar(){
+	height: 1em;
+    appearance: none;
+    background: 0;
+    border: 0;
+    background-color: var(--bgOverlay_ThemeColor);
+}
+
+.meter-value(
+	@status: ok // || warning || critical
+){
+    background: 0;
+    padding-right: 1px;
+    border: 0 solid;
+    border-right-width: 2px;
+     border-color: var(--interacitveFg_ThemeColor);
+    background-clip: content-box;
+    .transition( width background-color; @timing:ease );
+
+    .status-output() when (@status =warning) {
+        background-color: var(--statusWarning_ThemeColor);
+    }
+    .status-output() when (@status =critical) {
+        background-color: var(--statusCritical_ThemeColor);
+    }
+    .status-output() when (default()) {
+        background-color: var(--fg_ThemeColor);
+    }
+    .status-output();
+
+}
+
+meter {
+    .meter-bar();
+    // &::-moz-meter-bar { .meter-bar(); }
+
+	&::-webkit-meter-inner-element {
+		appearance: none;
+		display: block;
+	}
+
+	&::-webkit-meter-bar {
+		appearance: none;
+		background: none;
+		border: 0;
+	}
+
+	&::-webkit-meter-optimum-value               { .meter-value(ok); }
+    &:-moz-meter-optimum::-moz-meter-bar         { .meter-value(ok); }
+
+	&::-webkit-meter-suboptimum-value            { .meter-value(warning); }
+    &:-moz-meter-sub-optimum::-moz-meter-bar     { .meter-value(warning); }
+
+	&::-webkit-meter-even-less-good-value        { .meter-value(critical); }
+    &:-moz-meter-sub-sub-optimum::-moz-meter-bar { .meter-value(critical); }
+}

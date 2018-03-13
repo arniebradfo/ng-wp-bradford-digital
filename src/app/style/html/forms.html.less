@@ -1,0 +1,26 @@
+// FORM ELEMENTS //
+
+.label(){ 
+	.meta_Type();
+	&:after{ 
+		content: ':' 
+	}
+}
+
+.fieldset(){
+	border: 0;
+	padding: 0;
+	margin: 0;
+	&:focus{
+		outline: 0;
+	}
+}
+
+.legend(){
+	color: inherit;
+  .heading3_Type();
+}
+
+label    { .label(); }
+fieldset { .fieldset(); }
+legend   { .legend(); }
