@@ -1,0 +1,80 @@
+// POSITION //
+// TODO: test 
+
+/*
+write position like you would any other thickness value
+
+.absolute(0)
+=>
+position: abosolue;
+top:    0;
+right:  0;
+bottom: 0;
+left:   0;
+
+.absolute(0 10px)
+=>
+position: abosolue;
+top:    0;
+right:  10px;
+bottom: 0;
+left:   10px;
+
+.absolute(0 10px null)
+=>
+position: abosolue;
+top:    0;
+right:  10px;
+left:   10px;
+
+.absolute(1px 2px 3px 4px)
+=>
+position: abosolue;
+top:    1px;
+right:  2px;
+bottom: 3px;
+left:   4px;
+
+*/
+
+.position (
+    @position: static; 
+    @args:null
+) {
+	position: @position;
+	@length: length(@args);
+	.positions() when (@length = 1) {
+		top:    extract(@args, 1);
+		right:  extract(@args, 1);
+		bottom: extract(@args, 1);
+		left:   extract(@args, 1);
+	}
+	.positions() when (@length = 2) {
+		top:    extract(@args, 1);
+		right:  extract(@args, 2);
+		bottom: extract(@args, 1);
+		left:   extract(@args, 2);
+	}
+	.positions() when (@length = 3) {
+		top:    extract(@args, 1);
+		right:  extract(@args, 2);
+		bottom: extract(@args, 3);
+		left:   extract(@args, 2);
+	}
+	.positions() when (@length >= 4) {
+		top:    extract(@args, 1);
+		right:  extract(@args, 2);
+		bottom: extract(@args, 3);
+		left:   extract(@args, 4);
+	}
+    .positions();
+}
+.absolute (@args:null) {
+  .position(absolute, @args);
+}
+.fixed (@args:null) {
+  .position(fixed, @args);
+}
+.relative (@args:null) {
+  .position(relative, @args);
+}

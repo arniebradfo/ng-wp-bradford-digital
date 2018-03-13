@@ -1,0 +1,10 @@
+// CLEARFIX //
+// @order is a choice between :before and :after - use without the "::" prefix
+// untested
+.clearfix(@order: after;) {
+	&:@{order}{
+		content: '';
+		display: table;
+		clear:   both;
+	}
+}

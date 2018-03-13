@@ -1,0 +1,18 @@
+// TRANSFORMS //
+// adds translateZ to transforms to force Hardware Acceleration.
+// TODO: test 
+.transform(
+    @transforms; 
+    @Z:true;
+) {
+	// transform: @transforms; // to compare
+    .transform-export() when (@Z) {
+        transform: @transforms translateZ(0);
+    }
+    .transform-export() when not (@Z) {
+        transform: @transforms;
+    }
+	// backface-visibility: hidden; // prevent blinking in webkit
+	// perspective: 1000; // might help prevent blinking ??
+	.transform-export();
+}
