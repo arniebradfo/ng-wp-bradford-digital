@@ -1,0 +1,17 @@
+// http://cubic-bezier.com
+@default_Duration:      300ms;
+@hover_Duration:        150ms;
+@active_Duration:       70ms;
+@focus_Duration:        150ms;
+@selected_Duration:     150ms;
+@disabled_Duration:     150ms;
+
+@defaultMotion_Timing:  cubic-bezier(.5,.2,0,1); // smooth-ease;
+@defaultColor_Timing:   linear;
+
+@panelTransitionIn_Timing: cubic-bezier(0,.3,.3,1);
+@panelTransitionOut_Timing: cubic-bezier(.5,0,1,1);
+@panelTransition_Duration: 300ms;
+
+@mutationTransition_Timing: ease-in-out;
+@mutationTransition_Duration: var(@defaultMotion_Timing);

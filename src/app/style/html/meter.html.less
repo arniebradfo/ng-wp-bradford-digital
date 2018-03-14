@@ -4,7 +4,7 @@
     appearance: none;
     background: 0;
     border: 0;
-    background-color: var(--bgOverlay_ThemeColor);
+    background-color: var(--bgOverlay_Color);
 }
 
 .meter-value(
@@ -14,18 +14,18 @@
     padding-right: 1px;
     border: 0 solid;
     border-right-width: 2px;
-     border-color: var(--interacitveFg_ThemeColor);
+     border-color: var(--interacitveFg_Color);
     background-clip: content-box;
     .transition( width background-color; @timing:ease );
 
     .status-output() when (@status =warning) {
-        background-color: var(--statusWarning_ThemeColor);
+        background-color: var(--statusWarning_Color);
     }
     .status-output() when (@status =critical) {
-        background-color: var(--statusCritical_ThemeColor);
+        background-color: var(--statusCritical_Color);
     }
     .status-output() when (default()) {
-        background-color: var(--fg_ThemeColor);
+        background-color: var(--fg_Color);
     }
     .status-output();
 

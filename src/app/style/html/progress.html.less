@@ -1,11 +1,11 @@
 // PROGRESS //
 // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/progress
 .progress-bar() {
-    background-color: var(--bgOverlay_ThemeColor);
+    background-color: var(--bgOverlay_Color);
 }
 
 .progress-bar-value() {
-    background-color: var(--statusLoading_ThemeColor);
+    background-color: var(--statusLoading_Color);
     .transition(width background-color; @timing: ease);
 }
 
@@ -16,7 +16,7 @@ progress {
 
 	&:not([value]) {
 		// .loading_Icon(@display: inline-block);
-		border-color: var(--statusLoading_ThemeColor);
+		border-color: var(--statusLoading_Color);
 		&::-webkit-progress-inner-element { display: none; }
 		// &::-webkit-progress-bar   {}
 		// &::-webkit-progress-value {}

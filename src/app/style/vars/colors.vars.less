@@ -1,16 +1,44 @@
 // COLORS //
+@turquoise_Color:  #00FFCE;
+@turquoiseDark_Color:  darken(@turquoise_Color, 5%);
+@blue_Color:       #00D8FF;
+@navy_Color:       #0064A2;
+// @navyDark_Color:   #004862; //#00436C; 
+@navyDark_Color:   #00436C;
+@purpleDark_Color: #1E0041;
 
-.highlighted_Colors() {
-  // background-color: var(--textHighlightBg_ThemeColor);
-  // color: var(--textHighlightFg_ThemeColor);
-}
 
+// THEMES //
 :root, .light-color-theme {
-    --fg_Color: black;
+
+		@fgPrimary_Color: black;
+    --fgStrong_Color: fade(@fgPrimary_Color, 80%);
+    --fg_Color:       fade(@fgPrimary_Color, 70%);
+		--fgWeak_Color:   fade(@fgPrimary_Color, 60%);
+		
     --bg_Color: white;
+    --bgOverlay1_Color: fade(@navyDark_Color, 10%);
+		--bgOverlay2_Color: fade(@navyDark_Color, 20%);
+		
+		--accentStrong_Color: @navyDark_Color;
+		--accent_Color: @blue_Color;
+		--accentWeak_Color: @turquoise_Color;
+		--accentWeakDark_Color: @turquoiseDark_Color;
+
+		--bgHover_Opacity: .3;
+
+		--accent_Gradient: linear-gradient(to bottom right, @turquoise_Color, @blue_Color);
+
 }
 
 .dark-color-theme {
     --fg_Color: white;
     --bg_Color: black;
+}
+
+
+// MIXINS //
+.highlighted_Colors() {
+  background-color: var(--accentWeak_Color);
+  color: var(--fgStrong_Color);
 }

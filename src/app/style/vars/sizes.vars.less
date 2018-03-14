@@ -9,7 +9,14 @@
 @icon_Size: 11px;
 
 .inlineBackground_Spacing() {
-  padding: 0.15em 0.4em 0.1em;
-  margin-bottom: -0.1em;
-  margin-top: -0.15em;
+	@top:    0.25em;
+	@bottom: 0.1em;
+	@sides: 0.4em;
+
+  padding: @top @sides @bottom;
+  margin-bottom: -@bottom;
+  margin-top: -@top;
 }
+
+@borderSm_Radius: @s3;
+@border_Radius: 5px;

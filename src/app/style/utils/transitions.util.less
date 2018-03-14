@@ -4,9 +4,9 @@
 // makes the transitioned element appear/dissappear in visibily before/after the transition
 
 .transition( 
-    @properties: all; 
-    @timing: var(--defaultMotion_Timing);
-    @duration: var(--default_Duration);
+	@properties: all; 
+	@timing: @defaultMotion_Timing;
+	@duration: @default_Duration;
 	@visibility: none; // hidden | visible
 	@backface: hidden;
 ) {
