@@ -2,6 +2,17 @@
 
 .input_RadioCheckbox{
 	-webkit-appearance: none; // not -moz-
+	.input(@isButton:true);
+	&:checked{
+		background-color: var(--accentWeak_Color);
+	}
+	&:hover{
+		background-color: var(--accentWeakFade2_Color);
+	}
+	&:active{
+		background-color: var(--accentWeakDark_Color);
+	}
+	background-color: var(--bgOverlay2_Color);
 }
 
 .input_Radio{

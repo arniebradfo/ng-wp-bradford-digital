@@ -1,0 +1,57 @@
+.button(){
+	border: none;
+	background-color: none;
+	color: var(--fg_Color);
+	.transition(color);
+
+	font: inherit;
+	
+	position: relative;
+	z-index: 0;
+	&:before, &:after{
+		content: '';
+		.absolute(0);
+		.transition(opacity);
+		transition-duration: inherit;
+		z-index: -1;
+		border-radius: @borderSm_Radius;
+	}
+
+	&:before{
+		background-image: var(--accent_Gradient);
+		opacity: 0;
+	}
+	&:after{
+		background-color: var(--bgOverlay1_Color);
+		opacity: 1;
+	}
+
+	&:hover{
+		color: var(--fgStrong_Color);
+		transition-duration: @hover_Duration;
+		&:before{
+			opacity: var(--bgHover_Opacity);
+		}
+		&:after{
+			opacity: 0;
+		}
+	}
+
+	&:active{
+		color: var(--fgStrong_Color);
+		transition-duration: @active_Duration;
+		&:before{
+			opacity: 1;
+		}
+		&:after{
+			opacity: 0;
+		}
+	}
+
+}
+
+button,
+.button
+{ 
+	.button();
+}

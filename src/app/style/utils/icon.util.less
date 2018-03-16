@@ -1,0 +1,26 @@
+.iconBg_DataURI( 
+	@svgName; 
+	@fill: black;
+	@svgUrl: '../../icons/';
+) {
+	@dataUri: data-uri('image/svg+xml;charset=UTF-8', "@{svgUrl}@{svgName}.svg");
+	@replaceDefault: escape('<path ');		
+	@replaceNew: escape('<path fill="@{fill}" ');
+	@replaceSrc: replace("@{dataUri}", @replaceDefault, @replaceNew, "g");
+	@iconBg_return: e(@replaceSrc);
+}
+
+.iconBg_Var(
+	@svgName; 
+	@fill: black;
+) {
+	.iconBg_DataURI( @svgName, @fill );
+	--@{svgName}_IconBg: @iconBg_return;
+}
+
+.iconBg_Layout(@iconSize: @icon_Size){
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: @iconSize;
+}
+

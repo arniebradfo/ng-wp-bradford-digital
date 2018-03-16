@@ -1,20 +1,20 @@
 // RANGE INPUT - SLIDER //
 
-.input_Range(){
-    appearance: none;
-    display: block;
-    padding: 0;
-	  height: var(--dynamic_TouchSize);
+// .input_Range(){
+    // appearance: none;
+    // display: block;
+    // padding: 0;
+	  // height: var(--dynamic_TouchSize);
 
     // &:focus {
     //     outline: 0;
     // }
-}
+// }
 
-.sliderTrack(
-	@state: normal // || focus
-){
-	.sliderTrack_Output() when (default()){
+// .sliderTrack(
+// 	@state: normal // || focus
+// ){
+	// .sliderTrack_Output() when (default()){
 		// appearance: none;
 		// overflow: visible;
 		// box-sizing: border-box;
@@ -28,22 +28,22 @@
 		// border-right: 1px solid;
 		// border-color: var(--inputBorder_Color);
 		// .transition(border-color background-color);
-	}
-	.sliderTrack_Output() when (@state = focus){
+	// }
+	// .sliderTrack_Output() when (@state = focus){
 		// transition-duration: var(--focus_Duration);
 		// background-color: var(--focusFg_Color);
 		// border-color: var(--focusFg_Color);
-	}
-	.sliderTrack_Output();
-}
+	// }
+	// .sliderTrack_Output();
+// }
 
-.sliderThumb(
-	@state: normal; // || focus
-	@icon: Input_Thumb_TickVertical;
-	@size: 28px;
-	@border-width: 1px;
-){
-	.sliderThumb_Output() when (default()){
+// .sliderThumb(
+// 	@state: normal; // || focus
+// 	@icon: Input_Thumb_TickVertical;
+// 	@size: 28px;
+// 	@border-width: 1px;
+// ){
+	// .sliderThumb_Output() when (default()){
 		// appearance: none;
 		// overflow: visible;
 		// align-self: center;
@@ -60,42 +60,42 @@
 		// &:active {
 		// 	border-color: var(--activeFg_Color);
 		// }
-	}
-	.sliderThumb_Output() when (@state = focus){
+	// }
+	// .sliderThumb_Output() when (@state = focus){
 		// border-width: var(--focusedBorder_Size);
 		// &:not(:hover):not(:active) {
 		// 	border-color: var(--focusFg_Color);
     //     	// svgIcon: var(--focusFg_Color);
 		// }
-	}
-	.sliderThumb_Output();
-}
+	// }
+	// .sliderThumb_Output();
+// }
 
-input[type="range"] {
-    .input_Range();
-    &::-webkit-slider-container { appearance: none; }
+// input[type="range"] {
+//     .input_Range();
+//     &::-webkit-slider-container { appearance: none; }
 
-    &::-ms-ticks-before { display: none; }
-    &::-ms-ticks-after  { display: none; }
-    &::-ms-fill-upper   { display: none; }
-    &::-ms-fill-lower   { display: none; }
-    &::-ms-tooltip      { display: none; }
+//     &::-ms-ticks-before { display: none; }
+//     &::-ms-ticks-after  { display: none; }
+//     &::-ms-fill-upper   { display: none; }
+//     &::-ms-fill-lower   { display: none; }
+//     &::-ms-tooltip      { display: none; }
 
-    &::-webkit-slider-runnable-track { .sliderTrack(); }
-    &::-moz-range-track              { .sliderTrack(); }
-    &::-ms-track                     { .sliderTrack(); color: transparent; }
+//     &::-webkit-slider-runnable-track { .sliderTrack(); }
+//     &::-moz-range-track              { .sliderTrack(); }
+//     &::-ms-track                     { .sliderTrack(); color: transparent; }
 
-    &::-webkit-slider-thumb { .sliderThumb(); }
-    &::-moz-range-thumb     { .sliderThumb(); }
-    &::-ms-thumb            { .sliderThumb(); }
+//     &::-webkit-slider-thumb { .sliderThumb(); }
+//     &::-moz-range-thumb     { .sliderThumb(); }
+//     &::-ms-thumb            { .sliderThumb(); }
 
-    &:focus {
-        &::-webkit-slider-runnable-track { .sliderTrack(focus); }
-        &::-moz-range-track              { .sliderTrack(focus); }
-        &::-ms-track                     { .sliderTrack(focus); }
+//     &:focus {
+//         &::-webkit-slider-runnable-track { .sliderTrack(focus); }
+//         &::-moz-range-track              { .sliderTrack(focus); }
+//         &::-ms-track                     { .sliderTrack(focus); }
 
-				&::-webkit-slider-thumb { .sliderThumb(focus); }
-				&::-moz-range-thumb     { .sliderThumb(focus); }
-				&::-ms-thumb            { .sliderThumb(focus); }
-    }
-}
+// 				&::-webkit-slider-thumb { .sliderThumb(focus); }
+// 				&::-moz-range-thumb     { .sliderThumb(focus); }
+// 				&::-ms-thumb            { .sliderThumb(focus); }
+//     }
+// }

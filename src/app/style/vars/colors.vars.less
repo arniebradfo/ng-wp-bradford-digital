@@ -11,23 +11,31 @@
 // THEMES //
 :root, .light-color-theme {
 
+		@disabled_Opacity: .3;
+		--disabled_Opacity: @disabled_Opacity;
+
 		@fgPrimary_Color: black;
     --fgStrong_Color: fade(@fgPrimary_Color, 80%);
-    --fg_Color:       fade(@fgPrimary_Color, 70%);
-		--fgWeak_Color:   fade(@fgPrimary_Color, 60%);
+    --fg_Color:       fade(@fgPrimary_Color, 60%);
+		--fgWeak_Color:   fade(@fgPrimary_Color, 45%);
+		--fgDisabled_Color:   fade(@fgPrimary_Color, @disabled_Opacity * 100%);
 		
     --bg_Color: white;
     --bgOverlay1_Color: fade(@navyDark_Color, 10%);
 		--bgOverlay2_Color: fade(@navyDark_Color, 20%);
+
+		@bgHover_Opacity: .3;
+		--bgHover_Opacity: @bgHover_Opacity;
+
 		
 		--accentStrong_Color: @navyDark_Color;
 		--accent_Color: @blue_Color;
 		--accentWeak_Color: @turquoise_Color;
+		--accentWeakFade2_Color: fade(@turquoise_Color, 50%);
+		--accentWeakFade_Color: fade(@turquoise_Color, (@bgHover_Opacity * 100%));
 		--accentWeakDark_Color: @turquoiseDark_Color;
 
-		--bgHover_Opacity: .3;
-
-		--accent_Gradient: linear-gradient(to bottom right, @turquoise_Color, @blue_Color);
+		--accent_Gradient: linear-gradient(to bottom right, var(--accentWeak_Color), var(--accent_Color));
 
 }
 

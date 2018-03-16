@@ -1,10 +1,13 @@
 // COLOR INPUT //
 
 input[type="color"] {
-	// &::-webkit-color-swatch,
-	// &::-webkit-color-swatch-wrapper {
-	// 	margin: 0;
-	// 	padding: 0;
-	// 	border: 0;
-	// }
+	.input();
+	padding: @border_Radius - @borderSm_Radius;
+	&::-webkit-color-swatch,
+	&::-webkit-color-swatch-wrapper {
+		margin: 0;
+		padding: 0;
+		border: 0;
+		border-radius: @borderSm_Radius;
+	}
 }
