@@ -26,7 +26,7 @@
 		opacity: 1;
 	}
 
-	&:hover{
+	&:hover:not(:disabled){
 		color: var(--fgStrong_Color);
 		transition-duration: @hover_Duration;
 		&:before{
@@ -48,10 +48,26 @@
 		}
 	}
 
+	&:disabled{
+		background-color: none;
+		&:before, &:after{
+			border-color: var(--accent_Color);
+			opacity: 0;
+		}
+	}
+
+	&:focus{
+		border-color: var(--accent_Color);
+		color: var(--fgStrong_Color);
+		// border-image: var(--accent_Gradient) 2;
+	}
+
 }
 
 button,
 .button
 { 
 	.button();
+	padding: @s5 @horizontal_Padding;
+
 }
