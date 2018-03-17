@@ -1,12 +1,19 @@
-@s1: 1px;
-@s3: 3px;
-@s6: 6px;
-@s12: 12px;
-@s18: 18px;
-@s24: 24px;
-@s36: 36px;
+@s1:  1px;
+@s2:  2px;
+@s3:  3px;
+@s5:  6px  - 1;
+@s9:  10px - 1;
+@s11: 12px - 1;
+@s17: 18px - 1;
+@s23: 24px - 1;
+@s35: 36px - 1;
+@s41: 42px - 1;
 
 @icon_Size: 11px;
+@focusBorder_Size: @s2;
+@borderSm_Radius: @s3;
+@border_Radius: @s5;
+
 
 .inlineBackground_Spacing() {
 	@top:    0.25em;
@@ -17,8 +24,3 @@
   margin-bottom: -@bottom;
   margin-top: -@top;
 }
-
-@focusBorder_Size: 2px;
-
-@borderSm_Radius: @s3;
-@border_Radius: 5px;

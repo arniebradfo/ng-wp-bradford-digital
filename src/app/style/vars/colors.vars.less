@@ -26,7 +26,6 @@
 
 		@bgHover_Opacity: .3;
 		--bgHover_Opacity: @bgHover_Opacity;
-
 		
 		--accentStrong_Color: @navyDark_Color;
 		--accent_Color: @blue_Color;
@@ -36,6 +35,11 @@
 		--accentWeakDark_Color: @turquoiseDark_Color;
 
 		--accent_Gradient: linear-gradient(to bottom right, var(--accentWeak_Color), var(--accent_Color));
+
+		@iconBg_Color: fade(@fgPrimary_Color, 80%);
+		.iconBg_Var(icon_Pointer_Down,      @iconBg_Color);
+		.iconBg_Var(icon_Pointers_Vertical, @iconBg_Color);
+		.iconBg_Var(icon_X,               @iconBg_Color);
 
 }
 
