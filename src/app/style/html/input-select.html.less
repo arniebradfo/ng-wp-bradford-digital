@@ -3,11 +3,11 @@
 .select{
 	appearance: none;
 	.input();
-	// border-radius: 0;
-	// .iconBg_Layout(@icon_SizeSm);
-	// .iconBg_States(Arrow_PointerDownSm);
-	// background-position: right 12px center;
-	// padding-right: var(--dynamic_TouchSize);
+	padding: @s5 @s3 @s5 @s9 ;
+	.iconBg_Layout();
+	background-image: var(--icon_Pointer_Down_IconBg);
+	background-position: right @icon_Size center;
+	padding-right: 2 * @s5 + @s35;
 }
 
 select { .select(); }

@@ -16,20 +16,24 @@
 	border-radius: @borderSm_Radius;
 	cursor: pointer;
 	align-self: stretch;
-	.transition(opacity background-image border-color background-color);
 	.iconBg_Layout(@iconSize);
 	background-image: ~'var(--@{svgName}_IconBg)';
-
-
-	background-color: var(--bgOverlay2_Color);
-	opacity: .5;
+	
+	.transition(opacity background-color);
+	background-color: var(--bgOverlay1_Color);
+	opacity: 1;
+	&:focus{
+		opacity: .5;
+	}
 	&:hover{
 		background-color: var(--accentWeakFade2_Color);
-		opacity: .7;
+		opacity: 1;
+		transition-duration: @hover_Duration;
 	}
 	&:active{
 		background-color: var(--accentWeak_Color);
 		opacity: 1;
+		transition-duration: @active_Duration;		
 	}
 
 }

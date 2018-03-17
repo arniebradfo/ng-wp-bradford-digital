@@ -6,19 +6,16 @@
 	border-radius: @border_Radius;
 	font: inherit;
 	display: inline-flex;
-	align-content: stretch;
-	align-items: stretch;
-	padding: @s5 @s3 @s5 @s9 ;
 	height: @s35;
 	border: @focusBorder_Size solid transparent;
 
-	// border: none;
 	color: var(--fg_Color);
 	background-color: var(--bgOverlay1_Color);
 	.transition(background-color color border-color);
 
 	&:focus{
 		border-color: var(--accent_Color);
+		color: var(--fgStrong_Color);
 		// border-image: var(--accent_Gradient) 2;
 	}
 
@@ -36,19 +33,16 @@
 		}
 	}
 	.states_Output() when (default()){
-
 		&:hover:not(:focus){
 			color: var(--fgStrong_Color);
 			background-color: var(--accentWeakFade_Color);
 			transition-duration: @hover_Duration;
 		}
-
 		&:active{
 			color: var(--fgStrong_Color);
 			border-color: var(--accentWeak_Color);
 			transition-duration: @active_Duration;
 		}
-
 	}
 	.states_Output();
 
@@ -60,5 +54,6 @@ input[type="submit"],
 input[type="button"],
 input[type="reset"]{
 	.input(@isButton:true);
+	padding: @s5 @s9;
 }
 
