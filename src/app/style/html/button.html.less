@@ -15,6 +15,7 @@
 		transition-duration: inherit;
 		z-index: -1;
 		border-radius: @borderSm_Radius;
+		background-clip: border-box;
 	}
 
 	&:before{
@@ -24,6 +25,7 @@
 	&:after{
 		background-color: var(--bgOverlay1_Color);
 		opacity: 1;
+		border: @focusBorder_Size solid transparent;
 	}
 
 	&:hover:not(:disabled){
@@ -37,7 +39,7 @@
 		}
 	}
 
-	&:active{
+	&:active:not(:disabled){
 		color: var(--fgStrong_Color);
 		transition-duration: @active_Duration;
 		&:before{
@@ -48,18 +50,22 @@
 		}
 	}
 
-	&:disabled{
-		background-color: none;
-		&:before, &:after{
+	&:focus{
+		color: var(--fgStrong_Color);
+		&:after{
 			border-color: var(--accent_Color);
-			opacity: 0;
 		}
 	}
 
-	&:focus{
-		border-color: var(--accent_Color);
-		color: var(--fgStrong_Color);
-		// border-image: var(--accent_Gradient) 2;
+	&:disabled{
+		color: var(--fgDisabled_Color);
+		&:before{
+			opacity: 0;
+		}
+		&:after{
+			background-color: initial;
+			border: @s1 solid var(--bgOverlay1_Color);
+		}
 	}
 
 }
