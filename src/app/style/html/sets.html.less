@@ -1,0 +1,51 @@
+
+
+@setBorder_Radius: @border_Radius;
+
+.set-item{
+	display: flex;
+	align-items: center;
+	border-radius: 0;
+	padding: @vertical_Padding @horizontal_Padding;
+	background-color: var(--bgOverlay1_Color);
+}
+.set-item--emphasis{
+	background-color: var(--bgOverlay2_Color);
+}
+
+.set--horizontal{
+	display: flex;
+	flex-direction: row;
+
+	.set-item{
+		margin-right: @s1;
+	}
+	.set-item:first-child{
+		border-top-left-radius:    @setBorder_Radius;
+		border-bottom-left-radius: @setBorder_Radius;
+	}
+	.set-item:last-child{
+		border-top-right-radius:    @setBorder_Radius;
+		border-bottom-right-radius: @setBorder_Radius;
+		margin-right: 0;
+	}
+
+}
+
+.set--vertical{
+	display: flex;
+	flex-direction: column;
+
+	.set-item{
+		margin-bottom: @s1;
+	}
+	.set-item:first-child{
+		border-top-left-radius:  @setBorder_Radius;
+		border-top-right-radius: @setBorder_Radius;
+	}
+	.set-item:last-child{
+		border-bottom-left-radius:  @setBorder_Radius;
+		border-bottom-right-radius: @setBorder_Radius;
+		margin-bottom: 0;
+	}
+}
