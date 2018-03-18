@@ -18,30 +18,34 @@ import { SearchComponent } from './components/search/search.component';
 import { EmptyComponent } from './components/empty/empty.component';
 import { CommentsComponent } from './components/comments/comments.component';
 import { CommentFormComponent } from './components/comment-form/comment-form.component';
+import { IconComponent } from './components/icon/icon.component';
+import { IconDefsComponent } from './components/icon-defs/icon-defs.component';
 
 @NgModule({
-  declarations: [
-    NavComponent,
-    PostComponent,
-    SearchComponent,
-    ContentComponent,
-    RootComponent,
-    EmptyComponent,
-    CommentsComponent,
-    CommentFormComponent,
-    NumberToArrayPipe,
-  ],
-  imports: [
-    ShortcodesModule,
-    BrowserModule,
-    FormsModule,
-    HttpModule,
-    NgWpRoutingModule
-  ],
-  providers: [
-    WpRestService,
-    ViewModelService
-  ],
-  bootstrap: [RootComponent],
+	declarations: [
+		NavComponent,
+		PostComponent,
+		SearchComponent,
+		ContentComponent,
+		RootComponent,
+		EmptyComponent,
+		CommentsComponent,
+		CommentFormComponent,
+		NumberToArrayPipe,
+		IconComponent,
+		IconDefsComponent
+	],
+	imports: [
+		ShortcodesModule,
+		BrowserModule,
+		FormsModule,
+		HttpModule,
+		NgWpRoutingModule
+	],
+	providers: [
+		WpRestService,
+		ViewModelService
+	],
+	bootstrap: [RootComponent],
 })
 export class NgWpModule { }

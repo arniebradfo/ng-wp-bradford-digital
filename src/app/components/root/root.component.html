@@ -1,9 +1,12 @@
+<ngwp-icon-defs></ngwp-icon-defs>
+
 <header>
     <h1 routerLink="/">{{blogName}}</h1>
     <span>{{blogDescription}}</span>
     <ngwp-nav name="primary"></ngwp-nav>
     <small>NGWP by
-        <a href="http://bradford.digital">James Bradford</a>
+				<a href="http://bradford.digital">James Bradford</a>
+				<ngwp-icon></ngwp-icon>
     </small>
 </header>
 
@@ -16,19 +19,19 @@
         <ngwp-search></ngwp-search>
         <ngwp-post *ngFor="let post of postList.currentList" [post]="post"></ngwp-post>
         <p>
-            <button 
-                (click)="viewModelService.loadMorePosts()" 
+            <button
+                (click)="viewModelService.loadMorePosts()"
                 *ngIf="postList.canLoadMorePages"
                 >
                 load more
             </button>
         </p>
-        <ngwp-search></ngwp-search> 
+        <ngwp-search></ngwp-search>
         <nav *ngIf="postList.currentListPageCount > 1">
             <strong>go to page:</strong>
             <ul>
-                <li 
-                *ngFor="let count of postList.currentListPageCount | numberToArray; let i = index" 
+                <li
+                *ngFor="let count of postList.currentListPageCount | numberToArray; let i = index"
                 [routerLink]="postList.currentListRouterPrefix + '/page/' + (i+1)"
                 [queryParams]="postList.currentListQueryParams"
                 >
@@ -39,9 +42,9 @@
     </section>
 
     <section class="current-post">
-        <ngwp-post 
-            *ngIf="viewModelService.post$ | async as post" 
-            [post]="post.currentPost" 
+        <ngwp-post
+            *ngIf="viewModelService.post$ | async as post"
+            [post]="post.currentPost"
             [showFull]="true"
         ></ngwp-post>
     </section>
