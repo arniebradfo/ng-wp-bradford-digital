@@ -1,15 +1,40 @@
+@import (reference) '../../style/utils/position.util.less';
+@import (reference) '../../style/vars/sizes.vars.less';
+
+@column_Size: 300px;
+
 :host{
-    display: flex;
+	height: 100%;
+	width:  100%;
+	display: grid;
+	grid-template-columns: @column_Size auto @column_Size;
+	position: relative;
 }
 
-header{
-    flex: 0 0 100px;
-}
-main{
-    flex: 1 1 auto;
-    display: flex;
+.menu{
+	grid-column: 1;
+	grid-row: 1;
+	overflow: auto;
+	z-index: 2;
 }
 
-.current-post, .post-list{
-    flex: 1 1 50%;
+.post-list{
+	grid-column: 2;
+	grid-row: 1;
+	overflow: auto;
+	z-index: 1;
+}
+
+.current-post{
+	grid-column: ~'1 / span 3';
+	grid-row: 1;
+	overflow: auto;
+	background: white;
+	z-index: 3;
+}
+
+.menu-button{
+	.absolute(0 null null 0);
+	z-index: 4;
+	margin: @s17;
 }

@@ -1,5 +1,6 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { NgWpRoutingModule } from './ngwp-routing.module';
@@ -22,6 +23,14 @@ import { IconComponent } from './components/icon/icon.component';
 import { IconDefsComponent } from './components/icon-defs/icon-defs.component';
 
 @NgModule({
+	imports: [
+		BrowserAnimationsModule,
+		ShortcodesModule,
+		BrowserModule,
+		FormsModule,
+		HttpModule,
+		NgWpRoutingModule,
+	],
 	declarations: [
 		NavComponent,
 		PostComponent,
@@ -34,13 +43,6 @@ import { IconDefsComponent } from './components/icon-defs/icon-defs.component';
 		NumberToArrayPipe,
 		IconComponent,
 		IconDefsComponent
-	],
-	imports: [
-		ShortcodesModule,
-		BrowserModule,
-		FormsModule,
-		HttpModule,
-		NgWpRoutingModule
 	],
 	providers: [
 		WpRestService,

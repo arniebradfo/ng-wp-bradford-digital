@@ -3,72 +3,65 @@
 @turquoiseDark_Color:  darken(@turquoise_Color, 10%);
 @blue_Color:       #00D8FF;
 @navy_Color:       #0064A2;
-// @navyDark_Color:   #004862; //#00436C; 
+// @navyDark_Color:   #004862; //#00436C;
 @navyDark_Color:   #00436C;
 @purpleDark_Color: #1E0041;
 
 @disabled_Opacity: .3;
 
 // THEMES //
-:root, .light-color-theme {
-
-		--disabled_Opacity: @disabled_Opacity;
-
-		@fgPrimary_Color: black;
-    --fgStrong_Color: fade(@fgPrimary_Color, 80%);
-    --fg_Color:       fade(@fgPrimary_Color, 60%);
-		--fgWeak_Color:   fade(@fgPrimary_Color, 45%);
-		--fgDisabled_Color:   fade(@fgPrimary_Color, @disabled_Opacity * 100%);
-		
-    --bg_Color: white;
-    --bgOverlay1_Color: fade(@navyDark_Color, 10%);
-		--bgOverlay2_Color: fade(@navyDark_Color, 20%);
-
-		@bgHover_Opacity: .4;
-		--bgHover_Opacity: @bgHover_Opacity;
-		
-		--accentStrong_Color: @navyDark_Color;
-		--accent_Color: @blue_Color;
-		--accentWeak_Color: @turquoise_Color;
-		--accentWeakFade2_Color: fade(@turquoise_Color, 50%);
-		--accentWeakFade_Color: fade(@turquoise_Color, (@bgHover_Opacity * 100%));
-		--accentWeakDark_Color: @turquoiseDark_Color;
-
-		--accent_Gradient: linear-gradient(to bottom right, var(--accentWeak_Color), var(--accent_Color));
-
-		@iconBg_Color: fade(@fgPrimary_Color, 80%);
-		.iconBg_Var(icon_Pointer_Down,      @iconBg_Color);
-		.iconBg_Var(icon_Pointers_Vertical, @iconBg_Color);
-		.iconBg_Var(icon_X,                 @iconBg_Color);
-
-}
-
-.dark-color-theme {
+:root, .dark-color-theme {
 
 	background-image: var(--bg_Gradient);
+	color: var(--fg_Color);
 
 	@fgPrimary_Color: white;
 	--fgStrong_Color: fade(@fgPrimary_Color, 100%);
 	--fg_Color:       fade(@fgPrimary_Color, 80%);
 	--fgWeak_Color:   fade(@fgPrimary_Color, 60%);
 	--fgDisabled_Color:   fade(@fgPrimary_Color, @disabled_Opacity * 100%);
-	
+
 	--bg_Color: white;
 	--bg_Gradient: linear-gradient(to bottom right, @navyDark_Color, @purpleDark_Color);
 	--bgOverlay1_Color: fade(white, 10%);
 	--bgOverlay2_Color: fade(white, 20%);
 
-	// @bgHover_Opacity: .4;
-	// --bgHover_Opacity: @bgHover_Opacity;
-	
-	--accentStrong_Color: white;
-	// --accent_Color: @blue_Color;
-	// --accentWeak_Color: @turquoise_Color;
-	// --accentWeakFade2_Color: fade(@turquoise_Color, 50%);
-	// --accentWeakFade_Color: fade(@turquoise_Color, (@bgHover_Opacity * 100%));
-	// --accentWeakDark_Color: @turquoiseDark_Color;
+	@bgHover_Opacity: .4;
+	--bgHover_Opacity: @bgHover_Opacity;
 
-	// --accent_Gradient: linear-gradient(to bottom right, var(--accentWeak_Color), var(--accent_Color));
+	--accentStrong_Color: white;
+	--accent_Color: @blue_Color;
+	--accentWeak_Color: @turquoise_Color;
+	--accentWeakFade2_Color: fade(@turquoise_Color, 50%);
+	--accentWeakFade_Color: fade(@turquoise_Color, (@bgHover_Opacity * 100%));
+	--accentWeakDark_Color: @turquoiseDark_Color;
+
+	--accent_Gradient: linear-gradient(to bottom right, var(--accentWeak_Color), var(--accent_Color));
+
+	@iconBg_Color: fade(@fgPrimary_Color, 80%);
+	.iconBg_Var(icon_Pointer_Down,      @iconBg_Color);
+	.iconBg_Var(icon_Pointers_Vertical, @iconBg_Color);
+	.iconBg_Var(icon_X,                 @iconBg_Color);
+
+}
+
+.light-color-theme {
+
+	color: var(--fg_Color);
+
+	--disabled_Opacity: @disabled_Opacity;
+
+	@fgPrimary_Color: black;
+	--fgStrong_Color: fade(@fgPrimary_Color, 80%);
+	--fg_Color:       fade(@fgPrimary_Color, 60%);
+	--fgWeak_Color:   fade(@fgPrimary_Color, 45%);
+	--fgDisabled_Color:   fade(@fgPrimary_Color, @disabled_Opacity * 100%);
+
+	--bg_Color: white;
+	--bgOverlay1_Color: fade(@navyDark_Color, 10%);
+	--bgOverlay2_Color: fade(@navyDark_Color, 20%);
+
+	--accentStrong_Color: @navyDark_Color;
 
 	@iconBg_Color: fade(@fgPrimary_Color, 80%);
 	.iconBg_Var(icon_Pointer_Down,      @iconBg_Color);
