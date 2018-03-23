@@ -26,11 +26,21 @@
 }
 
 .current-post{
-	grid-column: ~'1 / span 3';
-	grid-row: 1;
+	// grid-column: ~'1 / span 3';
+	// grid-row: 1;
 	overflow: auto;
 	background: white;
 	z-index: 3;
+	.absolute(null null null 100%);
+	width: 100%;
+	height: 100%;
+
+	transition: transform .5s ease;
+	transform: translateX(-100%);
+	:host(.menu-open) &{
+		transform: translateX(-@column_Size);
+	}
+
 }
 
 .menu-button{

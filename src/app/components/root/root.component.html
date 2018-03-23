@@ -32,7 +32,10 @@
 	</nav>
 </section>
 
-<main class="current-post light-color-theme" [@menuState]="menuState">
+<main
+	class="current-post light-color-theme"
+	[@menuState]="menuState"
+	>
 	<ngwp-post *ngIf="viewModelService.post$ | async as post" [post]="post.currentPost" [showFull]="true"></ngwp-post>
 </main>
 

@@ -82,6 +82,7 @@ Originally built for the tutorial http://doppiaeast.com/article/angular-2-wordpr
 - [Save with Keyboard](https://wordpress.org/themes/save-with-keyboard/) is awesome.
 - [Use svg](https://wordpress.org/themes/svg-support/).
 - Use [vanilla js smooth scroll](https://github.com/cferdinandi/smooth-scroll/) to animate between anchors and other loads.
+- [new angular animation features](https://www.yearofmoo.com/2017/06/new-wave-of-animation-features.html)
 
 
 <!-- #### Usage
