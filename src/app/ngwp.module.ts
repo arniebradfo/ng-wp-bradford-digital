@@ -21,6 +21,7 @@ import { CommentsComponent } from './components/comments/comments.component';
 import { CommentFormComponent } from './components/comment-form/comment-form.component';
 import { IconComponent } from './components/icon/icon.component';
 import { IconDefsComponent } from './components/icon-defs/icon-defs.component';
+import { LogoComponent } from './components/logo/logo.component';
 
 @NgModule({
 	imports: [
@@ -42,7 +43,8 @@ import { IconDefsComponent } from './components/icon-defs/icon-defs.component';
 		CommentFormComponent,
 		NumberToArrayPipe,
 		IconComponent,
-		IconDefsComponent
+		IconDefsComponent,
+		LogoComponent
 	],
 	providers: [
 		WpRestService,
