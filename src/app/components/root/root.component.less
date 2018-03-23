@@ -1,4 +1,5 @@
 @import (reference) '../../style/utils/position.util.less';
+@import (reference) '../../style/utils/transitions.util.less';
 @import (reference) '../../style/vars/sizes.vars.less';
 
 @column_Size: 300px;
@@ -16,9 +17,19 @@
 	grid-row: 1;
 	overflow: auto;
 	z-index: 2;
+	position: relative;
+	border-right: @s1 solid var(--bgOverlay2_Color);
+
+	&:after{
+		content: '';
+		z-index: -1;
+		.absolute(0 @s1 0 0);
+		background-color: var(--bgOverlay0_Color);
+	}
 }
 
 .post-list{
+	padding: 0 @s35;
 	grid-column: 2;
 	grid-row: 1;
 	overflow: auto;
@@ -35,10 +46,11 @@
 	width: 100%;
 	height: 100%;
 
-	transition: transform .5s ease;
+	.transition(transform opacity);
 	transform: translateX(-100%);
 	:host(.menu-open) &{
 		transform: translateX(-@column_Size);
+		opacity: var(--disabled_Opacity);
 	}
 
 }

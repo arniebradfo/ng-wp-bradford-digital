@@ -10,11 +10,14 @@
 </header>
 
 <section class="post-list" *ngIf="viewModelService.postList$ | async as postList">
+
 	<small>{{ postList.type }}</small>
 	<h1>{{ postList.title }}</h1>
 	<span>page {{postList.currentListPageNumber}}</span>
 	<ngwp-search></ngwp-search>
+
 	<ngwp-post *ngFor="let post of postList.currentList" [post]="post"></ngwp-post>
+
 	<p>
 		<button (click)="viewModelService.loadMorePosts()" *ngIf="postList.canLoadMorePages">
 			load more
@@ -30,17 +33,15 @@
 			</li>
 		</ul>
 	</nav>
+
 </section>
 
-<main
-	class="current-post light-color-theme"
-	[@menuState]="menuState"
-	>
+<main class="current-post light-color-theme">
 	<ngwp-post *ngIf="viewModelService.post$ | async as post" [post]="post.currentPost" [showFull]="true"></ngwp-post>
 </main>
 
 <button class="menu-button light-color-theme" (click)="toggleMenu($event)">
-		<ngwp-icon name="icon_Menu"></ngwp-icon>
+	<ngwp-icon name="icon_Menu"></ngwp-icon>
 </button>
 
 

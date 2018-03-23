@@ -1,10 +1,11 @@
 // TRANSITIONS //
 // TODO: test
 @import (reference) 'for-each.util.less';
+@import (reference) '../vars/animation.vars.less';
 // makes the transitioned element appear/dissappear in visibily before/after the transition
 
-.transition( 
-	@properties: all; 
+.transition(
+	@properties: all;
 	@timing: @defaultMotion_Timing;
 	@duration: @default_Duration;
 	@visibility: none; // hidden | visible
@@ -19,7 +20,7 @@
     .for(length(@properties)); .-each(@i) {
 	    transition+: extract(@properties, @i) @duration @timing;
 	}
-	
+
 	.addVisibiltyToEnd() when (@visibility = hidden) {
 		visibility: hidden;
 		transition+: visibility 0ms linear @duration;

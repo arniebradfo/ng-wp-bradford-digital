@@ -7,7 +7,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 	selector: 'ngwp-root',
 	templateUrl: './root.component.html',
 	styleUrls: ['./root.component.less'],
-	animations: [
+	// animations: [ // not sure how performant this is...
 		// trigger('menuState', [
 		// 	state('open', style({
 		// 		transform: 'translateX(-300px)',
@@ -18,7 +18,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 		// 	transition('open => closed', animate('1000ms ease-in')),
 		// 	transition('closed => open', animate('1000ms ease-out'))
 		// ])
-	]
+	// ]
 })
 export class RootComponent implements OnInit {
 
