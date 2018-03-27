@@ -1,6 +1,7 @@
 @import (reference) '../../style/utils/position.util.less';
 @import (reference) '../../style/utils/transitions.util.less';
 @import (reference) '../../style/vars/sizes.vars.less';
+@import (reference) '../../style/vars/typography.vars.less';
 
 @column_Size: 300px;
 
@@ -20,6 +21,10 @@
 	position: relative;
 	border-right: @s1 solid var(--bgOverlay2_Color);
 
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+
 	&:after{
 		content: '';
 		z-index: -1;
@@ -29,8 +34,16 @@
 
 }
 
+.blog-logo{
+	margin: 0 @horizontal_PaddingLg;
+}
+.blog-title{
+	margin: 0 @horizontal_PaddingLg;
+	.body_Type();
+}
+
 .post-list{
-	padding: 0 @s35;
+	padding: 0 @horizontal_PaddingLg;
 	grid-column: 2;
 	grid-row: 1;
 	overflow: auto;

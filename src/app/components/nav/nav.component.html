@@ -1,5 +1,7 @@
-<nav>
-  <ul>
+<nav class="nav">
+	<button *ngFor="let item of items" [ngClass]="item.classes" [routerLink]="parseRouterLink(item.url)" class="nav-item">{{item.title}}</button>
+	<!--
+	<ul>
     <ng-template #recursiveList let-menu>
       <li *ngFor="let item of menu">
         <a [class]="item.classes" [routerLink]="parseRouterLink(item.url)">{{item.title}}</a>
@@ -9,8 +11,9 @@
       </li>
     </ng-template>
     <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: menu }"></ng-container>
-  </ul>
-  <p *ngIf="error">
-    {{error}}
-  </p>
+	</ul>
+	-->
+	<p *ngIf="error">
+		{{error}}
+	</p>
 </nav>

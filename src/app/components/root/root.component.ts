@@ -2,6 +2,7 @@ import { Component, OnInit, HostBinding } from '@angular/core';
 import { WpRestService } from 'app/services/wp-rest.service';
 import { ViewModelService } from 'app/services/view-model.service';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { IWpMenuItem } from 'app/interfaces/wp-rest-types';
 
 @Component({
 	selector: 'ngwp-root',
@@ -22,8 +23,10 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 })
 export class RootComponent implements OnInit {
 
-	public blogName: string;
-	public blogDescription: string;
+	blogName: string;
+	blogDescription: string;
+	menu: IWpMenuItem[];
+	menuMame: string = 'primary';
 
 	@HostBinding('class.menu-open')
 	public menuOpen: boolean = true;
@@ -38,10 +41,22 @@ export class RootComponent implements OnInit {
 			this.blogName = options.general.blogname;
 			this.blogDescription = options.general.blogdescription;
 		});
+		this._getMenus();
 	}
 
 	toggleMenu(event: MouseEvent) {
 		this.menuOpen = !this.menuOpen;
+	}
+
+	private _getMenus() {
+		this.wpRestService
+			.getMenu(this.menuMame)
+			.subscribe(res => {
+				this.menu = res;
+				console.log(this.menu);
+			}, err => {
+				console.error(err);
+			});
 	}
 
 }

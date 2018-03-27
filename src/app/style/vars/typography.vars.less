@@ -1,36 +1,37 @@
-@import url('https://fonts.googleapis.com/css?family=Cairo:300,600,900');
 
 // FAMILIES //
-@cairo_Family: 'Cairo', 'Helvetica Neue', sans-serif;
+@CAIRO: Cairo; // https://fonts.google.com/specimen/Cairo
+@cairo_Family: @CAIRO, 'Helvetica Neue', sans-serif;
 @monospace_Family: 'Consolas', monospace;
-// -webkit-font-smoothing:antialiased; // ??
 
 // WEIGHT //
-@light_Weight:       300; // light
-@regular_Weight:     600; // semi-bold
-@bold_Weight:        900; // black
+// available weights: 200 300 400 600 700 900
+@light_Weight:       200;
+@regular_Weight:     400;
+@bold_Weight:        900;
+@import url('https://fonts.googleapis.com/css?family=@{CAIRO}:@{light_Weight},@{regular_Weight},@{bold_Weight}');
 
 // HEADING //
-@heading1_Font:     @light_Weight     ~'36px/1.1em'   @cairo_Family ; // h1
-@heading2_Font:     @light_Weight     ~'30px/1.1em'   @cairo_Family ; // h2
-@heading3_Font:     @light_Weight     ~'24px/1.1em'   @cairo_Family ; // h3
-@heading4_Font:     @regular_Weight   ~'18px/1.1em'   @cairo_Family ; // h4
+@heading1_Font:     normal normal @light_Weight     ~'36px/1.1em'   @cairo_Family ; // h1
+@heading2_Font:     normal normal @light_Weight     ~'30px/1.1em'   @cairo_Family ; // h2
+@heading3_Font:     normal normal @light_Weight     ~'24px/1.1em'   @cairo_Family ; // h3
+@heading4_Font:     normal normal @regular_Weight   ~'18px/1.1em'   @cairo_Family ; // h4
 
 // META //
-@meta_Font:          @bold_Weight    ~'14px/1em'    @cairo_Family ; // h5
-@metaSm_Font:        @bold_Weight    ~'11px/1em'    @cairo_Family ; // h6
+@meta_Font:          normal normal @bold_Weight    ~'14px/1em'    @cairo_Family ; // h5
+@metaSm_Font:        normal normal @bold_Weight    ~'9px/1em'    @cairo_Family ; // h6
 
 // BODY //
 // body_Font is applied to the body tag, inherited by everything //
 // this font size here is then equal to 1rem unit //
-@body_Font:          @regular_Weight ~'14px/1.7em'   @cairo_Family  ; // p
-@bodySm_Font:        @regular_Weight ~'11px/1.7em'   @cairo_Family  ; // caption
+@body_Font:          normal normal @regular_Weight ~'12px/1.7em'   @cairo_Family  ; // p
+@bodySm_Font:        normal normal @regular_Weight ~'9px/1.7em'   @cairo_Family  ; // caption
 
 // OTHER //
 @quote_Font:        italic @regular_Weight ~'1em/1em' @cairo_Family    ; // blockquote
 @monoSpace_Font:                  normal ~'1em/1em' @monospace_Family  ; // code, pre
-	
-// font: font-style font-variant font-weight font-size/line-height font-family; 
+
+// font: font-style font-variant font-weight font-size/line-height font-family;
 
 
 // TYPOGRPAHY MIXINS //
@@ -45,13 +46,15 @@
 .quote_Type(){     font: @quote_Font; }
 .monoSpace_Type(){ font: @monoSpace_Font; }
 
+.all_Type(){ letter-spacing: 0.1em; }
 
-// VARS //    
+
+// VARS //
 // :root, .font-theme-cairo{ // do I need this?
 // 	--heading1_Font:    @heading1_Font;
 // 	--heading2_Font:    @heading2_Font;
-// 	--heading3_Font:    @heading3_Font; 
-// 	--heading4_Font:    @heading4_Font; 
+// 	--heading3_Font:    @heading3_Font;
+// 	--heading4_Font:    @heading4_Font;
 // 	--meta_Font:        @meta_Font;
 // 	--metaSm_Font:      @metaSm_Font;
 // 	--body_Font:        @body_Font;

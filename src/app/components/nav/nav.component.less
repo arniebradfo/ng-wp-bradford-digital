@@ -1,0 +1,24 @@
+@import (reference) '../../style/vars/sizes.vars.less';
+
+:host{
+	display: block;
+	position: relative;
+	// padding: @ horizontal_PaddingLg;
+}
+
+.nav{
+	display: flex;
+}
+
+:host(.right) {
+	.nav{
+		flex-direction: column;
+		align-items: flex-end;
+
+	}
+	.nav-item{
+		margin: @s1;
+	}
+}
+
+

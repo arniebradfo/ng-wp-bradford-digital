@@ -1,13 +1,9 @@
 <ngwp-icon-defs></ngwp-icon-defs>
 
 <header class="menu">
-	<ngwp-logo></ngwp-logo>
-	<h1 routerLink="/">{{blogName}}</h1>
-	<span>{{blogDescription}}</span>
-	<ngwp-nav name="primary"></ngwp-nav>
-	<small>NGWP by
-		<a href="http://bradford.digital">James Bradford</a>
-	</small>
+	<ngwp-logo class="blog-logo" routerLink="/"></ngwp-logo>
+	<h1 class="blog-title" routerLink="/">{{blogName}}</h1>
+	<ngwp-nav class="right" [items]="menu"></ngwp-nav>
 </header>
 
 <section class="post-list" *ngIf="viewModelService.postList$ | async as postList">
@@ -24,7 +20,9 @@
 			load more
 		</button>
 	</p>
+
 	<ngwp-search></ngwp-search>
+
 	<nav *ngIf="postList.currentListPageCount > 1">
 		<strong>go to page:</strong>
 		<ul>
