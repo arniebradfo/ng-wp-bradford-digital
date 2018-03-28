@@ -16,7 +16,6 @@
 .menu{
 	grid-column: 1;
 	grid-row: 1;
-	overflow: auto;
 	z-index: 2;
 	position: relative;
 	border-right: @s1 solid var(--bgOverlay2_Color);
@@ -25,6 +24,9 @@
 	flex-direction: column;
 	align-items: flex-end;
 
+	// for the nav selection bar items over the border?
+	// TODO: make the border another puesdo element
+	overflow: visible;
 	&:after{
 		content: '';
 		z-index: -1;

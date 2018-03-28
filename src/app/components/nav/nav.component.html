@@ -1,5 +1,16 @@
 <nav class="nav">
-	<button *ngFor="let item of items" [ngClass]="item.classes" [routerLink]="parseRouterLink(item.url)" class="nav-item">{{item.title}}</button>
+	<button
+		*ngFor="let item of items"
+		[ngClass]="item.classes"
+		[routerLink]="parseRouterLink(item.url)"
+		routerLinkActive="selected"
+		class="nav-item"
+		>
+		<span>
+			{{item.title}}
+		</span>
+		<div class="selection-bar"></div>
+	</button>
 	<!--
 	<ul>
     <ng-template #recursiveList let-menu>
