@@ -1,9 +1,9 @@
 <ngwp-icon-defs></ngwp-icon-defs>
 
 <header class="menu">
-	<ngwp-logo class="blog-logo" routerLink="/"></ngwp-logo>
-	<h1 class="blog-title" routerLink="/">{{blogName}}</h1>
-	<ngwp-nav class="right" [items]="menu"></ngwp-nav>
+	<ngwp-logo class="menu-logo" routerLink="/"></ngwp-logo>
+	<h1 class="menu-title" routerLink="/">{{blogName}}</h1>
+	<ngwp-nav class="menu-nav right" [items]="menu"></ngwp-nav>
 </header>
 
 <section class="post-list" *ngIf="viewModelService.postList$ | async as postList">

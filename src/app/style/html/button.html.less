@@ -5,11 +5,11 @@
 	.transition(color);
 
 	font: inherit;
-	
+
 	position: relative;
 	z-index: 0;
 	&:before, &:after{
-		content: '';
+		// content: '';
 		.absolute(0);
 		.transition(opacity);
 		transition-duration: inherit;
@@ -68,11 +68,18 @@
 		}
 	}
 
+	&:before{        content: ''; }
+	&.emhasis:after{ content: ''; }
+
+	&.selected{
+		color: var(--fgStrong_Color);
+	}
+
 }
 
 button,
 .button
-{ 
+{
 	.button();
 	padding: @s5 @horizontal_Padding;
 

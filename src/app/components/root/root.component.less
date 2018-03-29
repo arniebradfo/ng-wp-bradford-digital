@@ -9,7 +9,7 @@
 	height: 100%;
 	width:  100%;
 	display: grid;
-	grid-template-columns: @column_Size auto @column_Size;
+	grid-template-columns: auto 1fr @column_Size;
 	position: relative;
 }
 
@@ -18,7 +18,7 @@
 	grid-row: 1;
 	z-index: 2;
 	position: relative;
-	border-right: @s1 solid var(--bgOverlay2_Color);
+	// border-right: @s1 solid var(--bgOverlay2_Color);
 
 	display: flex;
 	flex-direction: column;
@@ -27,21 +27,31 @@
 	// for the nav selection bar items over the border?
 	// TODO: make the border another puesdo element
 	overflow: visible;
-	&:after{
+	&:after, &:before{
 		content: '';
 		z-index: -1;
-		.absolute(0 @s1 0 0);
+	}
+	&:after{
+		.absolute(0 @s1*2 0 0);
 		background-color: var(--bgOverlay0_Color);
 	}
-
+	&:before{
+		.absolute(0 0 0 null);
+		background-color: var(--bgOverlay2_Color);
+		width: @s1;
+	}
 }
-
-.blog-logo{
-	margin: 0 @horizontal_PaddingLg;
+.menu-logo{
+	margin: @horizontal_PaddingLg*2 @horizontal_PaddingLg @vertical_Padding;
 }
-.blog-title{
-	margin: 0 @horizontal_PaddingLg;
+.menu-title{
+	margin: @vertical_Padding @horizontal_PaddingLg;
 	.body_Type();
+}
+.menu-nav{
+	margin: @s35*2 0 ;
+	// flex: 1 0 auto;
+	// justify-content: center;
 }
 
 .post-list{
