@@ -13,7 +13,7 @@
 	<span>page {{postList.currentListPageNumber}}</span>
 	<ngwp-search></ngwp-search>
 
-	<ngwp-post *ngFor="let post of postList.currentList" [post]="post"></ngwp-post>
+	<ngwp-post class="post-list-item" *ngFor="let post of postList.currentList" [post]="post"></ngwp-post>
 
 	<p>
 		<button (click)="viewModelService.loadMorePosts()" *ngIf="postList.canLoadMorePages">

@@ -1,10 +1,29 @@
-<article *ngIf="post">
+<article *ngIf="post" class="post set--vertical">
 
-  <h1 [routerLink]="'/'+post.slug">
-    {{ post?.title.rendered }}
-  </h1>
+	<div class="post-date set-item">
+		{{ post.date | date: 'MM.dd.yyyy' }}
+	</div>
 
-  <p>
+	<div class="post-hero set-item" [routerLink]="'/'+post.slug">
+		<img class="post-img" *ngIf="post.featured_media_ref" [src]="post.featured_media_ref.media_details.sizes.thumbnail.source_url" />
+		<h1 class="post-title">
+			{{ post.title.rendered }}
+		</h1>
+	</div>
+
+	<div class="post-tags set-item" *ngIf="post.tags_ref != null && post.tags_ref.length > 0">
+			<button class="post-tag" *ngFor="let tag of post.tags_ref" [routerLink]="'/tag/' + tag.slug">
+				{{'#' + tag.name}}
+			</button>
+	</div>
+
+	<ngwp-content class="post-content set-item" [content]="showFull ? post?.content.rendered : post?.excerpt.rendered"></ngwp-content>
+
+	<button class="post-button set-item  set-item--emphasis" [routerLink]="'/'+post.slug">
+		Read More
+	</button>
+
+  <!-- <p>
     <strong>By: </strong>
     <a [routerLink]="'/author/' + post.author_ref.slug">
       {{ post.author_ref.name }}
@@ -47,6 +66,6 @@
     <br/>
     <strong>Next Post:</strong>
     <a [routerLink]="'/' + post.adjcentPosts.next.slug" [innerHTML]="post.adjcentPosts.next.title.rendered"></a>
-  </nav>
+  </nav> -->
 
 </article>

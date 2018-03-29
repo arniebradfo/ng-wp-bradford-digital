@@ -1,0 +1,43 @@
+@import (reference) '../../style/utils/all.util.less';
+@import (reference) '../../style/vars/sizes.vars.less';
+@import (reference) '../../style/vars/typography.vars.less';
+
+:host{
+	display: block;
+}
+
+.post{}
+.post-date{
+	.metaSm_Type();
+	color: var(--fgStrong_Color);
+}
+.post-hero{
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	align-items: flex-start;
+	height: @s35*7;
+	background-color: transparent;
+}
+.post-img{
+	.absolute(0);
+	object-fit: cover;
+	width: 100%;
+	height: 100%;
+	z-index: -1;
+	opacity: .4;
+}
+.post-title{
+}
+.post-tags{
+	padding: @s1 0 0 @s1;
+}
+.post-tag{
+	.metaSm_Type();
+	margin: 0 @s1 @s1 0;
+}
+.post-content{}
+.post-button{
+	.meta_Type();
+}

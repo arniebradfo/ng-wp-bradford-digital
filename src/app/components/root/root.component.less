@@ -1,5 +1,4 @@
-@import (reference) '../../style/utils/position.util.less';
-@import (reference) '../../style/utils/transitions.util.less';
+@import (reference) '../../style/utils/all.util.less';
 @import (reference) '../../style/vars/sizes.vars.less';
 @import (reference) '../../style/vars/typography.vars.less';
 
@@ -11,6 +10,7 @@
 	display: grid;
 	grid-template-columns: auto 1fr @column_Size;
 	position: relative;
+	overflow: hidden;
 }
 
 .menu{
@@ -60,6 +60,9 @@
 	grid-row: 1;
 	overflow: auto;
 	z-index: 1;
+}
+.post-list-item{
+	margin-bottom: @s23;
 }
 
 .current-post{
