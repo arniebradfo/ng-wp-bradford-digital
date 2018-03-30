@@ -2,13 +2,45 @@
 @import (reference) '../../style/utils/all.util.less';
 
 :host{
-	display: block;
-	position: relative;
 	display: flex;
 }
 
-.nav-item.selected{
-	// color: rebeccapurple;
+.selection-bar{
+	background-color: currentColor;
+	opacity: 0;
+	.transition(opacity);
+	.selected & {
+		opacity: 1;
+	}
+}
+
+
+:host(.top) {
+	flex-direction: row;
+	@buttonHorizontal_Padding: @s9;
+	@buttonVertical_Padding: @s3;
+	@buttonVertical_Margin: @s5;
+
+
+	.nav-item{
+		margin-right: @s1;
+		margin-top: @buttonVertical_Margin;
+		padding: @buttonVertical_Padding @buttonHorizontal_Padding;
+		&:first-child{
+			margin-left:-(@buttonHorizontal_Padding);
+		}
+		&:last-child{
+			margin-right:-(@buttonHorizontal_Padding);
+		}
+
+	}
+
+	.selection-bar{
+		height: @s1;
+		.absolute(-(@buttonVertical_Margin) @buttonHorizontal_Padding null);
+	}
+
+
 }
 
 
@@ -30,14 +62,6 @@
 	.selection-bar{
 		width: @s1;
 		.absolute(@s5 -(@buttonHorizontal_Margin) @s5 null);
-		background-color: currentColor;
-
-		opacity: 0;
-		.transition(opacity);
-	}
-
-	.selected .selection-bar {
-		opacity: 1;
 	}
 
 }
