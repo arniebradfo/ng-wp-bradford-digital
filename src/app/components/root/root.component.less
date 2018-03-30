@@ -61,6 +61,33 @@
 	overflow: auto;
 	z-index: 1;
 }
+.post-list-header{
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	margin-top: 101px; // magic number!!!
+	margin-bottom: @s35;
+}
+.post-list-title{
+	flex: 0 0 auto;
+	.heading2_Type();
+}
+.post-list-search{
+	flex: 0 1 auto;
+}
+.post-list-nav{
+	flex: 0 1 100%;
+	position: relative;
+
+	&:after{
+		content: '';
+		.absolute(0 0 null 0);
+		height: @s1;
+		background-color: var(--bgOverlay2_Color);
+		z-index: -1;
+	}
+}
+
 .post-list-item{
 	margin-bottom: @s23;
 }

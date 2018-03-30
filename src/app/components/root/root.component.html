@@ -8,10 +8,15 @@
 
 <section class="post-list" *ngIf="viewModelService.postList$ | async as postList">
 
-	<small>{{ postList.type }}</small>
-	<h1>{{ postList.title }}</h1>
-	<span>page {{postList.currentListPageNumber}}</span>
-	<ngwp-search></ngwp-search>
+	<div class="post-list-header">
+		<h1 class="post-list-title">{{ postList.title }}</h1>
+		<ngwp-search class="post-list-search"></ngwp-search>
+		<!--
+			<small class="post-list-type">{{ postList.type }}</small>
+			<span class="post-list-page-number">page {{postList.currentListPageNumber}}</span>
+		-->
+		<ngwp-nav class="post-list-nav top" [items]="menu"></ngwp-nav>
+	</div>
 
 	<ngwp-post class="post-list-item" *ngFor="let post of postList.currentList" [post]="post"></ngwp-post>
 
