@@ -12,7 +12,6 @@ import { ViewModelService } from './services/view-model.service';
 import { NumberToArrayPipe } from './pipes/number-to-array.pipe';
 
 import { RootComponent } from './components/root/root.component';
-import { NavComponent } from './components/nav/nav.component';
 import { PostComponent } from './components/post/post.component';
 import { ContentComponent } from './components/content/content.component';
 import { SearchComponent } from './components/search/search.component';
@@ -34,7 +33,6 @@ import { UrlPathnamePipe } from './pipes/url-pathname.pipe';
 		NgWpRoutingModule,
 	],
 	declarations: [
-		NavComponent,
 		PostComponent,
 		SearchComponent,
 		ContentComponent,
