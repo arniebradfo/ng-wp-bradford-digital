@@ -1,0 +1,63 @@
+@import (reference) '../../style/vars/sizes.vars.less';
+@import (reference) '../../style/utils/all.util.less';
+
+.nav{
+	display: flex;
+}
+
+.selection-bar{
+	background-color: currentColor;
+	opacity: 0;
+	.transition(opacity);
+	.selected & {
+		opacity: 1;
+	}
+}
+
+.nav.top {
+	flex-direction: row;
+	@buttonHorizontal_Padding: @s9;
+	@buttonVertical_Padding: @s3;
+	@buttonVertical_Margin: @s5;
+
+	.nav-item{
+		margin-right: @s1;
+		margin-top: @buttonVertical_Margin;
+		padding: @buttonVertical_Padding @buttonHorizontal_Padding;
+		&:first-child{
+			margin-left:-(@buttonHorizontal_Padding);
+		}
+		&:last-child{
+			margin-right:-(@buttonHorizontal_Padding);
+		}
+
+	}
+
+	.selection-bar{
+		height: @s1;
+		.absolute(-(@buttonVertical_Margin) @buttonHorizontal_Padding null);
+	}
+
+}
+
+.nav.right {
+	@totalHorizontal_Spacing: @horizontal_PaddingLg;
+	@buttonHorizontal_Margin: @s17;
+
+	flex-direction: column;
+	align-items: flex-end;
+	padding: @buttonHorizontal_Margin;
+
+	.nav-item{
+		@buttonHorizontal_Padding: @totalHorizontal_Spacing - @buttonHorizontal_Margin;
+		padding-right: @buttonHorizontal_Padding;
+		padding-left:  @buttonHorizontal_Padding;
+		margin-bottom: @s1;
+	}
+
+	.selection-bar{
+		width: @s1;
+		.absolute(@s5 -(@buttonHorizontal_Margin) @s5 null);
+	}
+
+}

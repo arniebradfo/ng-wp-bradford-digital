@@ -1,6 +1,8 @@
 # TODOs:
-- css 
-- animations
+- make nav a css structure, not a component
+- search component
+- style button to switch between menu and page view
+
 
 
 ### TODOs: less important

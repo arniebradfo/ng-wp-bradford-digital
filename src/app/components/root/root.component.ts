@@ -48,6 +48,11 @@ export class RootComponent implements OnInit {
 		this.menuOpen = !this.menuOpen;
 	}
 
+		// get the route out of a url
+		public parseRouterLink(url: string): string {
+			return new URL(url).pathname;
+		}
+
 	private _getMenus() {
 		this.wpRestService
 			.getMenu(this.menuMame)

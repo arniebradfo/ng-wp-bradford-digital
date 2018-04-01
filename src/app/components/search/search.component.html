@@ -1,4 +1,7 @@
 <form #searchForm="ngForm" (ngSubmit)="onSubmit()">
   <input type="search" [(ngModel)]="search" name="search" placeholder="search for posts or pages" required/>
-  <button type="submit" [disabled]="!searchForm.form.valid">Search!</button>
+  <button type="submit" [disabled]="!searchForm.form.valid">
+		Search!
+		<ngwp-icon name="icon_Search"></ngwp-icon>
+	</button>
 </form>

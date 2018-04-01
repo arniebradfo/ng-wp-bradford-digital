@@ -1,12 +1,12 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'numberToArray'
+	name: 'numberToArray'
 })
 export class NumberToArrayPipe implements PipeTransform {
 
-  transform(value: number): undefined[] {
-    return new Array(value).fill(undefined);
-  }
+	transform(value: number): undefined[] {
+		return new Array(value).fill(undefined);
+	}
 
 }
