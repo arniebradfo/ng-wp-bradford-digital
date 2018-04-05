@@ -25,7 +25,7 @@
 			<small class="post-list-type">{{ postList.type }}</small>
 			<span class="post-list-page-number">page {{postList.currentListPageNumber}}</span>
 		-->
-		<nav class="post-list-nav nav top">
+		<nav class="post-list-nav nav top" [ngClass]="{'seach-open':topSearch.isOpen}">
 			<button
 				*ngFor="let item of menu"
 				[ngClass]="item.classes"
@@ -36,20 +36,25 @@
 					{{item.title}}
 				<div class="selection-bar"></div>
 			</button>
-			<ngwp-search class="post-list-search"></ngwp-search>
+			<div class="flex-splitter"></div>
+			<button class="nav-item post-list-search-button" (click)="topSearch.open()">
+				<span>search</span>
+				<ngwp-icon class="icon-right" name="icon_Search"></ngwp-icon>
+			</button>
+			<ngwp-search #topSearch class="post-list-search"></ngwp-search>
 		</nav>
 	</div>
 
 	<ngwp-post class="post-list-item" *ngFor="let post of postList.currentList" [post]="post"></ngwp-post>
 
 	<button class="load-more-button emhasis" (click)="viewModelService.loadMorePosts()" *ngIf="postList.canLoadMorePages">
-		<span class="load-more-button-text" >Load More</span>
-		<ngwp-icon class="load-more-button-icon" name="icon_Pointer_Down"></ngwp-icon>
+		<span>Load More</span>
+		<ngwp-icon class="icon-right" name="icon_Pointer_Down"></ngwp-icon>
 	</button>
 
 	<div class="post-list-header">
-		<nav class="post-list-nav nav top" *ngIf="postList.currentListPageCount > 1">
-			<label class="post-list-nav-label" >go to page</label>
+		<nav class="post-list-nav nav top" *ngIf="postList.currentListPageCount > 1" [ngClass]="{'seach-open':bottomSearch.isOpen}">
+			<label class="post-list-nav-label nav-item" >go to page</label>
 			<button
 				class="nav-item"
 				*ngFor="let count of postList.currentListPageCount | numberToArray; let i = index"
@@ -60,10 +65,14 @@
 				{{i+1}}
 				<div class="selection-bar"></div>
 			</button>
-			<ngwp-search class="post-list-search"></ngwp-search>
+			<div class="flex-splitter"></div>
+			<button class="nav-item post-list-search-button" (click)="bottomSearch.open()">
+				<span>search</span>
+				<ngwp-icon class="icon-right" name="icon_Search"></ngwp-icon>
+			</button>
+			<ngwp-search #bottomSearch class="post-list-search"></ngwp-search>
 		</nav>
 	</div>
-
 
 </section>
 

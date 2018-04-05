@@ -1,6 +1,22 @@
 @import (reference) '../../style/vars/sizes.vars.less';
+// @import (reference) '../../style/utils/all.util.less';
 
 :host{
+	display: none;
+	justify-content: stretch;
+}
+
+.search-form{
+	flex: 1 0 100%
+}
+.search-input{
+	height: auto;
+	flex: 1 1 auto;
+}
+.search-button{
+	flex: 0 0 auto;
+}
+
+:host(.is-open){
 	display: flex;
-	// justify-content: flex-end;
 }

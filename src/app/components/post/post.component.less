@@ -33,6 +33,7 @@
 .post-tag{
 	.metaSm_Type();
 	margin: 0 @s1 @s1 0;
+	// padding: 0 @horizontal_PaddingMd - @s1;
 }
 .post-content{}
 .post-button{
@@ -46,6 +47,6 @@
 	padding-right: @horizontal_PaddingMd;
 	padding-left: @horizontal_PaddingMd;
 	&.post-tags{
-		padding: @s1;
+		padding: @s1 @horizontal_PaddingMd - @horizontal_Padding - @s1 0;
 	}
 }
