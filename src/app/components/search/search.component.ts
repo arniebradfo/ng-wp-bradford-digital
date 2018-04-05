@@ -4,25 +4,26 @@ import { Router, ActivatedRoute } from '@angular/router';
 // search form that routes to a post-list filtered by the search string
 
 @Component({
-  selector: 'ngwp-search',
-  templateUrl: './search.component.html'
+	selector: 'ngwp-search',
+	templateUrl: './search.component.html',
+	styleUrls: ['./search.component.less']
 })
 export class SearchComponent implements OnInit {
 
-  search: string;
+	search: string;
 
-  constructor(
-    private router: Router,
-    private activatedRoute: ActivatedRoute
-  ) { }
+	constructor(
+		private router: Router,
+		private activatedRoute: ActivatedRoute
+	) { }
 
-  ngOnInit() { }
+	ngOnInit() { }
 
-  onSubmit() {
-    this.router.navigate([''], {
-      queryParams: { s: this.search },
-      relativeTo: this.activatedRoute.root
-    });
-  }
+	onSubmit() {
+		this.router.navigate([''], {
+			queryParams: { s: this.search },
+			relativeTo: this.activatedRoute.root
+		});
+	}
 
 }

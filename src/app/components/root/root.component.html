@@ -21,7 +21,6 @@
 
 	<div class="post-list-header">
 		<h1 class="post-list-title">{{ postList.title }}</h1>
-		<ngwp-search class="post-list-search"></ngwp-search>
 		<!--
 			<small class="post-list-type">{{ postList.type }}</small>
 			<span class="post-list-page-number">page {{postList.currentListPageNumber}}</span>
@@ -37,32 +36,30 @@
 					{{item.title}}
 				<div class="selection-bar"></div>
 			</button>
+			<ngwp-search class="post-list-search"></ngwp-search>
 		</nav>
 	</div>
 
 	<ngwp-post class="post-list-item" *ngFor="let post of postList.currentList" [post]="post"></ngwp-post>
 
-	<p>
-		<button (click)="viewModelService.loadMorePosts()" *ngIf="postList.canLoadMorePages">
-			Load More
-			<ngwp-icon name="icon_Pointer_Down"></ngwp-icon>
-		</button>
-	</p>
-
+	<button class="load-more-button" (click)="viewModelService.loadMorePosts()" *ngIf="postList.canLoadMorePages">
+		<span class="load-more-button-text" >Load More</span>
+		<ngwp-icon class="load-more-button-icon" name="icon_Pointer_Down"></ngwp-icon>
+	</button>
 
 	<nav class="post-list-nav nav top" *ngIf="postList.currentListPageCount > 1">
-		<strong>go to page:</strong>
-			<button
-				class="nav-item"
-				*ngFor="let count of postList.currentListPageCount | numberToArray; let i = index"
-				[routerLink]="postList.currentListRouterPrefix + '/page/' + (i+1)"
-				routerLinkActive="selected"
-				[queryParams]="postList.currentListQueryParams"
-				>
-				{{i+1}}
-				<div class="selection-bar"></div>
-			</button>
-			<ngwp-search></ngwp-search>
+		<label class="post-list-nav-label" >go to page</label>
+		<button
+			class="nav-item"
+			*ngFor="let count of postList.currentListPageCount | numberToArray; let i = index"
+			[routerLink]="postList.currentListRouterPrefix + '/page/' + (i+1)"
+			routerLinkActive="selected"
+			[queryParams]="postList.currentListQueryParams"
+			>
+			{{i+1}}
+			<div class="selection-bar"></div>
+		</button>
+		<ngwp-search class="post-list-search"></ngwp-search>
 	</nav>
 
 </section>

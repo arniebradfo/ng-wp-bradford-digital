@@ -3,6 +3,7 @@
 
 .nav{
 	display: flex;
+	// align-items: baseline;
 }
 
 .selection-bar{
@@ -20,17 +21,22 @@
 	@buttonVertical_Padding: @s3;
 	@buttonVertical_Margin: @s5;
 
+	margin: 0 -(@buttonHorizontal_Padding);
+	padding-top: @buttonVertical_Margin;
+
+	position: relative;
+
+	&:after{
+		content: '';
+		.absolute(0 @buttonHorizontal_Padding null );
+		height: @s1;
+		background-color: var(--bgOverlay2_Color);
+		z-index: -1;
+	}
+
 	.nav-item{
 		margin-right: @s1;
-		margin-top: @buttonVertical_Margin;
 		padding: @buttonVertical_Padding @buttonHorizontal_Padding;
-		&:first-child{
-			margin-left:-(@buttonHorizontal_Padding);
-		}
-		&:last-child{
-			margin-right:-(@buttonHorizontal_Padding);
-		}
-
 	}
 
 	.selection-bar{
