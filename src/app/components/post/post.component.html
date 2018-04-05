@@ -20,7 +20,8 @@
 	<ngwp-content class="post-content set-item" [content]="showFull ? post?.content.rendered : post?.excerpt.rendered"></ngwp-content>
 
 	<button class="post-button set-item  set-item--emphasis" [routerLink]="'/'+post.slug">
-		Read More
+		<span>Read More</span>
+		<ngwp-icon class="load-more-button-icon" name="icon_Expand"></ngwp-icon>
 	</button>
 
   <!-- <p>

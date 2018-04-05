@@ -28,11 +28,8 @@
 	z-index: -1;
 	opacity: .4;
 }
-.post-title{
-}
-.post-tags{
-	padding: @s1 0;
-}
+.post-title{}
+.post-tags{}
 .post-tag{
 	.metaSm_Type();
 	margin: 0 @s1 @s1 0;
@@ -40,4 +37,15 @@
 .post-content{}
 .post-button{
 	.meta_Type();
+	display: flex;
+	justify-content: space-between;
+	padding: @s11;
+}
+
+.set-item{
+	padding-right: @horizontal_PaddingMd;
+	padding-left: @horizontal_PaddingMd;
+	&.post-tags{
+		padding: @s1;
+	}
 }
