@@ -1,25 +1,43 @@
-<article *ngIf="post" class="post set--vertical">
+<article *ngIf="post" class="post" [ngClass]="{'set--vertical':!showFull}">
 
-	<div class="post-date set-item">
-		{{ post.date | date: 'MM.dd.yyyy' }}
-	</div>
+	<div class="post-header">
 
-	<div class="post-hero set-item" [routerLink]="'/'+post.slug">
-		<img class="post-img" *ngIf="post.featured_media_ref" [src]="post.featured_media_ref.media_details.sizes.thumbnail.source_url" />
-		<h1 class="post-title">
-			{{ post.title.rendered }}
-		</h1>
-	</div>
+		<div class="post-date" [ngClass]="{'set-item':!showFull}">
+			{{ post.date | date: 'MM.dd.yyyy' }}
+		</div>
 
-	<div class="post-tags set-item" *ngIf="post.tags_ref != null && post.tags_ref.length > 0">
+		<div
+			class="post-hero"
+			[routerLink]="'/'+post.slug"
+			[ngClass]="{'set-item':!showFull}"
+			>
+			<img class="post-img" *ngIf="post.featured_media_ref" [src]="post.featured_media_ref.media_details.sizes.thumbnail.source_url" />
+			<h1 class="post-title">
+				{{ post.title.rendered }}
+			</h1>
+		</div>
+
+		<div class="post-tags" *ngIf="post.tags_ref != null && post.tags_ref.length > 0" [ngClass]="{'set-item':!showFull}">
 			<button class="post-tag" *ngFor="let tag of post.tags_ref" [routerLink]="'/tag/' + tag.slug">
-				{{'#' + tag.name}}
+				#{{tag.name}}
 			</button>
+		</div>
+
+		<div class="post-header-last-item"></div>
+
 	</div>
 
-	<ngwp-content class="post-content set-item" [content]="showFull ? post?.content.rendered : post?.excerpt.rendered"></ngwp-content>
+	<ngwp-content
+		class="post-content"
+		[content]="showFull ? post?.content.rendered : post?.excerpt.rendered"
+		[ngClass]="{'set-item':!showFull}"
+	></ngwp-content>
 
-	<button class="post-button set-item  set-item--emphasis" [routerLink]="'/'+post.slug">
+	<button
+		class="post-button set-item set-item--emphasis"
+		*ngIf="!showFull"
+		[routerLink]="'/'+post.slug"
+		>
 		<span>Read More</span>
 		<ngwp-icon class="load-more-button-icon" name="icon_Expand"></ngwp-icon>
 	</button>
