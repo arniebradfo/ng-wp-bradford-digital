@@ -1,17 +1,14 @@
 <article *ngIf="post" class="post" [ngClass]="{'set--vertical':!showFull}">
 
-	<div class="post-header">
+	<section class="post-header">
 
 		<div class="post-date" [ngClass]="{'set-item':!showFull}">
 			{{ post.date | date: 'MM.dd.yyyy' }}
 		</div>
 
-		<div
-			class="post-hero"
-			[routerLink]="'/'+post.slug"
-			[ngClass]="{'set-item':!showFull}"
-			>
-			<img class="post-img" *ngIf="post.featured_media_ref" [src]="post.featured_media_ref.media_details.sizes.thumbnail.source_url" />
+		<div class="post-hero" [routerLink]="'/'+post.slug" [ngClass]="{'set-item':!showFull}">
+			<img class="post-img" *ngIf="post.featured_media_ref" [src]="post.featured_media_ref.media_details.sizes.thumbnail.source_url"
+			/>
 			<h1 class="post-title">
 				{{ post.title.rendered }}
 			</h1>
@@ -21,28 +18,47 @@
 			<button class="post-tag" *ngFor="let tag of post.tags_ref" [routerLink]="'/tag/' + tag.slug">
 				#{{tag.name}}
 			</button>
+			<!--
+				<a *ngFor="let category of post.categories_ref" [routerLink]="'/category/' + category.slug">
+      		{{category.name}}
+    		</a>
+			-->
 		</div>
 
 		<div class="post-header-last-item"></div>
 
-	</div>
+	</section>
 
-	<ngwp-content
-		class="post-content"
-		[content]="showFull ? post?.content.rendered : post?.excerpt.rendered"
-		[ngClass]="{'set-item':!showFull}"
-	></ngwp-content>
+	<section class="post-content" [ngClass]="{'set-item':!showFull,'light-color-theme':showFull}">
 
-	<button
-		class="post-button set-item set-item--emphasis"
-		*ngIf="!showFull"
-		[routerLink]="'/'+post.slug"
-		>
+		<ngwp-content [content]="showFull ? post?.content.rendered : post?.excerpt.rendered"></ngwp-content>
+
+		<form *ngIf="post.isLocked" #passwordForm="ngForm" (ngSubmit)="onSubmitPassword()">
+			<h4>This post is password protected</h4>
+			<input type="password" [(ngModel)]="password" name="password" placeholder="password" required/>
+			<button type="submit" [disabled]="!passwordForm.form.valid">Submit</button>
+			{{post.error?.message}}
+			<hr/>
+		</form>
+
+		<ngwp-comments *ngIf="showFull"></ngwp-comments>
+
+	</section>
+
+	<nav *ngIf="post.adjcentPosts && showFull">
+		<strong>Previous Post:</strong>
+		<a [routerLink]="'/' + post.adjcentPosts.previous.slug" [innerHTML]="post.adjcentPosts.previous.title.rendered"></a>
+		<br/>
+		<strong>Next Post:</strong>
+		<a [routerLink]="'/' + post.adjcentPosts.next.slug" [innerHTML]="post.adjcentPosts.next.title.rendered"></a>
+	</nav>
+
+	<button class="post-button set-item set-item--emphasis" *ngIf="!showFull" [routerLink]="'/'+post.slug">
 		<span>Read More</span>
 		<ngwp-icon class="load-more-button-icon" name="icon_Expand"></ngwp-icon>
 	</button>
 
-  <!-- <p>
+	<!-- <p>
     <strong>By: </strong>
     <a [routerLink]="'/author/' + post.author_ref.slug">
       {{ post.author_ref.name }}
@@ -67,13 +83,7 @@
     </a>
   </p>
 
-  <form *ngIf="post.isLocked" #passwordForm="ngForm" (ngSubmit)="onSubmitPassword()">
-    <h4>This post is password protected</h4>
-    <input type="password" [(ngModel)]="password" name="password" placeholder="password" required/>
-    <button type="submit" [disabled]="!passwordForm.form.valid">Submit</button>
-    {{post.error?.message}}
-    <hr/>
-  </form>
+
 
   <ngwp-content [content]="showFull ? post?.content.rendered : post?.excerpt.rendered"></ngwp-content>
 

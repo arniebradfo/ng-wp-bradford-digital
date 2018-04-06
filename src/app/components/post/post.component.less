@@ -66,12 +66,24 @@
 		flex-direction: column;
 	}
 	.post-hero{
-		flex: 1 0 auto;
+		flex: 1 0 70%;
 	}
 	.post-img{
 		// .absolute(0 0 null 0);
 	}
 	.post-header-last-item{
 		display: none;
+	}
+	.post-hero, .post-tags, .post-date{
+		margin: 0 @horizontal_PaddingMd*3;
+	}
+	.post-date{
+		margin-top: @s17;
+		height: @button_Size;
+		display: flex;
+		align-items: center;
+	}
+	.post-content{
+		background-color: var(--bg_Color);
 	}
 }

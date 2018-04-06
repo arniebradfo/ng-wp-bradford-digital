@@ -82,4 +82,17 @@ button,
 {
 	.button();
 	padding: @s5 @horizontal_Padding;
+
+	&.button--round{
+		height: @button_Size;
+		width:  @button_Size;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0;
+		&:before,&:after{
+			border-radius: @button_Size / 2;
+		}
+	}
+
 }

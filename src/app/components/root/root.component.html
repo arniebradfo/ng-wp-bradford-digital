@@ -76,11 +76,11 @@
 
 </section>
 
-<main class="current-post light-color-theme">
+<main class="current-post">
 	<ngwp-post *ngIf="viewModelService.post$ | async as post" [post]="post.currentPost" [showFull]="true"></ngwp-post>
 </main>
 
-<button class="menu-button light-color-theme" (click)="toggleMenu($event)">
+<button class="menu-button button--round light-color-theme" (click)="toggleMenu($event)">
 	<ngwp-icon name="icon_Menu"></ngwp-icon>
 </button>
 
