@@ -59,6 +59,8 @@
 
 
 :host(.show-full) {
+	@postHorizontal_Padding: @horizontal_PaddingMd*3;
+
 	.post-header{
 		position: relative;
 		height: 90vh;
@@ -66,7 +68,7 @@
 		flex-direction: column;
 	}
 	.post-hero{
-		flex: 1 0 70%;
+		flex: 1 0 auto;
 	}
 	.post-img{
 		// .absolute(0 0 null 0);
@@ -74,8 +76,15 @@
 	.post-header-last-item{
 		display: none;
 	}
-	.post-hero, .post-tags, .post-date{
+	.post-hero, .post-date{
 		margin: 0 @horizontal_PaddingMd*3;
+	}
+	.post-title{
+		margin-bottom: 15vh;
+	}
+	.post-tags{
+		padding: @s1 @postHorizontal_Padding - @horizontal_Padding 0;
+		border-top: @s1 solid var(--bgOverlay1_Color);
 	}
 	.post-date{
 		margin-top: @s17;
@@ -85,5 +94,8 @@
 	}
 	.post-content{
 		background-color: var(--bg_Color);
+		border-bottom-left-radius:  @border_Radius;
+		border-bottom-right-radius: @border_Radius;
+		padding: @postHorizontal_Padding;
 	}
 }

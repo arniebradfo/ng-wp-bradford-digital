@@ -76,8 +76,14 @@
 
 </section>
 
-<main class="current-post">
-	<ngwp-post *ngIf="viewModelService.post$ | async as post" [post]="post.currentPost" [showFull]="true"></ngwp-post>
+<main class="current-post" *ngIf="viewModelService.post$ | async as post">
+	<ngwp-post [post]="post.currentPost" [showFull]="true"></ngwp-post>
+	<nav *ngIf="post.currentPost?.adjcentPosts as adjcentPosts">
+		<strong>Previous Post:</strong>
+		<ngwp-post class="post-list-item" [post]="adjcentPosts.previous"></ngwp-post>
+		<strong>Next Post:</strong>
+		<ngwp-post class="post-list-item" [post]="adjcentPosts.next"></ngwp-post>
+	</nav>
 </main>
 
 <button class="menu-button button--round light-color-theme" (click)="toggleMenu($event)">

@@ -114,6 +114,13 @@
 
 }
 
+
+:host(:not(.menu-open)) {
+	.menu, .post-list{
+		display: none;
+	}
+}
+
 .menu-button{
 	.absolute(0 null null 0);
 	z-index: 4;

@@ -7,7 +7,7 @@
 		</div>
 
 		<div class="post-hero" [routerLink]="'/'+post.slug" [ngClass]="{'set-item':!showFull}">
-			<img class="post-img" *ngIf="post.featured_media_ref" [src]="post.featured_media_ref.media_details.sizes.thumbnail.source_url"
+			<img class="post-img" *ngIf="post.featured_media_ref" [src]="post.featured_media_ref.media_details.sizes.full.source_url"
 			/>
 			<h1 class="post-title">
 				{{ post.title.rendered }}
@@ -45,20 +45,14 @@
 
 	</section>
 
-	<nav *ngIf="post.adjcentPosts && showFull">
-		<strong>Previous Post:</strong>
-		<a [routerLink]="'/' + post.adjcentPosts.previous.slug" [innerHTML]="post.adjcentPosts.previous.title.rendered"></a>
-		<br/>
-		<strong>Next Post:</strong>
-		<a [routerLink]="'/' + post.adjcentPosts.next.slug" [innerHTML]="post.adjcentPosts.next.title.rendered"></a>
-	</nav>
-
 	<button class="post-button set-item set-item--emphasis" *ngIf="!showFull" [routerLink]="'/'+post.slug">
 		<span>Read More</span>
 		<ngwp-icon class="load-more-button-icon" name="icon_Expand"></ngwp-icon>
 	</button>
 
-	<!-- <p>
+	<!--
+
+	<p>
     <strong>By: </strong>
     <a [routerLink]="'/author/' + post.author_ref.slug">
       {{ post.author_ref.name }}
@@ -95,6 +89,8 @@
     <br/>
     <strong>Next Post:</strong>
     <a [routerLink]="'/' + post.adjcentPosts.next.slug" [innerHTML]="post.adjcentPosts.next.title.rendered"></a>
-  </nav> -->
+	</nav>
+
+	-->
 
 </article>
