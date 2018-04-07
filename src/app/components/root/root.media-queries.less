@@ -1,0 +1,26 @@
+// this must match:
+// export const MOBILE_BREAKPOINT = 700;
+// in ./root.component.less
+@MOBILE_BREAKPOINT: 760px;
+
+@mobile_Breakpoint:  @MOBILE_BREAKPOINT;  // < 768px
+@tablet_Breakpoint:  1100px; // < 1080px
+@laptop_Breakpoint:  1400px; // > 1366px
+@desktop_Breakpoint: 2000px; // > 1920px
+@tv_Breakpoint:      9999px; // ???
+
+@mobilePlusOne_Breakpoint: (@mobile_Breakpoint + 1);
+@mobile_Media: ~'screen and (max-width: @{mobile_Breakpoint})';
+@gtMobile_Media: ~'screen and (min-width: @{mobilePlusOne_Breakpoint})';
+// gt means greater than
+
+.mobile(@rules) {
+	@media @mobile_Media {
+		@rules();
+	}
+}
+.gtMobile(@rules) {
+	@media @gtMobile_Media {
+		@rules();
+	}
+}

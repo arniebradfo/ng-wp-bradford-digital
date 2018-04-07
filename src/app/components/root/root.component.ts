@@ -5,6 +5,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { IWpMenuItem } from 'app/interfaces/wp-rest-types';
 import { Subscription } from 'rxjs/Subscription';
 import { Router, NavigationExtras } from '@angular/router';
+import { Observable } from 'rxjs/Rx';
 
 @Component({
 	selector: 'ngwp-root',
@@ -33,11 +34,16 @@ export class RootComponent implements OnInit, OnDestroy {
 	private _routerInfoState;
 	private _menuNavigation: [any[], NavigationExtras];
 
+	stateRoot: StateRoot = 'state-list';
+	stateMobile: StateMobile = 'state-not-mobile';
 	@HostBinding('class')
-	public stateRoot: StateRoot = 'state-list';
+	private get _rootClass(): string {
+		return `${this.stateRoot} ${this.stateMobile}`;
+	}
 
-	// @HostBinding('class')
-	// public stateMobile: StateMobile = 'state-not-mobile';
+	private _mobileStateSubscription: Subscription
+		= Observable.fromEvent(window, 'resize').debounceTime(200)
+			.subscribe(() => this._updateStateMobile());
 
 	constructor(
 		private wpRestService: WpRestService,
@@ -64,10 +70,13 @@ export class RootComponent implements OnInit, OnDestroy {
 				}
 			];
 		});
+
+		this._updateStateMobile();
 	}
 
 	ngOnDestroy(): void {
 		this._routerInfoSubscription.unsubscribe();
+		this._mobileStateSubscription.unsubscribe();
 	}
 
 	menuButtonClick() {
@@ -90,9 +99,16 @@ export class RootComponent implements OnInit, OnDestroy {
 			});
 	}
 
-
+	private _updateStateMobile() {
+		this.stateMobile = window.innerWidth > MOBILE_BREAKPOINT ? 'state-not-mobile' : 'state-mobile';
+	}
 
 }
 
 export type StateRoot = 'state-post' | 'state-list' | 'state-menu';
 export type StateMobile = 'state-not-mobile' | 'state-mobile';
+
+// this must match:
+// @MOBILE_BREAKPOINT: 700px;
+// in ./root.media-queries.less
+export const MOBILE_BREAKPOINT = 760;
