@@ -47,7 +47,11 @@ export class RootComponent implements OnInit, OnDestroy {
 			this.blogDescription = options.general.blogdescription;
 		});
 		this._getMenus();
-		this._routerInfoSubscription = this.viewModelService.routerInfo$.subscribe((routerInfo) => console.log(routerInfo));
+		this._routerInfoSubscription = this.viewModelService.routerInfo$.subscribe((routerInfo) => {
+			console.log(routerInfo);
+			this.viewMenuOpen = routerInfo.menuOpen;
+			this.viewPostList = !routerInfo.postActive;
+		});
 	}
 
 	ngOnDestroy(): void {

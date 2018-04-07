@@ -86,7 +86,12 @@
 	</nav>
 </main>
 
-<button class="menu-button button--round light-color-theme" (click)="toggleMenu($event)">
+<button
+	class="menu-button button--round light-color-theme"
+	[routerLink]="'./'"
+	[queryParams]="{m:!viewMenuOpen}"
+	>
+	<!-- (click)="toggleMenu($event)" -->
 	<ngwp-icon name="icon_Menu"></ngwp-icon>
 </button>
 

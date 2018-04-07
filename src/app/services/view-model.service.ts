@@ -137,7 +137,7 @@ export class ViewModelService {
 		this._typeSlug = params.typeSlug;
 		this._slug = params.slug;
 		this._searchSlug = this._queryParams.s;
-		this._menuOpen = this._queryParams.m != null;
+		this._menuOpen = this._queryParams.m != null && this._queryParams.m !== 'false';
 		this._postActive = this._slug != null;
 
 		this.updateTitle();
