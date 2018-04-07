@@ -348,3 +348,5 @@ export enum Week {
 	Friday,
 	Saturday
 }
+
+export type WpSort = 'tag' | 'category' | 'author' | 'search';

@@ -86,12 +86,12 @@
 </main>
 
 <button
-	class="menu-button button--round light-color-theme"
-	[routerLink]="'./'"
-	[queryParams]="{m:!viewMenuOpen}"
+	class="menu-button button--round"
+	(click)="menuButtonClick()"
 	>
-	<!-- (click)="toggleMenu($event)" -->
-	<ngwp-icon name="icon_Menu"></ngwp-icon>
+	<!-- [routerLink]="menuButtonRouterLink()"
+	[queryParams]="!viewMenuOpen ? {m:true} : {}" -->
+	<ngwp-icon [name]="viewMenuOpen ? 'icon_X' : 'icon_Menu'"></ngwp-icon>
 </button>
 
 <div style="display:none">

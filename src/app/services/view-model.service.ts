@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IWpPost, IWpPage, IWpComment, IWpError } from 'app/interfaces/wp-rest-types';
+import { IWpPost, IWpPage, IWpComment, IWpError, WpSort } from 'app/interfaces/wp-rest-types';
 import { WpRestService } from './wp-rest.service';
 import { Router, ActivationEnd } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
@@ -11,18 +11,18 @@ import { Title } from '@angular/platform-browser';
 @Injectable()
 export class ViewModelService {
 
-	private _slug: string | undefined;
-	private _typeSlug: string | undefined;
-	private _type: 'tag' | 'category' | 'author' | undefined;
+	private _slug?: string;
+	private _typeSlug?: string;
+	private _type?: WpSort
 	private _menuOpen: boolean = false;
 	private _postActive: boolean = false;
 	private _pageNumber: number;
 	private _commentsPageNumber: number;
 	routerInfo$: Subject<{
 		// type: 'post' | 'list';
-		slug: string | undefined;
-		typeSlug: string | undefined;
-		type: 'tag' | 'category' | 'author' | undefined;
+		slug?: string;
+		typeSlug?: string;
+		type?: WpSort;
 		menuOpen: boolean;
 		postActive: boolean;
 		pageNumber: number;
@@ -49,7 +49,7 @@ export class ViewModelService {
 		canLoadMorePages: boolean;
 		loadMorePageCount: number;
 		title: string;
-		type: 'tag' | 'category' | 'author' | undefined;
+		type?: WpSort;
 	}> = new Subject();
 
 	private _allComments: IWpComment[];
@@ -122,30 +122,38 @@ export class ViewModelService {
 	private updateView(event: ActivationEnd): void {
 		const params = event.snapshot.params;
 		const queryParams = event.snapshot.queryParams;
+		const type = params.type;
+		const typeSlug = params.typeSlug;
+		const slug = params.slug;
 
 		this._pageNumber = +params['pageNumber'] || 1;
 		this._commentsPageNumber = +params['commentsPageNumber'] || 1;
-		this._type = params.type;
-		this._typeSlug = params.typeSlug;
-		this._slug = params.slug;
 		this._menuOpen = queryParams.m != null && queryParams.m !== 'false';
-		this._postActive = this._slug != null;
+		this._postActive = slug != null;
+
+		if (type)
+			this._type = type;
+		if (typeSlug)
+			this._typeSlug = typeSlug;
+		if (slug)
+			this._slug = slug;
 
 		this.updateTitle();
 		this.emitRouterInfo();
 
 		if (this._postActive)
 			this.updatePost();
-		if (this._type && this._typeSlug)
-			this.updatePostList(this._type, this._typeSlug);
-		else // if (!this._currentList || (!this._type && !this._typeSlug && !this._slug))
+		if (type && typeSlug)
+			this.updatePostList(type, typeSlug);
+		else if (!this._currentList || (!type && !typeSlug && !slug))
 			this.updatePostList();
+
+
 	}
 
 	private updateTitle() {
 		this.wpRestService.options
 			.then(options => {
-				// const subtitle = this._typeSlug || this._slug || this._searchSlug || options.general.blogdescription; // should be slug reneder name
 				const subtitle = this._typeSlug || this._slug || options.general.blogdescription; // should be slug reneder name
 				this.titleService.setTitle(`${options.general.blogname} // ${subtitle}`);
 			});
@@ -200,7 +208,7 @@ export class ViewModelService {
 	}
 
 	public updatePostList(
-		type?: 'tag' | 'category' | 'author' | 'search',
+		type?: WpSort,
 		slug?: string,
 	): void {
 		// retrieve the requested set of posts from the WpRestService

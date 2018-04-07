@@ -4,6 +4,7 @@ import { ViewModelService } from 'app/services/view-model.service';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { IWpMenuItem } from 'app/interfaces/wp-rest-types';
 import { Subscription } from 'rxjs/Subscription';
+import { Router, NavigationExtras } from '@angular/router';
 
 @Component({
 	selector: 'ngwp-root',
@@ -29,6 +30,7 @@ export class RootComponent implements OnInit, OnDestroy {
 	menu: IWpMenuItem[];
 	menuMame: string = 'primary';
 	private _routerInfoSubscription: Subscription;
+	private _menuNavigation: [any[], NavigationExtras];
 
 	@HostBinding('class.view-menu-open')
 	public viewMenuOpen: boolean = false;
@@ -39,6 +41,7 @@ export class RootComponent implements OnInit, OnDestroy {
 	constructor(
 		private wpRestService: WpRestService,
 		public viewModelService: ViewModelService,
+		private router: Router
 	) { }
 
 	ngOnInit(): void {
@@ -51,6 +54,13 @@ export class RootComponent implements OnInit, OnDestroy {
 			console.log(routerInfo);
 			this.viewMenuOpen = routerInfo.menuOpen;
 			this.viewPostList = !routerInfo.postActive;
+			// TODO: if mobile, do something else??
+			this._menuNavigation = [
+				routerInfo.slug ? [routerInfo.slug] : [],
+				{
+					queryParams: !this.viewMenuOpen && !this.viewPostList ? { m: true } : {}
+				}
+			];
 		});
 	}
 
@@ -58,8 +68,9 @@ export class RootComponent implements OnInit, OnDestroy {
 		this._routerInfoSubscription.unsubscribe();
 	}
 
-	toggleMenu(event: MouseEvent) {
-		this.viewMenuOpen = !this.viewMenuOpen;
+	menuButtonClick() {
+		console.log(this._menuNavigation);
+		this.router.navigate(this._menuNavigation[0], this._menuNavigation[1]);
 	}
 
 	private _getMenus() {

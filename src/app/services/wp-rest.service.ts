@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { environment } from '../../environments/environment';
 import {
 	IWpMenuItem, IWpPost, IWpPage, IWpTaxonomy, IWpUser, IWpComment,
-	IWpOptions, IWpId, IWpMedia, IWpError
+	IWpOptions, IWpId, IWpMedia, IWpError, WpSort
 } from '../interfaces/wp-rest-types';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/map';
@@ -237,7 +237,7 @@ export class WpRestService {
 		});
 	}
 
-	public getPosts(type?: 'tag' | 'category' | 'author' | 'search', slug?: string): Promise<(IWpPage | IWpPost)[]> {
+	public getPosts(type?: WpSort, slug?: string): Promise<(IWpPage | IWpPost)[]> {
 
 		// return all posts if there are no filter parameters
 		if (type == null || slug == null)
