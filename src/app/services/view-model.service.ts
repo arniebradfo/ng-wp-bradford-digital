@@ -16,6 +16,8 @@ export class ViewModelService {
 	private _typeSlug: string | undefined;
 	private _type: 'tag' | 'category' | 'author' | undefined;
 	private _searchSlug: string | undefined;
+	private _menuOpen: boolean = false;
+	private _postActive: boolean = false;
 	private _pageNumber: number;
 	private _commentsPageNumber: number;
 	routerInfo$: Subject<{
@@ -25,6 +27,8 @@ export class ViewModelService {
 		typeSlug: string | undefined;
 		type: 'tag' | 'category' | 'author' | undefined;
 		searchSlug: string | undefined;
+		menuOpen: boolean;
+		postActive: boolean;
 		pageNumber: number;
 		commentsPageNumber: number;
 	}> = new Subject();
@@ -84,6 +88,8 @@ export class ViewModelService {
 			typeSlug: this._typeSlug,
 			type: this._type,
 			searchSlug: this._searchSlug,
+			menuOpen: this._menuOpen,
+			postActive: this._postActive,
 			pageNumber: this._pageNumber,
 			commentsPageNumber: this._commentsPageNumber,
 		})
@@ -131,11 +137,13 @@ export class ViewModelService {
 		this._typeSlug = params.typeSlug;
 		this._slug = params.slug;
 		this._searchSlug = this._queryParams.s;
+		this._menuOpen = this._queryParams.m != null;
+		this._postActive = this._slug != null;
 
 		this.updateTitle();
 		this.emitRouterInfo();
 
-		if (this._slug)
+		if (this._postActive)
 			this.updatePost();
 		if (this._type && this._typeSlug)
 			this.updatePostList(this._type, this._typeSlug);

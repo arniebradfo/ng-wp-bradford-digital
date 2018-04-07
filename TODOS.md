@@ -1,6 +1,35 @@
 # TODOs:
-- search component
-- style button to switch between menu and page view
+- root states
+	- menu open/closed
+	- post/post-list 
+	- mobile/not
+- menu button color and icon
+	- on open
+	- on scroll
+- change routing?
+	- active sidebar
+	- root should go to correct state on router event
+
+- comments
+- content shortcodes
+- password protection
+- posts without images
+- scroll down button
+
+- transformations / animations
+	- post to full post
+	- search
+	- open/close menu
+	- main image parallax
+	- load post list
+	- inital load of anything
+
+- initial css and svg loading
+
+- seo
+- google analytics
+- speed up loading
+
 
 
 

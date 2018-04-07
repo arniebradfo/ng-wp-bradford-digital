@@ -369,7 +369,7 @@ export class WpRestService {
 				.map((res: Response) => res.json())
 				.toPromise()
 				.then(res => {
-					console.log(res);
+					// console.log(res);
 					return res;
 				}, err => console.log(err));
 		});
