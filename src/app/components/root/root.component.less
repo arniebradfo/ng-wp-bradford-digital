@@ -107,7 +107,7 @@
 
 	.transition(transform opacity);
 	transform: translateX(-100%);
-	:host(.view-menu-open) &, :host(.view-post-list) &{
+	:host(.state-menu) &, :host(.state-list) &{
 		transform: translateX(-@column_Size);
 		opacity: var(--disabled_Opacity);
 	}
@@ -115,7 +115,7 @@
 }
 
 
-:host(:not(.view-menu-open):not(.view-post-list)) {
+:host(:not(.state-menu):not(.state-list)) {
 	.menu, .post-list{
 		display: none;
 	}

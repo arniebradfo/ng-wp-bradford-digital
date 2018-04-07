@@ -5,6 +5,7 @@ import { Router, ActivationEnd } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/'
 import { Title } from '@angular/platform-browser';
+import { StateRoot } from '../components/root/root.component';
 
 
 
@@ -13,9 +14,10 @@ export class ViewModelService {
 
 	private _slug?: string;
 	private _typeSlug?: string;
-	private _type?: WpSort
-	private _menuOpen: boolean = false;
-	private _postActive: boolean = false;
+	private _type?: WpSort;
+	// private _menuOpen: boolean = false;
+	// private _postActive: boolean = false;
+	private _state: StateRoot;
 	private _pageNumber: number;
 	private _commentsPageNumber: number;
 	routerInfo$: Subject<{
@@ -23,8 +25,9 @@ export class ViewModelService {
 		slug?: string;
 		typeSlug?: string;
 		type?: WpSort;
-		menuOpen: boolean;
-		postActive: boolean;
+		// menuOpen: boolean;
+		// postActive: boolean;
+		state: StateRoot;
 		pageNumber: number;
 		commentsPageNumber: number;
 	}> = new Subject();
@@ -81,8 +84,9 @@ export class ViewModelService {
 			slug: this._slug,
 			typeSlug: this._typeSlug,
 			type: this._type,
-			menuOpen: this._menuOpen,
-			postActive: this._postActive,
+			// menuOpen: this._menuOpen,
+			// postActive: this._postActive,
+			state: this._state,
 			pageNumber: this._pageNumber,
 			commentsPageNumber: this._commentsPageNumber,
 		})
@@ -125,11 +129,13 @@ export class ViewModelService {
 		const type = params.type;
 		const typeSlug = params.typeSlug;
 		const slug = params.slug;
+		const menuOpen = queryParams.m != null && queryParams.m !== 'false';
 
 		this._pageNumber = +params['pageNumber'] || 1;
 		this._commentsPageNumber = +params['commentsPageNumber'] || 1;
-		this._menuOpen = queryParams.m != null && queryParams.m !== 'false';
-		this._postActive = slug != null;
+		// this._postActive = slug != null;
+
+		this._state = !menuOpen ? slug != null ? 'state-post' : 'state-list' : 'state-menu';
 
 		if (type)
 			this._type = type;
@@ -141,7 +147,7 @@ export class ViewModelService {
 		this.updateTitle();
 		this.emitRouterInfo();
 
-		if (this._postActive)
+		if (slug)
 			this.updatePost();
 		if (type && typeSlug)
 			this.updatePostList(type, typeSlug);

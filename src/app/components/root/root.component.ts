@@ -30,13 +30,20 @@ export class RootComponent implements OnInit, OnDestroy {
 	menu: IWpMenuItem[];
 	menuMame: string = 'primary';
 	private _routerInfoSubscription: Subscription;
+	private _routerInfoState;
 	private _menuNavigation: [any[], NavigationExtras];
 
-	@HostBinding('class.view-menu-open')
-	public viewMenuOpen: boolean = false;
+	// @HostBinding('class.view-menu-open')
+	// public viewMenuOpen: boolean = false;
 
-	@HostBinding('class.view-post-list')
-	public viewPostList: boolean = false;
+	// @HostBinding('class.view-post-list')
+	// public viewPostList: boolean = false;
+
+	@HostBinding('class')
+	public stateRoot: StateRoot = 'state-list';
+
+	// @HostBinding('class')
+	// public stateMobile: StateMobile = 'state-not-mobile';
 
 	constructor(
 		private wpRestService: WpRestService,
@@ -51,14 +58,17 @@ export class RootComponent implements OnInit, OnDestroy {
 		});
 		this._getMenus();
 		this._routerInfoSubscription = this.viewModelService.routerInfo$.subscribe((routerInfo) => {
-			console.log(routerInfo);
-			this.viewMenuOpen = routerInfo.menuOpen;
-			this.viewPostList = !routerInfo.postActive;
+			console.log(routerInfo.state);
+			this.stateRoot = routerInfo.state
+			this._routerInfoState = routerInfo;
+
+			// this.viewMenuOpen = routerInfo.menuOpen;
+			// this.viewPostList = !routerInfo.postActive;
 			// TODO: if mobile, do something else??
 			this._menuNavigation = [
 				routerInfo.slug ? [routerInfo.slug] : [],
 				{
-					queryParams: !this.viewMenuOpen && !this.viewPostList ? { m: true } : {}
+					queryParams: this.stateRoot === 'state-post' ? { m: true } : {}
 				}
 			];
 		});
@@ -87,3 +97,6 @@ export class RootComponent implements OnInit, OnDestroy {
 
 
 }
+
+export type StateRoot = 'state-post' | 'state-list' | 'state-menu';
+export type StateMobile = 'state-not-mobile' | 'state-mobile';
