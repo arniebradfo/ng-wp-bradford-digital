@@ -11,22 +11,18 @@ import { Title } from '@angular/platform-browser';
 @Injectable()
 export class ViewModelService {
 
-	private _queryParams: { [key: string]: string; };
 	private _slug: string | undefined;
 	private _typeSlug: string | undefined;
 	private _type: 'tag' | 'category' | 'author' | undefined;
-	private _searchSlug: string | undefined;
 	private _menuOpen: boolean = false;
 	private _postActive: boolean = false;
 	private _pageNumber: number;
 	private _commentsPageNumber: number;
 	routerInfo$: Subject<{
 		// type: 'post' | 'list';
-		queryParams: { [key: string]: string; };
 		slug: string | undefined;
 		typeSlug: string | undefined;
 		type: 'tag' | 'category' | 'author' | undefined;
-		searchSlug: string | undefined;
 		menuOpen: boolean;
 		postActive: boolean;
 		pageNumber: number;
@@ -50,7 +46,6 @@ export class ViewModelService {
 		currentListPageNumber: number;
 		currentListPageCount: number;
 		currentListRouterPrefix: string;
-		currentListQueryParams: { [key: string]: string; };
 		canLoadMorePages: boolean;
 		loadMorePageCount: number;
 		title: string;
@@ -83,11 +78,9 @@ export class ViewModelService {
 
 	private emitRouterInfo() {
 		this.routerInfo$.next({
-			queryParams: this._queryParams,
 			slug: this._slug,
 			typeSlug: this._typeSlug,
 			type: this._type,
-			searchSlug: this._searchSlug,
 			menuOpen: this._menuOpen,
 			postActive: this._postActive,
 			pageNumber: this._pageNumber,
@@ -108,10 +101,9 @@ export class ViewModelService {
 			currentListPageNumber: this._pageNumber,
 			currentListPageCount: this._currentListPageCount,
 			currentListRouterPrefix: this._type && this._typeSlug ? `/${this._type}/${this._typeSlug}` : '',
-			currentListQueryParams: this._queryParams,
 			canLoadMorePages: this._canLoadMorePages,
 			loadMorePageCount: this._loadMorePageCount,
-			title: this._typeSlug || this._searchSlug || 'Posts',
+			title: this._typeSlug || 'Posts',
 			type: this._type
 		});
 	}
@@ -129,15 +121,14 @@ export class ViewModelService {
 
 	private updateView(event: ActivationEnd): void {
 		const params = event.snapshot.params;
+		const queryParams = event.snapshot.queryParams;
 
-		this._queryParams = event.snapshot.queryParams;
 		this._pageNumber = +params['pageNumber'] || 1;
 		this._commentsPageNumber = +params['commentsPageNumber'] || 1;
 		this._type = params.type;
 		this._typeSlug = params.typeSlug;
 		this._slug = params.slug;
-		this._searchSlug = this._queryParams.s;
-		this._menuOpen = this._queryParams.m != null && this._queryParams.m !== 'false';
+		this._menuOpen = queryParams.m != null && queryParams.m !== 'false';
 		this._postActive = this._slug != null;
 
 		this.updateTitle();
@@ -147,16 +138,15 @@ export class ViewModelService {
 			this.updatePost();
 		if (this._type && this._typeSlug)
 			this.updatePostList(this._type, this._typeSlug);
-		else if (this._searchSlug)
-			this.updatePostList('search', this._searchSlug);
-		else if (!this._currentList || (!this._type && !this._typeSlug && !this._slug && !this._searchSlug))
+		else // if (!this._currentList || (!this._type && !this._typeSlug && !this._slug))
 			this.updatePostList();
 	}
 
 	private updateTitle() {
 		this.wpRestService.options
 			.then(options => {
-				const subtitle = this._typeSlug || this._slug || this._searchSlug || options.general.blogdescription; // should be slug reneder name
+				// const subtitle = this._typeSlug || this._slug || this._searchSlug || options.general.blogdescription; // should be slug reneder name
+				const subtitle = this._typeSlug || this._slug || options.general.blogdescription; // should be slug reneder name
 				this.titleService.setTitle(`${options.general.blogname} // ${subtitle}`);
 			});
 	}

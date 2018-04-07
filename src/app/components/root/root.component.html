@@ -60,7 +60,6 @@
 				*ngFor="let count of postList.currentListPageCount | numberToArray; let i = index"
 				[routerLink]="postList.currentListRouterPrefix + '/page/' + (i+1)"
 				routerLinkActive="selected"
-				[queryParams]="postList.currentListQueryParams"
 				>
 				{{i+1}}
 				<div class="selection-bar"></div>

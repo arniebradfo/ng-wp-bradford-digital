@@ -29,9 +29,9 @@ export class SearchComponent implements OnInit {
 	ngOnInit() { }
 
 	onSubmit() {
-		this.router.navigate([''], {
-			queryParams: { s: this.search },
-			relativeTo: this.activatedRoute.root
+		this.router.navigate(['search', this.search], {
+			// queryParams: { s: this.search },
+			// relativeTo: this.activatedRoute.root
 		});
 		// window.setTimeout(() => this.close(), 0)
 		this.close();
