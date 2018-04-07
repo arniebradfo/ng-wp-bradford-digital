@@ -15,18 +15,13 @@ export class ViewModelService {
 	private _slug?: string;
 	private _typeSlug?: string;
 	private _type?: WpSort;
-	// private _menuOpen: boolean = false;
-	// private _postActive: boolean = false;
 	private _state: StateRoot;
 	private _pageNumber: number;
 	private _commentsPageNumber: number;
 	routerInfo$: Subject<{
-		// type: 'post' | 'list';
 		slug?: string;
 		typeSlug?: string;
 		type?: WpSort;
-		// menuOpen: boolean;
-		// postActive: boolean;
 		state: StateRoot;
 		pageNumber: number;
 		commentsPageNumber: number;
@@ -84,8 +79,6 @@ export class ViewModelService {
 			slug: this._slug,
 			typeSlug: this._typeSlug,
 			type: this._type,
-			// menuOpen: this._menuOpen,
-			// postActive: this._postActive,
 			state: this._state,
 			pageNumber: this._pageNumber,
 			commentsPageNumber: this._commentsPageNumber,
@@ -129,12 +122,11 @@ export class ViewModelService {
 		const type = params.type;
 		const typeSlug = params.typeSlug;
 		const slug = params.slug;
+		const isHome = !type && !typeSlug && !slug;
 		const menuOpen = queryParams.m != null && queryParams.m !== 'false';
 
 		this._pageNumber = +params['pageNumber'] || 1;
 		this._commentsPageNumber = +params['commentsPageNumber'] || 1;
-		// this._postActive = slug != null;
-
 		this._state = !menuOpen ? slug != null ? 'state-post' : 'state-list' : 'state-menu';
 
 		if (type)
@@ -151,15 +143,15 @@ export class ViewModelService {
 			this.updatePost();
 		if (type && typeSlug)
 			this.updatePostList(type, typeSlug);
-		else if (!this._currentList || (!type && !typeSlug && !slug))
+		else if (!this._currentList || isHome)
 			this.updatePostList();
-
 
 	}
 
 	private updateTitle() {
 		this.wpRestService.options
 			.then(options => {
+				// TODO: fix this
 				const subtitle = this._typeSlug || this._slug || options.general.blogdescription; // should be slug reneder name
 				this.titleService.setTitle(`${options.general.blogname} // ${subtitle}`);
 			});

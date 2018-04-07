@@ -33,12 +33,6 @@ export class RootComponent implements OnInit, OnDestroy {
 	private _routerInfoState;
 	private _menuNavigation: [any[], NavigationExtras];
 
-	// @HostBinding('class.view-menu-open')
-	// public viewMenuOpen: boolean = false;
-
-	// @HostBinding('class.view-post-list')
-	// public viewPostList: boolean = false;
-
 	@HostBinding('class')
 	public stateRoot: StateRoot = 'state-list';
 
@@ -62,8 +56,6 @@ export class RootComponent implements OnInit, OnDestroy {
 			this.stateRoot = routerInfo.state
 			this._routerInfoState = routerInfo;
 
-			// this.viewMenuOpen = routerInfo.menuOpen;
-			// this.viewPostList = !routerInfo.postActive;
 			// TODO: if mobile, do something else??
 			this._menuNavigation = [
 				routerInfo.slug ? [routerInfo.slug] : [],
@@ -81,6 +73,10 @@ export class RootComponent implements OnInit, OnDestroy {
 	menuButtonClick() {
 		console.log(this._menuNavigation);
 		this.router.navigate(this._menuNavigation[0], this._menuNavigation[1]);
+	}
+
+	menuButtonIcon(): string {
+		return this.stateRoot === 'state-post' ? 'icon_Menu' : 'icon_X'
 	}
 
 	private _getMenus() {
