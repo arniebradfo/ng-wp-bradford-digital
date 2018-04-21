@@ -1,0 +1,168 @@
+@import (reference) '../../style/utils/all.util.less';
+@import (reference) '../../style/vars/sizes.vars.less';
+@import (reference) '../../style/vars/typography.vars.less';
+@import (reference) './root.media-queries.less';
+
+@column_Size: @s23*10;
+// PRIMARY VIEW //
+.primaryView(){
+	height: 100%;
+	width: 100%;
+	.absolute(null null null 100%);
+	.transition(transform opacity);
+}
+.primaryView_MobileOpen(){
+
+}
+.primaryView_MobileClosed(){
+	transform: translateX(90%);
+	opacity: 0;
+}
+
+
+
+
+:host{
+	height: 100%;
+	width:  100%;
+	position: relative;
+	overflow: hidden;
+	display: grid;
+}
+.menu{
+	overflow: auto;
+	grid-column: 1;
+	z-index: 2;
+}
+.post-list{
+	overflow: auto;
+	z-index: 1;
+}
+.current-post{
+	overflow: auto;
+	z-index: 3;
+	.primaryView();
+}
+.menu-button{
+	.absolute(0 null null 0);
+	margin: @s17;
+	z-index: 4;
+}
+
+
+// MEDIA QUERIES //
+@media @state-mobile{
+	:host{
+		grid-template-columns: @column_Size 1fr;
+	}
+	.menu{}
+	.post-list{
+		.primaryView();
+		.absolute(0);
+	}
+	.current-post{
+		.absolute(0);
+	}
+}
+@media @state-not-mobile{
+	:host{
+		grid-template-columns: @column_Size 1fr @column_Size;
+	}
+	.menu{}
+	.post-list{
+		grid-column: 2;
+	}
+	.current-post{
+		// grid-column: 3;
+	}
+}
+
+
+:host{
+	// @media @state-mobile{
+	// }
+	// @media @state-not-mobile{
+		// grid-template-columns: @column_Size 1fr @column_Size;
+	// }
+}
+.menu{
+	// @media @state-mobile{}
+	// @media @state-not-mobile{}
+}
+.post-list{
+	// @media @state-mobile{
+	// 	.primaryView();
+	// 	.absolute(0);
+	// }
+	// @media @state-not-mobile{
+	// 	grid-column: 2;
+	// }
+}
+.current-post{
+	// .primaryView();
+	// @media @state-mobile{
+	// 	.absolute(0);
+	// }
+	// @media @state-not-mobile{
+	// 	// grid-column: 3;
+	// }
+}
+
+
+// STATES //
+// .state-post | .state-list | .state-menu //
+// .state-not-mobile | .state-mobile // @media @state-not-mobile{} | @media @state-mobile{} //
+:host(.state-menu),
+:host(.state-list)
+{
+	@media @state-not-mobile{
+		.current-post{
+			transform: translateX(-@column_Size);
+			opacity: var(--disabled_Opacity);
+		}
+	}
+}
+:host(.state-menu){
+	@media @state-mobile{
+		.post-list, .current-post{
+			.primaryView_MobileClosed();
+		 }
+	}
+}
+:host(.state-list){
+	@media @state-mobile{
+		.post-list{
+			.primaryView_MobileOpen();
+		}
+		.current-post{
+			.primaryView_MobileClosed();
+		}
+	}
+}
+:host(.state-post){
+	@media @state-mobile{
+		.current-post{
+			.primaryView_MobileOpen();
+		}
+		.post-list{
+			.primaryView_MobileClosed();
+		 }
+	}
+	@media @state-not-mobile{
+		.current-post{
+			transform: translateX(-100%);
+		}
+		.menu, .post-list{
+			display: none;
+		}
+	}
+}
+:host(.state-post),
+:host(.state-list)
+{
+	@media @state-mobile{
+		.menu{
+			display: none;
+		}
+	}
+}

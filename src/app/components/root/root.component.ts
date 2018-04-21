@@ -10,7 +10,7 @@ import { Observable } from 'rxjs/Rx';
 @Component({
 	selector: 'ngwp-root',
 	templateUrl: './root.component.html',
-	styleUrls: ['./root.component.less']
+	styleUrls: ['./root-states.component.less', './root.component.less']
 })
 export class RootComponent implements OnInit, OnDestroy {
 
