@@ -7,18 +7,7 @@
 // .state-post | .state-list | .state-menu //
 // .state-not-mobile | .state-mobile // @media @state-not-mobile{} | @media @state-mobile{} //
 
-
 @column_Size: @s23*10;
-// PRIMARY VIEW //
-
-.primaryView_MobileOpen(){
-
-}
-.primaryView_MobileClosed(){
-	transform: translateX(90%);
-	opacity: 0;
-}
-
 
 :host{
 	height: 100%;
@@ -64,27 +53,39 @@
 	.current-post{}
 	.post-list{}
 
+	.primary_Open(){
+
+	}
+	.primary_Closed(){
+		transform: translateX(90%);
+		opacity: 0;
+	}
+
 	:host(.state-menu){
 		.post-list,
 		.current-post
 		{
-			.primaryView_MobileClosed();
+			.primary_Closed();
 		}
 	}
 
-	:host(.state-list) .post-list,
-	:host(.state-post) .current-post
-	{
-		// list or post in focus
+	:host(.state-list) {
+		.post-list{
+			.primary_Open();
+		}
+		.current-post{
+			.primary_Closed();
+		}
+	}
+	:host(.state-post){
+		.current-post{
+			.primary_Open();
+		}
+		.post-list{
+			.primary_Closed();
+		}
 	}
 
-	:host(.state-list) .current-post,
-	:host(.state-post) .post-list
-	{
-		// menu in focus
-		transform: translateX(90%);
-		opacity: 0;
-	}
 
 	:host(.state-post),
 	:host(.state-list)
