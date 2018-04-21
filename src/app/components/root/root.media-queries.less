@@ -10,17 +10,17 @@
 @tv_Breakpoint:      9999px; // ???
 
 @mobilePlusOne_Breakpoint: (@mobile_Breakpoint + 1);
-@mobile_Media: ~'screen and (max-width: @{mobile_Breakpoint})';
-@gtMobile_Media: ~'screen and (min-width: @{mobilePlusOne_Breakpoint})';
+@state-mobile: ~'screen and (max-width: @{mobile_Breakpoint})';
+@state-not-mobile: ~'screen and (min-width: @{mobilePlusOne_Breakpoint})';
 // gt means greater than
 
-// @media @mobile_Media@rules) {
-// 	@media @mobile_Media {
+// @media @state-mobile@rules) {
+// 	@media @state-mobile {
 // 		@rules();
 // 	}
 // }
 // .gtMobile(@rules) {
-// 	@media @gtMobile_Media {
+// 	@media @state-not-mobile {
 // 		@rules();
 // 	}
 // }

@@ -136,33 +136,33 @@
 
 // MEDIA QUERIES //
 :host{
-	@media @mobile_Media{
+	@media @state-mobile{
 		grid-template-columns: @column_Size 1fr;
 	}
-	@media @gtMobile_Media{
+	@media @state-not-mobile{
 		grid-template-columns: @column_Size 1fr @column_Size;
 	}
 }
 .menu{
 	grid-column: 1;
-	@media @mobile_Media{}
-	@media @gtMobile_Media{}
+	@media @state-mobile{}
+	@media @state-not-mobile{}
 }
 .post-list{
-	@media @mobile_Media{
+	@media @state-mobile{
 		.primaryView();
 		.absolute(0);
 	}
-	@media @gtMobile_Media{
+	@media @state-not-mobile{
 		grid-column: 2;
 	}
 }
 .current-post{
 	.primaryView();
-	@media @mobile_Media{
+	@media @state-mobile{
 		.absolute(0);
 	}
-	@media @gtMobile_Media{
+	@media @state-not-mobile{
 		// grid-column: 3;
 	}
 }
@@ -170,11 +170,11 @@
 
 // STATES //
 // .state-post | .state-list | .state-menu //
-// .state-not-mobile | .state-mobile // @media @gtMobile_Media{} | @media @mobile_Media{} //
+// .state-not-mobile | .state-mobile // @media @state-not-mobile{} | @media @state-mobile{} //
 :host(.state-menu),
 :host(.state-list)
 {
-	@media @gtMobile_Media{
+	@media @state-not-mobile{
 		.current-post{
 			transform: translateX(-@column_Size);
 			opacity: var(--disabled_Opacity);
@@ -182,14 +182,14 @@
 	}
 }
 :host(.state-menu){
-	@media @mobile_Media{
+	@media @state-mobile{
 		.post-list, .current-post{
 			.primaryView_MobileClosed();
 		 }
 	}
 }
 :host(.state-list){
-	@media @mobile_Media{
+	@media @state-mobile{
 		.post-list{
 			.primaryView_MobileOpen();
 		}
@@ -199,7 +199,7 @@
 	}
 }
 :host(.state-post){
-	@media @mobile_Media{
+	@media @state-mobile{
 		.current-post{
 			.primaryView_MobileOpen();
 		}
@@ -207,7 +207,7 @@
 			.primaryView_MobileClosed();
 		 }
 	}
-	@media @gtMobile_Media{
+	@media @state-not-mobile{
 		.current-post{
 			transform: translateX(-100%);
 		}
@@ -219,7 +219,7 @@
 :host(.state-post),
 :host(.state-list)
 {
-	@media @mobile_Media{
+	@media @state-mobile{
 		.menu{
 			display: none;
 		}
