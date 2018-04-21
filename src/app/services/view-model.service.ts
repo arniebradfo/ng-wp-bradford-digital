@@ -3,11 +3,8 @@ import { IWpPost, IWpPage, IWpComment, IWpError, WpSort } from 'app/interfaces/w
 import { WpRestService } from './wp-rest.service';
 import { Router, ActivationEnd } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
-import 'rxjs/'
 import { Title } from '@angular/platform-browser';
 import { StateRoot } from '../components/root/root.component';
-
-
 
 @Injectable()
 export class ViewModelService {

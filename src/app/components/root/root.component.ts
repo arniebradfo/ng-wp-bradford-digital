@@ -1,7 +1,7 @@
 import { Component, OnInit, HostBinding, OnDestroy } from '@angular/core';
 import { WpRestService } from 'app/services/wp-rest.service';
 import { ViewModelService } from 'app/services/view-model.service';
-import { trigger, state, style, transition, animate } from '@angular/animations';
+// import { trigger, state, style, transition, animate } from '@angular/animations';
 import { IWpMenuItem } from 'app/interfaces/wp-rest-types';
 import { Subscription } from 'rxjs/Subscription';
 import { Router, NavigationExtras } from '@angular/router';
@@ -10,19 +10,7 @@ import { Observable } from 'rxjs/Rx';
 @Component({
 	selector: 'ngwp-root',
 	templateUrl: './root.component.html',
-	styleUrls: ['./root.component.less'],
-	// animations: [ // not sure how performant this is...
-	// trigger('menuState', [
-	// 	state('open', style({
-	// 		transform: 'translateX(-300px)',
-	// 	})),
-	// 	state('closed',  style({
-	// 		transform: 'translateX(-100%)',
-	// 	})),
-	// 	transition('open => closed', animate('1000ms ease-in')),
-	// 	transition('closed => open', animate('1000ms ease-out'))
-	// ])
-	// ]
+	styleUrls: ['./root.component.less']
 })
 export class RootComponent implements OnInit, OnDestroy {
 
@@ -58,7 +46,7 @@ export class RootComponent implements OnInit, OnDestroy {
 		});
 		this._getMenus();
 		this._routerInfoSubscription = this.viewModelService.routerInfo$.subscribe((routerInfo) => {
-			console.log(routerInfo.state);
+			// console.log(routerInfo.state);
 			this.stateRoot = routerInfo.state
 			this._routerInfoState = routerInfo;
 
@@ -80,7 +68,7 @@ export class RootComponent implements OnInit, OnDestroy {
 	}
 
 	menuButtonClick() {
-		console.log(this._menuNavigation);
+		// console.log(this._menuNavigation);
 		this.router.navigate(this._menuNavigation[0], this._menuNavigation[1]);
 	}
 

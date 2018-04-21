@@ -1,32 +1,38 @@
 @import (reference) '../../style/utils/all.util.less';
 @import (reference) '../../style/vars/sizes.vars.less';
 @import (reference) '../../style/vars/typography.vars.less';
+@import (reference) './root.media-queries.less';
 
-@column_Size: 300px;
+@column_Size: @s23*10;
+
+
+// not mobile
+	// post state
+	// menu/list state
+// mobile
+	// menu state
+	// post state
+	// list state
+
 
 :host{
 	height: 100%;
 	width:  100%;
-	display: grid;
-	grid-template-columns: auto 1fr @column_Size;
 	position: relative;
 	overflow: hidden;
+	display: grid;
 }
 
+
+// MENU //
 .menu{
-	grid-column: 1;
-	grid-row: 1;
+	overflow: auto;
 	z-index: 2;
 	position: relative;
-	// border-right: @s1 solid var(--bgOverlay2_Color);
-
 	display: flex;
 	flex-direction: column;
 	align-items: flex-end;
 
-	// for the nav selection bar items over the border?
-	// TODO: make the border another puesdo element
-	overflow: visible;
 	&:after, &:before{
 		content: '';
 		z-index: -1;
@@ -40,6 +46,7 @@
 		background-color: var(--bgOverlay2_Color);
 		width: @s1;
 	}
+
 }
 .menu-logo{
 	margin: @horizontal_PaddingLg*2 @horizontal_PaddingLg @vertical_Padding;
@@ -52,11 +59,11 @@
 	margin: @s35*2 0 ;
 }
 
+
+// LIST //
 .post-list{
-	padding: @s35*3 @horizontal_PaddingLg;
-	grid-column: 2;
-	grid-row: 1;
 	overflow: auto;
+	padding: @s35*3 @horizontal_PaddingLg;
 	z-index: 1;
 }
 .post-list-header{
@@ -86,43 +93,135 @@
 .post-list-search{
 	.absolute(0);
 	top: @s5;
-	// display: none;
 }
-
 .seach-open .nav-item{
 	opacity: 0;
 }
-
-
 .flex-splitter{
 	flex: 1 1 auto;
 }
 
+// POST //
 .current-post{
-	overflow: auto;
 	z-index: 3;
-	.absolute(null null null 100%);
-	width: 100%;
-	height: 100%;
-
-	.transition(transform opacity);
-	transform: translateX(-100%);
-	:host(.state-menu) &, :host(.state-list) &{
-		transform: translateX(-@column_Size);
-		opacity: var(--disabled_Opacity);
-	}
-
+	overflow: auto;
 }
 
-
-:host(:not(.state-menu):not(.state-list)) {
-	.menu, .post-list{
-		display: none;
-	}
-}
-
+// MENU BUTTON //
 .menu-button{
 	.absolute(0 null null 0);
 	z-index: 4;
 	margin: @s17;
+}
+
+
+
+// PRIMARY VIEW //
+.primaryView(){
+	height: 100%;
+	width: 100%;
+	.absolute(null null null 100%);
+	.transition(transform opacity);
+	// transform: translateX(-100%);
+}
+.primaryView_MobileOpen(){
+
+}
+.primaryView_MobileClosed(){
+	transform: translateX(90%);
+	opacity: 0;
+}
+
+
+
+// MEDIA QUERIES //
+:host{
+	@media @mobile_Media{
+		grid-template-columns: @column_Size 1fr;
+	}
+	@media @gtMobile_Media{
+		grid-template-columns: @column_Size 1fr @column_Size;
+	}
+}
+.menu{
+	grid-column: 1;
+	@media @mobile_Media{}
+	@media @gtMobile_Media{}
+}
+.post-list{
+	@media @mobile_Media{
+		.primaryView();
+		.absolute(0);
+	}
+	@media @gtMobile_Media{
+		grid-column: 2;
+	}
+}
+.current-post{
+	.primaryView();
+	@media @mobile_Media{
+		.absolute(0);
+	}
+	@media @gtMobile_Media{
+		// grid-column: 3;
+	}
+}
+
+
+// STATES //
+// .state-post | .state-list | .state-menu //
+// .state-not-mobile | .state-mobile // @media @gtMobile_Media{} | @media @mobile_Media{} //
+:host(.state-menu),
+:host(.state-list)
+{
+	@media @gtMobile_Media{
+		.current-post{
+			transform: translateX(-@column_Size);
+			opacity: var(--disabled_Opacity);
+		}
+	}
+}
+:host(.state-menu){
+	@media @mobile_Media{
+		.post-list, .current-post{
+			.primaryView_MobileClosed();
+		 }
+	}
+}
+:host(.state-list){
+	@media @mobile_Media{
+		.post-list{
+			.primaryView_MobileOpen();
+		}
+		.current-post{
+			.primaryView_MobileClosed();
+		}
+	}
+}
+:host(.state-post){
+	@media @mobile_Media{
+		.current-post{
+			.primaryView_MobileOpen();
+		}
+		.post-list{
+			.primaryView_MobileClosed();
+		 }
+	}
+	@media @gtMobile_Media{
+		.current-post{
+			transform: translateX(-100%);
+		}
+		.menu, .post-list{
+			display: none;
+		}
+	}
+}
+:host(.state-post),
+:host(.state-list)
+{
+	@media @mobile_Media{
+		.menu{
+			display: none;
+		}
+	}
 }
