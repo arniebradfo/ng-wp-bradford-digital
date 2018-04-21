@@ -46,17 +46,35 @@ export class RootComponent implements OnInit, OnDestroy {
 		});
 		this._getMenus();
 		this._routerInfoSubscription = this.viewModelService.routerInfo$.subscribe((routerInfo) => {
-			// console.log(routerInfo.state);
+			// console.log(routerInfo);
 			this.stateRoot = routerInfo.state
 			this._routerInfoState = routerInfo;
 
-			// TODO: if mobile, do something else??
-			this._menuNavigation = [
-				routerInfo.slug ? [routerInfo.slug] : [],
-				{
-					queryParams: this.stateRoot === 'state-post' ? { m: true } : {}
-				}
-			];
+			if (this.stateMobile === 'state-not-mobile') {
+
+				this._menuNavigation = [
+					routerInfo.slug ? [routerInfo.slug] : [],
+					{
+						queryParams: this.stateRoot === 'state-post' ? { m: true } : {}
+					}
+				];
+
+			} else { // if (this.stateMobile === 'state-mobile') {
+
+				let route: string[] = [];
+				if (this.stateRoot === 'state-post' && routerInfo.slug)
+					route = [routerInfo.slug];
+				else if (this.stateRoot === 'state-list' && routerInfo.type && routerInfo.typeSlug)
+					route = [routerInfo.type, routerInfo.typeSlug];
+
+				this._menuNavigation = [
+					route,
+					{
+						queryParams: this.stateRoot === 'state-post' || this.stateRoot === 'state-list' ? { m: true } : {}
+					}
+				];
+			}
+
 		});
 
 		this._updateStateMobile();
@@ -73,7 +91,10 @@ export class RootComponent implements OnInit, OnDestroy {
 	}
 
 	menuButtonIcon(): string {
-		return this.stateRoot === 'state-post' ? 'icon_Menu' : 'icon_X'
+		if (this.stateMobile === 'state-not-mobile')
+			return this.stateRoot === 'state-post' ? 'icon_Menu' : 'icon_X'
+		else
+			return this.stateRoot !== 'state-menu' ? 'icon_Menu' : 'icon_X'
 	}
 
 	private _getMenus() {
