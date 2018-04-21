@@ -4,8 +4,9 @@
 @import (reference) './root.media-queries.less';
 
 // STATES //
-// .state-post | .state-list | .state-menu //
-// .state-not-mobile | .state-mobile // @media @state-not-mobile{} | @media @state-mobile{} //
+// .state-post | .state-list | .state-menu
+// .was-state-post | .was-state-list | .was-state-menu
+// .state-not-mobile | .state-mobile // @media @state-not-mobile{} | @media @state-mobile{}
 
 @column_Size: @s23*10;
 
@@ -57,7 +58,7 @@
 
 	}
 	.primary_Closed(){
-		transform: translateX(90%);
+		transform: translateX(@column_Size);
 		opacity: 0;
 	}
 
@@ -68,6 +69,12 @@
 			.primary_Closed();
 		}
 	}
+	:host(.state-menu.was-state-list) .post-list,
+	:host(.state-menu.was-state-post) .current-post,
+	{
+		opacity: 1;
+	}
+
 
 	:host(.state-list) {
 		.post-list{

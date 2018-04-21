@@ -24,9 +24,10 @@ export class RootComponent implements OnInit, OnDestroy {
 
 	stateRoot: StateRoot = 'state-list';
 	stateMobile: StateMobile = 'state-not-mobile';
+	stateWas: StateRootWas = 'was-state-list';
 	@HostBinding('class')
 	private get _rootClass(): string {
-		return `${this.stateRoot} ${this.stateMobile}`;
+		return `${this.stateRoot} ${this.stateMobile} ${this.stateWas}`;
 	}
 
 	private _mobileStateSubscription: Subscription
@@ -46,9 +47,13 @@ export class RootComponent implements OnInit, OnDestroy {
 		});
 		this._getMenus();
 		this._routerInfoSubscription = this.viewModelService.routerInfo$.subscribe((routerInfo) => {
-			// console.log(routerInfo);
+
+			this.stateWas = `was-${this.stateRoot}` as StateRootWas ;
 			this.stateRoot = routerInfo.state
 			this._routerInfoState = routerInfo;
+
+			// console.log(routerInfo);
+			// console.log(this.stateWas);
 
 			if (this.stateMobile === 'state-not-mobile') {
 
@@ -70,7 +75,7 @@ export class RootComponent implements OnInit, OnDestroy {
 				this._menuNavigation = [
 					route,
 					{
-						queryParams: this.stateRoot === 'state-post' || this.stateRoot === 'state-list' ? { m: true } : {}
+						queryParams: this.stateRoot !== 'state-menu' ? { m: true } : {}
 					}
 				];
 			}
@@ -116,6 +121,7 @@ export class RootComponent implements OnInit, OnDestroy {
 
 export type StateRoot = 'state-post' | 'state-list' | 'state-menu';
 export type StateMobile = 'state-not-mobile' | 'state-mobile';
+export type StateRootWas = 'was-state-post' | 'was-state-list' | 'was-state-menu';
 
 // this must match:
 // @MOBILE_BREAKPOINT: 700px;
