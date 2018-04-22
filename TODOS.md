@@ -1,10 +1,6 @@
 # TODOs:
 - root states
-	- menu open/closed
-	- post/post-list 
-	- mobile/not
-		- `.was-post` or `.was-list`
-	- refacor `post` `list` `menu` naming usage
+	- add pretty animations
 - menu button color and icon
 	- on open
 	- on scroll

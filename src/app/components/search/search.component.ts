@@ -1,7 +1,7 @@
 import { Component, OnInit, HostBinding, ViewChild, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
-// search form that routes to a post-list filtered by the search string
+// search form that routes to a list filtered by the search string
 
 @Component({
 	selector: 'ngwp-search',

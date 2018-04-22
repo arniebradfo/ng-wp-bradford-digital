@@ -17,15 +17,15 @@
 	</nav>
 </header>
 
-<section class="post-list" *ngIf="viewModelService.postList$ | async as postList">
+<section class="list" *ngIf="viewModelService.postList$ | async as postList">
 
-	<div class="post-list-header">
-		<h1 class="post-list-title">{{ postList.title }}</h1>
+	<div class="list-header">
+		<h1 class="list-title">{{ postList.title }}</h1>
 		<!--
-			<small class="post-list-type">{{ postList.type }}</small>
-			<span class="post-list-page-number">page {{postList.currentListPageNumber}}</span>
+			<small class="list-type">{{ postList.type }}</small>
+			<span class="list-page-number">page {{postList.currentListPageNumber}}</span>
 		-->
-		<nav class="post-list-nav nav top" [ngClass]="{'seach-open':topSearch.isOpen}">
+		<nav class="list-nav nav top" [ngClass]="{'seach-open':topSearch.isOpen}">
 			<button
 				*ngFor="let item of menu"
 				[ngClass]="item.classes"
@@ -37,24 +37,24 @@
 				<div class="selection-bar"></div>
 			</button>
 			<div class="flex-splitter"></div>
-			<button class="nav-item post-list-search-button" (click)="topSearch.open()">
+			<button class="nav-item list-search-button" (click)="topSearch.open()">
 				<span>search</span>
 				<ngwp-icon class="icon-right" name="icon_Search"></ngwp-icon>
 			</button>
-			<ngwp-search #topSearch class="post-list-search"></ngwp-search>
+			<ngwp-search #topSearch class="list-search"></ngwp-search>
 		</nav>
 	</div>
 
-	<ngwp-post class="post-list-item" *ngFor="let post of postList.currentList" [post]="post"></ngwp-post>
+	<ngwp-post class="list-item" *ngFor="let post of postList.currentList" [post]="post"></ngwp-post>
 
 	<button class="load-more-button emhasis" (click)="viewModelService.loadMorePosts()" *ngIf="postList.canLoadMorePages">
 		<span>Load More</span>
 		<ngwp-icon class="icon-right" name="icon_Pointer_Down"></ngwp-icon>
 	</button>
 
-	<div class="post-list-header">
-		<nav class="post-list-nav nav top" *ngIf="postList.currentListPageCount > 1" [ngClass]="{'seach-open':bottomSearch.isOpen}">
-			<label class="post-list-nav-label nav-item" >go to page</label>
+	<div class="list-header">
+		<nav class="list-nav nav top" *ngIf="postList.currentListPageCount > 1" [ngClass]="{'seach-open':bottomSearch.isOpen}">
+			<label class="list-nav-label nav-item" >go to page</label>
 			<button
 				class="nav-item"
 				*ngFor="let count of postList.currentListPageCount | numberToArray; let i = index"
@@ -65,23 +65,23 @@
 				<div class="selection-bar"></div>
 			</button>
 			<div class="flex-splitter"></div>
-			<button class="nav-item post-list-search-button" (click)="bottomSearch.open()">
+			<button class="nav-item list-search-button" (click)="bottomSearch.open()">
 				<span>search</span>
 				<ngwp-icon class="icon-right" name="icon_Search"></ngwp-icon>
 			</button>
-			<ngwp-search #bottomSearch class="post-list-search"></ngwp-search>
+			<ngwp-search #bottomSearch class="list-search"></ngwp-search>
 		</nav>
 	</div>
 
 </section>
 
-<main class="current-post" *ngIf="viewModelService.post$ | async as post">
+<main class="post" *ngIf="viewModelService.post$ | async as post">
 	<ngwp-post [post]="post.currentPost" [showFull]="true"></ngwp-post>
 	<nav *ngIf="post.currentPost?.adjcentPosts as adjcentPosts">
 		<strong>Previous Post:</strong>
-		<ngwp-post class="post-list-item" [post]="adjcentPosts.previous"></ngwp-post>
+		<ngwp-post class="list-item" [post]="adjcentPosts.previous"></ngwp-post>
 		<strong>Next Post:</strong>
-		<ngwp-post class="post-list-item" [post]="adjcentPosts.next"></ngwp-post>
+		<ngwp-post class="list-item" [post]="adjcentPosts.next"></ngwp-post>
 	</nav>
 </main>
 

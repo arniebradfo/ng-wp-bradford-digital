@@ -22,11 +22,11 @@
 	grid-column: 1;
 	z-index: 2;
 }
-.post-list{
+.list{
 	overflow: auto;
 	z-index: 1;
 }
-.current-post{
+.post{
 	overflow: auto;
 	z-index: 3;
 }
@@ -43,52 +43,52 @@
 		grid-template-columns: @column_Size 1fr;
 	}
 	.menu{}
-	.post-list,
-	.current-post
+	.list,
+	.post
 	{
 		height: 100%;
 		width: 100%;
 		.absolute(0);
 		.transition(transform opacity);
 	}
-	.current-post{}
-	.post-list{}
+	.post{}
+	.list{}
 
-	.primary_Open(){
-
-	}
+	.primary_Open(){}
 	.primary_Closed(){
 		transform: translateX(@column_Size);
 		opacity: 0;
+		z-index: 0;
+		// display: none;
 	}
 
 	:host(.state-menu){
-		.post-list,
-		.current-post
+		.list,
+		.post
 		{
 			.primary_Closed();
 		}
 	}
-	:host(.state-menu.was-state-list) .post-list,
-	:host(.state-menu.was-state-post) .current-post,
+	:host(.state-menu.was-state-list) .list,
+	:host(.state-menu.was-state-post) .post,
 	{
-		opacity: 1;
+		opacity: 0.5;
 	}
 
 
 	:host(.state-list) {
-		.post-list{
+		.list{
 			.primary_Open();
 		}
-		.current-post{
+		.post{
 			.primary_Closed();
 		}
 	}
 	:host(.state-post){
-		.current-post{
+		.post{
 			.primary_Open();
 		}
-		.post-list{
+		.list{
 			.primary_Closed();
 		}
 	}
@@ -109,10 +109,10 @@
 		grid-template-columns: @column_Size 1fr @column_Size;
 	}
 	.menu{}
-	.post-list{
+	.list{
 		grid-column: 2;
 	}
-	.current-post{
+	.post{
 		height: 100%;
 		width: 100%;
 		.absolute(null null null 100%);
@@ -123,16 +123,16 @@
 	:host(.state-menu),
 	:host(.state-list)
 	{
-		.current-post{
+		.post{
 			transform: translateX(-@column_Size);
 			opacity: var(--disabled_Opacity);
 		}
 	}
 	:host(.state-post){
-		.current-post{
+		.post{
 			transform: translateX(-100%);
 		}
-		.menu, .post-list{
+		.menu, .list{
 			display: none;
 		}
 	}
