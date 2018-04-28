@@ -1,21 +1,30 @@
 # TODOs:
-- root states
-	- add pretty animations
-- menu button color and icon
-	- on open
-	- on scroll
-- change routing?
-	- active sidebar
+- posts types
+	- without images
+	- video
+	- link
+	- password protection
+- add scroll component to eliminate scrollbox
+	- scroll to top
+	- menu button color onscroll
+	- scroll down button
+	- main image parallax
+- active sidebar
+	- change routing?
 	- root should go to correct state on router event
+- src sizes for images
 
-- comments
 - content shortcodes
-- password protection
-- posts without images
-- scroll down button
+- comments css
+
+- seo
+- google analytics
+- speed up loading
+- sitemap
 
 - transformations / animations
 	- post to full post
+	- menu
 	- search
 	- open/close menu
 	- main image parallax
@@ -24,15 +33,8 @@
 
 - initial css and svg loading
 
-- seo
-- google analytics
-- speed up loading
-
-
-
 
 ### TODOs: less important
-- sitemap
 - configure to not require a wpBase environment var
 - what to do when network fails?
 - imporove network performance with more, smaller requests returning `Observables`
@@ -43,9 +45,9 @@
   - change tag and category base
   - change permalink file
 - support options
-    - permalink structure ?
-    - homepage display
+	- permalink structure ?
+	- homepage display
 - use date and time formatting from options obj:
-    - map [Anuglar date pipe](https://angular.io/api/common/DatePipe) to [php date formatting](https://codex.wordpress.org/Formatting_Date_and_Time)
+	- map [Anuglar date pipe](https://angular.io/api/common/DatePipe) to [php date formatting](https://codex.wordpress.org/Formatting_Date_and_Time)
 - [widgets](https://wordpress.org/plugins/wp-rest-api-sidebars/) maybe not...
-    - [custom templates](https://wordpress.stackexchange.com/questions/97411/code-for-recent-posts-widget)
+	- [custom templates](https://wordpress.stackexchange.com/questions/97411/code-for-recent-posts-widget)
