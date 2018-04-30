@@ -64,6 +64,7 @@ export interface IWpPost extends IWpPage {
 	categories: number[];
 	categories_ref?: IWpTaxonomy[];
 	format: 'standard' | 'link' | 'video' | 'aside' | 'audio' | 'chat' | 'gallery' | 'image' | 'quote' | 'status';
+	externalLink?: URL;
 	sticky: boolean;
 	tags: number[];
 	tags_ref?: IWpTaxonomy[];

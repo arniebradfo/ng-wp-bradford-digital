@@ -46,8 +46,8 @@
 	</section>
 
 	<button class="post-button set-item set-item--emphasis" *ngIf="!showFull" [routerLink]="'/'+post.slug">
-		<span>Read More</span>
-		<ngwp-icon class="load-more-button-icon" name="icon_Expand"></ngwp-icon>
+		<span>Read More <span *ngIf="post.externalLink">on: {{post.externalLink.hostname}}<a></a></span></span>
+		<ngwp-icon class="load-more-button-icon" [name]="post.format === 'link' ? 'icon_Link' : 'icon_Expand'"></ngwp-icon>
 	</button>
 
 	<!--

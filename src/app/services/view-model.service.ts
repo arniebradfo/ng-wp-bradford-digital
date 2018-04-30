@@ -65,6 +65,8 @@ export class ViewModelService {
 		private router: Router,
 		private titleService: Title
 	) {
+		console.log(this);
+
 		this.router.events.subscribe(event => {
 			if (event instanceof ActivationEnd)
 				this.updateView(event)

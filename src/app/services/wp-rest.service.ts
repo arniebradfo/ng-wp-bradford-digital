@@ -94,6 +94,10 @@ export class WpRestService {
 					post.isLocked = post.content.protected;
 
 					post = this.tryConvertingDates(post);
+
+					if (post.format === 'link')
+						post.externalLink = this.getFirstUrl(post.content.rendered);
+
 				});
 				return posts;
 			});
@@ -432,6 +436,11 @@ export class WpRestService {
 		});
 		comments = comments.filter(comment => comment.parent === 0);
 		return comments;
+	}
+
+	private getFirstUrl(content: string): URL | undefined {
+		const match = /href="([^"]*)"/.exec(content)
+		return match ? new URL(match[1]) : undefined ;
 	}
 
 }

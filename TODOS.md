@@ -1,7 +1,6 @@
 # TODOs:
 - posts types
 	- without images
-	- video
 	- link
 	- password protection
 - add scroll component to eliminate scrollbox
