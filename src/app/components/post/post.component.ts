@@ -31,4 +31,8 @@ export class PostComponent implements OnInit {
 		this.viewModelService.getPasswordProtected(this.post.id, this.password);
 	}
 
+	public chooseRoute(post: IWpPost): any[] {
+		return post.externalLink ?  ['/externalRedirect', { externalUrl: post.externalLink.href }] : ['/', post.slug];
+	}
+
 }

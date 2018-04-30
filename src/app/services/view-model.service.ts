@@ -116,6 +116,14 @@ export class ViewModelService {
 	}
 
 	private updateView(event: ActivationEnd): void {
+		// console.log(event); // for debug
+
+		if (event.snapshot.routeConfig.path === 'externalRedirect') {
+			// TODO: animate out first or go open in another window
+			window.open(event.snapshot.params.externalUrl, '_self');
+			return;
+		}
+
 		const params = event.snapshot.params;
 		const queryParams = event.snapshot.queryParams;
 		const type = params.type;

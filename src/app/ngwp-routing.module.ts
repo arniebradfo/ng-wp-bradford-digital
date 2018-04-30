@@ -1,6 +1,7 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { NgModule, InjectionToken } from '@angular/core';
+import { Routes, RouterModule, ActivatedRouteSnapshot } from '@angular/router';
 import { EmptyComponent } from './components/empty/empty.component';
+
 
 const routes: Routes = [
 	{
@@ -10,6 +11,10 @@ const routes: Routes = [
 	},
 	{
 		path: 'page/:pageNumber',
+		component: EmptyComponent,
+	},
+	{
+		path: 'externalRedirect',
 		component: EmptyComponent,
 	},
 	{
@@ -33,6 +38,7 @@ const routes: Routes = [
 		component: EmptyComponent
 	},
 ];
+
 
 
 @NgModule({

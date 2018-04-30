@@ -6,7 +6,7 @@
 			{{ post.date | date: 'MM.dd.yyyy' }}
 		</div>
 
-		<div class="post-hero" [routerLink]="'/'+post.slug" [ngClass]="{'set-item':!showFull}">
+		<div class="post-hero" [routerLink]="chooseRoute(post)" [ngClass]="{'set-item':!showFull}">
 			<img class="post-img" *ngIf="post.featured_media_ref" [src]="post.featured_media_ref.media_details.sizes.full.source_url"
 			/>
 			<h1 class="post-title">
@@ -45,7 +45,7 @@
 
 	</section>
 
-	<button class="post-button set-item set-item--emphasis" *ngIf="!showFull" [routerLink]="'/'+post.slug">
+	<button class="post-button set-item set-item--emphasis" *ngIf="!showFull" [routerLink]="chooseRoute(post)">
 		<span>Read More <span *ngIf="post.externalLink">on: {{post.externalLink.hostname}}<a></a></span></span>
 		<ngwp-icon class="load-more-button-icon" [name]="post.format === 'link' ? 'icon_Link' : 'icon_Expand'"></ngwp-icon>
 	</button>
