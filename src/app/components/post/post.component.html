@@ -1,8 +1,4 @@
-<article *ngIf="post" class="post"
-	[ngClass]="[
-		!showFull ? 'set--vertical': '',
-		'format-' + post.format
-	]">
+<article *ngIf="post" class="post" [ngClass]="{'set--vertical':!showFull}">
 
 	<section class="post-header" 	[ngClass]="post.featured_media_ref ? 'has-img' : 'no-img' ">
 

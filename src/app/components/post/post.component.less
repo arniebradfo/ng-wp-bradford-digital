@@ -51,15 +51,27 @@
 	}
 }
 
-:host(:not(.show-full)) {
+:host.show-list{
 	.post-hero{
+		padding-top: @s40;
+		padding-bottom: @s16;
+	}
+	.post-title{
+		margin: 0;
+	}
+	&.featured-media-with .post-hero{
 		position: relative;
-		height: @s32*7;
+		min-height: @s8 * 24;
+	}
+	&.featured-media-without {
+		.post-hero{
+			// min-height: @s8 * 12;
+		}
+
 	}
 }
 
-
-:host(.show-full) {
+:host.show-full {
 	@postHorizontal_Padding: @horizontal_PaddingMd*3;
 
 	.post-header{

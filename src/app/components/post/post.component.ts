@@ -11,8 +11,19 @@ export class PostComponent implements OnInit {
 
 	@Input() post: IWpPage | IWpPost;
 
-	@HostBinding('class.show-full')
+	// @HostBinding('class.show-full')
+
 	@Input() showFull: boolean = false;
+	@Input() class: string = '';
+	@HostBinding('class')
+	get hostClasses(): string {
+		return [
+			this.class,
+			this.showFull ? 'show-full' : 'show-list',
+			`format-${(<IWpPost>this.post).format}`,
+			this.post.featured_media_ref ? 'featured-media-with' : 'featured-media-without',
+		].join(' ');
+	}
 
 
 	private showPasswordForm: boolean = false;
@@ -32,7 +43,7 @@ export class PostComponent implements OnInit {
 	}
 
 	public chooseRoute(post: IWpPost): any[] {
-		return post.externalLink ?  ['/externalRedirect', { externalUrl: post.externalLink.href }] : ['/', post.slug];
+		return post.externalLink ? ['/externalRedirect', { externalUrl: post.externalLink.href }] : ['/', post.slug];
 	}
 
 }
