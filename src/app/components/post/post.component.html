@@ -1,6 +1,6 @@
 <article *ngIf="post" class="post" [ngClass]="{'set--vertical':!showFull}">
 
-	<section class="post-header" 	[ngClass]="post.featured_media_ref ? 'has-img' : 'no-img' ">
+	<section class="post-header" >
 
 		<ng-template #dateTemplate>
 				<div class="post-date" [ngClass]="{'set-item': post.featured_media_ref && !showFull}">
@@ -17,10 +17,10 @@
 			<ng-container *ngIf="!(post.featured_media_ref && !showFull)">
 				<ng-container *ngTemplateOutlet="dateTemplate" ></ng-container>
 			</ng-container>
-				<h1 class="post-title">
-					{{ post.title.rendered }}
-				</h1>
-			</div>
+			<h1 class="post-title">
+				{{ post.title.rendered }}
+			</h1>
+		</div>
 
 
 		<div class="post-tags" *ngIf="post.tags_ref != null && post.tags_ref.length > 0" [ngClass]="{'set-item':!showFull}">
