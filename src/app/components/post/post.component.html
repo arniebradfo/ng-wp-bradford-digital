@@ -1,4 +1,8 @@
-<article *ngIf="post" class="post" [ngClass]="{'set--vertical':!showFull}">
+<article *ngIf="post" class="post"
+	[ngClass]="[
+		!showFull ? 'set--vertical': undefined,
+		'format-' + post.format
+	]">
 
 	<section class="post-header">
 
