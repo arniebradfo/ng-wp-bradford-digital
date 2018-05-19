@@ -31,7 +31,7 @@
 .post-tag{
 	.metaSm_Type();
 	margin: 0 @s1 @s1 0;
-	// padding: 0 @horizontal_PaddingMd - @s1;
+	// padding: 0 @s24 - @s1;
 }
 .post-content{}
 .post-button{
@@ -57,10 +57,10 @@
 	}
 
 	.set-item{
-		padding-right: @horizontal_PaddingMd;
-		padding-left: @horizontal_PaddingMd;
+		padding-right: @s24;
+		padding-left: @s24;
 		&.post-tags{
-			padding: @s1 @horizontal_PaddingMd - @horizontal_Padding - @s1 0;
+			padding: @s1 @s24 - @s12 - @s1 0;
 		}
 	}
 
@@ -80,7 +80,7 @@
 
 
 :host.show-full {
-	@postHorizontal_Padding: @horizontal_PaddingMd*3;
+	@postHorizontal_Padding: @s24*3;
 
 	.post-header{
 		position: relative;
@@ -98,13 +98,13 @@
 		display: none;
 	}
 	.post-hero, .post-date{
-		margin: 0 @horizontal_PaddingMd*3;
+		margin: 0 @s24*3;
 	}
 	.post-title{
 		margin-bottom: 15vh;
 	}
 	.post-tags{
-		padding: @s1 @postHorizontal_Padding - @horizontal_Padding 0;
+		padding: @s1 @postHorizontal_Padding - @s12 0;
 		border-top: @s1 solid var(--bgOverlay1_Color);
 	}
 	.post-date{
