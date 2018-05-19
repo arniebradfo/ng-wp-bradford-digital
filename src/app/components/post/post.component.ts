@@ -24,7 +24,7 @@ export class PostComponent implements OnInit {
 
 	ngOnInit() {
 		this.showPasswordForm = !!this.post.content.protected;
-		// console.log(this.post);
+		console.log(this.post);
 	}
 
 	public onSubmitPassword(): void {

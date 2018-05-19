@@ -16,7 +16,9 @@
 	flex-direction: column;
 	justify-content: flex-end;
 	align-items: flex-start;
-	background-color: transparent;
+	.has-img &{
+		background-color: transparent;
+	}
 }
 .post-img{
 	.absolute(0);
@@ -54,7 +56,6 @@
 		position: relative;
 		height: @s32*7;
 	}
-
 }
 
 
