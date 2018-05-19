@@ -106,7 +106,7 @@
 // NOT MOBILE //
 @media @state-not-mobile{
 	:host{
-		grid-template-columns: @column_Size 1fr @column_Size;
+		grid-template-columns: 1fr @centerColumn_Width 1fr;
 	}
 	.menu{}
 	.list{
@@ -115,7 +115,8 @@
 	.post{
 		height: 100%;
 		width: 100%;
-		.absolute(null null null 100%);
+
+		.absolute(0);
 		.transition(transform opacity);
 		// grid-column: 3;
 	}
@@ -124,13 +125,13 @@
 	:host(.state-list)
 	{
 		.post{
-			transform: translateX(-@column_Size);
+			transform: translateX(calc( ~'((100% - @{centerColumn_Width}) / 2) + @{centerColumn_Width}' ));
 			opacity: var(--disabled_Opacity);
 		}
 	}
 	:host(.state-post){
 		.post{
-			transform: translateX(-100%);
+			transform: translateX(0);
 		}
 		.menu, .list{
 			display: none;
