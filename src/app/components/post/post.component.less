@@ -1,6 +1,7 @@
 @import (reference) '../../style/utils/all.util.less';
 @import (reference) '../../style/vars/sizes.vars.less';
 @import (reference) '../../style/vars/typography.vars.less';
+@import (reference) '../../style/html/sets.html.less';
 
 :host{
 	display: block;
@@ -55,23 +56,28 @@
 		padding-bottom: @s16;
 	}
 
+	.set-item{
+		padding-right: @horizontal_PaddingMd;
+		padding-left: @horizontal_PaddingMd;
+		&.post-tags{
+			padding: @s1 @horizontal_PaddingMd - @horizontal_Padding - @s1 0;
+		}
+	}
+
 	&.featured-media-with {
 		.post-hero{
 			position: relative;
 			min-height: @s8 * 24;
 			background-color: transparent;
 		}
+		.post-date{
+			&:extend(.set-item);
+		}
 	}
 	&.featured-media-without {}
 
 }
-.set-item{ // .set-item only exists in .show-list
-	padding-right: @horizontal_PaddingMd;
-	padding-left: @horizontal_PaddingMd;
-	&.post-tags{
-		padding: @s1 @horizontal_PaddingMd - @horizontal_Padding - @s1 0;
-	}
-}
+
 
 :host.show-full {
 	@postHorizontal_Padding: @horizontal_PaddingMd*3;

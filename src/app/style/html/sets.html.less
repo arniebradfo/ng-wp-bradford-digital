@@ -1,16 +1,17 @@
-
-
 @setBorder_Radius: @border_Radius;
 
-.set-item{
-	display: flex;
-	align-items: center;
-	border-radius: 0;
-	padding: @vertical_Padding @horizontal_Padding;
-	background-color: var(--bgOverlay1_Color);
-}
-.set-item--emphasis{
-	background-color: var(--bgOverlay2_Color);
+.set{
+	.set-item{
+		display: flex;
+		align-items: center;
+		border-radius: 0;
+		padding: @vertical_Padding @horizontal_Padding;
+		background-color: var(--bgOverlay1_Color);
+	}
+	.set-item--emphasis{
+		background-color: var(--bgOverlay2_Color);
+	}
+
 }
 
 .set--horizontal{
@@ -29,7 +30,6 @@
 		border-bottom-right-radius: @setBorder_Radius;
 		margin-right: 0;
 	}
-
 }
 
 .set--vertical{

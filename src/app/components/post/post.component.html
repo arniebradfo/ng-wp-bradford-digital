@@ -1,4 +1,4 @@
-<article *ngIf="post" class="post" [ngClass]="{'set--vertical':!showFull}">
+<article *ngIf="post" class="post" [ngClass]="{'set set--vertical':!showFull}">
 
 	<section class="post-header" >
 
@@ -12,7 +12,7 @@
 			<ng-container *ngTemplateOutlet="dateTemplate" ></ng-container>
 		</ng-container>
 
-		<div class="post-hero" [routerLink]="chooseRoute(post)" [ngClass]="{'set-item':!showFull}">
+		<div class="post-hero set-item" [routerLink]="chooseRoute(post)">
 			<img class="post-img" *ngIf="post.featured_media_ref" [src]="post.featured_media_ref.media_details.sizes.full.source_url"/>
 			<ng-container *ngIf="!(post.featured_media_ref && !showFull)">
 				<ng-container *ngTemplateOutlet="dateTemplate" ></ng-container>
@@ -23,7 +23,7 @@
 		</div>
 
 
-		<div class="post-tags" *ngIf="post.tags_ref != null && post.tags_ref.length > 0" [ngClass]="{'set-item':!showFull}">
+		<div class="post-tags set-item" *ngIf="post.tags_ref != null && post.tags_ref.length > 0">
 			<button class="post-tag" *ngFor="let tag of post.tags_ref" [routerLink]="'/tag/' + tag.slug">
 				#{{tag.name}}
 			</button>
@@ -38,7 +38,7 @@
 
 	</section>
 
-	<section class="post-content" [ngClass]="{'set-item':!showFull,'light-color-theme':showFull}">
+	<section class="post-content set-item" [ngClass]="{'light-color-theme':showFull}">
 
 		<ngwp-content [content]="showFull ? post?.content.rendered : post?.excerpt.rendered"></ngwp-content>
 
