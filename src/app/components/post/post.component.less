@@ -83,13 +83,15 @@
 
 
 :host.display-full {
-	@postHorizontal_Padding: @s24*3;
+	@postHorizontal_Padding: @s8*13;
 
 	.post-header{
 		position: relative;
 		height: 90vh;
 		display: flex;
 		flex-direction: column;
+		align-items: center;
+
 	}
 	.post-hero{
 		flex: 1 0 auto;
@@ -100,15 +102,23 @@
 	.post-header-last-item{
 		display: none;
 	}
-	.post-hero, .post-date{
-		margin: 0 @s24*3;
+	.post-hero{
+		padding: 0 @postHorizontal_Padding;
+		width: 100%;
+		max-width: @centerColumn_Width;
 	}
 	.post-title{
 		margin-bottom: 15vh;
 	}
+	.post-tags-hr{
+		align-self: stretch;
+		margin: 0;
+	}
 	.post-tags{
 		padding: @s1 @postHorizontal_Padding - @s12 0;
-		border-top: @s1 solid var(--bgOverlay1_Color);
+		width: 100%;
+		max-width: @centerColumn_Width;
+		// border-top: @s1 solid var(--bgOverlay1_Color);
 	}
 	.post-date{
 		margin-top: @s16;
@@ -117,9 +127,13 @@
 		align-items: center;
 	}
 	.post-content{
+		margin: @s1 0;
 		background-color: var(--bg_Color);
-		border-bottom-left-radius:  @border_Radius;
-		border-bottom-right-radius: @border_Radius;
+	}
+	.post-content-wrapper{
+		margin: 0 auto;
 		padding: @postHorizontal_Padding;
+		width: 100%;
+		max-width: @centerColumn_Width;
 	}
 }

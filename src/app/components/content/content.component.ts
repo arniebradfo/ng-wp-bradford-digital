@@ -10,7 +10,8 @@ import { EmbeddableComponentsService } from '../../shortcodes/shortcodes.module'
 
 @Component({
 	selector: 'ngwp-content',
-	template: '<span></span>'
+	template: '<span></span>',
+	// styles: [`:host{display:block}`]
 })
 export class ContentComponent implements DoCheck, OnDestroy {
 

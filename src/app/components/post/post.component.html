@@ -22,6 +22,7 @@
 			</h1>
 		</div>
 
+		<hr class="post-tags-hr" *ngIf="displayFull" />
 
 		<div class="post-tags set-item" *ngIf="post.tags_ref != null && post.tags_ref.length > 0">
 			<button class="post-tag" *ngFor="let tag of post.tags_ref" [routerLink]="'/tag/' + tag.slug">
@@ -39,18 +40,21 @@
 	</section>
 
 	<section class="post-content set-item" [ngClass]="{'light-color-theme':displayFull}">
+		<div class="post-content-wrapper">
 
-		<ngwp-content [content]="displayFull ? post?.content.rendered : post?.excerpt.rendered"></ngwp-content>
+			<ngwp-content [content]="displayFull ? post?.content.rendered : post?.excerpt.rendered"></ngwp-content>
 
-		<form *ngIf="post.isLocked" #passwordForm="ngForm" (ngSubmit)="onSubmitPassword()">
-			<h4>This post is password protected</h4>
-			<input type="password" [(ngModel)]="password" name="password" placeholder="password" required/>
-			<button type="submit" [disabled]="!passwordForm.form.valid">Submit</button>
-			{{post.error?.message}}
-			<hr/>
-		</form>
+			<form *ngIf="post.isLocked" #passwordForm="ngForm" (ngSubmit)="onSubmitPassword()">
+				<h4>This post is password protected</h4>
+				<input type="password" [(ngModel)]="password" name="password" placeholder="password" required/>
+				<button type="submit" [disabled]="!passwordForm.form.valid">Submit</button>
+				{{post.error?.message}}
+				<hr/>
+			</form>
 
-		<ngwp-comments *ngIf="displayFull"></ngwp-comments>
+			<ngwp-comments *ngIf="displayFull"></ngwp-comments>
+
+		</div>
 
 	</section>
 
