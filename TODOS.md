@@ -8,6 +8,7 @@
 	- menu button color onscroll
 	- scroll down button
 	- main image parallax
+- redo sizes 8px grid 8x(1)
 - active sidebar
 	- change routing?
 	- root should go to correct state on router event
