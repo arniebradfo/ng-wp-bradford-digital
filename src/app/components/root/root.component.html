@@ -76,7 +76,7 @@
 </section>
 
 <main class="post" *ngIf="viewModelService.post$ | async as post">
-	<ngwp-post [post]="post.currentPost" [showFull]="true"></ngwp-post>
+	<ngwp-post [post]="post.currentPost" [displayFull]="true"></ngwp-post>
 	<nav *ngIf="post.currentPost?.adjcentPosts as adjcentPosts">
 		<strong>Previous Post:</strong>
 		<ngwp-post class="list-item" [post]="adjcentPosts.previous"></ngwp-post>

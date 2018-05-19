@@ -1,20 +1,20 @@
-<article *ngIf="post" class="post" [ngClass]="{'set set--vertical':!showFull}">
+<article *ngIf="post" class="post" [ngClass]="{'set set--vertical':!displayFull}">
 
 	<section class="post-header" >
 
 		<ng-template #dateTemplate>
-				<div class="post-date" [ngClass]="{'set-item': post.featured_media_ref && !showFull}">
+				<div class="post-date" [ngClass]="{'set-item': post.featured_media_ref && !displayFull}">
 					{{ post.date | date: 'MM.dd.yyyy' }}
 				</div>
 		</ng-template>
 
-		<ng-container *ngIf="post.featured_media_ref && !showFull">
+		<ng-container *ngIf="post.featured_media_ref && !displayFull">
 			<ng-container *ngTemplateOutlet="dateTemplate" ></ng-container>
 		</ng-container>
 
 		<div class="post-hero set-item" [routerLink]="chooseRoute(post)">
 			<img class="post-img" *ngIf="post.featured_media_ref" [src]="post.featured_media_ref.media_details.sizes.full.source_url"/>
-			<ng-container *ngIf="!(post.featured_media_ref && !showFull)">
+			<ng-container *ngIf="!(post.featured_media_ref && !displayFull)">
 				<ng-container *ngTemplateOutlet="dateTemplate" ></ng-container>
 			</ng-container>
 			<h1 class="post-title">
@@ -38,9 +38,9 @@
 
 	</section>
 
-	<section class="post-content set-item" [ngClass]="{'light-color-theme':showFull}">
+	<section class="post-content set-item" [ngClass]="{'light-color-theme':displayFull}">
 
-		<ngwp-content [content]="showFull ? post?.content.rendered : post?.excerpt.rendered"></ngwp-content>
+		<ngwp-content [content]="displayFull ? post?.content.rendered : post?.excerpt.rendered"></ngwp-content>
 
 		<form *ngIf="post.isLocked" #passwordForm="ngForm" (ngSubmit)="onSubmitPassword()">
 			<h4>This post is password protected</h4>
@@ -50,11 +50,11 @@
 			<hr/>
 		</form>
 
-		<ngwp-comments *ngIf="showFull"></ngwp-comments>
+		<ngwp-comments *ngIf="displayFull"></ngwp-comments>
 
 	</section>
 
-	<button class="post-button set-item set-item--emphasis" *ngIf="!showFull" [routerLink]="chooseRoute(post)">
+	<button class="post-button set-item set-item--emphasis" *ngIf="!displayFull" [routerLink]="chooseRoute(post)">
 		<span>Read More <span *ngIf="post.externalLink">on: {{post.externalLink.hostname}}<a></a></span></span>
 		<ngwp-icon class="load-more-button-icon" [name]="post.format === 'link' ? 'icon_Link' : 'icon_Expand'"></ngwp-icon>
 	</button>
@@ -88,11 +88,11 @@
 
 
 
-  <ngwp-content [content]="showFull ? post?.content.rendered : post?.excerpt.rendered"></ngwp-content>
+  <ngwp-content [content]="displayFull ? post?.content.rendered : post?.excerpt.rendered"></ngwp-content>
 
-  <ngwp-comments *ngIf="showFull"></ngwp-comments>
+  <ngwp-comments *ngIf="displayFull"></ngwp-comments>
 
-  <nav *ngIf="post.adjcentPosts && showFull">
+  <nav *ngIf="post.adjcentPosts && displayFull">
     <strong>Previous Post:</strong>
     <a [routerLink]="'/' + post.adjcentPosts.previous.slug" [innerHTML]="post.adjcentPosts.previous.title.rendered"></a>
     <br/>
