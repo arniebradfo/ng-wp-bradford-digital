@@ -83,7 +83,7 @@
 
 
 :host.display-full {
-	@postHorizontal_Padding: @s8*13;
+	@postHorizontal_Padding: @s8*9;
 
 	.post-header{
 		position: relative;
@@ -105,7 +105,7 @@
 	.post-hero{
 		padding: 0 @postHorizontal_Padding;
 		width: 100%;
-		max-width: @centerColumn_Width;
+		max-width: @centerColumn_MaxWidth;
 	}
 	.post-title{
 		margin-bottom: 15vh;
@@ -117,7 +117,7 @@
 	.post-tags{
 		padding: @s1 @postHorizontal_Padding - @s12 0;
 		width: 100%;
-		max-width: @centerColumn_Width;
+		max-width: @centerColumn_MaxWidth;
 		// border-top: @s1 solid var(--bgOverlay1_Color);
 	}
 	.post-date{
@@ -134,6 +134,6 @@
 		margin: 0 auto;
 		padding: @postHorizontal_Padding;
 		width: 100%;
-		max-width: @centerColumn_Width;
+		max-width: @centerColumn_MaxWidth;
 	}
 }
