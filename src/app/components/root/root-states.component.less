@@ -8,7 +8,10 @@
 // .was-state-post | .was-state-list | .was-state-menu
 // .state-not-mobile | .state-mobile // @media @state-not-mobile{} | @media @state-mobile{}
 
-@column_Size: @s24 * 10;
+@leftColumn_MinWidth: (@s8 * 24);
+@rightColumn_MinWidth: (@s8 * 6);
+@column_Size: @leftColumn_MinWidth;
+@unfocusedColumn_Opacity: 0.4;
 
 :host{
 	height: 100%;
@@ -72,7 +75,7 @@
 	:host(.state-menu.was-state-list) .list,
 	:host(.state-menu.was-state-post) .post,
 	{
-		opacity: 0.5;
+		opacity: @unfocusedColumn_Opacity;
 	}
 
 
@@ -104,8 +107,7 @@
 }
 
 
-@leftColumn_MinWidth: @s8*24;
-@rightColumn_MinWidth: @s8*6;
+
 
 
 // NOT MOBILE //
@@ -129,14 +131,6 @@
 		// grid-column: 3;
 	}
 
-	:host(.state-menu),
-	:host(.state-list)
-	{
-		.post{
-			transform: translateX(calc( ~'((100% - @{centerColumn_MaxWidth}) / 2) + @{centerColumn_MaxWidth}' ));
-			opacity: var(--disabled_Opacity);
-		}
-	}
 	:host(.state-post){
 		.post{
 			transform: translateX(0);
@@ -147,3 +141,30 @@
 	}
 
 }
+
+
+:host(.state-menu),
+:host(.state-list)
+{
+	.post{
+		@threeColumn_MinWidth: (@leftColumn_MinWidth + @centerColumn_MaxWidth + @rightColumn_MinWidth);
+		@threeColumn_MaxWidth: (max(@leftColumn_MinWidth, @rightColumn_MinWidth) * 2 + @centerColumn_MaxWidth);
+
+		@media @state-not-mobile{
+			opacity: @unfocusedColumn_Opacity;
+		}
+
+		@media screen and (min-width: @mobilePlusOne_Breakpoint) and (max-width: @threeColumn_MinWidth)  {
+			transform: translateX(calc( ~'100% - @{rightColumn_MinWidth}' ));
+		}
+
+		@media screen and (min-width: (@threeColumn_MinWidth + 1)) and (max-width: @threeColumn_MaxWidth) {
+			transform: translateX((@leftColumn_MinWidth + @centerColumn_MaxWidth));
+		}
+
+		@media screen and (min-width: (@threeColumn_MaxWidth + 1)) {
+			transform: translateX(calc( ~'((100% - @{centerColumn_MaxWidth}) / 2) + @{centerColumn_MaxWidth}' ));
+		}
+	}
+}
+

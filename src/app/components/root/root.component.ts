@@ -126,4 +126,4 @@ export type StateRootWas = 'was-state-post' | 'was-state-list' | 'was-state-menu
 // this must match:
 // @MOBILE_BREAKPOINT: 700px;
 // in ./root.media-queries.less
-export const MOBILE_BREAKPOINT = 760;
+export const MOBILE_BREAKPOINT = 8 * 120;
