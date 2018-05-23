@@ -1,7 +1,6 @@
 @import (reference) '../../style/utils/all.util.less';
 @import (reference) '../../style/vars/sizes.vars.less';
 @import (reference) '../../style/vars/typography.vars.less';
-@import (reference) './root.media-queries.less';
 
 // MENU //
 .menu{
@@ -39,7 +38,12 @@
 
 // LIST //
 .list{
-	padding: @s8*15 @s8*6;
+	@media screen and (max-width: @mobileSm_Breakpoint) {
+		padding: @s8*15 (@postHorizontal_MarginSm - @postHorizontal_Padding);
+	}
+	@media screen and (min-width: (@mobileSm_Breakpoint + 1)) {
+		padding: @s8*15 (@postHorizontal_Margin - @postHorizontal_Padding);
+	}
 }
 .list-header{
 	margin: @s8*4 @s24 @s8*9;
@@ -77,4 +81,26 @@
 }
 
 // POST //
+@post_Border: solid @s1 var(--bgOverlay2_Color);
 .post{}
+.adjcent-post-list-wrapper{
+	margin: @s1 0;
+	border: @post_Border;
+
+}
+.adjcent-post-list{
+	@media screen and (max-width: @mobileSm_Breakpoint) {
+		padding: @s8*4 (@postHorizontal_MarginSm - @postHorizontal_Padding);
+	}
+	@media screen and (min-width: (@mobileSm_Breakpoint + 1)) {
+		padding: @s8*8 (@postHorizontal_Margin - @postHorizontal_Padding);
+	}
+	margin: 0 auto;
+	width: 100%;
+	max-width: @centerColumn_MaxWidth;
+}
+.post-footer{
+	background-color: var(--bgOverlay0_Color);
+	// border-right: @post_Border;
+	// border-left:  @post_Border;
+}

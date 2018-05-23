@@ -77,12 +77,33 @@
 
 <main class="post" *ngIf="viewModelService.post$ | async as post">
 	<ngwp-post [post]="post.currentPost" [displayFull]="true"></ngwp-post>
-	<nav *ngIf="post.currentPost?.adjcentPosts as adjcentPosts">
-		<strong>Previous Post:</strong>
-		<ngwp-post class="list-item" [post]="adjcentPosts.previous"></ngwp-post>
-		<strong>Next Post:</strong>
-		<ngwp-post class="list-item" [post]="adjcentPosts.next"></ngwp-post>
-	</nav>
+	<div class="adjcent-post-list-wrapper">
+		<nav class="adjcent-post-list" *ngIf="post.currentPost?.adjcentPosts as adjcentPosts">
+			<!--
+				<h3>Previous:</h3>
+				<ngwp-post class="list-item" [post]="adjcentPosts.previous"></ngwp-post>
+			-->
+			<h3>Next:</h3>
+			<ngwp-post class="list-item" [post]="adjcentPosts.next"></ngwp-post>
+		</nav>
+	</div>
+	<footer class="post-footer nav">
+		<button
+			class="nav-item"
+			>
+			contact
+			<div class="selection-bar"></div>
+		</button>
+		<button
+			class="nav-item"
+			>
+			about
+			<div class="selection-bar"></div>
+		</button>
+		<p>
+			copyright 2018 james bradford
+		</p>
+	</footer>
 </main>
 
 <button

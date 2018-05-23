@@ -18,7 +18,11 @@
 @borderSm_Radius: @s4;
 @border_Radius: @s6;
 
-@centerColumn_MaxWidth: @s8 * 118;
+@centerColumn_MaxWidth:   @s8 * 118;
+
+@postHorizontal_Padding:  @s8 * 3;
+@postHorizontal_Margin:   @postHorizontal_Padding + @s8 * 6;
+@postHorizontal_MarginSm: @postHorizontal_Padding + @s8;
 
 .inlineBackground_Spacing() {
 	@top:    0.25em;
@@ -29,4 +33,25 @@
   margin-bottom: -@bottom;
   margin-top: -@top;
 }
+
+
+
+// MEDIA QUERIES //
+
+// this must match:
+// export const MOBILE_BREAKPOINT = 700;
+// in ./root.component.less
+@MOBILE_BREAKPOINT: (8px * 120);
+
+@mobile_Breakpoint:  @MOBILE_BREAKPOINT;
+
+@mobileSm_Breakpoint: 700px; // < 768px
+@tablet_Breakpoint:  1100px; // < 1080px
+@laptop_Breakpoint:  1400px; // > 1366px
+@desktop_Breakpoint: 2000px; // > 1920px
+@tv_Breakpoint:      9999px; // ???
+
+@mobilePlusOne_Breakpoint: (@mobile_Breakpoint + 1);
+@state-mobile: ~'screen and (max-width: @{mobile_Breakpoint})';
+@state-not-mobile: ~'screen and (min-width: @{mobilePlusOne_Breakpoint})';
 

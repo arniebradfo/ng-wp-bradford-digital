@@ -60,8 +60,8 @@
 	}
 
 	.set-item{
-		padding-right: @s24;
-		padding-left: @s24;
+		padding-right: @postHorizontal_Padding;
+		padding-left:  @postHorizontal_Padding;
 		&.post-tags{
 			padding: @s1 @s24 - @s12 - @s1 0;
 		}
@@ -83,7 +83,6 @@
 
 
 :host.display-full {
-	@postHorizontal_Padding: @s8*9;
 
 	.post-header{
 		position: relative;
@@ -103,9 +102,16 @@
 		display: none;
 	}
 	.post-hero{
-		padding: 0 @postHorizontal_Padding;
 		width: 100%;
 		max-width: @centerColumn_MaxWidth;
+
+		@media screen and (max-width: @mobileSm_Breakpoint) {
+			padding: 0 @postHorizontal_MarginSm;
+		}
+		@media screen and (min-width: (@mobileSm_Breakpoint + 1)) {
+			padding: 0 @postHorizontal_Margin;
+		}
+
 	}
 	.post-title{
 		margin-bottom: 15vh;
@@ -115,7 +121,13 @@
 		margin: 0;
 	}
 	.post-tags{
-		padding: @s1 @postHorizontal_Padding - @s12 0;
+		@media screen and (max-width: @mobileSm_Breakpoint) {
+			padding: @s1 @postHorizontal_MarginSm - @s12 0;
+		}
+		@media screen and (min-width: (@mobileSm_Breakpoint + 1)) {
+			padding: @s1 @postHorizontal_Margin - @s12 0;
+		}
+
 		width: 100%;
 		max-width: @centerColumn_MaxWidth;
 		// border-top: @s1 solid var(--bgOverlay1_Color);
@@ -132,8 +144,13 @@
 	}
 	.post-content-wrapper{
 		margin: 0 auto;
-		padding: @postHorizontal_Padding;
 		width: 100%;
 		max-width: @centerColumn_MaxWidth;
+		@media screen and (max-width: @mobileSm_Breakpoint) {
+			padding: @postHorizontal_MarginSm;
+		}
+		@media screen and (min-width: (@mobileSm_Breakpoint + 1)) {
+			padding: @postHorizontal_Margin;
+		}
 	}
 }
