@@ -46,9 +46,10 @@
 	<ng-template #passwordFormTemplate>
 			<form #passwordForm="ngForm" (ngSubmit)="onSubmitPassword()">
 				<div class="password-field set--horz">
-					<input class="password-input set-item--horz" type="password" [(ngModel)]="password" name="password" placeholder="password" required/>
+					<input class="password-input set-item--horz set-item--emphasis" type="password" [(ngModel)]="password" name="password" placeholder="password" required/>
 					<button class="password-submit set-item--horz" type="submit"  [disabled]="!passwordForm.form.valid">
-						Submit
+							<span>Unlock</span>
+							<ngwp-icon class="password-submit-icon" [name]="'icon_Expand'"></ngwp-icon>
 					</button>
 				</div>
 				<p class="password-error">
@@ -60,9 +61,10 @@
 	<section class="post-content set-item--vert" [ngClass]="{'light-color-theme':displayFull}">
 		<div class="post-content-wrapper">
 
-			<ng-container *ngIf="post.isLocked">
-					<h4>This post is password protected</h4>
-					<ng-container *ngTemplateOutlet="passwordFormTemplate"></ng-container>
+			<span *ngIf="post.isLocked">This post is password protected</span>
+
+			<ng-container *ngIf="post.isLocked && displayFull">
+				<ng-container *ngTemplateOutlet="passwordFormTemplate"></ng-container>
 			</ng-container>
 
 			<ngwp-content [content]="displayFull ? post?.content.rendered : post?.excerpt.rendered"></ngwp-content>
@@ -73,8 +75,15 @@
 
 	</section>
 
-	<button class="post-button set-item--vert set-item--emphasis" *ngIf="!displayFull" [routerLink]="chooseRoute(post)">
-		<span>Read More <span *ngIf="post.externalLink">on: {{post.externalLink.hostname}}<a></a></span></span>
+	<div class="password-field-list-wrapper" *ngIf="post.isLocked && !displayFull">
+		<ng-container>
+				<ng-container *ngTemplateOutlet="passwordFormTemplate"></ng-container>
+		</ng-container>
+	</div>
+
+
+	<button class="post-button set-item--vert set-item--emphasis" *ngIf="!post.isLocked && !displayFull" [routerLink]="chooseRoute(post)">
+		<span>Read More <span *ngIf="post.externalLink">on: {{post.externalLink.hostname}}</span></span>
 		<ngwp-icon class="load-more-button-icon" [name]="post.format === 'link' ? 'icon_Link' : 'icon_Expand'"></ngwp-icon>
 	</button>
 

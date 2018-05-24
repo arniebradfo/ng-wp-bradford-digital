@@ -43,6 +43,21 @@
 	justify-content: space-between;
 	padding: @s12;
 }
+.password-field-list-wrapper{}
+.password-field{}
+.password-input{
+	flex: 1 0 auto;
+}
+.password-submit{
+	.meta_Type();
+}
+.password-submit-icon{
+	margin-left: @s16;
+}
+.password-input, .password-submit{
+	padding-right: @postHorizontal_Padding;
+	padding-left:  @postHorizontal_Padding;
+}
 
 
 
@@ -78,6 +93,11 @@
 		// }
 	}
 	&.featured-media-without {}
+
+	.password-input, .password-submit{
+		border-top-left-radius: 0;
+		border-top-right-radius: 0;
+	}
 
 }
 

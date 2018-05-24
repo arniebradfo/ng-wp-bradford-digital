@@ -22,7 +22,6 @@ import { IconComponent } from './components/icon/icon.component';
 import { IconDefsComponent } from './components/icon-defs/icon-defs.component';
 import { LogoComponent } from './components/logo/logo.component';
 import { UrlPathnamePipe } from './pipes/url-pathname.pipe';
-import { PasswordFormComponent } from './components/password-form/password-form.component';
 
 @NgModule({
 	imports: [
@@ -46,7 +45,6 @@ import { PasswordFormComponent } from './components/password-form/password-form.
 		IconDefsComponent,
 		LogoComponent,
 		UrlPathnamePipe,
-		PasswordFormComponent
 	],
 	providers: [
 		WpRestService,
