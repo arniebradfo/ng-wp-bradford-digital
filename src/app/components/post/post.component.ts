@@ -23,7 +23,6 @@ export class PostComponent implements OnInit {
 		].join(' ');
 	}
 
-	private showPasswordForm: boolean = false;
 	private password: string;
 
 	constructor(
@@ -31,7 +30,6 @@ export class PostComponent implements OnInit {
 	) { }
 
 	ngOnInit() {
-		this.showPasswordForm = !!this.post.content.protected;
 		console.log(this.post);
 	}
 

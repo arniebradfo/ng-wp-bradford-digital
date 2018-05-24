@@ -1,9 +1,9 @@
-<article *ngIf="post" class="post" [ngClass]="{'set set--vertical':!displayFull}">
+<article *ngIf="post" class="post" [ngClass]="{'set--vert':!displayFull}">
 
 	<section class="post-header" >
 
 		<ng-template #dateTemplate>
-				<div class="post-date" [ngClass]="{'set-item': post.featured_media_ref && !displayFull}">
+				<div class="post-date" [ngClass]="{'set-item--vert': post.featured_media_ref && !displayFull}">
 					{{ post.date | date: 'MM.dd.yyyy' }}
 				</div>
 		</ng-template>
@@ -12,19 +12,23 @@
 			<ng-container *ngTemplateOutlet="dateTemplate" ></ng-container>
 		</ng-container>
 
-		<div class="post-hero set-item" [routerLink]="chooseRoute(post)">
+		<div class="post-hero set-item--vert" [routerLink]="chooseRoute(post)">
+
 			<img class="post-img" *ngIf="post.featured_media_ref" [src]="post.featured_media_ref.media_details.sizes.full.source_url"/>
+
 			<ng-container *ngIf="!(post.featured_media_ref && !displayFull)">
 				<ng-container *ngTemplateOutlet="dateTemplate" ></ng-container>
 			</ng-container>
+
 			<h1 class="post-title">
 				{{ post.title.rendered }}
 			</h1>
+
 		</div>
 
 		<hr class="post-tags-hr" *ngIf="displayFull" />
 
-		<div class="post-tags set-item" *ngIf="post.tags_ref != null && post.tags_ref.length > 0">
+		<div class="post-tags set-item--vert" *ngIf="post.tags_ref != null && post.tags_ref.length > 0">
 			<button class="post-tag" *ngFor="let tag of post.tags_ref" [routerLink]="'/tag/' + tag.slug">
 				#{{tag.name}}
 			</button>
@@ -39,18 +43,29 @@
 
 	</section>
 
-	<section class="post-content set-item" [ngClass]="{'light-color-theme':displayFull}">
+	<ng-template #passwordFormTemplate>
+			<form #passwordForm="ngForm" (ngSubmit)="onSubmitPassword()">
+				<div class="password-field set--horz">
+					<input class="password-input set-item--horz" type="password" [(ngModel)]="password" name="password" placeholder="password" required/>
+					<button class="password-submit set-item--horz" type="submit"  [disabled]="!passwordForm.form.valid">
+						Submit
+					</button>
+				</div>
+				<p class="password-error">
+					{{post.error?.message}}
+				</p>
+			</form>
+	</ng-template>
+
+	<section class="post-content set-item--vert" [ngClass]="{'light-color-theme':displayFull}">
 		<div class="post-content-wrapper">
 
-			<ngwp-content [content]="displayFull ? post?.content.rendered : post?.excerpt.rendered"></ngwp-content>
+			<ng-container *ngIf="post.isLocked">
+					<h4>This post is password protected</h4>
+					<ng-container *ngTemplateOutlet="passwordFormTemplate"></ng-container>
+			</ng-container>
 
-			<form *ngIf="post.isLocked" #passwordForm="ngForm" (ngSubmit)="onSubmitPassword()">
-				<h4>This post is password protected</h4>
-				<input type="password" [(ngModel)]="password" name="password" placeholder="password" required/>
-				<button type="submit" [disabled]="!passwordForm.form.valid">Submit</button>
-				{{post.error?.message}}
-				<hr/>
-			</form>
+			<ngwp-content [content]="displayFull ? post?.content.rendered : post?.excerpt.rendered"></ngwp-content>
 
 			<ngwp-comments *ngIf="displayFull"></ngwp-comments>
 
@@ -58,7 +73,7 @@
 
 	</section>
 
-	<button class="post-button set-item set-item--emphasis" *ngIf="!displayFull" [routerLink]="chooseRoute(post)">
+	<button class="post-button set-item--vert set-item--emphasis" *ngIf="!displayFull" [routerLink]="chooseRoute(post)">
 		<span>Read More <span *ngIf="post.externalLink">on: {{post.externalLink.hostname}}<a></a></span></span>
 		<ngwp-icon class="load-more-button-icon" [name]="post.format === 'link' ? 'icon_Link' : 'icon_Expand'"></ngwp-icon>
 	</button>

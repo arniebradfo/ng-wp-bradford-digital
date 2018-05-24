@@ -1,12 +1,12 @@
 <form
 	#searchForm="ngForm"
-	class="search-form set--horizontal"
+	class="search-form set--horz"
 	(ngSubmit)="onSubmit()"
 	(focusout)="maybeClose()"
 	>
 	<input
 		#searchInput
-		class="search-input set-item"
+		class="search-input set-item--horz"
 		type="search"
 		[(ngModel)]="search"
 		name="search"
@@ -15,7 +15,7 @@
 		/>
 	<button
 		#searchSubmit
-		class="search-button set-item set-item--emphasis" type="submit" [disabled]="!searchForm.form.valid">
+		class="search-button set-item--horz set-item--emphasis" type="submit" [disabled]="!searchForm.form.valid">
 		<ngwp-icon name="icon_Search"></ngwp-icon>
 	</button>
 </form>

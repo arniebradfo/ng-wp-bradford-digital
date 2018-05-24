@@ -77,13 +77,13 @@
 
 <main class="post" *ngIf="viewModelService.post$ | async as post">
 	<ngwp-post [post]="post.currentPost" [displayFull]="true"></ngwp-post>
-	<div class="adjcent-post-list-wrapper">
-		<nav class="adjcent-post-list" *ngIf="post.currentPost?.adjcentPosts as adjcentPosts">
+	<div class="adjcent-post-list-wrapper" *ngIf="post.currentPost?.adjcentPosts as adjcentPosts">
+		<nav class="adjcent-post-list">
 			<!--
-				<h3>Previous:</h3>
+				<h3 class="adjcent-post-title">Previous:</h3>
 				<ngwp-post class="list-item" [post]="adjcentPosts.previous"></ngwp-post>
 			-->
-			<h3>Next:</h3>
+			<h3 class="adjcent-post-title">Next:</h3>
 			<ngwp-post class="list-item" [post]="adjcentPosts.next"></ngwp-post>
 		</nav>
 	</div>
