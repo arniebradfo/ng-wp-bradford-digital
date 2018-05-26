@@ -1,6 +1,5 @@
 # TODOs:
 - inputs
-	- button should have black foreground
 	- focus issues
 	- hover issues
 - posts types
