@@ -9,7 +9,9 @@
 	align-items: center;
 	padding: @s8 @s12;
 	background-color: var(--bgOverlay1_Color);
-	border-radius: 0;
+	&, &:before, &:after{
+		border-radius: 0;
+	}
 }
 .set-item--emphasis{
 	background-color: var(--bgOverlay2_Color);
@@ -24,12 +26,16 @@
 	margin-bottom: @s1;
 }
 .set-item--vert:first-child{
-	border-top-left-radius:     @setBorder_Radius;
-	border-top-right-radius:    @setBorder_Radius;
+	&, &:before, &:after{
+		border-top-left-radius:     @setBorder_Radius;
+		border-top-right-radius:    @setBorder_Radius;
+	}
 }
 .set-item--vert:last-child{
-	border-bottom-left-radius:  @setBorder_Radius;
-	border-bottom-right-radius: @setBorder_Radius;
+	&, &:before, &:after{
+		border-bottom-left-radius:  @setBorder_Radius;
+		border-bottom-right-radius: @setBorder_Radius;
+	}
 	margin-bottom: 0;
 }
 
@@ -42,11 +48,15 @@
 	margin-right: @s1;
 }
 .set-item--horz:first-child{
-	border-top-left-radius:     @setBorder_Radius;
-	border-bottom-left-radius:  @setBorder_Radius;
+	&, &:before, &:after{
+		border-top-left-radius:     @setBorder_Radius;
+		border-bottom-left-radius:  @setBorder_Radius;
+	}
 }
 .set-item--horz:last-child{
-	border-top-right-radius:    @setBorder_Radius;
-	border-bottom-right-radius: @setBorder_Radius;
+	&, &:before, &:after{
+		border-top-right-radius:    @setBorder_Radius;
+		border-bottom-right-radius: @setBorder_Radius;
+	}
 	margin-right: 0;
 }

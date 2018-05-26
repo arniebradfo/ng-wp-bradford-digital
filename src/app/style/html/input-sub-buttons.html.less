@@ -2,15 +2,18 @@
 
 .input_Sub_Button(
 	@svgName;
-	@height: @s24;
-	@width:  @s16;
+	@height: @s24 + 1;
+	@width:  @s16 + 1;
 	@iconSize: @icon_Size;
 ) {
 	appearance: none;
 	width: @width;
-	height: @height;
+	// height: @height;
+	height: 100%;
 	margin: 0 0 0 @s1;
-	padding: 0 (@width/2); // to squeeze down original content
+	padding: 0
+		// (@height/2)
+		(@width/2); // to squeeze down original content
 	box-sizing: border-box;
 	display: block;
 	border-radius: @borderSm_Radius;
@@ -18,7 +21,7 @@
 	align-self: stretch;
 	.iconBg_Layout(@iconSize);
 	background-image: ~'var(--@{svgName}_IconBg)';
-	
+
 	.transition(opacity background-color);
 	background-color: var(--bgOverlay1_Color);
 	opacity: 1;
@@ -33,7 +36,7 @@
 	&:active{
 		background-color: var(--accentWeak_Color);
 		opacity: 1;
-		transition-duration: @active_Duration;		
+		transition-duration: @active_Duration;
 	}
 
 }
@@ -55,7 +58,7 @@ input{
 	// 	&::-webkit-clear-button          { display: none; }
 	// 	&::-webkit-search-cancel-button  { display: none; }
 	// 	&::-ms-clear                     { display: none; }
-	// } 
+	// }
 	// &.hideSpin{
 	// 	&::-webkit-inner-spin-button     { display: none; }
 	// }
@@ -63,5 +66,5 @@ input{
 	// 	&::-webkit-calendar-picker-indicator { display: none; }
 	// 	&::-ms-expand { display: none; }
 	// }
- 
+
 }

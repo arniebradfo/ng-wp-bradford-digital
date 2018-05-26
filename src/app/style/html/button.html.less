@@ -9,7 +9,7 @@
 	position: relative;
 	z-index: 0;
 	&:before, &:after{
-		// content: '';
+		content: '';
 		.absolute(0);
 		.transition(opacity);
 		transition-duration: inherit;
@@ -23,7 +23,7 @@
 		opacity: 0;
 	}
 	&:after{
-		background-color: var(--bgOverlay1_Color);
+		background-color: var(--bgOverlay2_Color);
 		opacity: 1;
 		border: @focusBorder_Size solid transparent;
 	}
@@ -68,8 +68,13 @@
 		}
 	}
 
-	&:before{        content: ''; }
-	&.emhasis:after{ content: ''; }
+	// :not(button--emphasis)
+	background-color: initial !important;
+	&:after{ content: initial };
+
+	&.button--emphasis:after{
+		content: '';
+	}
 
 	&.selected{
 		color: var(--fgStrong_Color);

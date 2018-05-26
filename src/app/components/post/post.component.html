@@ -47,7 +47,7 @@
 			<form #passwordForm="ngForm" (ngSubmit)="onSubmitPassword()">
 				<div class="password-field set--horz">
 					<input class="password-input set-item--horz set-item--emphasis" type="password" [(ngModel)]="password" name="password" placeholder="password" required/>
-					<button class="password-submit set-item--horz" type="submit"  [disabled]="!passwordForm.form.valid">
+					<button class="password-submit set-item--horz button--emphasis" type="submit"  [disabled]="!passwordForm.form.valid">
 							<span>Unlock</span>
 							<ngwp-icon class="password-submit-icon" [name]="'icon_Expand'"></ngwp-icon>
 					</button>
@@ -82,7 +82,7 @@
 	</div>
 
 
-	<button class="post-button set-item--vert set-item--emphasis" *ngIf="!post.isLocked && !displayFull" [routerLink]="chooseRoute(post)">
+	<button class="post-button set-item--vert button--emphasis" *ngIf="!post.isLocked && !displayFull" [routerLink]="chooseRoute(post)">
 		<span>Read More <span *ngIf="post.externalLink">on: {{post.externalLink.hostname}}</span></span>
 		<ngwp-icon class="load-more-button-icon" [name]="post.format === 'link' ? 'icon_Link' : 'icon_Expand'"></ngwp-icon>
 	</button>

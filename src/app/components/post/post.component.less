@@ -30,7 +30,9 @@
 	opacity: .4;
 }
 .post-title{}
-.post-tags{}
+.post-tags{
+	flex-wrap: wrap;
+}
 .post-tag{
 	.metaSm_Type();
 	margin: 0 @s1 @s1 0;
@@ -95,8 +97,10 @@
 	&.featured-media-without {}
 
 	.password-input, .password-submit{
-		border-top-left-radius: 0;
-		border-top-right-radius: 0;
+		&, &:before, &:after{
+			border-top-left-radius: 0;
+			border-top-right-radius: 0;
+		}
 	}
 
 }

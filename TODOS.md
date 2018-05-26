@@ -1,7 +1,13 @@
 # TODOs:
+- inputs
+	- button should have black foreground
+	- focus issues
+	- hover issues
 - posts types
-	- link
+	- make links black
 	- password protection
+	- align menu button
+	- fix unlock icon
 - add scroll component to eliminate scrollbox
 	- scroll to top
 	- menu button color onscroll
