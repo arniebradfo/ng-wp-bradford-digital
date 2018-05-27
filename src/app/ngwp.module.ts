@@ -23,6 +23,7 @@ import { IconDefsComponent } from './components/icon-defs/icon-defs.component';
 import { LogoComponent } from './components/logo/logo.component';
 import { UrlPathnamePipe } from './pipes/url-pathname.pipe';
 import { InputDetectionService } from './services/input-detection.service';
+import { TabDetectionService } from './services/tab-detection.service';
 
 @NgModule({
 	imports: [
@@ -50,7 +51,8 @@ import { InputDetectionService } from './services/input-detection.service';
 	providers: [
 		WpRestService,
 		ViewModelService,
-		InputDetectionService
+		InputDetectionService,
+		TabDetectionService
 	],
 	bootstrap: [RootComponent],
 })

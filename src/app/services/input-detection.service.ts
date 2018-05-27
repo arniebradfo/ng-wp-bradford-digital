@@ -36,7 +36,7 @@ export class InputDetectionService {
 	private _switchToMouse(event?: MouseEvent) {
 		// 'touchend' and 'mousemove' both fire at the end of a touch press on android
 		// event.timeStamp should equal this._touchEndTimeStamp exactly, but lets allow a margin of error
-		if (event && event.timeStamp - this._touchEndTimeStamp < 10 )
+		if (event && event.timeStamp - this._touchEndTimeStamp < 10)
 			return; // filter out the 'mousemove' that occur after presses on a touch device
 
 		document.addEventListener('touchstart', this._switchToTouchRef, true);

@@ -23,7 +23,6 @@
 		opacity: 0;
 	}
 	&:after{
-		background-color: var(--bgOverlay2_Color);
 		opacity: 1;
 		border: @focusBorder_Size solid transparent;
 	}
@@ -70,10 +69,10 @@
 
 	// :not(button--emphasis)
 	background-color: initial !important;
-	&:after{ content: initial };
+	// &:after{ content: initial };
 
 	&.button--emphasis:after{
-		content: '';
+		background-color: var(--bgOverlay2_Color);
 	}
 
 	&.selected{

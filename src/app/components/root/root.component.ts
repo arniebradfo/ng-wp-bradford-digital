@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { Router, NavigationExtras } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
 import { InputDetectionService } from '../../services/input-detection.service';
+import { TabDetectionService } from '../../services/tab-detection.service';
 
 @Component({
 	selector: 'ngwp-root',
@@ -39,7 +40,8 @@ export class RootComponent implements OnInit, OnDestroy {
 		private wpRestService: WpRestService,
 		public viewModelService: ViewModelService,
 		private router: Router,
-		private thing: InputDetectionService
+		private inputDetectionService: InputDetectionService,
+		private tabDetectionService: TabDetectionService
 	) { }
 
 	ngOnInit(): void {
