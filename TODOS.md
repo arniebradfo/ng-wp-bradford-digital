@@ -1,7 +1,4 @@
 # TODOs:
-- inputs
-	- focus issues
-	- hover issues
 - posts types
 	- make links black
 	- align menu button

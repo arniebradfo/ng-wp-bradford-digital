@@ -1,4 +1,5 @@
-<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 11 11">
-  <title>icon</title>
-  <path d="M3.41,0H4V1L1.19,5.5,4,10.05V11H3.41L0,5.5ZM7.59,0H7V1L9.81,5.5,7,10.05V11h.59L11,5.5Z"/>
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 11 11" style="enable-background:new 0 0 11 11;" xml:space="preserve">
+<path d="M3.413,0H4v0.95L1.188,5.5L4,10.05V11H3.413L0.012,5.5L3.413,0z M7.587,0H7v0.95L9.812,5.5L7,10.05V11h0.587l3.401-5.5
+	L7.587,0z M0,0 M11,11"/>
 </svg>
