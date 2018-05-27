@@ -38,10 +38,12 @@
 		}
 	}
 
-	&:focus:focus{
-		color: var(--fgStrong_Color);
-		&:after{
-			border-color: var(--accent_Color);
+	form &, .input-tabbing &{
+		&:focus{
+			color: var(--fgStrong_Color);
+			&:after{
+				border-color: var(--accent_Color);
+			}
 		}
 	}
 

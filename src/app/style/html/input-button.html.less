@@ -17,14 +17,16 @@
 	// .states_Output() when (default()){}
 	// .states_Output();
 
-	&:focus:focus{
-		border-color: var(--fgWeak_Color);
-		color: var(--fgStrong_Color);
-	}
 	.input-mouse &:hover:not(:focus){
 		color: var(--fgStrong_Color);
 		background-color: var(--accentWeakFade_Color);
 		transition-duration: @hover_Duration;
+	}
+	form &, .input-tabbing &{
+		&:focus{
+			border-color: var(--fgWeak_Color);
+			color: var(--fgStrong_Color);
+		}
 	}
 	&:active:active{
 		color: var(--fgStrong_Color);
