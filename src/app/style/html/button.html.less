@@ -28,7 +28,7 @@
 		border: @focusBorder_Size solid transparent;
 	}
 
-	&:hover:not(:disabled){
+	.input-mouse &:hover{
 		color: var(--fgStrong_Color);
 		transition-duration: @hover_Duration;
 		&:before{
@@ -39,7 +39,14 @@
 		}
 	}
 
-	&:active:not(:disabled){
+	&:focus:focus{
+		color: var(--fgStrong_Color);
+		&:after{
+			border-color: var(--accent_Color);
+		}
+	}
+
+	&:active:active{
 		color: var(--fgOnAccent_Color);
 		transition-duration: @active_Duration;
 		&:before{
@@ -50,14 +57,7 @@
 		}
 	}
 
-	&:focus{
-		color: var(--fgStrong_Color);
-		&:after{
-			border-color: var(--accent_Color);
-		}
-	}
-
-	&:disabled{
+	&:disabled:disabled{
 		color: var(--fgDisabled_Color);
 		&:before{
 			opacity: 0;

@@ -13,38 +13,25 @@
 	background-color: var(--bgOverlay1_Color);
 	.transition(background-color color border-color);
 
-	.states_Output() when (@isButton){
-		&:hover{
-			color: var(--fgStrong_Color);
-			background-color: var(--accentWeakFade_Color);
-			transition-duration: @hover_Duration;
-		}
-		&:active{
-			color: var(--fgStrong_Color);
-			border-color: var(--accentWeak_Color);
-			background-color: var(--accentWeak_Color);
-			transition-duration: @active_Duration;
-		}
-	}
-	.states_Output() when (default()){
-		&:hover:not(:focus):not(:disabled){
-			color: var(--fgStrong_Color);
-			background-color: var(--accentWeakFade_Color);
-			transition-duration: @hover_Duration;
-		}
-		&:active{
-			color: var(--fgStrong_Color);
-			border-color: var(--accentWeak_Color);
-			transition-duration: @active_Duration;
-		}
-	}
-	.states_Output();
+	// .states_Output() when (@isButton){}
+	// .states_Output() when (default()){}
+	// .states_Output();
 
-	&:focus{
+	&:focus:focus{
 		border-color: var(--fgWeak_Color);
 		color: var(--fgStrong_Color);
 	}
-
+	.input-mouse &:hover:not(:focus){
+		color: var(--fgStrong_Color);
+		background-color: var(--accentWeakFade_Color);
+		transition-duration: @hover_Duration;
+	}
+	&:active:active{
+		color: var(--fgStrong_Color);
+		border-color: var(--accentWeak_Color);
+		background-color: var(--accentWeak_Color);
+		transition-duration: @active_Duration;
+	}
 	&:disabled:disabled{
 		color: var(--fgDisabled_Color);
 		background-color: initial;

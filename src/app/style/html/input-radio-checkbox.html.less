@@ -4,20 +4,22 @@
 	.input(@isButton:true);
 	-webkit-appearance: none; // not -moz-
 	height: @s24;
-	width:  @s24;	
+	width:  @s24;
 	vertical-align: bottom; // ???
 	margin: @s1;
 	&:checked{
 		background-color: var(--accentWeak_Color);
 	}
-	&:hover{
+	.input-mouse &:hover{
 		background-color: var(--accentWeakFade2_Color);
 	}
-	&:active{
+	&:active:active{
 		background-color: var(--accentWeakDark_Color);
 	}
 	background-color: var(--bgOverlay2_Color);
 }
+
+// TODO: disabled?
 
 .input_Radio{
 	.input_RadioCheckbox();

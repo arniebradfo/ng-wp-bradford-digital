@@ -25,14 +25,13 @@
 	.transition(opacity background-color);
 	background-color: var(--bgOverlay1_Color);
 	opacity: 1;
-	&:focus{
-		opacity: .5;
-	}
-	&:hover{
+
+	.input-mouse &:hover{
 		background-color: var(--accentWeakFade2_Color);
 		opacity: 1;
 		transition-duration: @hover_Duration;
 	}
+	// &:focus{ opacity: .5; } // these are never focused?
 	&:active{
 		background-color: var(--accentWeak_Color);
 		opacity: 1;
