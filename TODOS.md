@@ -4,9 +4,9 @@
 	- hover issues
 - posts types
 	- make links black
-	- password protection
 	- align menu button
 	- fix unlock icon
+- password protected UX
 - add scroll component to eliminate scrollbox
 	- scroll to top
 	- menu button color onscroll
@@ -17,6 +17,10 @@
 	- change routing?
 	- root should go to correct state on router event
 - src sizes for images
+- tab issue? search then tab destroys layout?
+- clicking a left-post should retun to that post
+- fix external link routing
+
 
 - content shortcodes
 - comments css

@@ -22,6 +22,7 @@ import { IconComponent } from './components/icon/icon.component';
 import { IconDefsComponent } from './components/icon-defs/icon-defs.component';
 import { LogoComponent } from './components/logo/logo.component';
 import { UrlPathnamePipe } from './pipes/url-pathname.pipe';
+import { InputDetectionService } from './services/input-detection.service';
 
 @NgModule({
 	imports: [
@@ -48,7 +49,8 @@ import { UrlPathnamePipe } from './pipes/url-pathname.pipe';
 	],
 	providers: [
 		WpRestService,
-		ViewModelService
+		ViewModelService,
+		InputDetectionService
 	],
 	bootstrap: [RootComponent],
 })

@@ -6,6 +6,7 @@ import { IWpMenuItem } from 'app/interfaces/wp-rest-types';
 import { Subscription } from 'rxjs/Subscription';
 import { Router, NavigationExtras } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
+import { InputDetectionService } from '../../services/input-detection.service';
 
 @Component({
 	selector: 'ngwp-root',
@@ -37,7 +38,8 @@ export class RootComponent implements OnInit, OnDestroy {
 	constructor(
 		private wpRestService: WpRestService,
 		public viewModelService: ViewModelService,
-		private router: Router
+		private router: Router,
+		private thing: InputDetectionService
 	) { }
 
 	ngOnInit(): void {
