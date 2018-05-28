@@ -2,14 +2,11 @@
 - posts types
 	- make links black
 	- align menu button
-	- fix unlock icon
-- password protected UX
 - add scroll component to eliminate scrollbox
 	- scroll to top
 	- menu button color onscroll
 	- scroll down button
 	- main image parallax
-- redo sizes 8px grid 8x(1)
 - active sidebar
 	- change routing?
 	- root should go to correct state on router event
@@ -17,6 +14,7 @@
 - tab issue? search then tab destroys layout?
 - clicking a left-post should retun to that post
 - fix external link routing
+- password protected UX
 
 
 - content shortcodes

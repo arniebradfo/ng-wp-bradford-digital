@@ -3,9 +3,9 @@ import { WpRestService } from 'app/services/wp-rest.service';
 import { ViewModelService } from 'app/services/view-model.service';
 // import { trigger, state, style, transition, animate } from '@angular/animations';
 import { IWpMenuItem } from 'app/interfaces/wp-rest-types';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription, fromEvent } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 import { Router, NavigationExtras } from '@angular/router';
-import { Observable } from 'rxjs/Rx';
 import { InputDetectionService } from '../../services/input-detection.service';
 import { TabDetectionService } from '../../services/tab-detection.service';
 
@@ -33,7 +33,7 @@ export class RootComponent implements OnInit, OnDestroy {
 	}
 
 	private _mobileStateSubscription: Subscription
-		= Observable.fromEvent(window, 'resize').debounceTime(200)
+		= fromEvent(window, 'resize').pipe(debounceTime(200))
 			.subscribe(() => this._updateStateMobile());
 
 	constructor(

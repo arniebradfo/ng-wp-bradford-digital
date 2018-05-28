@@ -1,15 +1,17 @@
+
+import { throwError,  Observable } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Http, Response, RequestOptionsArgs, Headers } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
 import { environment } from '../../environments/environment';
 import {
 	IWpMenuItem, IWpPost, IWpPage, IWpTaxonomy, IWpUser, IWpComment,
 	IWpOptions, IWpId, IWpMedia, IWpError, WpSort
 } from '../interfaces/wp-rest-types';
-import 'rxjs/add/observable/throw';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/toPromise';
+
+
+
+
 
 // this service also serves as the global store of client-side data
 
@@ -153,12 +155,13 @@ export class WpRestService {
 
 	public refreshOptions(): void {
 		this.options = this._http.get(this._ngWp + `options`)
-			.map((res: Response) => res.json())
-			.catch((err: Response | any) => {
-				console.error(err);
-				return Observable.throw(err);
-			})
-			.toPromise();
+			.pipe(
+				map((res: Response) => res.json(),
+				catchError((err: Response | any) => {
+					console.error(err);
+					return throwError(err);
+				}))
+			).toPromise();
 		// this.options.then(options => console.log('options', options)); // for debug
 	}
 
@@ -172,13 +175,14 @@ export class WpRestService {
 			const requestPostSet = () => {
 				this._http
 					.get(this._wpRest + `${type}?per_page=${perPage}&page=${page}`)
-					.map((res: Response) => res.json())
-					.catch((err: Response | any) => {
-						console.error(err);
-						reject(err);
-						return Observable.throw(err);
-					})
-					.subscribe((res: any[]) => {
+					.pipe(
+						map((res: Response) => res.json()),
+						catchError((err: Response | any) => {
+							console.error(err);
+							reject(err);
+							return throwError(err);
+						})
+					).subscribe((res: any[]) => {
 
 						// add the returned data to the set
 						set = set.concat(res);
@@ -223,14 +227,15 @@ export class WpRestService {
 			this._postsById.then(postsById => {
 				const post = postsById[id];
 				this._http.get(post._links.self[0].href, { params: { password: password } })
-					.map((res: Response) => res.json())
-					.catch((err: Response) => {
-						const wpErr: IWpError = err.json();
-						post.error = wpErr;
-						reject(post);
-						return Observable.throw(wpErr);
-					})
-					.forEach(postRes => {
+					.pipe(
+						map((res: Response) => res.json()),
+						catchError((err: Response) => {
+							const wpErr: IWpError = err.json();
+							post.error = wpErr;
+							reject(post);
+							return throwError(wpErr);
+						})
+					).forEach(postRes => {
 						// add the newly returned content and excerpt to the post and return the post
 						post.content = postRes.content;
 						post.excerpt = postRes.excerpt;
@@ -305,11 +310,13 @@ export class WpRestService {
 	public getMenu(name: string): Observable<IWpMenuItem[]> {
 		return this._http
 			.get(this._wpMenus + `menu-locations/${name}`)
-			.map((res: Response) => res.json())
-			.catch((err: Response | any) => {
-				console.error(err);
-				return Observable.throw(this.checkForMenuApiErr(err));
-			});
+			.pipe(
+				map((res: Response) => res.json()),
+				catchError((err: Response | any) => {
+					console.error(err);
+					return throwError(this.checkForMenuApiErr(err));
+				})
+			);
 	}
 
 	// get the comments of a specified post
@@ -324,12 +331,13 @@ export class WpRestService {
 
 		const commentsRequest: Promise<IWpComment[]> = this._http
 			.get(post._links.replies[0].href + '&per_page=100', requestObj)
-			.map((res: Response) => res.json())
-			.catch((err: Response | any) => {
-				console.error(err);
-				return Observable.throw(err);
-			})
-			.toPromise();
+			.pipe(
+				map((res: Response) => res.json()),
+				catchError((err: Response | any) => {
+					console.error(err);
+					return throwError(err);
+				})
+			).toPromise();
 
 		return Promise.all([commentsRequest, this._usersById]).then(res => {
 			const comments = res[0];
@@ -370,7 +378,7 @@ export class WpRestService {
 			};
 
 			this._http.post(this._wpRest + 'comments', body)
-				.map((res: Response) => res.json())
+				.pipe(map((res: Response) => res.json()))
 				.toPromise()
 				.then(res => {
 					// console.log(res);

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { IWpPost, IWpPage, IWpComment, IWpError, WpSort } from 'app/interfaces/wp-rest-types';
 import { WpRestService } from './wp-rest.service';
 import { Router, ActivationEnd } from '@angular/router';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 import { Title } from '@angular/platform-browser';
 import { StateRoot } from '../components/root/root.component';
 
