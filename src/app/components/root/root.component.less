@@ -34,6 +34,17 @@
 .menu-nav{
 	margin: @s8*6 0 ;
 }
+.menu-button{
+	.absolute(0 null null 0);
+	z-index: 4;
+
+	@media screen and (max-width: @mobileSm_Breakpoint) {
+		margin: @s8*2.5;
+	}
+	@media screen and (min-width: (@mobileSm_Breakpoint + 1)) {
+		margin: @s8*4 - 1;
+	}
+}
 
 
 // LIST //
