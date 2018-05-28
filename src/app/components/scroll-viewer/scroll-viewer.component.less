@@ -1,0 +1,18 @@
+@scrollBar_Size: 20px; // wild guess
+
+:host{
+	display: block;
+	position: relative;
+	overflow: hidden;
+}
+
+.scroll-viewport{
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: @scrollBar_Size;
+	bottom: @scrollBar_Size;
+
+}
+
+.scroll-content{}

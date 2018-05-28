@@ -1,8 +1,11 @@
 # TODOs:
 - add scroll component to eliminate scrollbox
+	- add scrollviewer componenet
 	- scroll to top
 	- menu button color onscroll
-	- scroll down button
+		- change after designated hard-coded scrollvalue
+		- change after ANY scrolling?
+		- use `IntersectionObserver` on inverted header [pollyfill](https://github.com/w3c/IntersectionObserver)
 	- main image parallax
 - active sidebar
 	- change routing?
