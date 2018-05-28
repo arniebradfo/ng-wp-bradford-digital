@@ -1,7 +1,7 @@
 # TODOs:
 - posts types
 	- make links black
-	- align menu button
+	- fix content/header alignment
 - add scroll component to eliminate scrollbox
 	- scroll to top
 	- menu button color onscroll
@@ -15,6 +15,7 @@
 - clicking a left-post should retun to that post
 - fix external link routing
 - password protected UX
+- delete `less-loader` from `package.json`
 
 
 - content shortcodes
