@@ -1,40 +1,38 @@
-
 // FAMILIES //
-@CAIRO: Cairo; // https://fonts.google.com/specimen/Cairo
-@cairo_Family: @CAIRO, 'Helvetica Neue', sans-serif;
+@FONT: Cairo; // https://fonts.google.com/specimen/Cairo
+@font_Family: '@{FONT}', 'Helvetica Neue', sans-serif;
 @monospace_Family: 'Consolas', monospace;
 
 // WEIGHT //
-// available weights: 200 300 400 600 700 900
+// Available Cairo weights: 200 300 400 600 700 900
 @light_Weight:       300;
 @regular_Weight:     600;
 @bold_Weight:        900;
-// e('@import url(https://fonts.googleapis.com/css?family=@{CAIRO}:@{light_Weight},@{regular_Weight},@{bold_Weight});'); // TODO: uncomment for production
+@import url('https://fonts.googleapis.com/css?family=@{FONT}:@{light_Weight},@{regular_Weight},@{bold_Weight}.css');
 
 
-@import (reference) './sizes.vars.less';
+// FONT SYNTAX // cuz i always forget...
 // font: font-style font-variant font-weight font-size/line-height font-family;
 
-
 // HEADING //
-@heading1_Font:     normal normal @light_Weight     (@s8 * 5) ~'/' (@s8 * 6)    @cairo_Family ; // h1
-@heading2_Font:     normal normal @light_Weight     (@s8 * 4) ~'/' (@s8 * 5)    @cairo_Family ; // h2
-@heading3_Font:     normal normal @light_Weight     (@s8 * 3) ~'/' (@s8 * 4)    @cairo_Family ; // h3
-@heading4_Font:     normal normal @regular_Weight   (@s8 * 2) ~'/' (@s8 * 3)    @cairo_Family ; // h4
+@heading1_Font:     normal normal @light_Weight     (@s8 * 5) ~'/' (@s8 * 6)    @font_Family ; // h1
+@heading2_Font:     normal normal @light_Weight     (@s8 * 4) ~'/' (@s8 * 5)    @font_Family ; // h2
+@heading3_Font:     normal normal @light_Weight     (@s8 * 3) ~'/' (@s8 * 4)    @font_Family ; // h3
+@heading4_Font:     normal normal @regular_Weight   (@s8 * 2) ~'/' (@s8 * 3)    @font_Family ; // h4
 
 // META //
-@meta_Font:         normal normal @bold_Weight      @s12 ~'/' @s12    @cairo_Family ; // h5
-@metaSm_Font:       normal normal @bold_Weight      @s10 ~'/' @s10    @cairo_Family ; // h6
+@meta_Font:         normal normal @bold_Weight      @s12 ~'/' @s12    @font_Family ; // h5
+@metaSm_Font:       normal normal @bold_Weight      @s10 ~'/' @s10    @font_Family ; // h6
 
 // BODY //
 // body_Font is applied to the body tag, inherited by everything //
 // this font size here is then equal to 1rem unit //
-@body_Font:          normal normal @regular_Weight  @s12 ~'/' @s16  @cairo_Family  ; // p
-@bodySm_Font:        normal normal @regular_Weight  @s10 ~'/' @s16  @cairo_Family  ; // caption
+@body_Font:          normal normal @regular_Weight  @s12 ~'/' @s16  @font_Family  ; // p
+@bodySm_Font:        normal normal @regular_Weight  @s10 ~'/' @s16  @font_Family  ; // caption
 
 // OTHER //
-@quote_Font:         italic @regular_Weight  inherit ~'/' inherit  @cairo_Family    ; // blockquote
-@monoSpace_Font:            normal           inherit ~'/' inherit  @monospace_Family  ; // code, pre
+@quote_Font:         italic @regular_Weight  inherit ~'/' inherit  @font_Family    ; // blockquote
+@monoSpace_Font:     normal                  inherit ~'/' inherit  @monospace_Family; // code, pre
 
 
 // TYPOGRPAHY MIXINS //
