@@ -24,6 +24,7 @@ import { LogoComponent } from './components/logo/logo.component';
 import { UrlPathnamePipe } from './pipes/url-pathname.pipe';
 import { InputDetectionService } from './services/input-detection.service';
 import { TabDetectionService } from './services/tab-detection.service';
+import { ScrollbarComponent } from './components/scrollbar/scrollbar.component';
 
 @NgModule({
 	imports: [
@@ -42,11 +43,12 @@ import { TabDetectionService } from './services/tab-detection.service';
 		EmptyComponent,
 		CommentsComponent,
 		CommentFormComponent,
-		NumberToArrayPipe,
 		IconComponent,
 		IconDefsComponent,
 		LogoComponent,
+		ScrollbarComponent,
 		UrlPathnamePipe,
+		NumberToArrayPipe,
 	],
 	providers: [
 		WpRestService,

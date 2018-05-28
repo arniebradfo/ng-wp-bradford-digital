@@ -1,7 +1,4 @@
 # TODOs:
-- posts types
-	- make links black
-	- fix content/header alignment
 - add scroll component to eliminate scrollbox
 	- scroll to top
 	- menu button color onscroll
@@ -16,6 +13,10 @@
 - fix external link routing
 - password protected UX
 - delete `less-loader` from `package.json`
+- css
+	- add focus color
+	- make links black
+	- touch :active state?
 
 
 - content shortcodes
