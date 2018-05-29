@@ -1,4 +1,4 @@
-import { Component, OnInit, HostBinding, OnDestroy } from '@angular/core';
+import { Component, OnInit, HostBinding, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 import { WpRestService } from 'app/services/wp-rest.service';
 import { ViewModelService } from 'app/services/view-model.service';
 // import { trigger, state, style, transition, animate } from '@angular/animations';
@@ -8,33 +8,33 @@ import { debounceTime } from 'rxjs/operators';
 import { Router, NavigationExtras } from '@angular/router';
 import { InputDetectionService } from '../../services/input-detection.service';
 import { TabDetectionService } from '../../services/tab-detection.service';
+import { ScrollViewerComponent } from '../scroll-viewer/scroll-viewer.component';
 
 @Component({
 	selector: 'ngwp-root',
 	templateUrl: './root.component.html',
 	styleUrls: ['./root-states.component.less', './root.component.less']
 })
-export class RootComponent implements OnInit, OnDestroy {
+export class RootComponent implements OnInit, AfterViewInit, OnDestroy {
 
 	blogName: string;
 	blogDescription: string;
 	menu: IWpMenuItem[];
 	menuMame: string = 'primary';
-	private _routerInfoSubscription: Subscription;
+	private _subscriptions: Subscription[] = [];
 	private _routerInfoState;
 	private _menuNavigation: [any[], NavigationExtras];
 
 	stateRoot: StateRoot = 'state-list';
 	stateMobile: StateMobile = 'state-not-mobile';
 	stateWas: StateRootWas = 'was-state-list';
+
 	@HostBinding('class')
 	private get _rootClass(): string {
 		return `${this.stateRoot} ${this.stateMobile} ${this.stateWas}`;
 	}
 
-	private _mobileStateSubscription: Subscription
-		= fromEvent(window, 'resize').pipe(debounceTime(200))
-			.subscribe(() => this._updateStateMobile());
+	@ViewChild('postElement') postElement: ScrollViewerComponent;
 
 	constructor(
 		private wpRestService: WpRestService,
@@ -50,48 +50,17 @@ export class RootComponent implements OnInit, OnDestroy {
 			this.blogDescription = options.general.blogdescription;
 		});
 		this._getMenus();
-		this._routerInfoSubscription = this.viewModelService.routerInfo$.subscribe((routerInfo) => {
-
-			this.stateWas = `was-${this.stateRoot}` as StateRootWas ;
-			this.stateRoot = routerInfo.state
-			this._routerInfoState = routerInfo;
-
-			// console.log(routerInfo);
-			// console.log(this.stateWas);
-
-			if (this.stateMobile === 'state-not-mobile') {
-
-				this._menuNavigation = [
-					routerInfo.slug ? [routerInfo.slug] : [],
-					{
-						queryParams: this.stateRoot === 'state-post' ? { m: true } : {}
-					}
-				];
-
-			} else { // if (this.stateMobile === 'state-mobile') {
-
-				let route: string[] = [];
-				if (this.stateRoot === 'state-post' && routerInfo.slug)
-					route = [routerInfo.slug];
-				else if (this.stateRoot === 'state-list' && routerInfo.type && routerInfo.typeSlug)
-					route = [routerInfo.type, routerInfo.typeSlug];
-
-				this._menuNavigation = [
-					route,
-					{
-						queryParams: this.stateRoot !== 'state-menu' ? { m: true } : {}
-					}
-				];
-			}
-
-		});
-
+		this._subscriptions.push( fromEvent(window, 'resize').pipe(debounceTime(200)).subscribe(this._updateStateMobile.bind(this)) );
+		this._subscriptions.push( this.viewModelService.routerInfo$.subscribe(this._onRouterInfoChange.bind(this)) );
 		this._updateStateMobile();
 	}
 
+	ngAfterViewInit() {
+		this._subscriptions.push( this.postElement.onScroll$.subscribe(this._onPostScroll.bind(this)) );
+	}
+
 	ngOnDestroy(): void {
-		this._routerInfoSubscription.unsubscribe();
-		this._mobileStateSubscription.unsubscribe();
+		this._subscriptions.forEach(subscription => subscription.unsubscribe());
 	}
 
 	menuButtonClick() {
@@ -104,6 +73,40 @@ export class RootComponent implements OnInit, OnDestroy {
 			return this.stateRoot === 'state-post' ? 'icon_Menu' : 'icon_X'
 		else
 			return this.stateRoot !== 'state-menu' ? 'icon_Menu' : 'icon_X'
+	}
+
+	private _onRouterInfoChange(routerInfo) {
+		this.stateWas = `was-${this.stateRoot}` as StateRootWas ;
+		this.stateRoot = routerInfo.state
+		this._routerInfoState = routerInfo;
+
+		// console.log(routerInfo);
+		// console.log(this.stateWas);
+
+		if (this.stateMobile === 'state-not-mobile') {
+
+			this._menuNavigation = [
+				routerInfo.slug ? [routerInfo.slug] : [],
+				{
+					queryParams: this.stateRoot === 'state-post' ? { m: true } : {}
+				}
+			];
+
+		} else { // if (this.stateMobile === 'state-mobile') {
+
+			let route: string[] = [];
+			if (this.stateRoot === 'state-post' && routerInfo.slug)
+				route = [routerInfo.slug];
+			else if (this.stateRoot === 'state-list' && routerInfo.type && routerInfo.typeSlug)
+				route = [routerInfo.type, routerInfo.typeSlug];
+
+			this._menuNavigation = [
+				route,
+				{
+					queryParams: this.stateRoot !== 'state-menu' ? { m: true } : {}
+				}
+			];
+		}
 	}
 
 	private _getMenus() {
@@ -119,6 +122,10 @@ export class RootComponent implements OnInit, OnDestroy {
 
 	private _updateStateMobile() {
 		this.stateMobile = window.innerWidth > MOBILE_BREAKPOINT ? 'state-not-mobile' : 'state-mobile';
+	}
+
+	private _onPostScroll(event: Event) {
+		console.log(event.srcElement.scrollTop);
 	}
 
 }

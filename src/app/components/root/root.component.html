@@ -17,8 +17,8 @@
 	</nav>
 </header>
 
-<ngwp-scroll-viewer class="list" *ngIf="viewModelService.postList$ | async as postList">
-	<div class="list-wrapper">
+<ngwp-scroll-viewer class="list" >
+	<div class="list-wrapper" *ngIf="viewModelService.postList$ | async as postList">
 
 		<div class="list-header">
 			<h1 class="list-title">{{ postList.title }}</h1>
@@ -77,35 +77,38 @@
 	</div>
 </ngwp-scroll-viewer>
 
-<ngwp-scroll-viewer class="post" *ngIf="viewModelService.post$ | async as post">
-	<ngwp-post [post]="post.currentPost" [displayFull]="true"></ngwp-post>
-	<div class="adjcent-post-list-wrapper" *ngIf="post.currentPost?.adjcentPosts as adjcentPosts">
-		<nav class="adjcent-post-list">
-			<!--
-				<h3 class="adjcent-post-title">Previous:</h3>
-				<ngwp-post class="list-item" [post]="adjcentPosts.previous"></ngwp-post>
-			-->
-			<h3 class="adjcent-post-title">Next:</h3>
-			<ngwp-post class="list-item" [post]="adjcentPosts.next"></ngwp-post>
-		</nav>
+<ngwp-scroll-viewer #postElement class="post" >
+	<div class="post-wrapper" *ngIf="viewModelService.post$ | async as post">
+		<ngwp-post [post]="post.currentPost" [displayFull]="true" ></ngwp-post>
+		<div class="adjcent-post-list-wrapper" *ngIf="post.currentPost?.adjcentPosts as adjcentPosts">
+			<nav class="adjcent-post-list">
+				<!--
+					<h3 class="adjcent-post-title">Previous:</h3>
+					<ngwp-post class="list-item" [post]="adjcentPosts.previous"></ngwp-post>
+				-->
+				<h3 class="adjcent-post-title">Next:</h3>
+				<ngwp-post class="list-item" [post]="adjcentPosts.next"></ngwp-post>
+			</nav>
+		</div>
+		<footer class="post-footer nav">
+			<button
+				class="nav-item"
+				>
+				contact
+				<div class="selection-bar"></div>
+			</button>
+			<button
+				class="nav-item"
+				>
+				about
+				<div class="selection-bar"></div>
+			</button>
+			<p>
+				copyright 2018 james bradford
+			</p>
+		</footer>
 	</div>
-	<footer class="post-footer nav">
-		<button
-			class="nav-item"
-			>
-			contact
-			<div class="selection-bar"></div>
-		</button>
-		<button
-			class="nav-item"
-			>
-			about
-			<div class="selection-bar"></div>
-		</button>
-		<p>
-			copyright 2018 james bradford
-		</p>
-	</footer>
+
 </ngwp-scroll-viewer>
 
 <button

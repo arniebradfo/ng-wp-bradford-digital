@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { AfterContentInit } from '@angular/core';
+import { Component, OnInit, ElementRef, AfterContentInit, ViewChild } from '@angular/core';
 import { scrollBarUtil } from './scroll-bar.util';
+import { fromEvent, Observable } from 'rxjs';
+import { throttleTime } from 'rxjs/operators';
+import { animationFrame } from 'rxjs/internal/scheduler/animationFrame';
 
 @Component({
 	selector: 'ngwp-scroll-viewer',
@@ -12,15 +14,21 @@ export class ScrollViewerComponent implements OnInit, AfterContentInit {
 	public scrollboxMargin: string = '';
 	public scrollboxPadding: string = '';
 
+	public onScroll$: Observable<Event>;
+
+	@ViewChild('scrollViewport') scrollViewport: ElementRef;
+
 	constructor() { }
 
 	ngOnInit() { }
 
 	ngAfterContentInit() {
-		this.hideNativeScrollbar();
+		this._hideNativeScrollbar();
+		this.onScroll$ = fromEvent<Event>(this.scrollViewport.nativeElement, 'scroll')
+			.pipe(throttleTime(0, animationFrame))
 	}
 
-	private hideNativeScrollbar(): void {
+	private _hideNativeScrollbar(): void {
 		const baseMargin = 30;
 		const scrollbarWidth = scrollBarUtil.getNativeScrollbarWidth();
 		this.scrollboxMargin = '0 -' + baseMargin + 'px 0 0';
