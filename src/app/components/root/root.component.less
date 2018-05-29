@@ -18,7 +18,7 @@
 		background-color: var(--bgOverlay0_Color);
 	}
 	&:before{
-		.absolute(0 0 0 null);
+		.absolute(0 0 0 initial);
 		background-color: var(--bgOverlay2_Color);
 		width: @s1;
 	}
@@ -35,7 +35,7 @@
 	margin: @s8*6 0 ;
 }
 .menu-button{
-	.absolute(0 null null 0);
+	.absolute(0 initial initial 0);
 	z-index: 4;
 
 	@media screen and (max-width: @mobileSm_Breakpoint) {
@@ -48,7 +48,7 @@
 
 
 // LIST //
-.list{
+.list-wrapper{
 	@media screen and (max-width: @mobileSm_Breakpoint) {
 		padding: @s8*15 (@postHorizontal_MarginSm - @postHorizontal_Padding);
 	}

@@ -1,5 +1,5 @@
 // POSITION //
-// TODO: test 
+// TODO: test
 
 /*
 write position like you would any other thickness value
@@ -20,7 +20,7 @@ right:  10px;
 bottom: 0;
 left:   10px;
 
-.absolute(0 10px null)
+.absolute(0 10px initial)
 =>
 position: abosolue;
 top:    0;
@@ -38,8 +38,8 @@ left:   4px;
 */
 
 .position (
-    @position: static; 
-    @args:null
+    @position: static;
+    @args: initial
 ) {
 	position: @position;
 	@length: length(@args);
@@ -69,12 +69,13 @@ left:   4px;
 	}
     .positions();
 }
-.absolute (@args:null) {
-  .position(absolute, @args);
+.absolute (@args:initial) {
+	.position(absolute, @args);
+	will-change: transform; // forces a new layer?
 }
-.fixed (@args:null) {
+.fixed (@args:initial) {
   .position(fixed, @args);
 }
-.relative (@args:null) {
+.relative (@args:initial) {
   .position(relative, @args);
 }

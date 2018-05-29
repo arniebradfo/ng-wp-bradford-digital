@@ -28,7 +28,7 @@
 
 	&:after{
 		content: '';
-		.absolute(0 @buttonHorizontal_Padding null );
+		.absolute(0 @buttonHorizontal_Padding initial );
 		height: @s1;
 		background-color: var(--bgOverlay2_Color);
 		z-index: -1;
@@ -41,7 +41,7 @@
 
 	.selection-bar{
 		height: @s1;
-		.absolute(-(@buttonVertical_Margin) @buttonHorizontal_Padding null);
+		.absolute(-(@buttonVertical_Margin) @buttonHorizontal_Padding initial);
 	}
 
 }
@@ -64,7 +64,7 @@
 
 	.selection-bar{
 		width: @s1;
-		.absolute(@s8 -(@buttonHorizontal_Margin) @s8 null);
+		.absolute(@s8 -(@buttonHorizontal_Margin) @s8 initial);
 	}
 
 }

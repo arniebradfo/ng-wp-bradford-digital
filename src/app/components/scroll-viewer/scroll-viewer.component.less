@@ -1,4 +1,3 @@
-@scrollBar_Size: 20px; // wild guess
 
 :host{
 	display: block;
@@ -10,8 +9,13 @@
 	position: absolute;
 	top: 0;
 	left: 0;
-	right: @scrollBar_Size;
-	bottom: @scrollBar_Size;
+	right: 0;
+	bottom: 0;
+
+	// overflow: auto;
+
+	overflow-x: hidden;
+	overflow-y: scroll;
 
 }
 

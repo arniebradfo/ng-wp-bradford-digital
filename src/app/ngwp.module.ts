@@ -24,7 +24,6 @@ import { LogoComponent } from './components/logo/logo.component';
 import { UrlPathnamePipe } from './pipes/url-pathname.pipe';
 import { InputDetectionService } from './services/input-detection.service';
 import { TabDetectionService } from './services/tab-detection.service';
-import { ScrollbarComponent } from './components/scrollbar/scrollbar.component';
 import { ScrollViewerComponent } from './components/scroll-viewer/scroll-viewer.component';
 
 @NgModule({
@@ -47,7 +46,6 @@ import { ScrollViewerComponent } from './components/scroll-viewer/scroll-viewer.
 		IconComponent,
 		IconDefsComponent,
 		LogoComponent,
-		ScrollbarComponent,
 		ScrollViewerComponent,
 		UrlPathnamePipe,
 		NumberToArrayPipe,

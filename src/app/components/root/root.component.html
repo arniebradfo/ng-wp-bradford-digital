@@ -17,65 +17,67 @@
 	</nav>
 </header>
 
-<section class="list" *ngIf="viewModelService.postList$ | async as postList">
+<ngwp-scroll-viewer class="list" *ngIf="viewModelService.postList$ | async as postList">
+	<div class="list-wrapper">
 
-	<div class="list-header">
-		<h1 class="list-title">{{ postList.title }}</h1>
-		<!--
-			<small class="list-type">{{ postList.type }}</small>
-			<span class="list-page-number">page {{postList.currentListPageNumber}}</span>
-		-->
-		<nav class="list-nav nav top" [ngClass]="{'seach-open':topSearch.isOpen}">
-			<button
-				*ngFor="let item of menu"
-				[ngClass]="item.classes"
-				[routerLink]="item.url | urlPathname"
-				routerLinkActive="selected"
-				class="nav-item"
-				>
-					{{item.title}}
-				<div class="selection-bar"></div>
-			</button>
-			<div class="flex-splitter"></div>
-			<button class="nav-item list-search-button" (click)="topSearch.open()">
-				<span>search</span>
-				<ngwp-icon class="icon-right" name="icon_Search"></ngwp-icon>
-			</button>
-			<ngwp-search #topSearch class="list-search"></ngwp-search>
-		</nav>
+		<div class="list-header">
+			<h1 class="list-title">{{ postList.title }}</h1>
+			<!--
+				<small class="list-type">{{ postList.type }}</small>
+				<span class="list-page-number">page {{postList.currentListPageNumber}}</span>
+			-->
+			<nav class="list-nav nav top" [ngClass]="{'seach-open':topSearch.isOpen}">
+				<button
+					*ngFor="let item of menu"
+					[ngClass]="item.classes"
+					[routerLink]="item.url | urlPathname"
+					routerLinkActive="selected"
+					class="nav-item"
+					>
+						{{item.title}}
+					<div class="selection-bar"></div>
+				</button>
+				<div class="flex-splitter"></div>
+				<button class="nav-item list-search-button" (click)="topSearch.open()">
+					<span>search</span>
+					<ngwp-icon class="icon-right" name="icon_Search"></ngwp-icon>
+				</button>
+				<ngwp-search #topSearch class="list-search"></ngwp-search>
+			</nav>
+		</div>
+
+		<ngwp-post class="list-item" *ngFor="let post of postList.currentList" [post]="post"></ngwp-post>
+
+		<button class="load-more-button emhasis" (click)="viewModelService.loadMorePosts()" *ngIf="postList.canLoadMorePages">
+			<span>Load More</span>
+			<ngwp-icon class="icon-right" name="icon_Pointer_Down"></ngwp-icon>
+		</button>
+
+		<div class="list-header">
+			<nav class="list-nav nav top" *ngIf="postList.currentListPageCount > 1" [ngClass]="{'seach-open':bottomSearch.isOpen}">
+				<label class="list-nav-label nav-item" >go to page</label>
+				<button
+					class="nav-item"
+					*ngFor="let count of postList.currentListPageCount | numberToArray; let i = index"
+					[routerLink]="postList.currentListRouterPrefix + '/page/' + (i+1)"
+					routerLinkActive="selected"
+					>
+					{{i+1}}
+					<div class="selection-bar"></div>
+				</button>
+				<div class="flex-splitter"></div>
+				<button class="nav-item list-search-button" (click)="bottomSearch.open()">
+					<span>search</span>
+					<ngwp-icon class="icon-right" name="icon_Search"></ngwp-icon>
+				</button>
+				<ngwp-search #bottomSearch class="list-search"></ngwp-search>
+			</nav>
+		</div>
+
 	</div>
+</ngwp-scroll-viewer>
 
-	<ngwp-post class="list-item" *ngFor="let post of postList.currentList" [post]="post"></ngwp-post>
-
-	<button class="load-more-button emhasis" (click)="viewModelService.loadMorePosts()" *ngIf="postList.canLoadMorePages">
-		<span>Load More</span>
-		<ngwp-icon class="icon-right" name="icon_Pointer_Down"></ngwp-icon>
-	</button>
-
-	<div class="list-header">
-		<nav class="list-nav nav top" *ngIf="postList.currentListPageCount > 1" [ngClass]="{'seach-open':bottomSearch.isOpen}">
-			<label class="list-nav-label nav-item" >go to page</label>
-			<button
-				class="nav-item"
-				*ngFor="let count of postList.currentListPageCount | numberToArray; let i = index"
-				[routerLink]="postList.currentListRouterPrefix + '/page/' + (i+1)"
-				routerLinkActive="selected"
-				>
-				{{i+1}}
-				<div class="selection-bar"></div>
-			</button>
-			<div class="flex-splitter"></div>
-			<button class="nav-item list-search-button" (click)="bottomSearch.open()">
-				<span>search</span>
-				<ngwp-icon class="icon-right" name="icon_Search"></ngwp-icon>
-			</button>
-			<ngwp-search #bottomSearch class="list-search"></ngwp-search>
-		</nav>
-	</div>
-
-</section>
-
-<main class="post" *ngIf="viewModelService.post$ | async as post">
+<ngwp-scroll-viewer class="post" *ngIf="viewModelService.post$ | async as post">
 	<ngwp-post [post]="post.currentPost" [displayFull]="true"></ngwp-post>
 	<div class="adjcent-post-list-wrapper" *ngIf="post.currentPost?.adjcentPosts as adjcentPosts">
 		<nav class="adjcent-post-list">
@@ -104,7 +106,7 @@
 			copyright 2018 james bradford
 		</p>
 	</footer>
-</main>
+</ngwp-scroll-viewer>
 
 <button
 	class="menu-button button--round"
