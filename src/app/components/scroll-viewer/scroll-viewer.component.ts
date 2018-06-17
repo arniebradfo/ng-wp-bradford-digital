@@ -28,11 +28,15 @@ export class ScrollViewerComponent implements OnInit, AfterContentInit {
 			.pipe(throttleTime(0, animationFrame))
 	}
 
-	private _hideNativeScrollbar(): void {
+	private _hideNativeScrollbar() {
 		const baseMargin = 30;
 		const scrollbarWidth = scrollBarUtil.getNativeScrollbarWidth();
 		this.scrollboxMargin = '0 -' + baseMargin + 'px 0 0';
 		this.scrollboxPadding = '0 ' + (baseMargin - scrollbarWidth) + 'px 0 0';
+	}
+
+	public scrollToTop() {
+		this.scrollViewport.nativeElement.scrollTop = 0;
 	}
 
 }

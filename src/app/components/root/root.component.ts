@@ -34,7 +34,8 @@ export class RootComponent implements OnInit, AfterViewInit, OnDestroy {
 		return `${this.stateRoot} ${this.stateMobile} ${this.stateWas}`;
 	}
 
-	@ViewChild('postElement') postElement: ScrollViewerComponent;
+	@ViewChild('postScrollViewer') postScrollViewer: ScrollViewerComponent;
+	@ViewChild('listScrollViewer') listScrollViewer: ScrollViewerComponent;
 
 	constructor(
 		private wpRestService: WpRestService,
@@ -56,10 +57,10 @@ export class RootComponent implements OnInit, AfterViewInit, OnDestroy {
 	}
 
 	ngAfterViewInit() {
-		this._subscriptions.push( this.postElement.onScroll$.subscribe(this._onPostScroll.bind(this)) );
+		this._subscriptions.push( this.postScrollViewer.onScroll$.subscribe(this._onPostScroll.bind(this)) );
 	}
 
-	ngOnDestroy(): void {
+	ngOnDestroy() {
 		this._subscriptions.forEach(subscription => subscription.unsubscribe());
 	}
 
@@ -79,6 +80,9 @@ export class RootComponent implements OnInit, AfterViewInit, OnDestroy {
 		this.stateWas = `was-${this.stateRoot}` as StateRootWas ;
 		this.stateRoot = routerInfo.state
 		this._routerInfoState = routerInfo;
+
+		console.log(routerInfo);
+
 
 		// console.log(routerInfo);
 		// console.log(this.stateWas);
@@ -125,7 +129,7 @@ export class RootComponent implements OnInit, AfterViewInit, OnDestroy {
 	}
 
 	private _onPostScroll(event: Event) {
-		console.log(event.srcElement.scrollTop);
+		// console.log(event.srcElement.scrollTop);
 	}
 
 }

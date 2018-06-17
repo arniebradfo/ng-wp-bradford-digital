@@ -17,7 +17,7 @@
 	</nav>
 </header>
 
-<ngwp-scroll-viewer class="list" >
+<ngwp-scroll-viewer #listScrollViewer class="list" >
 	<div class="list-wrapper" *ngIf="viewModelService.postList$ | async as postList">
 
 		<div class="list-header">
@@ -77,7 +77,7 @@
 	</div>
 </ngwp-scroll-viewer>
 
-<ngwp-scroll-viewer #postElement class="post" >
+<ngwp-scroll-viewer #postScrollViewer class="post" >
 	<div class="post-wrapper" *ngIf="viewModelService.post$ | async as post">
 		<ngwp-post [post]="post.currentPost" [displayFull]="true" ></ngwp-post>
 		<div class="adjcent-post-list-wrapper" *ngIf="post.currentPost?.adjcentPosts as adjcentPosts">

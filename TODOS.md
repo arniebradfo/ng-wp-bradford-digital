@@ -1,6 +1,6 @@
 # TODOs:
 - add scroll component to eliminate scrollbox
-	- add scrollviewer componenet
+	- add scrollviewer component
 	- scroll to top
 	- menu button color onscroll
 		- change after designated hard-coded scrollvalue

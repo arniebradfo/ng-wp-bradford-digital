@@ -12,6 +12,8 @@ export class ViewModelService {
 	private _slug?: string;
 	private _typeSlug?: string;
 	private _type?: WpSort;
+	private _typeUpdated: boolean = false;
+	private _slugUpdated: boolean = false;
 	private _state: StateRoot;
 	private _pageNumber: number;
 	private _commentsPageNumber: number;
@@ -136,6 +138,15 @@ export class ViewModelService {
 		this._commentsPageNumber = +params['commentsPageNumber'] || 1;
 		this._state = !menuOpen ? slug != null ? 'state-post' : 'state-list' : 'state-menu';
 
+		this._slugUpdated = !!(slug && this._slug !== slug);
+		this._typeUpdated = !!((typeSlug && this._typeSlug !== typeSlug) || (type && this._type !== type));
+		if (!this._typeUpdated && (!this._currentList || isHome)) {
+			this._typeUpdated = true;
+			this._typeSlug = this._slug = undefined;
+		}
+
+		console.log( 'this._slugUpdated',  this._slugUpdated, '\nthis._typeUpdated', this._typeUpdated );
+
 		if (type)
 			this._type = type;
 		if (typeSlug)
@@ -146,12 +157,12 @@ export class ViewModelService {
 		this.updateTitle();
 		this.emitRouterInfo();
 
-		if (slug)
+		if (this._slugUpdated)
 			this.updatePost();
-		if (type && typeSlug)
+		if (this._typeUpdated)
 			this.updatePostList(type, typeSlug);
-		else if (!this._currentList || isHome)
-			this.updatePostList();
+		// else if (!this._currentList || isHome)
+		// 	this.updatePostList();
 
 	}
 
@@ -165,6 +176,8 @@ export class ViewModelService {
 	}
 
 	public updatePost() {
+		console.log('updatePost');
+
 		this.wpRestService.getPostOrPage(this._slug)
 			.then(post => {
 				if (!post) return;
