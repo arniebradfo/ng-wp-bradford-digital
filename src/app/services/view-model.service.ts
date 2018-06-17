@@ -12,19 +12,12 @@ export class ViewModelService {
 	private _slug?: string;
 	private _typeSlug?: string;
 	private _type?: WpSort;
-	private _typeUpdated: boolean = false;
-	private _slugUpdated: boolean = false;
 	private _state: StateRoot;
 	private _pageNumber: number;
 	private _commentsPageNumber: number;
-	routerInfo$: Subject<{
-		slug?: string;
-		typeSlug?: string;
-		type?: WpSort;
-		state: StateRoot;
-		pageNumber: number;
-		commentsPageNumber: number;
-	}> = new Subject();
+
+	private _routerInfo: IRouterInfo[] = [];
+	routerInfo$: Subject<IRouterInfo[]> = new Subject();
 
 	private _currentPost: IWpPost | IWpPage;
 	post$: Subject<{
@@ -76,14 +69,15 @@ export class ViewModelService {
 	}
 
 	private emitRouterInfo() {
-		this.routerInfo$.next({
+		this._routerInfo.unshift({
 			slug: this._slug,
 			typeSlug: this._typeSlug,
 			type: this._type,
 			state: this._state,
 			pageNumber: this._pageNumber,
 			commentsPageNumber: this._commentsPageNumber,
-		})
+		});
+		this.routerInfo$.next(this._routerInfo)
 	}
 
 	private emitPost() {
@@ -138,15 +132,6 @@ export class ViewModelService {
 		this._commentsPageNumber = +params['commentsPageNumber'] || 1;
 		this._state = !menuOpen ? slug != null ? 'state-post' : 'state-list' : 'state-menu';
 
-		this._slugUpdated = !!(slug && this._slug !== slug);
-		this._typeUpdated = !!((typeSlug && this._typeSlug !== typeSlug) || (type && this._type !== type));
-		if (!this._typeUpdated && (!this._currentList || isHome)) {
-			this._typeUpdated = true;
-			this._typeSlug = this._slug = undefined;
-		}
-
-		console.log( 'this._slugUpdated',  this._slugUpdated, '\nthis._typeUpdated', this._typeUpdated );
-
 		if (type)
 			this._type = type;
 		if (typeSlug)
@@ -157,12 +142,23 @@ export class ViewModelService {
 		this.updateTitle();
 		this.emitRouterInfo();
 
-		if (this._slugUpdated)
+		if (this._routerInfo[1]) {
+			console.log(this._routerInfo[0]);
+			console.log(
+				'postChanged: ', this._routerInfo[0].slug !== this._routerInfo[1].slug,
+				'\nlistChanged: ',
+				this._routerInfo[0].type !== this._routerInfo[1].type ||
+				this._routerInfo[0].typeSlug !== this._routerInfo[1].typeSlug ||
+				this._routerInfo[0].pageNumber !== this._routerInfo[1].pageNumber,
+			);
+		}
+
+		if (slug)
 			this.updatePost();
-		if (this._typeUpdated)
+		if (type && typeSlug)
 			this.updatePostList(type, typeSlug);
-		// else if (!this._currentList || isHome)
-		// 	this.updatePostList();
+		else if (!this._currentList || isHome)
+			this.updatePostList();
 
 	}
 
@@ -176,8 +172,6 @@ export class ViewModelService {
 	}
 
 	public updatePost() {
-		console.log('updatePost');
-
 		this.wpRestService.getPostOrPage(this._slug)
 			.then(post => {
 				if (!post) return;
@@ -266,3 +260,11 @@ export class ViewModelService {
 }
 
 
+export interface IRouterInfo {
+	slug?: string;
+	typeSlug?: string;
+	type?: WpSort;
+	state: StateRoot;
+	pageNumber: number;
+	commentsPageNumber: number;
+};

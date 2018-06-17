@@ -1,6 +1,6 @@
 import { Component, OnInit, HostBinding, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 import { WpRestService } from 'app/services/wp-rest.service';
-import { ViewModelService } from 'app/services/view-model.service';
+import { ViewModelService, IRouterInfo } from 'app/services/view-model.service';
 // import { trigger, state, style, transition, animate } from '@angular/animations';
 import { IWpMenuItem } from 'app/interfaces/wp-rest-types';
 import { Subscription, fromEvent } from 'rxjs';
@@ -76,16 +76,12 @@ export class RootComponent implements OnInit, AfterViewInit, OnDestroy {
 			return this.stateRoot !== 'state-menu' ? 'icon_Menu' : 'icon_X'
 	}
 
-	private _onRouterInfoChange(routerInfo) {
+	private _onRouterInfoChange(routerInfoStack: IRouterInfo[]) {
+		const routerInfo = routerInfoStack[0];
+
 		this.stateWas = `was-${this.stateRoot}` as StateRootWas ;
 		this.stateRoot = routerInfo.state
 		this._routerInfoState = routerInfo;
-
-		console.log(routerInfo);
-
-
-		// console.log(routerInfo);
-		// console.log(this.stateWas);
 
 		if (this.stateMobile === 'state-not-mobile') {
 
