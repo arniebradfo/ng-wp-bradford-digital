@@ -7,11 +7,12 @@
 - clicking a left-post should retun to that post
 - fix external link routing
 - password protected UX
-- delete `less-loader` from `package.json`
+- scroll events on touch?
 - css
 	- add focus color
 	- make links black
 	- touch :active state?
+- delete `less-loader` from `package.json`
 
 
 - content shortcodes
