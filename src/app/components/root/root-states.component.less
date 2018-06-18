@@ -6,6 +6,8 @@
 // .state-post | .state-list | .state-menu
 // .was-state-post | .was-state-list | .was-state-menu
 // .state-not-mobile | .state-mobile // @media @state-not-mobile{} | @media @state-mobile{}
+// .state-post-scroll-top || .state-post-scroll-down
+
 
 @leftColumn_MinWidth: (@s8 * 24);
 @rightColumn_MinWidth: (@s8 * 6);
@@ -33,6 +35,15 @@
 	z-index: 3;
 }
 
+
+// POST SCROLLED TOP/DOWN //
+// .state-post-scroll-top{}
+// .state-post-scroll-down.state-post{}
+.menu-button.light-color-theme{
+	&:after{
+		background-color: var(--bgTransparent_Color);
+	}
+}
 
 // MOBILE //
 @media @state-mobile{
@@ -98,8 +109,6 @@
 		}
 	}
 }
-
-
 
 
 

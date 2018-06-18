@@ -9,6 +9,7 @@ import { Router, NavigationExtras } from '@angular/router';
 import { InputDetectionService } from '../../services/input-detection.service';
 import { TabDetectionService } from '../../services/tab-detection.service';
 import { ScrollViewerComponent } from '../scroll-viewer/scroll-viewer.component';
+import { Input } from '@angular/core';
 
 @Component({
 	selector: 'ngwp-root',
@@ -21,6 +22,7 @@ export class RootComponent implements OnInit, AfterViewInit, OnDestroy {
 	blogDescription: string;
 	menu: IWpMenuItem[];
 	menuMame: string = 'primary';
+	buttonClass: string = '';
 	private _subscriptions: Subscription[] = [];
 	private _routerInfoState: IRouterInfo;
 	private _menuNavigation: [any[], NavigationExtras];
@@ -28,10 +30,18 @@ export class RootComponent implements OnInit, AfterViewInit, OnDestroy {
 	stateRoot: StateRoot = 'state-list';
 	stateMobile: StateMobile = 'state-not-mobile';
 	stateWas: StateRootWas = 'was-state-list';
+	statePostScroll: StatePostScrolledTop = 'state-post-scroll-top';
 
+	@Input() class: string = '';
 	@HostBinding('class')
-	private get _rootClass(): string {
-		return `${this.stateRoot} ${this.stateMobile} ${this.stateWas}`;
+	get hostClasses(): string {
+		return [
+			this.class,
+			this.stateRoot,
+			this.stateMobile,
+			this.stateWas,
+			this.statePostScroll
+		].join(' ');
 	}
 
 	@ViewChild('postScrollViewer') postScrollViewer: ScrollViewerComponent;
@@ -51,13 +61,13 @@ export class RootComponent implements OnInit, AfterViewInit, OnDestroy {
 			this.blogDescription = options.general.blogdescription;
 		});
 		this._getMenus();
-		this._subscriptions.push( fromEvent(window, 'resize').pipe(debounceTime(200)).subscribe(this._updateStateMobile.bind(this)) );
-		this._subscriptions.push( this.viewModelService.routerInfo$.subscribe(this._onRouterInfoChange.bind(this)) );
+		this._subscriptions.push(fromEvent(window, 'resize').pipe(debounceTime(200)).subscribe(this._updateStateMobile.bind(this)));
+		this._subscriptions.push(this.viewModelService.routerInfo$.subscribe(this._onRouterInfoChange.bind(this)));
 		this._updateStateMobile();
 	}
 
 	ngAfterViewInit() {
-		this._subscriptions.push( this.postScrollViewer.onScroll$.subscribe(this._onPostScroll.bind(this)) );
+		this._subscriptions.push(this.postScrollViewer.onScroll$.subscribe(this._onPostScroll.bind(this)));
 	}
 
 	ngOnDestroy() {
@@ -93,6 +103,7 @@ export class RootComponent implements OnInit, AfterViewInit, OnDestroy {
 		// if (routerInfoStack[1]) this.stateWas = `was-${routerInfoStack[1].state}` as StateRootWas;
 		this.stateWas = `was-${this.stateRoot}` as StateRootWas;
 		this.stateRoot = this._routerInfoState.state;
+		this._updateButtonClass();
 	}
 
 	private _setMenuNavigation() {
@@ -134,7 +145,16 @@ export class RootComponent implements OnInit, AfterViewInit, OnDestroy {
 	}
 
 	private _onPostScroll(event: Event) {
-		// console.log(event.srcElement.scrollTop);
+		console.log(event.srcElement.scrollTop);
+		this.statePostScroll = event.srcElement.scrollTop > 0 ? 'state-post-scroll-down' : 'state-post-scroll-top';
+		this._updateButtonClass();
+	}
+
+	private _updateButtonClass() {
+		if (this.statePostScroll === 'state-post-scroll-down' && this.stateRoot === 'state-post')
+			this.buttonClass = 'light-color-theme';
+		else
+			this.buttonClass = '' ;
 	}
 
 }
@@ -142,6 +162,7 @@ export class RootComponent implements OnInit, AfterViewInit, OnDestroy {
 export type StateRoot = 'state-post' | 'state-list' | 'state-menu';
 export type StateMobile = 'state-not-mobile' | 'state-mobile';
 export type StateRootWas = 'was-state-post' | 'was-state-list' | 'was-state-menu';
+export type StatePostScrolledTop = 'state-post-scroll-top' | 'state-post-scroll-down';
 
 // this must match:
 // @MOBILE_BREAKPOINT: 700px;

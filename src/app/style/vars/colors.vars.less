@@ -25,7 +25,8 @@
 	// --fgOnAccent_Color: @navyDark_Color;
 	--fgOnAccent_Color: fade(black, 60%);
 
-	--bg_Color: white;
+	--bg_Color: @navyDark_Color;
+	--bgTransparent_Color: fade(@navyDark_Color, 20%);
 	--bg_Gradient: linear-gradient(to bottom right, @navyDark_Color, @purpleDark_Color);
 	--bgOverlay0_Color: fade(white, 3%);
 	--bgOverlay1_Color: fade(white, 10%);
@@ -61,6 +62,8 @@
 	--fgDisabled_Color:   fade(@fgPrimary_Color, @disabled_Opacity * 100%);
 
 	--bg_Color: white;
+	--bgTransparent_Color: fade(white, 20%);
+	--bgOverlay0_Color: fade(@navyDark_Color, 5%);
 	--bgOverlay1_Color: fade(@navyDark_Color, 10%);
 	--bgOverlay2_Color: fade(@navyDark_Color, 20%);
 
