@@ -14,7 +14,12 @@
 
 		<div class="post-hero set-item--vert" [routerLink]="chooseRoute(post)">
 
-			<img class="post-img" *ngIf="post.featured_media_ref" [src]="post.featured_media_ref.media_details.sizes.full.source_url"/>
+			<img
+				class="post-img"
+				*ngIf="post.featured_media_ref"
+				[src]="post.featured_media_ref.media_details.sizes.full.source_url"
+				[style.transform]="parallaxTranslate(1.5)"
+				/>
 
 			<ng-container *ngIf="!(post.featured_media_ref && !displayFull)">
 				<ng-container *ngTemplateOutlet="dateTemplate" ></ng-container>

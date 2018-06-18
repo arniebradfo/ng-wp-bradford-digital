@@ -1,10 +1,4 @@
 # TODOs:
-- add scroll component to eliminate scrollbox
-	- menu button color onscroll
-		- change after designated hard-coded scrollvalue
-		- change after ANY scrolling?
-		- use `IntersectionObserver` on inverted header [pollyfill](https://github.com/w3c/IntersectionObserver)
-	- main image parallax: http://www.javascriptkit.com/dhtmltutors/parallaxscrolling/index.shtml
 - active sidebar
 	- change routing?
 	- root should go to correct state on router event

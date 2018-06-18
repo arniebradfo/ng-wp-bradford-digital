@@ -79,7 +79,7 @@
 
 <ngwp-scroll-viewer #postScrollViewer class="post" >
 	<div class="post-wrapper" *ngIf="viewModelService.post$ | async as post">
-		<ngwp-post [post]="post.currentPost" [displayFull]="true" ></ngwp-post>
+		<ngwp-post [post]="post.currentPost" [displayFull]="true" [parallaxScrollTop]="(postScrollViewer.onScroll$ | async)?.srcElement.scrollTop"></ngwp-post>
 		<div class="adjcent-post-list-wrapper" *ngIf="post.currentPost?.adjcentPosts as adjcentPosts">
 			<nav class="adjcent-post-list">
 				<!--

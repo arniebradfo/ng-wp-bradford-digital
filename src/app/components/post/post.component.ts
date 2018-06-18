@@ -10,8 +10,9 @@ import { ViewModelService } from '../../services/view-model.service';
 export class PostComponent implements OnInit {
 
 	@Input() post: IWpPage | IWpPost;
-
 	@Input() displayFull: boolean = false;
+	@Input() parallaxScrollTop: number = 0;
+
 	@Input() class: string = '';
 	@HostBinding('class')
 	get hostClasses(): string {
@@ -33,12 +34,18 @@ export class PostComponent implements OnInit {
 		// console.log(this.post);
 	}
 
-	public onSubmitPassword(): void {
+	onSubmitPassword(): void {
 		this.viewModelService.getPasswordProtected(this.post.id, this.password);
 	}
 
-	public chooseRoute(post: IWpPost): any[] {
+	chooseRoute(post: IWpPost): any[] {
 		return post.externalLink ? ['/externalRedirect', { externalUrl: post.externalLink.href }] : ['/', post.slug];
+	}
+
+	parallaxTranslate(denominator: number = 2): string {
+		const transX = Math.round(this.parallaxScrollTop / denominator);
+		return `translate3d( 0, ${transX}px, 0 )`;
+		// a different method: http://www.javascriptkit.com/dhtmltutors/parallaxscrolling/index.shtml
 	}
 
 }
