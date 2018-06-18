@@ -12,7 +12,7 @@ export class ViewModelService {
 	private _slug?: string;
 	private _typeSlug?: string;
 	private _type?: WpSort;
-	private _state: StateRoot = 'state-list';
+	private _state: StateRoot; //= 'state-list';
 	private _pageNumber: number = 1;
 	private _commentsPageNumber: number = 1;
 
@@ -85,7 +85,6 @@ export class ViewModelService {
 				postCommentPageNumber: this._commentsPageNumber !== this._routerInfo[0].commentsPageNumber
 			} : { list: true, listPageNumber: true, post: true, postCommentPageNumber: true }
 		});
-		console.log(this._routerInfo[0].changes);
 		this.routerInfo$.next(this._routerInfo)
 	}
 
@@ -144,12 +143,12 @@ export class ViewModelService {
 		if (typeSlug)
 			this._typeSlug = typeSlug;
 		if (type || typeSlug || isHome)
-			this._pageNumber = +params['pageNumber'] || 1;
+			this._pageNumber = +params.pageNumber || 1;
 		if (isHome)
 			this._typeSlug = this._type = undefined; // this._slug too?
 		if (slug) {
 			this._slug = slug;
-			this._commentsPageNumber = +params['commentsPageNumber'] || 1;
+			this._commentsPageNumber = +params.commentsPageNumber || 1;
 			// TODO: maybe _commentsPageNumber setter doesn't go here...
 		}
 
@@ -160,9 +159,6 @@ export class ViewModelService {
 			this.updatePost();
 		if (this._routerInfo[0].changes.list)
 			this.updatePostList(type, typeSlug);
-		// else if (!this._currentList || isHome)
-		// 	this.updatePostList();
-
 	}
 
 	private updateTitle() {
