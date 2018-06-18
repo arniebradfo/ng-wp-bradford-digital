@@ -22,7 +22,7 @@ export class RootComponent implements OnInit, AfterViewInit, OnDestroy {
 	menu: IWpMenuItem[];
 	menuMame: string = 'primary';
 	private _subscriptions: Subscription[] = [];
-	private _routerInfoState;
+	private _routerInfoState: IRouterInfo;
 	private _menuNavigation: [any[], NavigationExtras];
 
 	stateRoot: StateRoot = 'state-list';
@@ -77,29 +77,38 @@ export class RootComponent implements OnInit, AfterViewInit, OnDestroy {
 	}
 
 	private _onRouterInfoChange(routerInfoStack: IRouterInfo[]) {
-		const routerInfo = routerInfoStack[0];
+		this._routerInfoState = routerInfoStack[0];
 
-		this.stateWas = `was-${this.stateRoot}` as StateRootWas ;
-		this.stateRoot = routerInfo.state
-		this._routerInfoState = routerInfo;
+		if (this._routerInfoState.changes.list)
+			this.listScrollViewer.scrollToTop();
+		if (this._routerInfoState.changes.post)
+			this.postScrollViewer.scrollToTop();
 
+		this._updateRootStates();
+		this._setMenuNavigation();
+
+	}
+
+	private _updateRootStates() {
+		// if (routerInfoStack[1]) this.stateWas = `was-${routerInfoStack[1].state}` as StateRootWas;
+		this.stateWas = `was-${this.stateRoot}` as StateRootWas;
+		this.stateRoot = this._routerInfoState.state;
+	}
+
+	private _setMenuNavigation() {
 		if (this.stateMobile === 'state-not-mobile') {
-
 			this._menuNavigation = [
-				routerInfo.slug ? [routerInfo.slug] : [],
+				this._routerInfoState.slug ? [this._routerInfoState.slug] : [],
 				{
 					queryParams: this.stateRoot === 'state-post' ? { m: true } : {}
 				}
 			];
-
 		} else { // if (this.stateMobile === 'state-mobile') {
-
 			let route: string[] = [];
-			if (this.stateRoot === 'state-post' && routerInfo.slug)
-				route = [routerInfo.slug];
-			else if (this.stateRoot === 'state-list' && routerInfo.type && routerInfo.typeSlug)
-				route = [routerInfo.type, routerInfo.typeSlug];
-
+			if (this.stateRoot === 'state-post' && this._routerInfoState.slug)
+				route = [this._routerInfoState.slug];
+			else if (this.stateRoot === 'state-list' && this._routerInfoState.type && this._routerInfoState.typeSlug)
+				route = [this._routerInfoState.type, this._routerInfoState.typeSlug];
 			this._menuNavigation = [
 				route,
 				{
