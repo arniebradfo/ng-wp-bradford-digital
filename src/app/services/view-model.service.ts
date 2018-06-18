@@ -12,7 +12,7 @@ export class ViewModelService {
 	private _slug?: string;
 	private _typeSlug?: string;
 	private _type?: WpSort;
-	private _state: StateRoot; //= 'state-list';
+	private _state: StateRoot; // = 'state-list';
 	private _pageNumber: number = 1;
 	private _commentsPageNumber: number = 1;
 
