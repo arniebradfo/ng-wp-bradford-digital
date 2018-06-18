@@ -12,9 +12,9 @@ export class ViewModelService {
 	private _slug?: string;
 	private _typeSlug?: string;
 	private _type?: WpSort;
-	private _state: StateRoot;
-	private _pageNumber: number;
-	private _commentsPageNumber: number;
+	private _state: StateRoot = 'state-list';
+	private _pageNumber: number = 1;
+	private _commentsPageNumber: number = 1;
 
 	private _routerInfo: IRouterInfo[] = [];
 	routerInfo$: Subject<IRouterInfo[]> = new Subject();
@@ -60,8 +60,7 @@ export class ViewModelService {
 		private router: Router,
 		private titleService: Title
 	) {
-		console.log(this);
-
+		// console.log(this);
 		this.router.events.subscribe(event => {
 			if (event instanceof ActivationEnd)
 				this.updateView(event)
@@ -76,7 +75,17 @@ export class ViewModelService {
 			state: this._state,
 			pageNumber: this._pageNumber,
 			commentsPageNumber: this._commentsPageNumber,
+			changes: this._routerInfo[0] ? {
+				list:
+					this._type !== this._routerInfo[0].type ||
+					this._typeSlug !== this._routerInfo[0].typeSlug ||
+					this._pageNumber !== this._routerInfo[0].pageNumber,
+				listPageNumber: this._pageNumber !== this._routerInfo[0].pageNumber,
+				post: this._slug !== this._routerInfo[0].slug,
+				postCommentPageNumber: this._commentsPageNumber !== this._routerInfo[0].commentsPageNumber
+			} : { list: true, listPageNumber: true, post: true, postCommentPageNumber: true }
 		});
+		console.log(this._routerInfo[0].changes);
 		this.routerInfo$.next(this._routerInfo)
 	}
 
@@ -128,37 +137,31 @@ export class ViewModelService {
 		const isHome = !type && !typeSlug && !slug;
 		const menuOpen = queryParams.m != null && queryParams.m !== 'false';
 
-		this._pageNumber = +params['pageNumber'] || 1;
-		this._commentsPageNumber = +params['commentsPageNumber'] || 1;
 		this._state = !menuOpen ? slug != null ? 'state-post' : 'state-list' : 'state-menu';
 
 		if (type)
 			this._type = type;
 		if (typeSlug)
 			this._typeSlug = typeSlug;
-		if (slug)
+		if (type || typeSlug || isHome)
+			this._pageNumber = +params['pageNumber'] || 1;
+		if (isHome)
+			this._typeSlug = this._type = undefined; // this._slug too?
+		if (slug) {
 			this._slug = slug;
+			this._commentsPageNumber = +params['commentsPageNumber'] || 1;
+			// TODO: maybe _commentsPageNumber setter doesn't go here...
+		}
 
 		this.updateTitle();
 		this.emitRouterInfo();
 
-		if (this._routerInfo[1]) {
-			console.log(this._routerInfo[0]);
-			console.log(
-				'postChanged: ', this._routerInfo[0].slug !== this._routerInfo[1].slug,
-				'\nlistChanged: ',
-				this._routerInfo[0].type !== this._routerInfo[1].type ||
-				this._routerInfo[0].typeSlug !== this._routerInfo[1].typeSlug ||
-				this._routerInfo[0].pageNumber !== this._routerInfo[1].pageNumber,
-			);
-		}
-
-		if (slug)
+		if (this._routerInfo[0].changes.post)
 			this.updatePost();
-		if (type && typeSlug)
+		if (this._routerInfo[0].changes.list)
 			this.updatePostList(type, typeSlug);
-		else if (!this._currentList || isHome)
-			this.updatePostList();
+		// else if (!this._currentList || isHome)
+		// 	this.updatePostList();
 
 	}
 
@@ -267,4 +270,10 @@ export interface IRouterInfo {
 	state: StateRoot;
 	pageNumber: number;
 	commentsPageNumber: number;
+	changes: {
+		list: boolean;
+		listPageNumber: boolean;
+		post: boolean;
+		postCommentPageNumber: boolean;
+	};
 };
