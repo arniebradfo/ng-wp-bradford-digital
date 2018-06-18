@@ -33,9 +33,9 @@
 
 		<hr class="post-tags-hr" *ngIf="displayFull" />
 
-		<div class="post-tags set-item--vert" *ngIf="post.tags_ref != null && post.tags_ref.length > 0">
-			<button class="post-tag" *ngFor="let tag of post.tags_ref" [routerLink]="'/tag/' + tag.slug">
-				#{{tag.name}}
+		<div class="post-tags set-item--vert" *ngIf="post.categories_ref != null && post.categories_ref.length > 0">
+			<button class="post-tag" *ngFor="let category of post.categories_ref" [routerLink]="'/category/' + category.slug">
+				#{{category.name}}
 			</button>
 			<!--
 				<a *ngFor="let category of post.categories_ref" [routerLink]="'/category/' + category.slug">

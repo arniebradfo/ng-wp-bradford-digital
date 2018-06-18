@@ -2,6 +2,9 @@
 - active sidebar
 	- change routing?
 	- root should go to correct state on router event
+- categories heiarchy
+	- subnavigaion
+	- routing?
 - src sizes for images
 - tab issue? search then tab destroys layout?
 - clicking a left-post should retun to that post

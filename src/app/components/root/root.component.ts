@@ -145,7 +145,6 @@ export class RootComponent implements OnInit, AfterViewInit, OnDestroy {
 	}
 
 	private _onPostScroll(event: Event) {
-		console.log(event.srcElement.scrollTop);
 		this.statePostScroll = event.srcElement.scrollTop > 0 ? 'state-post-scroll-down' : 'state-post-scroll-top';
 		this._updateButtonClass();
 	}

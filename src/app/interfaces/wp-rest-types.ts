@@ -1,6 +1,17 @@
 // TODO: this should be in a typings.d.ts file?
 
-export interface IWpMenuItem {
+export interface IWpId {
+	id: number;
+}
+export interface IWpSlug {
+	slug: string;
+}
+export interface IWpHierarchical extends IWpId {
+	parent: number;
+	children?: IWpHierarchical[];
+}
+
+export interface IWpMenuItem extends IWpHierarchical {
 	ID: number;
 	attr: string;
 	children: IWpMenuItem[];
@@ -9,7 +20,6 @@ export interface IWpMenuItem {
 	object: string;
 	object_id: number;
 	order: number;
-	parent: number;
 	target: string;
 	title: string;
 	type: string;
@@ -18,11 +28,7 @@ export interface IWpMenuItem {
 	xfn: string;
 }
 
-export interface IWpId {
-	id: number;
-}
-
-export interface IWpPage extends IWpId {
+export interface IWpPage extends IWpHierarchical, IWpSlug {
 	author: number;
 	author_ref?: IWpUser;
 	comment_status: 'open' | 'closed'; // TODO: add the rest
@@ -38,9 +44,8 @@ export interface IWpPage extends IWpId {
 	meta: string[]; // is this right?
 	modified: string | Date; // Date?
 	modified_gmt: string | Date; // Date?
-	parent: number; // not in IPost...
+	children?: IWpPage[];
 	ping_status: 'open' | 'closed'; // TODO: add the rest
-	slug: string;
 	status: 'open' | 'closed' | 'publish' | 'inherit'; // ??? TODO: add the rest
 	template: string;
 	title: IWpContent;
@@ -62,12 +67,12 @@ export interface IWpPage extends IWpId {
 
 export interface IWpPost extends IWpPage {
 	categories: number[];
-	categories_ref?: IWpTaxonomy[];
+	categories_ref?: IWpTag[];
 	format: 'standard' | 'link' | 'video' | 'aside' | 'audio' | 'chat' | 'gallery' | 'image' | 'quote' | 'status';
 	externalLink?: URL;
 	sticky: boolean;
 	tags: number[];
-	tags_ref?: IWpTaxonomy[];
+	tags_ref?: IWpTag[];
 	_links: {
 		about: IWpLinkHref[];
 		author: IWpLinkHrefEmbeddable[];
@@ -85,6 +90,7 @@ export interface IWpPost extends IWpPage {
 		}[];
 	};
 	parent: undefined;
+	children: undefined;
 	adjcentPosts: {
 		next: IWpPost;
 		previous: IWpPost;
@@ -112,14 +118,12 @@ export interface IWpMedia extends IWpPage {
 	};
 }
 
-export interface IWpTaxonomy extends IWpId { // IWpCategory & IWpTag
+export interface IWpTag extends IWpId, IWpSlug { // IWpCategory & IWpTag
 	count: number;
 	description: string;
 	link: string;
 	meta: string[]; // ???
 	name: string;
-	parent: number;
-	slug: string;
 	taxonomy: 'category' | 'post_tag'; // ???
 	_links: {
 		about: IWpLinkHref[];
@@ -130,13 +134,16 @@ export interface IWpTaxonomy extends IWpId { // IWpCategory & IWpTag
 	};
 }
 
-export interface IWpUser extends IWpId {
+export interface IWpCategory extends IWpTag, IWpHierarchical {
+	children?: IWpCategory[];
+}
+
+export interface IWpUser extends IWpId, IWpSlug {
 	avatar_urls: IWpAvatarUrls;
 	description: string;
 	link: string;
 	meta: string[];
 	name: string;
-	slug: string;
 	url: string;
 	_links: {
 		collection: IWpLinkHref[];
@@ -144,7 +151,7 @@ export interface IWpUser extends IWpId {
 	};
 }
 
-export interface IWpComment extends IWpId {
+export interface IWpComment extends IWpHierarchical {
 	author: number;
 	author_ref: IWpUser;
 	author_avatar_urls: IWpAvatarUrls;
@@ -155,7 +162,6 @@ export interface IWpComment extends IWpId {
 	date_gmt: string | Date;
 	link: string;
 	meta: string[];
-	parent: number;
 	post: number;
 	status: 'approved' | 'pending';
 	type: 'comment';

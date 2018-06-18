@@ -5,8 +5,8 @@ import { Injectable } from '@angular/core';
 import { Http, Response, RequestOptionsArgs, Headers } from '@angular/http';
 import { environment } from '../../environments/environment';
 import {
-	IWpMenuItem, IWpPost, IWpPage, IWpTaxonomy, IWpUser, IWpComment,
-	IWpOptions, IWpId, IWpMedia, IWpError, WpSort
+	IWpMenuItem, IWpPost, IWpPage, IWpTag, IWpUser, IWpComment,
+	IWpOptions, IWpId, IWpMedia, IWpError, WpSort, IWpHierarchical, IWpCategory, IWpSlug
 } from '../interfaces/wp-rest-types';
 
 
@@ -18,6 +18,11 @@ import {
 @Injectable()
 export class WpRestService {
 
+	_mediaBySlug: Promise<{ [key: string]: IWpMedia; }>;
+	_usersBySlug: Promise<{ [key: string]: IWpUser; }>;
+	_postsBySlug: Promise<{ [key: string]: IWpPost; }>;
+	_pagesBySlug: Promise<{ [key: string]: IWpPage; }>;
+	_tagsBySlug: Promise<{ [key: string]: IWpTag; }>;
 	private _wpDomain: string = environment.wpBase;
 	private _wpRest: string = this._wpDomain + 'wp-json/wp/v2/';
 	private _wpMenus: string = this._wpDomain + 'wp-json/wp-api-menus/v2/';
@@ -32,11 +37,12 @@ export class WpRestService {
 	public media: Promise<IWpMedia[]>;
 	private _mediaById: Promise<IWpMedia[]>;
 
-	public tags: Promise<IWpTaxonomy[]>;
-	private _tagsById: Promise<IWpTaxonomy[]>;
+	public tags: Promise<IWpTag[]>;
+	private _tagsById: Promise<IWpTag[]>;
 
-	public categories: Promise<IWpTaxonomy[]>;
-	private _categoriesById: Promise<IWpTaxonomy[]>;
+	public categories: Promise<IWpCategory[]>;
+	private _categoriesById: Promise<IWpCategory[]>;
+	private _categoriesBySlug: Promise<{ [key: string]: IWpCategory; }>;
 
 	public users: Promise<IWpUser[]>;
 	private _usersById: Promise<IWpUser[]>;
@@ -103,7 +109,8 @@ export class WpRestService {
 				});
 				return posts;
 			});
-		this._postsById = <Promise<IWpPost[]>>this.orderById(this.posts);
+		this._postsById = this.orderById(this.posts);
+		this._postsBySlug = this.orderBySlug(this.posts);
 	}
 
 	public refreshPages(): void {
@@ -121,22 +128,32 @@ export class WpRestService {
 			});
 			return pages;
 		});
-		this._pagesById = <Promise<IWpPage[]>>this.orderById(this.pages);
+		this._pagesById = this.orderById(this.pages);
+		this._pagesBySlug = this.orderBySlug(this.pages);
 	}
 
 	public refreshTags(): void {
 		this.tags = this.requestType('tags');
-		this._tagsById = <Promise<IWpTaxonomy[]>>this.orderById(this.tags);
+		this._tagsById = this.orderById(this.tags);
+		this._tagsBySlug = this.orderBySlug(this.tags);
 	}
 
 	public refreshCategories(): void {
 		this.categories = this.requestType('categories');
-		this._categoriesById = <Promise<IWpTaxonomy[]>>this.orderById(this.categories);
+		this._categoriesById = this.orderById(this.categories);
+		this._categoriesBySlug = this.orderBySlug(this.categories);
+		this.categories = this.categories.then(categories => this.generateParentedHeiarchy(categories) );
+
+		this.categories.then(categories => console.log(categories) );
+		this._categoriesById.then(categories => console.log(categories) );
+		this._categoriesBySlug.then(categories => console.log(categories) );
+
 	}
 
 	public refreshUsers(): void {
 		this.users = this.requestType('users');
-		this._usersById = <Promise<IWpUser[]>>this.orderById(this.users);
+		this._usersById = this.orderById(this.users);
+		this._usersBySlug = this.orderBySlug(this.users);
 	}
 
 	public refreshMedia(): void {
@@ -150,7 +167,8 @@ export class WpRestService {
 			});
 			return medias;
 		});
-		this._mediaById = <Promise<IWpMedia[]>>this.orderById(this.media);
+		this._mediaById = this.orderById(this.media);
+		this._mediaBySlug = this.orderBySlug(this.media);
 	}
 
 	public refreshOptions(): void {
@@ -205,20 +223,26 @@ export class WpRestService {
 	}
 
 	public getPostOrPage(slug: string): Promise<IWpPage | IWpPost | undefined> {
-		// TODO: make a map of slugs to posts/pages similar to the ..ById objects
-		// ... and return items from that instead
 
-		// get all the posts and pages and check them one by one until we match our string.
-		return Promise.all([this.posts, this.pages]).then(res => {
+		return Promise.all([this._postsBySlug, this._pagesBySlug]).then(res => {
 			for (let i = 0; i < res.length; i++)       // for both sets: posts and pages
-				for (let j = 0; j < res[i].length; j++)  // for each item within posts or pages
-					if (slug === res[i][j].slug)           // check if the slug matches
-						return res[i][j];                    // return the post/page if it does
+				if (res[i][slug])                        // check if the slug exists
+					return res[i][slug];                   // return the post/page if it does
 
 			// if nothing matched, return undefined
 			return undefined;
-
 		});
+
+		// get all the posts and pages and check them one by one until we match our string.
+		// return Promise.all([this.posts, this.pages]).then(res => {
+		// 	for (let i = 0; i < res.length; i++)       // for both sets: posts and pages
+		// 		for (let j = 0; j < res[i].length; j++)  // for each item within posts or pages
+		// 			if (slug === res[i][j].slug)           // check if the slug matches
+		// 				return res[i][j];                    // return the post/page if it does
+
+		// 	// if nothing matched, return undefined
+		// 	return undefined;
+		// });
 	}
 
 	// get a post or page that is password protected
@@ -271,7 +295,7 @@ export class WpRestService {
 
 		// set the filter parameters
 		let prop: string;
-		let set: Promise<(IWpUser | IWpTaxonomy)[]>;
+		let set: Promise<(IWpUser | IWpTag)[]>;
 		switch (type) {
 			case 'tag':
 				prop = 'tags';
@@ -346,7 +370,7 @@ export class WpRestService {
 				comment.author_ref = usersById[comment.author];
 				comment = this.tryConvertingDates(comment);
 			});
-			const hierarchicalComments = this.generateCommentHeiarchy(comments);
+			const hierarchicalComments = this.generateParentedHeiarchy(comments);
 			post.comments = hierarchicalComments;
 			return hierarchicalComments;
 		});
@@ -388,11 +412,20 @@ export class WpRestService {
 	}
 
 	// return an array where the ids are keys to Wp objects
-	private orderById(promise: Promise<IWpId[]>): Promise<IWpId[]> {
+	private orderById<T extends IWpId>(promise: Promise<T[]>): Promise<T[]> {
 		return promise.then(items => {
-			const itemsById: (IWpId | undefined)[] = [];
+			const itemsById: T[] = [];
 			items.forEach(item => itemsById[item.id] = item);
 			return itemsById;
+		});
+	}
+
+	// return an object where the ids are keys to Wp objects
+	private orderBySlug<T extends IWpSlug>(promise: Promise<T[]>): Promise<{[key: string]: T}> {
+		return promise.then(items => {
+			const itemsBySlug: {[key: string]: T} = {};
+			items.forEach(item => itemsBySlug[item.slug] = item);
+			return itemsBySlug;
 		});
 	}
 
@@ -433,17 +466,17 @@ export class WpRestService {
 	}
 
 	// nest reply comments under their parents
-	private generateCommentHeiarchy(comments: IWpComment[]): IWpComment[] {
+	private generateParentedHeiarchy<T extends IWpHierarchical>(items: T[]): T[] {
 		// TODO: test this more, it might produce unexpected results
-		comments.forEach(comment => comment.children = []);
-		comments.forEach(comment => {
-			if (comment.parent === 0) return;
-			comments.find(parentComment => {
-				return parentComment.id === comment.parent;
-			}).children.push(comment);
+		items.forEach(item => item.children = []);
+		items.forEach(item => {
+			if (item.parent === 0) return;
+			items.find(parentItem => {
+				return parentItem.id === item.parent;
+			}).children.push(item);
 		});
-		comments = comments.filter(comment => comment.parent === 0);
-		return comments;
+		items = items.filter(item => item.parent === 0);
+		return items;
 	}
 
 	private getFirstUrl(content: string): URL | undefined {
