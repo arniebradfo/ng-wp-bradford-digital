@@ -223,7 +223,6 @@ export class WpRestService {
 	}
 
 	public getPostOrPage(slug: string): Promise<IWpPage | IWpPost | undefined> {
-
 		return Promise.all([this._postsBySlug, this._pagesBySlug]).then(res => {
 			for (let i = 0; i < res.length; i++)       // for both sets: posts and pages
 				if (res[i][slug])                        // check if the slug exists
@@ -232,18 +231,8 @@ export class WpRestService {
 			// if nothing matched, return undefined
 			return undefined;
 		});
-
-		// get all the posts and pages and check them one by one until we match our string.
-		// return Promise.all([this.posts, this.pages]).then(res => {
-		// 	for (let i = 0; i < res.length; i++)       // for both sets: posts and pages
-		// 		for (let j = 0; j < res[i].length; j++)  // for each item within posts or pages
-		// 			if (slug === res[i][j].slug)           // check if the slug matches
-		// 				return res[i][j];                    // return the post/page if it does
-
-		// 	// if nothing matched, return undefined
-		// 	return undefined;
-		// });
 	}
+
 
 	// get a post or page that is password protected
 	public getPasswordProtected(id: number, password: string): Promise<IWpPage | IWpPost | false> {
@@ -317,7 +306,7 @@ export class WpRestService {
 				const posts = res[0];
 				const items: any[] = res[1];
 				const matchingItem = items.find(item => {
-					return item.slug === slug;
+					return item.slug === slug; // TODO: use the bySlug set
 				});
 				const itemId: number = matchingItem.id;
 				return posts.filter(post => {
@@ -328,6 +317,21 @@ export class WpRestService {
 				});
 			});
 
+	}
+
+	public getPostsNav(type?: WpSort, slug?: string): Promise<any> {
+
+		if (type === 'category')
+
+		return Promise.all([this._categoriesBySlug, this._categoriesById])
+			.then(res => {
+				const categoriesBySlug = res[0];
+				const categoriesById = res[1];
+				let id = categoriesBySlug[slug].id
+				while (categoriesById[id].parent > 0)
+					id = categoriesById[categoriesById[id].parent].id
+				return categoriesById[id];
+			})
 	}
 
 	// get a menu from the https://wordpress.org/plugins/wp-api-menus/ plugin endpoint

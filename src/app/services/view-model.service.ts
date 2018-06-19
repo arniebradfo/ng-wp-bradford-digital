@@ -9,6 +9,7 @@ import { StateRoot } from '../components/root/root.component';
 @Injectable()
 export class ViewModelService {
 
+	_postsNav: any;
 	private _slug?: string;
 	private _typeSlug?: string;
 	private _type?: WpSort;
@@ -38,8 +39,9 @@ export class ViewModelService {
 		currentListRouterPrefix: string;
 		canLoadMorePages: boolean;
 		loadMorePageCount: number;
-		title: string;
+		typeSlug: string;
 		type?: WpSort;
+		postsNav: any;
 	}> = new Subject();
 
 	private _allComments: IWpComment[];
@@ -103,8 +105,9 @@ export class ViewModelService {
 			currentListRouterPrefix: this._type && this._typeSlug ? `/${this._type}/${this._typeSlug}` : '',
 			canLoadMorePages: this._canLoadMorePages,
 			loadMorePageCount: this._loadMorePageCount,
-			title: this._typeSlug || 'Posts',
-			type: this._type
+			typeSlug: this._typeSlug || 'Posts',
+			type: this._type,
+			postsNav: this._postsNav
 		});
 	}
 
@@ -225,10 +228,12 @@ export class ViewModelService {
 		// retrieve the requested set of posts from the WpRestService
 		Promise.all([
 			this.wpRestService.getPosts(type, slug),
-			this.wpRestService.options
+			this.wpRestService.options,
+			this.wpRestService.getPostsNav(type, slug),
 		]).then(res => {
 			this._wholeList = res[0];
 			const options = res[1];
+			this._postsNav = res[2];
 
 			this._loadMorePageCount = 1;
 
