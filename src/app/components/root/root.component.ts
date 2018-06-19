@@ -48,15 +48,15 @@ export class RootComponent implements OnInit, AfterViewInit, OnDestroy {
 	@ViewChild('listScrollViewer') listScrollViewer: ScrollViewerComponent;
 
 	constructor(
-		private wpRestService: WpRestService,
 		public viewModelService: ViewModelService,
-		private router: Router,
-		private inputDetectionService: InputDetectionService,
-		private tabDetectionService: TabDetectionService
+		private _wpRestService: WpRestService,
+		private _router: Router,
+		private _inputDetectionService: InputDetectionService,
+		private _tabDetectionService: TabDetectionService
 	) { }
 
 	ngOnInit() {
-		this.wpRestService.options.then(options => {
+		this._wpRestService.options.then(options => {
 			this.blogName = options.general.blogname;
 			this.blogDescription = options.general.blogdescription;
 		});
@@ -76,7 +76,7 @@ export class RootComponent implements OnInit, AfterViewInit, OnDestroy {
 
 	menuButtonClick() {
 		// console.log(this._menuNavigation);
-		this.router.navigate(this._menuNavigation[0], this._menuNavigation[1]);
+		this._router.navigate(this._menuNavigation[0], this._menuNavigation[1]);
 	}
 
 	menuButtonIcon(): string {
@@ -130,7 +130,7 @@ export class RootComponent implements OnInit, AfterViewInit, OnDestroy {
 	}
 
 	private _getMenus() {
-		this.wpRestService
+		this._wpRestService
 			.getMenu(this.menuMame)
 			.subscribe(res => {
 				this.menu = res;

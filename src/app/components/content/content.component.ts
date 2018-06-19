@@ -15,30 +15,29 @@ import { EmbeddableComponentsService } from '../../shortcodes/shortcodes.module'
 })
 export class ContentComponent implements DoCheck, OnDestroy {
 
-	private embeddableComponentFactories: Map<string, ComponentFactory<any>>;
-	private embeddedComponentInstances: ComponentRef<any>[] = [];
-	private contentElement: HTMLElement;
+	private _embeddableComponentFactories: Map<string, ComponentFactory<any>>;
+	private _embeddedComponentInstances: ComponentRef<any>[] = [];
+	private _contentElement: HTMLElement;
 
-	@Output()
-	contentRendered = new EventEmitter();
+	@Output() contentRendered = new EventEmitter();
 
 	constructor(
 		componentFactoryResolver: ComponentFactoryResolver,
 		elementRef: ElementRef,
 		embeddableComponentsService: EmbeddableComponentsService,
-		private injector: Injector,
+		private _injector: Injector,
 	) {
-		this.contentElement = elementRef.nativeElement;
+		this._contentElement = elementRef.nativeElement;
 
 		// Create factories for each type of embeddable component
-		this.createEmbeddedComponentFactories(embeddableComponentsService, componentFactoryResolver);
+		this._createEmbeddedComponentFactories(embeddableComponentsService, componentFactoryResolver);
 	}
 
 	@Input()
 	set content(content: string) {
-		this.onContentChanged();
+		this._onContentChanged();
 		if (content) {
-			this.build(content);
+			this._build(content);
 			this.contentRendered.emit();
 		}
 	}
@@ -46,24 +45,24 @@ export class ContentComponent implements DoCheck, OnDestroy {
 	/**
    * Add doc content to host element and build it out with embedded components
    */
-	private build(content: string) {
+	private _build(content: string) {
 
 		// security: content is always authored by someone "trustworthy"
 		// and is considered to be safe
-		this.contentElement.innerHTML = content || '';
+		this._contentElement.innerHTML = content || '';
 
 		if (!content) return;
-		this.createEmbeddedComponentInstances();
+		this._createEmbeddedComponentInstances();
 	}
 
 	ngDoCheck() {
-		this.embeddedComponentInstances.forEach(
+		this._embeddedComponentInstances.forEach(
 			comp => comp.changeDetectorRef.detectChanges()
 		);
 	}
 
 	ngOnDestroy() {
-		this.onContentChanged();
+		this._onContentChanged();
 	}
 
 	//// helpers ////
@@ -73,16 +72,16 @@ export class ContentComponent implements DoCheck, OnDestroy {
    * @param embeddableComponents The embedded component classes
    * @param componentFactoryResolver Finds the ComponentFactory for a given Component
    */
-	private createEmbeddedComponentFactories(
+	private _createEmbeddedComponentFactories(
 		embeddableComponents: EmbeddableComponentsService,
 		componentFactoryResolver: ComponentFactoryResolver) {
 
-		this.embeddableComponentFactories = new Map<string, ComponentFactory<any>>();
+		this._embeddableComponentFactories = new Map<string, ComponentFactory<any>>();
 
 		for (const component of embeddableComponents.components) {
 			const componentFactory = componentFactoryResolver.resolveComponentFactory(component);
 			const selector = componentFactory.selector;
-			this.embeddableComponentFactories.set(selector, componentFactory);
+			this._embeddableComponentFactories.set(selector, componentFactory);
 		}
 	}
 
@@ -90,13 +89,13 @@ export class ContentComponent implements DoCheck, OnDestroy {
    * Create and inject embedded components into the current doc content
    * wherever their selectors are found
    **/
-	private createEmbeddedComponentInstances() {
-		this.embeddableComponentFactories.forEach(
+	private _createEmbeddedComponentInstances() {
+		this._embeddableComponentFactories.forEach(
 			(componentFactory, selector) => {
 
 				// All current doc elements with this embedded component's selector
 				const embeddedComponentElements =
-					this.contentElement.querySelectorAll(selector) as any as HTMLElement[];
+					this._contentElement.querySelectorAll(selector) as any as HTMLElement[];
 
 				// Create an Angular embedded component for each element.
 				for (const element of embeddedComponentElements) {
@@ -108,7 +107,7 @@ export class ContentComponent implements DoCheck, OnDestroy {
 					// **Security** Simply forwarding the incoming innerHTML which comes from
 					// docs authors and as such is considered to be safe.
 					const embeddedComponent =
-						componentFactory.create(this.injector, content, element);
+						componentFactory.create(this._injector, content, element);
 
 					// Assume all attributes are also properties of the component; set them.
 					const attributes = (element as any).attributes;
@@ -116,7 +115,7 @@ export class ContentComponent implements DoCheck, OnDestroy {
 						embeddedComponent.instance[attr.nodeName] = attr.nodeValue;
 					}
 
-					this.embeddedComponentInstances.push(embeddedComponent);
+					this._embeddedComponentInstances.push(embeddedComponent);
 				}
 			});
 	}
@@ -125,9 +124,9 @@ export class ContentComponent implements DoCheck, OnDestroy {
    * Destroy the current embedded component instances
    * or else there will be memory leaks.
    **/
-	private onContentChanged() {
-		this.embeddedComponentInstances.forEach(comp => comp.destroy());
-		this.embeddedComponentInstances.length = 0;
+	private _onContentChanged() {
+		this._embeddedComponentInstances.forEach(comp => comp.destroy());
+		this._embeddedComponentInstances.length = 0;
 	}
 }
 

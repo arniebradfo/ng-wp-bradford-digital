@@ -59,18 +59,18 @@ export class ViewModelService {
 	}> = new Subject();
 
 	constructor(
-		private wpRestService: WpRestService,
-		private router: Router,
-		private titleService: Title
+		private _wpRestService: WpRestService,
+		private _router: Router,
+		private _titleService: Title
 	) {
 		// console.log(this);
-		this.router.events.subscribe(event => {
+		this._router.events.subscribe(event => {
 			if (event instanceof ActivationEnd)
-				this.updateView(event)
+				this._updateView(event)
 		})
 	}
 
-	private emitRouterInfo() {
+	private _emitRouterInfo() {
 		this._routerInfo.unshift({
 			slug: this._slug,
 			typeSlug: this._typeSlug,
@@ -92,13 +92,13 @@ export class ViewModelService {
 		this.routerInfo$.next(this._routerInfo)
 	}
 
-	private emitPost() {
+	private _emitPost() {
 		this.post$.next({
 			currentPost: this._currentPost,
 		});
 	}
 
-	private emitPostList() {
+	private _emitPostList() {
 		this.postList$.next({
 			currentList: this._currentList,
 			postsPerPage: this._postsPerPage,
@@ -114,7 +114,7 @@ export class ViewModelService {
 		});
 	}
 
-	private emitComments() {
+	private _emitComments() {
 		this.commentList$.next({
 			currentPost: this._currentPost,
 			allComments: this._allComments,
@@ -125,7 +125,7 @@ export class ViewModelService {
 		});
 	}
 
-	private updateView(event: ActivationEnd) {
+	private _updateView(event: ActivationEnd) {
 		// console.log(event); // for debug
 
 		if (event.snapshot.routeConfig.path === 'externalRedirect') {
@@ -158,8 +158,8 @@ export class ViewModelService {
 			// TODO: maybe _commentsPageNumber setter doesn't go here...
 		}
 
-		this.updateTitle();
-		this.emitRouterInfo();
+		this._updateTitle();
+		this._emitRouterInfo();
 
 		if (this._routerInfo[0].changes.post)
 			this.updatePost();
@@ -167,21 +167,21 @@ export class ViewModelService {
 			this.updatePostList(type, typeSlug);
 	}
 
-	private updateTitle() {
-		this.wpRestService.options
+	private _updateTitle() {
+		this._wpRestService.options
 			.then(options => {
 				// TODO: fix this
 				const subtitle = this._typeSlug || this._slug || options.general.blogdescription; // should be slug reneder name
-				this.titleService.setTitle(`${options.general.blogname} // ${subtitle}`);
+				this._titleService.setTitle(`${options.general.blogname} // ${subtitle}`);
 			});
 	}
 
 	updatePost() {
-		this.wpRestService.getPostOrPage(this._slug)
+		this._wpRestService.getPostOrPage(this._slug)
 			.then(post => {
 				if (!post) return;
 				this._currentPost = post;
-				this.emitPost();
+				this._emitPost();
 
 				if (!this._currentPost.isLocked)
 					this.updateComments();
@@ -189,14 +189,14 @@ export class ViewModelService {
 	}
 
 	getPasswordProtected(id: number, password: string) {
-		this.wpRestService.getPasswordProtected(id, password)
+		this._wpRestService.getPasswordProtected(id, password)
 			.then(post => {
 				if (!post) return;
 				this._currentPost = post;
 				this.updateComments(password);
-				this.emitPost();
+				this._emitPost();
 			}, (err: IWpError) => {
-				this.emitPost();
+				this._emitPost();
 			});
 	}
 
@@ -205,8 +205,8 @@ export class ViewModelService {
 
 		// get the comments for the current post from the WpRestService
 		Promise.all([
-			this.wpRestService.getComments(this._currentPost, password),
-			this.wpRestService.options
+			this._wpRestService.getComments(this._currentPost, password),
+			this._wpRestService.options
 		]).then(res => {
 			const comments = this._allComments = res[0];
 			const options = res[1];
@@ -220,16 +220,16 @@ export class ViewModelService {
 			const upperIndex = this._commentsPerPage * this._commentsPageNumber;
 
 			this._comments = comments.slice(lowerIndex, upperIndex);
-			this.emitComments();
+			this._emitComments();
 		});
 	}
 
 	updatePostList(type?: WpSort, slug?: string) {
 		// retrieve the requested set of posts from the WpRestService
 		Promise.all([
-			this.wpRestService.getPosts(type, slug),
-			this.wpRestService.options,
-			this.wpRestService.getListFilter(type, slug),
+			this._wpRestService.getPosts(type, slug),
+			this._wpRestService.options,
+			this._wpRestService.getListFilter(type, slug),
 		]).then(res => {
 			this._wholeList = res[0];
 			const options = res[1];
@@ -247,7 +247,7 @@ export class ViewModelService {
 			this._canLoadMorePages = this._wholeList.length > upperIndex
 			this._currentList = this._wholeList.slice(lowerIndex, upperIndex);
 
-			this.emitPostList();
+			this._emitPostList();
 		});
 	}
 
@@ -258,7 +258,7 @@ export class ViewModelService {
 		this._canLoadMorePages = this._wholeList.length > upperIndex
 		this._currentList = this._wholeList.slice(lowerIndex, upperIndex);
 
-		this.emitPostList();
+		this._emitPostList();
 	}
 
 }

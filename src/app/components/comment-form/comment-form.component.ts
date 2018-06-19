@@ -19,7 +19,7 @@ export class CommentFormComponent implements OnInit {
 	submitted = false;
 
 	constructor(
-		private wpRestService: WpRestService,
+		private _wpRestService: WpRestService,
 	) { }
 
 	ngOnInit() { }
@@ -27,7 +27,7 @@ export class CommentFormComponent implements OnInit {
 	onSubmit() {
 		if (!this.post) return;
 		this.submitted = true;
-		this.wpRestService.postComment({
+		this._wpRestService.postComment({
 			author_email: this.email,
 			author_name: this.name,
 			content: this.message,

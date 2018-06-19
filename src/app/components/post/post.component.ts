@@ -24,10 +24,10 @@ export class PostComponent implements OnInit {
 		].join(' ');
 	}
 
-	private password: string;
+	private _password: string;
 
 	constructor(
-		private viewModelService: ViewModelService
+		private _viewModelService: ViewModelService
 	) { }
 
 	ngOnInit() {
@@ -35,7 +35,7 @@ export class PostComponent implements OnInit {
 	}
 
 	onSubmitPassword() {
-		this.viewModelService.getPasswordProtected(this.post.id, this.password);
+		this._viewModelService.getPasswordProtected(this.post.id, this._password);
 	}
 
 	chooseRoute(post: IWpPost): any[] {

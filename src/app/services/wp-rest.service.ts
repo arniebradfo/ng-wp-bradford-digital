@@ -74,7 +74,7 @@ export class WpRestService {
 	}
 
 	refreshPosts() {
-		this.posts = this.requestType('posts');
+		this.posts = this._requestType('posts');
 		this.posts = Promise.all([this.posts, this._mediaById, this._tagsById, this._categoriesById, this._usersById])
 			.then(res => {
 				let posts = res[0];
@@ -82,7 +82,7 @@ export class WpRestService {
 				const tagsById = res[2];
 				const categoriesById = res[3];
 				const usersById = res[4];
-				posts = this.putStickyPostsFirst(posts);
+				posts = this._putStickyPostsFirst(posts);
 				posts.forEach((post, i) => {
 
 					post.tags_ref = [];
@@ -101,21 +101,21 @@ export class WpRestService {
 
 					post.isLocked = post.content.protected;
 
-					post = this.tryConvertingDates(post);
+					post = this._tryConvertingDates(post);
 
 					if (post.format === 'link')
-						post.externalLink = this.getFirstUrl(post.content.rendered);
+						post.externalLink = this._getFirstUrl(post.content.rendered);
 
 				});
 				return posts;
 			});
-		this._postsById = this.orderById(this.posts);
-		this._postsBySlug = this.orderBySlug(this.posts);
+		this._postsById = this._orderById(this.posts);
+		this._postsBySlug = this._orderBySlug(this.posts);
 	}
 
 	refreshPages() {
 		// TODO: edit router.config so that child/grandchild page routing works
-		this.pages = this.requestType('pages');
+		this.pages = this._requestType('pages');
 		this.pages = Promise.all([this.pages, this._mediaById, this._usersById]).then(res => {
 			const pages = res[0];
 			const mediaById = res[1];
@@ -124,46 +124,46 @@ export class WpRestService {
 				page.author_ref = usersById[page.author];
 				page.featured_media_ref = mediaById[page.featured_media];
 				page.isLocked = page.content.protected;
-				page = this.tryConvertingDates(page);
+				page = this._tryConvertingDates(page);
 			});
 			return pages;
 		});
-		this._pagesById = this.orderById(this.pages);
-		this._pagesBySlug = this.orderBySlug(this.pages);
+		this._pagesById = this._orderById(this.pages);
+		this._pagesBySlug = this._orderBySlug(this.pages);
 	}
 
 	refreshTags() {
-		this.tags = this.requestType('tags');
-		this._tagsById = this.orderById(this.tags);
-		this._tagsBySlug = this.orderBySlug(this.tags);
+		this.tags = this._requestType('tags');
+		this._tagsById = this._orderById(this.tags);
+		this._tagsBySlug = this._orderBySlug(this.tags);
 	}
 
 	refreshCategories() {
-		this.categories = this.requestType('categories');
-		this._categoriesById = this.orderById(this.categories);
-		this._categoriesBySlug = this.orderBySlug(this.categories);
-		this.categories = this.categories.then(categories => this.generateParentedHeiarchy(categories) );
+		this.categories = this._requestType('categories');
+		this._categoriesById = this._orderById(this.categories);
+		this._categoriesBySlug = this._orderBySlug(this.categories);
+		this.categories = this.categories.then(categories => this._generateParentedHeiarchy(categories) );
 	}
 
 	refreshUsers() {
-		this.users = this.requestType('users');
-		this._usersById = this.orderById(this.users);
-		this._usersBySlug = this.orderBySlug(this.users);
+		this.users = this._requestType('users');
+		this._usersById = this._orderById(this.users);
+		this._usersBySlug = this._orderBySlug(this.users);
 	}
 
 	refreshMedia() {
-		this.media = this.requestType('media');
+		this.media = this._requestType('media');
 		this.media = Promise.all([this.media, this._usersById]).then(res => {
 			const medias = res[0];
 			const usersById = res[1];
 			medias.forEach(media => {
 				media.author_ref = usersById[media.author];
-				media = this.tryConvertingDates(media);
+				media = this._tryConvertingDates(media);
 			});
 			return medias;
 		});
-		this._mediaById = this.orderById(this.media);
-		this._mediaBySlug = this.orderBySlug(this.media);
+		this._mediaById = this._orderById(this.media);
+		this._mediaBySlug = this._orderBySlug(this.media);
 	}
 
 	refreshOptions() {
@@ -179,7 +179,7 @@ export class WpRestService {
 	}
 
 	// recursively calls the WP REST API to get the full set of request data
-	private requestType(type: string): Promise<any> {
+	private _requestType(type: string): Promise<any> {
 		let set = [];
 		return new Promise((resolve, reject) => {
 			let page = 1;
@@ -348,7 +348,7 @@ export class WpRestService {
 				map((res: Response) => res.json()),
 				catchError((err: Response | any) => {
 					console.error(err);
-					return throwError(this.checkForMenuApiErr(err));
+					return throwError(this._checkForMenuApiErr(err));
 				})
 			);
 	}
@@ -378,9 +378,9 @@ export class WpRestService {
 			const usersById = res[1];
 			comments.forEach(comment => {
 				comment.author_ref = usersById[comment.author];
-				comment = this.tryConvertingDates(comment);
+				comment = this._tryConvertingDates(comment);
 			});
-			const hierarchicalComments = this.generateParentedHeiarchy(comments);
+			const hierarchicalComments = this._generateParentedHeiarchy(comments);
 			post.comments = hierarchicalComments;
 			return hierarchicalComments;
 		});
@@ -422,7 +422,7 @@ export class WpRestService {
 	}
 
 	// return an array where the ids are keys to Wp objects
-	private orderById<T extends IWpId>(promise: Promise<T[]>): Promise<T[]> {
+	private _orderById<T extends IWpId>(promise: Promise<T[]>): Promise<T[]> {
 		return promise.then(items => {
 			const itemsById: T[] = [];
 			items.forEach(item => itemsById[item.id] = item);
@@ -431,7 +431,7 @@ export class WpRestService {
 	}
 
 	// return an object where the ids are keys to Wp objects
-	private orderBySlug<T extends IWpSlug>(promise: Promise<T[]>): Promise<{[key: string]: T}> {
+	private _orderBySlug<T extends IWpSlug>(promise: Promise<T[]>): Promise<{[key: string]: T}> {
 		return promise.then(items => {
 			const itemsBySlug: {[key: string]: T} = {};
 			items.forEach(item => itemsBySlug[item.slug] = item);
@@ -440,7 +440,7 @@ export class WpRestService {
 	}
 
 	// convert string dates to Date objects
-	private tryConvertingDates<T>(obj: T): T {
+	private _tryConvertingDates<T>(obj: T): T {
 		const item: any = obj;
 		if (item.date) item.date = new Date(item.date);
 		if (item.date_gmt) item.date_gmt = new Date(item.date_gmt);
@@ -450,7 +450,7 @@ export class WpRestService {
 	}
 
 	// if the WP API Menu plugin isn't active, return an error message
-	private checkForMenuApiErr(err: Response | any): string | any {
+	private _checkForMenuApiErr(err: Response | any): string | any {
 		if (err._body && err._body.match(/^[\{\{]/i)) {
 			const errJson = err.json();
 			if (errJson.code && errJson.code === `rest_no_route`) {
@@ -463,7 +463,7 @@ export class WpRestService {
 		return err;
 	}
 
-	private putStickyPostsFirst(posts: IWpPost[]): IWpPost[] {
+	private _putStickyPostsFirst(posts: IWpPost[]): IWpPost[] {
 		let stickyCount = 0;
 		posts.forEach((post, i) => {
 			if (post.sticky) {
@@ -476,7 +476,7 @@ export class WpRestService {
 	}
 
 	// nest reply comments under their parents
-	private generateParentedHeiarchy<T extends IWpHierarchical>(items: T[]): T[] {
+	private _generateParentedHeiarchy<T extends IWpHierarchical>(items: T[]): T[] {
 		// TODO: test this more, it might produce unexpected results
 		items.forEach(item => item.children = []);
 		items.forEach(item => {
@@ -489,7 +489,7 @@ export class WpRestService {
 		return items;
 	}
 
-	private getFirstUrl(content: string): URL | undefined {
+	private _getFirstUrl(content: string): URL | undefined {
 		const match = /href="([^"]*)"/.exec(content)
 		return match ? new URL(match[1]) : undefined ;
 	}

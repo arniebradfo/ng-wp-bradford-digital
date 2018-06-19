@@ -22,14 +22,14 @@ export class SearchComponent implements OnInit {
 	searchSubmit: ElementRef;
 
 	constructor(
-		private router: Router,
-		private activatedRoute: ActivatedRoute
+		private _router: Router,
+		private _activatedRoute: ActivatedRoute
 	) { }
 
 	ngOnInit() { }
 
 	onSubmit() {
-		this.router.navigate(['search', this.search], {
+		this._router.navigate(['search', this.search], {
 			// queryParams: { s: this.search },
 			// relativeTo: this.activatedRoute.root
 		});
