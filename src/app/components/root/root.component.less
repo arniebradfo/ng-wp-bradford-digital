@@ -60,7 +60,17 @@
 	margin: @s8*4 @s24 @s8*9;
 }
 .list-title{
+	display: flex;
+	align-items: baseline;
+}
+.list-title-text{
 	.heading2_Type();
+	margin-bottom: @s8*3;
+	flex: 1 0 auto;
+}
+.list-title-page-number{
+	.meta_Type();
+	flex: 0 0 auto;
 }
 .list-nav{}
 .list-nav-label{

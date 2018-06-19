@@ -1,17 +1,10 @@
 # TODOs:
-- List Title Nav
-	- search - # search results for "term"
-	- tags - # search results for "term"
-	- categories - all, subcat, subcat
-	- author - # posts authored by "name"
-	- homelist - custom menu?
 - page numbers
-	- List Title Nav add page #
 	- add selected page numbers to bottom page nav
 - active sidebar
 	- change routing?
 	- root should go to correct state on router event
-	
+
 - rename everything more consistently...
 	- HomeList - default list view?
 	- Post

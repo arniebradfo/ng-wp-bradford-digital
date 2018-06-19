@@ -22,11 +22,17 @@
 
 		<div class="list-header" [ngSwitch]="postList.type">
 			<!-- [ngSwitch]="postList.type" : 'tag' | 'category' | 'author' | 'search' | undefined -->
-
-			<h1 class="list-title">{{ postList.filterItem.name }}</h1>
-
 			<!--<small class="list-type">{{ postList.type }}</small>-->
-			<!--<span class="list-page-number">Page {{postList.currentListPageNumber}}</span>-->
+
+			<div class="list-title">
+				<h1 class="list-title-text">
+					{{ postList.filterItem.name }}
+				</h1>
+				<span *ngIf="postList.currentListPageNumber > 1" class="list-title-page-number">
+					Page {{postList.currentListPageNumber}}
+				</span>
+			</div>
+
 
 			<nav class="list-nav nav top" [ngClass]="{'seach-open':topSearch.isOpen}">
 
@@ -36,7 +42,7 @@
 						routerLinkActive="selected"
 						class="nav-item"
 						>
-							All
+						All
 						<div class="selection-bar"></div>
 					</button>
 					<button
@@ -45,7 +51,7 @@
 						routerLinkActive="selected"
 						class="nav-item"
 						>
-							{{item.name}}
+						{{item.name}}
 						<div class="selection-bar"></div>
 					</button>
 				</ng-container>
@@ -70,7 +76,7 @@
 						routerLinkActive="selected"
 						class="nav-item"
 						>
-							{{item.title}}
+						{{item.title}}
 						<div class="selection-bar"></div>
 					</button>
 				</ng-container>
