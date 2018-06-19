@@ -89,7 +89,7 @@ export class RootComponent implements OnInit, AfterViewInit, OnDestroy {
 	private _onRouterInfoChange(routerInfoStack: IRouterInfo[]) {
 		this.routerInfoState = routerInfoStack[0];
 
-		if (this.routerInfoState.changes.list)
+		if (this.routerInfoState.changes.postList)
 			this.postListScrollViewer.scrollToTop();
 		if (this.routerInfoState.changes.post)
 			this.postScrollViewer.scrollToTop();

@@ -79,15 +79,15 @@ export class ViewModelService {
 			pageNumber: this._pageNumber,
 			commentsPageNumber: this._commentsPageNumber,
 			changes: this._routerInfo[0] ? {
-				list:
+				postList:
 					this._type !== this._routerInfo[0].type ||
 					this._typeSlug !== this._routerInfo[0].typeSlug ||
 					this._pageNumber !== this._routerInfo[0].pageNumber ||
 					this._loadMorePageCount > 1,
-				listPageNumber: this._pageNumber !== this._routerInfo[0].pageNumber,
+				postListPageNumber: this._pageNumber !== this._routerInfo[0].pageNumber,
 				post: this._slug !== this._routerInfo[0].slug,
 				postCommentPageNumber: this._commentsPageNumber !== this._routerInfo[0].commentsPageNumber
-			} : { list: true, listPageNumber: true, post: true, postCommentPageNumber: true }
+			} : { postList: true, postListPageNumber: true, post: true, postCommentPageNumber: true }
 		});
 		this.routerInfo$.next(this._routerInfo)
 	}
@@ -163,7 +163,7 @@ export class ViewModelService {
 
 		if (this._routerInfo[0].changes.post)
 			this.updatePost();
-		if (this._routerInfo[0].changes.list)
+		if (this._routerInfo[0].changes.postList)
 			this.updatePostList(type, typeSlug);
 	}
 
@@ -272,8 +272,8 @@ export interface IRouterInfo {
 	pageNumber: number;
 	commentsPageNumber: number;
 	changes: {
-		list: boolean;
-		listPageNumber: boolean;
+		postList: boolean;
+		postListPageNumber: boolean;
 		post: boolean;
 		postCommentPageNumber: boolean;
 	};
