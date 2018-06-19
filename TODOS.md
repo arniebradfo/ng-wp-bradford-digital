@@ -1,15 +1,31 @@
 # TODOs:
+- List Title Nav
+	- search - # search results for "term"
+	- tags - # search results for "term"
+	- categories - all, subcat, subcat
+	- author - # posts authored by "name"
+	- homelist - custom menu?
+- page numbers
+	- List Title Nav add page #
+	- add selected page numbers to bottom page nav
 - active sidebar
 	- change routing?
 	- root should go to correct state on router event
-- categories heiarchy
-	- subnavigaion
-	- routing?
-- src sizes for images
-- tab issue? search then tab destroys layout?
+	
+- rename everything more consistently...
+	- HomeList - default list view?
+	- Post
+	- List
+	- Menu
+- make all private functions/props _name
+- remove all public and :void
+
 - clicking a left-post should retun to that post
+- src sizes for images
+
 - fix external link routing
-- password protected UX
+- tab issue? search then tab destroys layout?
+- password protected UX? 
 - scroll events on touch?
 - css
 	- add focus color

@@ -3,12 +3,18 @@
 export interface IWpId {
 	id: number;
 }
-export interface IWpSlug {
-	slug: string;
-}
+
 export interface IWpHierarchical extends IWpId {
 	parent: number;
 	children?: IWpHierarchical[];
+}
+
+export interface IWpSlug {
+	slug: string;
+}
+
+export interface IWpNamed {
+	name: string;
 }
 
 export interface IWpMenuItem extends IWpHierarchical {
@@ -26,6 +32,10 @@ export interface IWpMenuItem extends IWpHierarchical {
 	type_label: string;
 	url: string;
 	xfn: string;
+}
+
+export interface IWpMenu extends IWpNamed {
+	menu: IWpMenuItem[];
 }
 
 export interface IWpPage extends IWpHierarchical, IWpSlug {
@@ -118,12 +128,11 @@ export interface IWpMedia extends IWpPage {
 	};
 }
 
-export interface IWpTag extends IWpId, IWpSlug { // IWpCategory & IWpTag
+export interface IWpTag extends IWpId, IWpSlug, IWpNamed {
 	count: number;
 	description: string;
 	link: string;
 	meta: string[]; // ???
-	name: string;
 	taxonomy: 'category' | 'post_tag'; // ???
 	_links: {
 		about: IWpLinkHref[];
@@ -138,12 +147,11 @@ export interface IWpCategory extends IWpTag, IWpHierarchical {
 	children?: IWpCategory[];
 }
 
-export interface IWpUser extends IWpId, IWpSlug {
+export interface IWpUser extends IWpId, IWpSlug, IWpNamed {
 	avatar_urls: IWpAvatarUrls;
 	description: string;
 	link: string;
 	meta: string[];
-	name: string;
 	url: string;
 	_links: {
 		collection: IWpLinkHref[];
@@ -238,6 +246,8 @@ export interface IWpError {
 	data: { status: number };
 	message: string;
 }
+
+export type WpFilterItem = IWpCategory|IWpTag|IWpUser|IWpNamed|IWpMenu
 
 interface IWpDetailsImg {
 	width: number;

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IWpPost, IWpPage, IWpComment, IWpError, WpSort } from 'app/interfaces/wp-rest-types';
+import { IWpPost, IWpPage, IWpComment, IWpError, WpSort, WpFilterItem } from 'app/interfaces/wp-rest-types';
 import { WpRestService } from './wp-rest.service';
 import { Router, ActivationEnd } from '@angular/router';
 import { Subject } from 'rxjs';
@@ -9,7 +9,6 @@ import { StateRoot } from '../components/root/root.component';
 @Injectable()
 export class ViewModelService {
 
-	_postsNav: any;
 	private _slug?: string;
 	private _typeSlug?: string;
 	private _type?: WpSort;
@@ -31,17 +30,19 @@ export class ViewModelService {
 	private _currentListPageCount: number;
 	private _canLoadMorePages: boolean;
 	private _loadMorePageCount: number = 1;
+	private _filterItem: WpFilterItem;
 	postList$: Subject<{
 		currentList: (IWpPost | IWpPage)[];
 		postsPerPage: number;
 		currentListPageNumber: number;
 		currentListPageCount: number;
+		currentListPostCount: number;
 		currentListRouterPrefix: string;
 		canLoadMorePages: boolean;
 		loadMorePageCount: number;
 		typeSlug: string;
 		type?: WpSort;
-		postsNav: any;
+		filterItem: WpFilterItem;
 	}> = new Subject();
 
 	private _allComments: IWpComment[];
@@ -102,12 +103,13 @@ export class ViewModelService {
 			postsPerPage: this._postsPerPage,
 			currentListPageNumber: this._pageNumber,
 			currentListPageCount: this._currentListPageCount,
+			currentListPostCount: this._wholeList.length,
 			currentListRouterPrefix: this._type && this._typeSlug ? `/${this._type}/${this._typeSlug}` : '',
 			canLoadMorePages: this._canLoadMorePages,
 			loadMorePageCount: this._loadMorePageCount,
 			typeSlug: this._typeSlug || 'Posts',
 			type: this._type,
-			postsNav: this._postsNav
+			filterItem: this._filterItem
 		});
 	}
 
@@ -122,7 +124,7 @@ export class ViewModelService {
 		});
 	}
 
-	private updateView(event: ActivationEnd): void {
+	private updateView(event: ActivationEnd) {
 		// console.log(event); // for debug
 
 		if (event.snapshot.routeConfig.path === 'externalRedirect') {
@@ -197,7 +199,7 @@ export class ViewModelService {
 			});
 	}
 
-	public updateComments(password?: string): void {
+	public updateComments(password?: string) {
 		// const password = undefined; // figure this out later
 
 		// get the comments for the current post from the WpRestService
@@ -221,19 +223,16 @@ export class ViewModelService {
 		});
 	}
 
-	public updatePostList(
-		type?: WpSort,
-		slug?: string,
-	): void {
+	public updatePostList(type?: WpSort, slug?: string) {
 		// retrieve the requested set of posts from the WpRestService
 		Promise.all([
 			this.wpRestService.getPosts(type, slug),
 			this.wpRestService.options,
-			this.wpRestService.getPostsNav(type, slug),
+			this.wpRestService.getListFilter(type, slug),
 		]).then(res => {
 			this._wholeList = res[0];
 			const options = res[1];
-			this._postsNav = res[2];
+			this._filterItem = res[2];
 
 			this._loadMorePageCount = 1;
 

@@ -31,7 +31,7 @@ export class PostComponent implements OnInit {
 	) { }
 
 	ngOnInit() {
-		console.log(this.post);
+		// console.log(this.post);
 	}
 
 	onSubmitPassword(): void {

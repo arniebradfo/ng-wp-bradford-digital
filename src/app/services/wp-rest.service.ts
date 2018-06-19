@@ -6,7 +6,7 @@ import { Http, Response, RequestOptionsArgs, Headers } from '@angular/http';
 import { environment } from '../../environments/environment';
 import {
 	IWpMenuItem, IWpPost, IWpPage, IWpTag, IWpUser, IWpComment,
-	IWpOptions, IWpId, IWpMedia, IWpError, WpSort, IWpHierarchical, IWpCategory, IWpSlug
+	IWpOptions, IWpId, IWpMedia, IWpError, WpSort, IWpHierarchical, IWpCategory, IWpSlug, WpFilterItem
 } from '../interfaces/wp-rest-types';
 
 
@@ -143,11 +143,6 @@ export class WpRestService {
 		this._categoriesById = this.orderById(this.categories);
 		this._categoriesBySlug = this.orderBySlug(this.categories);
 		this.categories = this.categories.then(categories => this.generateParentedHeiarchy(categories) );
-
-		this.categories.then(categories => console.log(categories) );
-		this._categoriesById.then(categories => console.log(categories) );
-		this._categoriesBySlug.then(categories => console.log(categories) );
-
 	}
 
 	public refreshUsers(): void {
@@ -284,31 +279,32 @@ export class WpRestService {
 
 		// set the filter parameters
 		let prop: string;
-		let set: Promise<(IWpUser | IWpTag)[]>;
+		let set: Promise<{ [key: string]: (IWpTag|IWpUser); }>;
 		switch (type) {
 			case 'tag':
 				prop = 'tags';
-				set = this.tags;
+				set = this._tagsBySlug;
 				break;
 			case 'category':
 				prop = 'categories';
-				set = this.categories;
+				set = this._categoriesBySlug;
 				break;
 			case 'author':
 				prop = 'author';
-				set = this.users;
+				set = this._usersBySlug;
 				break;
+			default:
+				// TODO: go to 404 or something?
+				return Promise.resolve([]);
 		}
 
 		// return a filtered version of the posts
 		return Promise.all([this.posts, set])
 			.then(res => {
 				const posts = res[0];
-				const items: any[] = res[1];
-				const matchingItem = items.find(item => {
-					return item.slug === slug; // TODO: use the bySlug set
-				});
-				const itemId: number = matchingItem.id;
+				const items = res[1];
+				const matchingItem = items[slug];
+				const itemId = matchingItem.id;
 				return posts.filter(post => {
 					if (type === 'author')
 						return post.author === itemId;
@@ -319,19 +315,37 @@ export class WpRestService {
 
 	}
 
-	public getPostsNav(type?: WpSort, slug?: string): Promise<any> {
+	public getListFilter(type?: WpSort, slug?: string): Promise<WpFilterItem> {
 
-		if (type === 'category')
+		// - search - # search results for "term"
+		// - tags - # search results for "term"
+		// - categories - all, subcat, subcat
+		// - author - # posts authored by "name"
+		// - homelist - custom menu?
 
-		return Promise.all([this._categoriesBySlug, this._categoriesById])
-			.then(res => {
-				const categoriesBySlug = res[0];
-				const categoriesById = res[1];
-				let id = categoriesBySlug[slug].id
-				while (categoriesById[id].parent > 0)
-					id = categoriesById[categoriesById[id].parent].id
-				return categoriesById[id];
-			})
+		switch (type) {
+			case 'category':
+				return Promise.all([this._categoriesBySlug, this._categoriesById])
+					.then(res => {
+						const categoriesBySlug = res[0];
+						const categoriesById = res[1];
+						let id = categoriesBySlug[slug].id
+						// get the ancestor of the selected category
+						while (categoriesById[id].parent > 0)
+							id = categoriesById[categoriesById[id].parent].id
+						return categoriesById[id];
+					})
+			case 'tag':
+				return this._tagsBySlug.then(tagsBySlug => tagsBySlug[slug])
+			case 'author':
+				return this._usersBySlug.then(usersBySlug => usersBySlug[slug])
+			case 'search':
+				return Promise.resolve({name: slug});
+			default: // type is undefined, HomeList
+				return this.getMenu('homelist').toPromise()
+					.then(menuItems => {return {menu: menuItems, name: 'Posts'}} );
+		}
+
 	}
 
 	// get a menu from the https://wordpress.org/plugins/wp-api-menus/ plugin endpoint

@@ -20,27 +20,67 @@
 <ngwp-scroll-viewer #listScrollViewer class="list" >
 	<div class="list-wrapper" *ngIf="viewModelService.postList$ | async as postList">
 
-		<div class="list-header">
-			<h1 class="list-title">{{ postList.postsNav.name }}</h1>
-			<!--
-				<small class="list-type">{{ postList.type }}</small>
-				<span class="list-page-number">page {{postList.currentListPageNumber}}</span>
-			-->
+		<div class="list-header" [ngSwitch]="postList.type">
+			<!-- [ngSwitch]="postList.type" : 'tag' | 'category' | 'author' | 'search' | undefined -->
+
+			<h1 class="list-title">{{ postList.filterItem.name }}</h1>
+
+			<!--<small class="list-type">{{ postList.type }}</small>-->
+			<!--<span class="list-page-number">Page {{postList.currentListPageNumber}}</span>-->
+
 			<nav class="list-nav nav top" [ngClass]="{'seach-open':topSearch.isOpen}">
-				<button
-					*ngFor="let item of postList.postsNav.children"
-					[routerLink]="[postList.type, item.slug]"
-					routerLinkActive="selected"
-					class="nav-item"
-					>
-						{{item.name}}
+
+				<ng-container *ngSwitchCase="'category'">
+					<button
+						[routerLink]="[postList.type, postList.filterItem.slug]"
+						routerLinkActive="selected"
+						class="nav-item"
+						>
+							All
+						<div class="selection-bar"></div>
+					</button>
+					<button
+						*ngFor="let item of postList.filterItem.children"
+						[routerLink]="[postList.type, item.slug]"
+						routerLinkActive="selected"
+						class="nav-item"
+						>
+							{{item.name}}
+						<div class="selection-bar"></div>
+					</button>
+				</ng-container>
+
+				<ng-container *ngSwitchCase="'tag'">
+					<span>{{postList.currentListPostCount}} posts tagged "{{postList.filterItem.name}}"</span>
+				</ng-container>
+
+				<ng-container *ngSwitchCase="'author'">
+					<span>{{postList.currentListPostCount}} posts authored by {{postList.filterItem.name}}</span>
+				</ng-container>
+
+				<ng-container *ngSwitchCase="'search'">
+					<span>{{postList.currentListPostCount}} posts contain a match for the term {{postList.filterItem.name}}</span>
+				</ng-container>
+
+				<ng-container *ngSwitchDefault>
+					<button
+						*ngFor="let item of postList.menu"
+						[ngClass]="item.classes"
+						[routerLink]="item.url | urlPathname"
+						routerLinkActive="selected"
+						class="nav-item"
+						>
+						{{item.title}}
 					<div class="selection-bar"></div>
 				</button>
+				</ng-container>
+
 				<div class="flex-splitter"></div>
 				<button class="nav-item list-search-button" (click)="topSearch.open()">
 					<span>search</span>
 					<ngwp-icon class="icon-right" name="icon_Search"></ngwp-icon>
 				</button>
+
 				<ngwp-search #topSearch class="list-search"></ngwp-search>
 			</nav>
 		</div>
