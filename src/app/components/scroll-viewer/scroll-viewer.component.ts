@@ -11,10 +11,10 @@ import { animationFrame } from 'rxjs/internal/scheduler/animationFrame';
 })
 export class ScrollViewerComponent implements OnInit, AfterContentInit {
 
-	public scrollboxMargin: string = '';
-	public scrollboxPadding: string = '';
+	scrollboxMargin: string = '';
+	scrollboxPadding: string = '';
 
-	public onScroll$: Observable<Event>;
+	onScroll$: Observable<Event>;
 
 	@ViewChild('scrollViewport') scrollViewport: ElementRef;
 
@@ -35,7 +35,7 @@ export class ScrollViewerComponent implements OnInit, AfterContentInit {
 		this.scrollboxPadding = '0 ' + (baseMargin - scrollbarWidth) + 'px 0 0';
 	}
 
-	public scrollToTop() {
+	scrollToTop() {
 		this.scrollViewport.nativeElement.scrollTop = 0;
 	}
 

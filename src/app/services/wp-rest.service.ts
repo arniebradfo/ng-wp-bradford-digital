@@ -28,26 +28,26 @@ export class WpRestService {
 	private _wpMenus: string = this._wpDomain + 'wp-json/wp-api-menus/v2/';
 	private _ngWp: string = this._wpDomain + 'wp-json/ngwp/v2/';
 
-	public posts: Promise<IWpPost[]>;
+	posts: Promise<IWpPost[]>;
 	private _postsById: Promise<IWpPost[]>;
 
-	public pages: Promise<IWpPage[]>;
+	pages: Promise<IWpPage[]>;
 	private _pagesById: Promise<IWpPage[]>;
 
-	public media: Promise<IWpMedia[]>;
+	media: Promise<IWpMedia[]>;
 	private _mediaById: Promise<IWpMedia[]>;
 
-	public tags: Promise<IWpTag[]>;
+	tags: Promise<IWpTag[]>;
 	private _tagsById: Promise<IWpTag[]>;
 
-	public categories: Promise<IWpCategory[]>;
+	categories: Promise<IWpCategory[]>;
 	private _categoriesById: Promise<IWpCategory[]>;
 	private _categoriesBySlug: Promise<{ [key: string]: IWpCategory; }>;
 
-	public users: Promise<IWpUser[]>;
+	users: Promise<IWpUser[]>;
 	private _usersById: Promise<IWpUser[]>;
 
-	public options: Promise<IWpOptions>;
+	options: Promise<IWpOptions>;
 
 	constructor(
 		private _http: Http,
@@ -60,7 +60,7 @@ export class WpRestService {
 		//   .then(res => console.timeEnd('WpRestService'));
 	}
 
-	public refreshAll(): void {
+	refreshAll() {
 		// generate all properties.
 		this.refreshOptions();
 		this.refreshTags();
@@ -73,7 +73,7 @@ export class WpRestService {
 		this.refreshPages();
 	}
 
-	public refreshPosts(): void {
+	refreshPosts() {
 		this.posts = this.requestType('posts');
 		this.posts = Promise.all([this.posts, this._mediaById, this._tagsById, this._categoriesById, this._usersById])
 			.then(res => {
@@ -113,7 +113,7 @@ export class WpRestService {
 		this._postsBySlug = this.orderBySlug(this.posts);
 	}
 
-	public refreshPages(): void {
+	refreshPages() {
 		// TODO: edit router.config so that child/grandchild page routing works
 		this.pages = this.requestType('pages');
 		this.pages = Promise.all([this.pages, this._mediaById, this._usersById]).then(res => {
@@ -132,26 +132,26 @@ export class WpRestService {
 		this._pagesBySlug = this.orderBySlug(this.pages);
 	}
 
-	public refreshTags(): void {
+	refreshTags() {
 		this.tags = this.requestType('tags');
 		this._tagsById = this.orderById(this.tags);
 		this._tagsBySlug = this.orderBySlug(this.tags);
 	}
 
-	public refreshCategories(): void {
+	refreshCategories() {
 		this.categories = this.requestType('categories');
 		this._categoriesById = this.orderById(this.categories);
 		this._categoriesBySlug = this.orderBySlug(this.categories);
 		this.categories = this.categories.then(categories => this.generateParentedHeiarchy(categories) );
 	}
 
-	public refreshUsers(): void {
+	refreshUsers() {
 		this.users = this.requestType('users');
 		this._usersById = this.orderById(this.users);
 		this._usersBySlug = this.orderBySlug(this.users);
 	}
 
-	public refreshMedia(): void {
+	refreshMedia() {
 		this.media = this.requestType('media');
 		this.media = Promise.all([this.media, this._usersById]).then(res => {
 			const medias = res[0];
@@ -166,7 +166,7 @@ export class WpRestService {
 		this._mediaBySlug = this.orderBySlug(this.media);
 	}
 
-	public refreshOptions(): void {
+	refreshOptions() {
 		this.options = this._http.get(this._ngWp + `options`)
 			.pipe(
 				map((res: Response) => res.json(),
@@ -217,7 +217,7 @@ export class WpRestService {
 		});
 	}
 
-	public getPostOrPage(slug: string): Promise<IWpPage | IWpPost | undefined> {
+	getPostOrPage(slug: string): Promise<IWpPage | IWpPost | undefined> {
 		return Promise.all([this._postsBySlug, this._pagesBySlug]).then(res => {
 			for (let i = 0; i < res.length; i++)       // for both sets: posts and pages
 				if (res[i][slug])                        // check if the slug exists
@@ -230,7 +230,7 @@ export class WpRestService {
 
 
 	// get a post or page that is password protected
-	public getPasswordProtected(id: number, password: string): Promise<IWpPage | IWpPost | false> {
+	getPasswordProtected(id: number, password: string): Promise<IWpPage | IWpPost | false> {
 		return new Promise<IWpPage | IWpPost | false>((resolve, reject) => {
 			this._postsById.then(postsById => {
 				const post = postsById[id];
@@ -254,7 +254,7 @@ export class WpRestService {
 		});
 	}
 
-	public getPosts(type?: WpSort, slug?: string): Promise<(IWpPage | IWpPost)[]> {
+	getPosts(type?: WpSort, slug?: string): Promise<(IWpPage | IWpPost)[]> {
 
 		// return all posts if there are no filter parameters
 		if (type == null || slug == null)
@@ -315,7 +315,7 @@ export class WpRestService {
 
 	}
 
-	public getListFilter(type?: WpSort, slug?: string): Promise<WpFilterItem> {
+	getListFilter(type?: WpSort, slug?: string): Promise<WpFilterItem> {
 		switch (type) {
 			case 'category':
 				return Promise.all([this._categoriesBySlug, this._categoriesById])
@@ -341,7 +341,7 @@ export class WpRestService {
 	}
 
 	// get a menu from the https://wordpress.org/plugins/wp-api-menus/ plugin endpoint
-	public getMenu(name: string): Observable<IWpMenuItem[]> {
+	getMenu(name: string): Observable<IWpMenuItem[]> {
 		return this._http
 			.get(this._wpMenus + `menu-locations/${name}`)
 			.pipe(
@@ -354,7 +354,7 @@ export class WpRestService {
 	}
 
 	// get the comments of a specified post
-	public getComments(post: IWpPage, password?: string): Promise<IWpComment[]> {
+	getComments(post: IWpPage, password?: string): Promise<IWpComment[]> {
 		// TODO: maybe save the comments somehow?
 
 		// if asking for password protected comments that have been accessed before
@@ -387,14 +387,14 @@ export class WpRestService {
 	}
 
 	// try to submit a comment
-	public postComment(newComment: {
+	postComment(newComment: {
 		author_email: string;
 		author_name: string;
 		author_url?: string;
 		content: string;
 		post: number;
 		parent?: number;
-	}): void {
+	}) {
 		// I can't figure out how to submit a valid nonce with this post request
 		// the only way this works is with a rest_allow_anonymous_comments filter in functions.php
 		this.options.then(options => {

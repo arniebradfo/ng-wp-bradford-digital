@@ -34,7 +34,7 @@ export class PostComponent implements OnInit {
 		// console.log(this.post);
 	}
 
-	onSubmitPassword(): void {
+	onSubmitPassword() {
 		this.viewModelService.getPasswordProtected(this.post.id, this.password);
 	}
 

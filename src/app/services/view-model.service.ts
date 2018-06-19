@@ -176,7 +176,7 @@ export class ViewModelService {
 			});
 	}
 
-	public updatePost() {
+	updatePost() {
 		this.wpRestService.getPostOrPage(this._slug)
 			.then(post => {
 				if (!post) return;
@@ -188,7 +188,7 @@ export class ViewModelService {
 			});
 	}
 
-	public getPasswordProtected(id: number, password: string) {
+	getPasswordProtected(id: number, password: string) {
 		this.wpRestService.getPasswordProtected(id, password)
 			.then(post => {
 				if (!post) return;
@@ -200,7 +200,7 @@ export class ViewModelService {
 			});
 	}
 
-	public updateComments(password?: string) {
+	updateComments(password?: string) {
 		// const password = undefined; // figure this out later
 
 		// get the comments for the current post from the WpRestService
@@ -224,7 +224,7 @@ export class ViewModelService {
 		});
 	}
 
-	public updatePostList(type?: WpSort, slug?: string) {
+	updatePostList(type?: WpSort, slug?: string) {
 		// retrieve the requested set of posts from the WpRestService
 		Promise.all([
 			this.wpRestService.getPosts(type, slug),
@@ -251,7 +251,7 @@ export class ViewModelService {
 		});
 	}
 
-	public loadMorePosts() {
+	loadMorePosts() {
 		this._loadMorePageCount++;
 		const lowerIndex = this._postsPerPage * (this._pageNumber - 1);
 		const upperIndex = this._postsPerPage * (this._pageNumber + this._loadMorePageCount - 1);

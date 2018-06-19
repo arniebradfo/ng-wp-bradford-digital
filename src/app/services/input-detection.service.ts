@@ -5,8 +5,8 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class InputDetectionService {
 
-	public get isInputMouse(): boolean { return !this._isInputTouch };
-	public get isInputTouch(): boolean { return this._isInputTouch };
+	get isInputMouse(): boolean { return !this._isInputTouch };
+	get isInputTouch(): boolean { return this._isInputTouch };
 	private _isInputTouch: boolean = false;
 	private _element: HTMLElement = document.body;
 	private _switchToTouchRef = this._switchToTouch.bind(this);

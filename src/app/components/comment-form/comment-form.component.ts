@@ -13,10 +13,10 @@ export class CommentFormComponent implements OnInit {
 	@Input() parent: IWpComment;
 	@Input() post: IWpPost;
 
-	public name: string;
-	public email: string;
-	public message: string;
-	public submitted = false;
+	name: string;
+	email: string;
+	message: string;
+	submitted = false;
 
 	constructor(
 		private wpRestService: WpRestService,

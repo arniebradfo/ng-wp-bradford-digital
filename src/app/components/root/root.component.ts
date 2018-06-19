@@ -55,7 +55,7 @@ export class RootComponent implements OnInit, AfterViewInit, OnDestroy {
 		private tabDetectionService: TabDetectionService
 	) { }
 
-	ngOnInit(): void {
+	ngOnInit() {
 		this.wpRestService.options.then(options => {
 			this.blogName = options.general.blogname;
 			this.blogDescription = options.general.blogdescription;
