@@ -1,12 +1,6 @@
 # TODOs:
-- rename everything more consistently...
-	- post
-	- postList
-	- homePostList - default list view?
-	- menu
-
-- clicking a left-post should retun to that post
 - src sizes for images
+	- proper height and width for images
 
 - fix external link routing
 - tab issue? search then tab destroys layout?

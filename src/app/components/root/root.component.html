@@ -17,7 +17,7 @@
 	</nav>
 </header>
 
-<ngwp-scroll-viewer #postListScrollViewer class="post-list" >
+<ngwp-scroll-viewer #postListScrollViewer class="post-list" (click)="maybeCloseMenu($event, 'post-list')" >
 	<div class="post-list-wrapper" *ngIf="viewModelService.postList$ | async as postList">
 
 		<div class="post-list-header" [ngSwitch]="postList.type">
@@ -120,9 +120,10 @@
 		</div>
 
 	</div>
+	<div class="click-cover"></div>
 </ngwp-scroll-viewer>
 
-<ngwp-scroll-viewer #postScrollViewer class="post" >
+<ngwp-scroll-viewer #postScrollViewer class="post" (click)="maybeCloseMenu($event, 'post')">
 	<div class="post-wrapper" *ngIf="viewModelService.post$ | async as post">
 		<ngwp-post [post]="post.currentPost" [displayFull]="true" [parallaxScrollTop]="(postScrollViewer.onScroll$ | async)?.srcElement.scrollTop"></ngwp-post>
 		<div class="adjcent-post-list-wrapper" *ngIf="post.currentPost?.adjcentPosts as adjcentPosts">

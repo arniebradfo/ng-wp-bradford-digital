@@ -79,6 +79,7 @@ export class ViewModelService {
 			pageNumber: this._pageNumber,
 			commentsPageNumber: this._commentsPageNumber,
 			changes: this._routerInfo[0] ? {
+				// TODO: postList vs postListHeader
 				postList:
 					this._type !== this._routerInfo[0].type ||
 					this._typeSlug !== this._routerInfo[0].typeSlug ||

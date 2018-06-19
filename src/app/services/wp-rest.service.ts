@@ -330,7 +330,7 @@ export class WpRestService {
 				return this._usersBySlug.then(usersBySlug => usersBySlug[slug])
 			case 'search':
 				return Promise.resolve({name: slug});
-			default: // type is undefined, HomeList
+			default: // type is undefined, homePostList
 				return this.getMenu('home-menu').toPromise()
 					.then(menuItems => { return { menu: menuItems, name: 'Posts' }} );
 		}

@@ -86,6 +86,14 @@ export class RootComponent implements OnInit, AfterViewInit, OnDestroy {
 			return this.stateRoot !== 'state-menu' ? 'icon_Menu' : 'icon_X'
 	}
 
+	maybeCloseMenu(event: Event, type: string) {
+		if (
+			(type === 'post-list' && this.stateRoot === 'state-menu' && this.stateMobile === 'state-mobile') ||
+			(type === 'post' && this.stateRoot !== 'state-post')
+		)
+			this.menuButtonClick();
+	}
+
 	private _onRouterInfoChange(routerInfoStack: IRouterInfo[]) {
 		this.routerInfoState = routerInfoStack[0];
 
