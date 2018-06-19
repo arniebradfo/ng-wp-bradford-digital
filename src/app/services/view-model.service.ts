@@ -142,7 +142,7 @@ export class ViewModelService {
 		const isHome = !type && !typeSlug && !slug;
 		const menuOpen = queryParams.m != null && queryParams.m !== 'false';
 
-		this._state = !menuOpen ? slug != null ? 'state-post' : 'state-list' : 'state-menu';
+		this._state = !menuOpen ? slug != null ? 'state-post' : 'state-post-list' : 'state-menu';
 
 		if (type)
 			this._type = type;

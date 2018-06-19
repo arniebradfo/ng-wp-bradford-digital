@@ -3,8 +3,8 @@
 @import (reference) '../../style/vars/typography.vars.less';
 
 // STATES //
-// .state-post | .state-list | .state-menu
-// .was-state-post | .was-state-list | .was-state-menu
+// .state-post | .state-post-list | .state-menu
+// .was-state-post | .was-state-post-list | .was-state-menu
 // .state-not-mobile | .state-mobile // @media @state-not-mobile{} | @media @state-mobile{}
 // .state-post-scroll-top || .state-post-scroll-down
 
@@ -26,7 +26,7 @@
 	grid-column: 1;
 	z-index: 2;
 }
-.list{
+.post-list{
 	// overflow: auto;
 	z-index: 1;
 }
@@ -51,7 +51,7 @@
 		grid-template-columns: @column_Size 1fr;
 	}
 	.menu{}
-	.list,
+	.post-list,
 	.post
 	{
 		height: 100%;
@@ -60,7 +60,7 @@
 		.transition(transform opacity);
 	}
 	.post{}
-	.list{}
+	.post-list{}
 	.primary_Open(){}
 	.primary_Closed(){
 		transform: translateX(@column_Size);
@@ -70,21 +70,21 @@
 	}
 
 	:host(.state-menu){
-		.list,
+		.post-list,
 		.post
 		{
 			.primary_Closed();
 		}
 	}
-	:host(.state-menu.was-state-list) .list,
+	:host(.state-menu.was-state-post-list) .post-list,
 	:host(.state-menu.was-state-post) .post,
 	{
 		opacity: @unfocusedColumn_Opacity;
 	}
 
 
-	:host(.state-list) {
-		.list{
+	:host(.state-post-list) {
+		.post-list{
 			.primary_Open();
 		}
 		.post{
@@ -95,14 +95,14 @@
 		.post{
 			.primary_Open();
 		}
-		.list{
+		.post-list{
 			.primary_Closed();
 		}
 	}
 
 
 	:host(.state-post),
-	:host(.state-list)
+	:host(.state-post-list)
 	{
 		.menu{
 			display: none;
@@ -121,7 +121,7 @@
 			minmax(@rightColumn_MinWidth, 1fr);
 	}
 	.menu{}
-	.list{
+	.post-list{
 		grid-column: 2;
 	}
 	.post{
@@ -137,7 +137,7 @@
 		.post{
 			transform: translateX(0);
 		}
-		.menu, .list{
+		.menu, .post-list{
 			display: none;
 		}
 	}
@@ -146,7 +146,7 @@
 
 
 :host(.state-menu),
-:host(.state-list)
+:host(.state-post-list)
 {
 	.post{
 		@threeColumn_MinWidth: (@leftColumn_MinWidth + @centerColumn_MaxWidth + @rightColumn_MinWidth);

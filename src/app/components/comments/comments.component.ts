@@ -10,7 +10,7 @@ import { IWpComment } from '../../interfaces/wp-rest-types';
 export class CommentsComponent implements OnInit {
 
 	constructor(
-		viewModelService: ViewModelService,
+		public viewModelService: ViewModelService,
 	) { }
 
 	ngOnInit() { }

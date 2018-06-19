@@ -1,11 +1,9 @@
 # TODOs:
 - rename everything more consistently...
-	- HomeList - default list view?
-	- Post
-	- List
-	- Menu
-- make all private functions/props _name
-- remove all public and :void
+	- post
+	- postList
+	- homePostList - default list view?
+	- menu
 
 - clicking a left-post should retun to that post
 - src sizes for images

@@ -27,9 +27,9 @@ export class RootComponent implements OnInit, AfterViewInit, OnDestroy {
 	private _subscriptions: Subscription[] = [];
 	private _menuNavigation: [any[], NavigationExtras];
 
-	stateRoot: StateRoot = 'state-list';
+	stateRoot: StateRoot = 'state-post-list';
 	stateMobile: StateMobile = 'state-not-mobile';
-	stateWas: StateRootWas = 'was-state-list';
+	stateWas: StateRootWas = 'was-state-post-list';
 	statePostScroll: StatePostScrolledTop = 'state-post-scroll-top';
 
 	@Input() class: string = '';
@@ -45,7 +45,7 @@ export class RootComponent implements OnInit, AfterViewInit, OnDestroy {
 	}
 
 	@ViewChild('postScrollViewer') postScrollViewer: ScrollViewerComponent;
-	@ViewChild('listScrollViewer') listScrollViewer: ScrollViewerComponent;
+	@ViewChild('postListScrollViewer') postListScrollViewer: ScrollViewerComponent;
 
 	constructor(
 		public viewModelService: ViewModelService,
@@ -90,7 +90,7 @@ export class RootComponent implements OnInit, AfterViewInit, OnDestroy {
 		this.routerInfoState = routerInfoStack[0];
 
 		if (this.routerInfoState.changes.list)
-			this.listScrollViewer.scrollToTop();
+			this.postListScrollViewer.scrollToTop();
 		if (this.routerInfoState.changes.post)
 			this.postScrollViewer.scrollToTop();
 
@@ -118,7 +118,7 @@ export class RootComponent implements OnInit, AfterViewInit, OnDestroy {
 			let route: string[] = [];
 			if (this.stateRoot === 'state-post' && this.routerInfoState.slug)
 				route = [this.routerInfoState.slug];
-			else if (this.stateRoot === 'state-list' && this.routerInfoState.type && this.routerInfoState.typeSlug)
+			else if (this.stateRoot === 'state-post-list' && this.routerInfoState.type && this.routerInfoState.typeSlug)
 				route = [this.routerInfoState.type, this.routerInfoState.typeSlug];
 			this._menuNavigation = [
 				route,
@@ -158,9 +158,9 @@ export class RootComponent implements OnInit, AfterViewInit, OnDestroy {
 
 }
 
-export type StateRoot = 'state-post' | 'state-list' | 'state-menu';
+export type StateRoot = 'state-post' | 'state-post-list' | 'state-menu';
 export type StateMobile = 'state-not-mobile' | 'state-mobile';
-export type StateRootWas = 'was-state-post' | 'was-state-list' | 'was-state-menu';
+export type StateRootWas = 'was-state-post' | 'was-state-post-list' | 'was-state-menu';
 export type StatePostScrolledTop = 'state-post-scroll-top' | 'state-post-scroll-down';
 
 // this must match:

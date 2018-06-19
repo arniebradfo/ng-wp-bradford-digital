@@ -10,19 +10,11 @@ import {
 } from '../interfaces/wp-rest-types';
 
 
-
-
-
 // this service also serves as the global store of client-side data
 
 @Injectable()
 export class WpRestService {
 
-	_mediaBySlug: Promise<{ [key: string]: IWpMedia; }>;
-	_usersBySlug: Promise<{ [key: string]: IWpUser; }>;
-	_postsBySlug: Promise<{ [key: string]: IWpPost; }>;
-	_pagesBySlug: Promise<{ [key: string]: IWpPage; }>;
-	_tagsBySlug: Promise<{ [key: string]: IWpTag; }>;
 	private _wpDomain: string = environment.wpBase;
 	private _wpRest: string = this._wpDomain + 'wp-json/wp/v2/';
 	private _wpMenus: string = this._wpDomain + 'wp-json/wp-api-menus/v2/';
@@ -30,15 +22,19 @@ export class WpRestService {
 
 	posts: Promise<IWpPost[]>;
 	private _postsById: Promise<IWpPost[]>;
+	private _postsBySlug: Promise<{ [key: string]: IWpPost; }>;
 
 	pages: Promise<IWpPage[]>;
 	private _pagesById: Promise<IWpPage[]>;
+	private _pagesBySlug: Promise<{ [key: string]: IWpPage; }>;
 
 	media: Promise<IWpMedia[]>;
 	private _mediaById: Promise<IWpMedia[]>;
+	private _mediaBySlug: Promise<{ [key: string]: IWpMedia; }>;
 
 	tags: Promise<IWpTag[]>;
 	private _tagsById: Promise<IWpTag[]>;
+	private _tagsBySlug: Promise<{ [key: string]: IWpTag; }>;
 
 	categories: Promise<IWpCategory[]>;
 	private _categoriesById: Promise<IWpCategory[]>;
@@ -46,6 +42,7 @@ export class WpRestService {
 
 	users: Promise<IWpUser[]>;
 	private _usersById: Promise<IWpUser[]>;
+	private _usersBySlug: Promise<{ [key: string]: IWpUser; }>;
 
 	options: Promise<IWpOptions>;
 
@@ -227,7 +224,6 @@ export class WpRestService {
 			return undefined;
 		});
 	}
-
 
 	// get a post or page that is password protected
 	getPasswordProtected(id: number, password: string): Promise<IWpPage | IWpPost | false> {
