@@ -23,7 +23,7 @@ const routes: Routes = [
 	},
 	{
 		path: ':slug/comments-page/:commentsPageNumber',
-		component: EmptyComponent
+		component: EmptyComponent,
 	},
 	{
 		path: ':slug/page/:pageNumber',
@@ -42,7 +42,7 @@ const routes: Routes = [
 
 
 @NgModule({
-	imports: [RouterModule.forRoot(routes)],
+	imports: [RouterModule.forRoot(routes)], // {onSameUrlNavigation: 'reload'}
 	exports: [RouterModule],
 	providers: []
 })

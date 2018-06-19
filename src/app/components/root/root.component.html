@@ -39,7 +39,7 @@
 				<ng-container *ngSwitchCase="'category'">
 					<button
 						[routerLink]="[postList.type, postList.filterItem.slug]"
-						routerLinkActive="selected"
+						[ngClass]="{selected: routerInfoState.typeSlug === postList.filterItem.slug}"
 						class="nav-item"
 						>
 						All
@@ -48,7 +48,7 @@
 					<button
 						*ngFor="let item of postList.filterItem.children"
 						[routerLink]="[postList.type, item.slug]"
-						routerLinkActive="selected"
+						[ngClass]="{selected: routerInfoState.typeSlug === item.slug}"
 						class="nav-item"
 						>
 						{{item.name}}
@@ -105,7 +105,7 @@
 					class="nav-item"
 					*ngFor="let count of postList.currentListPageCount | numberToArray; let i = index"
 					[routerLink]="postList.currentListRouterPrefix + '/page/' + (i+1)"
-					routerLinkActive="selected"
+					[ngClass]="{selected: routerInfoState.pageNumber <= (i + 1) && (routerInfoState.pageNumber + postList.loadMorePageCount - 1) >= (i + 1) }"
 					>
 					{{i+1}}
 					<div class="selection-bar"></div>

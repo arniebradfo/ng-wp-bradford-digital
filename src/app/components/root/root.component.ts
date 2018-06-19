@@ -23,8 +23,8 @@ export class RootComponent implements OnInit, AfterViewInit, OnDestroy {
 	menu: IWpMenuItem[];
 	menuMame: string = 'primary-menu';
 	buttonClass: string = '';
+	routerInfoState: IRouterInfo;
 	private _subscriptions: Subscription[] = [];
-	private _routerInfoState: IRouterInfo;
 	private _menuNavigation: [any[], NavigationExtras];
 
 	stateRoot: StateRoot = 'state-list';
@@ -87,11 +87,11 @@ export class RootComponent implements OnInit, AfterViewInit, OnDestroy {
 	}
 
 	private _onRouterInfoChange(routerInfoStack: IRouterInfo[]) {
-		this._routerInfoState = routerInfoStack[0];
+		this.routerInfoState = routerInfoStack[0];
 
-		if (this._routerInfoState.changes.list)
+		if (this.routerInfoState.changes.list)
 			this.listScrollViewer.scrollToTop();
-		if (this._routerInfoState.changes.post)
+		if (this.routerInfoState.changes.post)
 			this.postScrollViewer.scrollToTop();
 
 		this._updateRootStates();
@@ -102,24 +102,24 @@ export class RootComponent implements OnInit, AfterViewInit, OnDestroy {
 	private _updateRootStates() {
 		// if (routerInfoStack[1]) this.stateWas = `was-${routerInfoStack[1].state}` as StateRootWas;
 		this.stateWas = `was-${this.stateRoot}` as StateRootWas;
-		this.stateRoot = this._routerInfoState.state;
+		this.stateRoot = this.routerInfoState.state;
 		this._updateButtonClass();
 	}
 
 	private _setMenuNavigation() {
 		if (this.stateMobile === 'state-not-mobile') {
 			this._menuNavigation = [
-				this._routerInfoState.slug ? [this._routerInfoState.slug] : [],
+				this.routerInfoState.slug ? [this.routerInfoState.slug] : [],
 				{
 					queryParams: this.stateRoot === 'state-post' ? { m: true } : {}
 				}
 			];
 		} else { // if (this.stateMobile === 'state-mobile') {
 			let route: string[] = [];
-			if (this.stateRoot === 'state-post' && this._routerInfoState.slug)
-				route = [this._routerInfoState.slug];
-			else if (this.stateRoot === 'state-list' && this._routerInfoState.type && this._routerInfoState.typeSlug)
-				route = [this._routerInfoState.type, this._routerInfoState.typeSlug];
+			if (this.stateRoot === 'state-post' && this.routerInfoState.slug)
+				route = [this.routerInfoState.slug];
+			else if (this.stateRoot === 'state-list' && this.routerInfoState.type && this.routerInfoState.typeSlug)
+				route = [this.routerInfoState.type, this.routerInfoState.typeSlug];
 			this._menuNavigation = [
 				route,
 				{

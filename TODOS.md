@@ -1,10 +1,4 @@
 # TODOs:
-- page numbers
-	- add selected page numbers to bottom page nav
-- active sidebar
-	- change routing?
-	- root should go to correct state on router event
-
 - rename everything more consistently...
 	- HomeList - default list view?
 	- Post

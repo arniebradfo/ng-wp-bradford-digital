@@ -82,7 +82,8 @@ export class ViewModelService {
 				list:
 					this._type !== this._routerInfo[0].type ||
 					this._typeSlug !== this._routerInfo[0].typeSlug ||
-					this._pageNumber !== this._routerInfo[0].pageNumber,
+					this._pageNumber !== this._routerInfo[0].pageNumber ||
+					this._loadMorePageCount > 1,
 				listPageNumber: this._pageNumber !== this._routerInfo[0].pageNumber,
 				post: this._slug !== this._routerInfo[0].slug,
 				postCommentPageNumber: this._commentsPageNumber !== this._routerInfo[0].commentsPageNumber
@@ -253,12 +254,12 @@ export class ViewModelService {
 	public loadMorePosts() {
 		this._loadMorePageCount++;
 		const lowerIndex = this._postsPerPage * (this._pageNumber - 1);
-		const upperIndex = this._postsPerPage * this._pageNumber * this._loadMorePageCount;
+		const upperIndex = this._postsPerPage * (this._pageNumber + this._loadMorePageCount - 1);
 		this._canLoadMorePages = this._wholeList.length > upperIndex
 		this._currentList = this._wholeList.slice(lowerIndex, upperIndex);
+
 		this.emitPostList();
 	}
-
 
 }
 
