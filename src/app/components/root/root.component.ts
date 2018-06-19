@@ -21,7 +21,7 @@ export class RootComponent implements OnInit, AfterViewInit, OnDestroy {
 	blogName: string;
 	blogDescription: string;
 	menu: IWpMenuItem[];
-	menuMame: string = 'primary';
+	menuMame: string = 'primary-menu';
 	buttonClass: string = '';
 	private _subscriptions: Subscription[] = [];
 	private _routerInfoState: IRouterInfo;

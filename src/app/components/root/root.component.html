@@ -64,15 +64,15 @@
 
 				<ng-container *ngSwitchDefault>
 					<button
-						*ngFor="let item of postList.menu"
+						*ngFor="let item of postList.filterItem.menu"
 						[ngClass]="item.classes"
 						[routerLink]="item.url | urlPathname"
 						routerLinkActive="selected"
 						class="nav-item"
 						>
-						{{item.title}}
-					<div class="selection-bar"></div>
-				</button>
+							{{item.title}}
+						<div class="selection-bar"></div>
+					</button>
 				</ng-container>
 
 				<div class="flex-splitter"></div>

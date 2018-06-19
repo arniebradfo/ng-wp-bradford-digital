@@ -316,13 +316,6 @@ export class WpRestService {
 	}
 
 	public getListFilter(type?: WpSort, slug?: string): Promise<WpFilterItem> {
-
-		// - search - # search results for "term"
-		// - tags - # search results for "term"
-		// - categories - all, subcat, subcat
-		// - author - # posts authored by "name"
-		// - homelist - custom menu?
-
 		switch (type) {
 			case 'category':
 				return Promise.all([this._categoriesBySlug, this._categoriesById])
@@ -342,10 +335,9 @@ export class WpRestService {
 			case 'search':
 				return Promise.resolve({name: slug});
 			default: // type is undefined, HomeList
-				return this.getMenu('homelist').toPromise()
-					.then(menuItems => {return {menu: menuItems, name: 'Posts'}} );
+				return this.getMenu('home-menu').toPromise()
+					.then(menuItems => { return { menu: menuItems, name: 'Posts' }} );
 		}
-
 	}
 
 	// get a menu from the https://wordpress.org/plugins/wp-api-menus/ plugin endpoint
