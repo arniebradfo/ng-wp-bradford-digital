@@ -249,10 +249,11 @@ export interface IWpError {
 
 export type WpFilterItem = IWpCategory|IWpTag|IWpUser|IWpNamed|IWpMenu
 
-interface IWpDetailsImg {
+export interface IWpDetailsImg {
 	width: number;
 	height: number;
 	file: string;
+	srcset?: string;
 	sizes: {
 		[size: string]: {
 			file: string;

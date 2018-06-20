@@ -18,6 +18,8 @@
 				class="post-img"
 				*ngIf="post.featured_media_ref"
 				[src]="post.featured_media_ref.media_details.sizes.full.source_url"
+				[srcset]="post.featured_media_ref.media_details.srcset"
+				sizes="100vw 90vh"
 				[style.transform]="parallaxTranslate(1.5)"
 				/>
 

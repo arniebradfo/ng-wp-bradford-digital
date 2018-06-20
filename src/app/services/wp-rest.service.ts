@@ -6,7 +6,7 @@ import { Http, Response, RequestOptionsArgs, Headers } from '@angular/http';
 import { environment } from '../../environments/environment';
 import {
 	IWpMenuItem, IWpPost, IWpPage, IWpTag, IWpUser, IWpComment,
-	IWpOptions, IWpId, IWpMedia, IWpError, WpSort, IWpHierarchical, IWpCategory, IWpSlug, WpFilterItem
+	IWpOptions, IWpId, IWpMedia, IWpError, WpSort, IWpHierarchical, IWpCategory, IWpSlug, WpFilterItem, IWpDetailsImg
 } from '../interfaces/wp-rest-types';
 
 
@@ -156,7 +156,10 @@ export class WpRestService {
 			medias.forEach(media => {
 				media.author_ref = usersById[media.author];
 				media = this._tryConvertingDates(media);
+				if ((<IWpDetailsImg>media.media_details).image_meta)
+					(<IWpDetailsImg>media.media_details).srcset = this._getSrcSet(media)
 			});
+			console.log(medias);
 			return medias;
 		});
 		this._mediaById = this._orderById(this.media);
@@ -488,6 +491,10 @@ export class WpRestService {
 	private _getFirstUrl(content: string): URL | undefined {
 		const match = /href="([^"]*)"/.exec(content)
 		return match ? new URL(match[1]) : undefined ;
+	}
+
+	private _getSrcSet(media: IWpMedia): string {
+		return media.description.rendered.match(/srcset="([^"]*)"/)[1];
 	}
 
 }
