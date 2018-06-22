@@ -1,20 +1,36 @@
 # TODOs:
-- src sizes for images
-	- proper height and width for images
-- fix external link routing
 - css issues
-	- layout css for search header
+	- header images
+		- make image height correct
+		- doesn't change on mobile height change... 
+		- src sizes="" for img tags
+		- header img border - imageless 
+	- layout css for search/tag/author header text
+	- align post and post-list content columns the same...
 	- footer menu
-	- header img border
-	- home alignment
-	- add focus color
+		- add menu
+		- add css
+	- home alignment css logo with post list header
+	- add focus color back in
+	- no disabled hover - outline is dissappearing
 	- make links black
 	- touch :active state?
+- hide comments
 - tab issue? search then tab destroys layout?
 	- trap tabbing?
+- fix external link routing
 - scroll events on touch?
+	- try css, give up with iOS
 - Img row... shortcode or what?
 	- php plugin maybe?
+- contact form?
+- browser test
+	- firefox
+	- safari
+	- edge
+	- chrome
+	- android chrome 
+	- i0S - emulator?
 
 ### Deployment
 - delete `less-loader` from `package.json`

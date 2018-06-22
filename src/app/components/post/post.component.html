@@ -19,7 +19,11 @@
 				*ngIf="post.featured_media_ref"
 				[src]="post.featured_media_ref.media_details.sizes.full.source_url"
 				[srcset]="post.featured_media_ref.media_details.srcset"
-				sizes="100vw 90vh"
+				[sizes]="displayFull ? '100vw' : '
+					(max-width: 960px) 100vw
+					(min-width: 961px) and (max-width: 1200px) calc(100vw - 334px),
+					(min-width: 1201px) 848px
+				'"
 				[style.transform]="parallaxTranslate(1.5)"
 				/>
 

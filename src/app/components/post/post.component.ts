@@ -43,6 +43,8 @@ export class PostComponent implements OnInit {
 	}
 
 	parallaxTranslate(denominator: number = 2): string {
+		if (this.displayFull)
+			return '';
 		const transX = Math.round(this.parallaxScrollTop / denominator);
 		return `translate3d( 0, ${transX}px, 0 )`;
 		// a different method: http://www.javascriptkit.com/dhtmltutors/parallaxscrolling/index.shtml

@@ -159,7 +159,6 @@ export class WpRestService {
 				if ((<IWpDetailsImg>media.media_details).image_meta)
 					(<IWpDetailsImg>media.media_details).srcset = this._getSrcSet(media)
 			});
-			console.log(medias);
 			return medias;
 		});
 		this._mediaById = this._orderById(this.media);
