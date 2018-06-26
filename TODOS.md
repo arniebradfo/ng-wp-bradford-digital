@@ -1,10 +1,11 @@
 # TODOs:
 - css issues
 	- header images
-		- make image height correct
-		- doesn't change on mobile height change... 
-		- src sizes="" for img tags
+		- ~~make image height correct~~
+		- ~~doesn't change on mobile height change... ~~
+		- ~~src sizes="" for img tags~~
 		- header img border - imageless 
+		- tags border and spacing
 	- layout css for search/tag/author header text
 	- align post and post-list content columns the same...
 	- footer menu
@@ -19,8 +20,9 @@
 - tab issue? search then tab destroys layout?
 	- trap tabbing?
 - fix external link routing
-- scroll events on touch?
+- scroll events on touch, parallax?
 	- try css, give up with iOS
+	- https://developers.google.com/web/updates/2016/12/performant-parallaxing
 - Img row... shortcode or what?
 	- php plugin maybe?
 - contact form?
